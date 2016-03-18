@@ -6,13 +6,14 @@
 //
 //
 
-#include "mutex.hpp"
+#include "pthread/mutex.hpp"
 
 namespace pthread {
   
   mutex::mutex () {
-    if ( pthread_mutex_init (&_mutex, NULL) != 0 ) {
-      throw mutex_exception ( "In constructor of mutex pthread_mutex_init(&mutex, NULL) failed." );
+    auto rc = pthread_mutex_init (&_mutex, NULL);
+    if ( rc != 0 ) {
+      throw mutex_exception ( "In constructor of mutex pthread_mutex_init(&mutex, NULL) failed. ", rc );
     }
   }
   
@@ -20,31 +21,29 @@ namespace pthread {
     pthread_mutex_destroy (&_mutex);
   }
   
-  int mutex::lock () {
-    return pthread_mutex_lock ( &_mutex );
+  void mutex::lock () {
+    auto rc = pthread_mutex_lock ( &_mutex );
+    if ( rc != 0 ){
+      throw mutex_exception("pthread_mutex_lock failed.", rc);
+    }
   }
   
-  int mutex::try_lock () {
+  void mutex::try_lock () {
     
-    return pthread_mutex_trylock ( &_mutex );
+    auto rc = pthread_mutex_trylock ( &_mutex );
+    if ( rc != 0 ){
+      throw mutex_exception("pthread_mutex_trylock failed, already locked.", rc);
+    }
   }
   
-  int mutex::unlock () {
+  void mutex::unlock () {
+    auto rc = pthread_mutex_unlock ( &_mutex );
     
-    return pthread_mutex_unlock ( &_mutex );
+    if ( rc != 0 ){
+      throw mutex_exception("pthread_mutex_unlock failed.", rc);
+    }
   }
-  
-  // exceptions & errors ------------
-  
-  mutex_exception::mutex_exception(const string message): _message{message}{
-    
-  }
-  
-  mutex_exception::~mutex_exception(){
-    
-  }
-  
-  const char *mutex_exception::what() const noexcept {
-    return _message.c_str();
-  }
+
+  mutex_exception::mutex_exception( const string message, const int pthread_error): pthread_exception{message, pthread_error} {
+  };
 }

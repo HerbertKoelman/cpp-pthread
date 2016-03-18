@@ -6,20 +6,25 @@
 //
 //
 
-#ifndef mutex_hpp
-#define mutex_hpp
+#ifndef pthread_mutex_hpp
+#define pthread_mutex_hpp
 
 #include <pthread.h>
 #include <exception>
 #include <string>
 
-#include "pthread/cpp-phtread.hpp"
+#include "pthread/pthread_exception.hpp"
 
 namespace pthread {
 
   using namespace std ;
   
+  class condition_variable;
+  
   class mutex {
+    
+    friend class condition_variable;
+  
   public:
     /**
      The mutex object is locked by calling pthread_mutex_lock. If
@@ -27,14 +32,14 @@ namespace pthread {
      available. This operation returns with the mutex object referenced by mutex in
      the locked state with the calling thread as its owner.
      */
-    int lock ();
+    void lock ();
     
     /**
      The function pthread_mutex_trylock is identical to pthread_mutex_lock except that
      if the mutex object referenced by mutex is currently locked (by any thread,
      including the current thread), the call returns immediately.
      */
-    int try_lock ();
+    void try_lock ();
     
     /**
      The pthread_mutex_unlock function releases the mutex object referenced by mutex.
@@ -46,7 +51,7 @@ namespace pthread {
      the count reaches zero and the calling thread no longer has any locks on this
      mutex).
      */
-    int unlock ();
+    void unlock ();
     
     /*
      Constructor/Desctructor
@@ -58,17 +63,12 @@ namespace pthread {
     pthread_mutex_t _mutex;
   };
 
-  class mutex_exception: public exception {
+  class mutex_exception: public pthread_exception {
   public:
-    mutex_exception( const string message);
-    virtual ~mutex_exception();
-    
-    virtual const char *what() const noexcept override ;
-    
-  private:
-    string _message;
+    mutex_exception( const string message, const int pthread_error = 0) ;
     
   };
+  
 } // namespace pthread
 
 #endif /* mutex_hpp */
