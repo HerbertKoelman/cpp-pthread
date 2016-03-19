@@ -18,23 +18,34 @@ namespace pthread {
     int rc = 0;
     cv_status status = cv_status::no_timeout;
     
-    timeval current;
+    timeval  now;
     timespec timeout;
     
-    gettimeofday ( &current, NULL );
-    timeout.tv_sec = current.tv_sec + (millis * 0.001);
-    
-    rc  = pthread_cond_timedwait ( &_condition, &mtx._mutex, &timeout );
-    
-    switch (rc){
-        
-      case ETIMEDOUT:
-        status = cv_status::timeout;
-        break;
-        
-      default:
-        status = cv_status::no_timeout ;
-        break;
+    if ( gettimeofday ( &now, NULL ) == 0){
+      timeout.tv_sec = now.tv_sec + (millis * 0.001);
+      timeout.tv_nsec= now.tv_usec * 1000 ;
+      
+      rc  = pthread_cond_timedwait ( &_condition, &mtx._mutex, &timeout );
+      
+      switch (rc){
+          
+        case ETIMEDOUT:
+          status = cv_status::timeout;
+          break;
+          
+        case EINVAL:
+          throw condition_variable_exception("The value specified by abstime is invalid.", rc);
+          break;
+          
+        case EPERM:
+          throw condition_variable_exception("The mutex was not owned by the current thread at the time of the call.", rc);
+          break;
+        default:
+          status = cv_status::no_timeout ;
+          break;
+      }
+    } else {
+      throw condition_variable_exception("failed to get current time.");
     }
     
     return status;
