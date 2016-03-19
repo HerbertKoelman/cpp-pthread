@@ -7,39 +7,17 @@
 //
 
 #include "pthread/thread.hpp"
+#include <unistd.h>
 
 namespace pthread {
   
   extern "C" void * thread_startup (void *);
   
-  /**
-   This function is a helper function. It has normal C linkage, and is
-   the base for newly created Thread objects. It runs the
-   run method on the thread object passed to it (as a void *).
-   */
-  void *thread_startup(void *args) {
-    
-    thread *t = (thread *)args;
-    t->run();
-    if ( t->destroy_when_ended () ) delete t;
-    
-    return (NULL);
-  }
-  
-  
-  thread::thread ( bool destroy ): _destroy{destroy} {
-    
-    /* Initialize and set thread detached attribute */
-    pthread_attr_init(&_attr);
-    pthread_attr_setdetachstate(&_attr, PTHREAD_CREATE_JOINABLE);
-  }
-  
-  thread::~thread () {
-    pthread_attr_destroy(&_attr);
-  }
-  
   void thread::run () noexcept {
-    
+  }
+  
+  void thread::sleep(const int millis){    
+    usleep(millis * 1000);
   }
   
   int thread::start () {
@@ -65,6 +43,35 @@ namespace pthread {
     rc = pthread_cancel ( _thread );
     
     return rc;
+  }
+  
+  thread::thread ( bool destroy ): _destroy{destroy} {
+    
+    /* Initialize and set thread detached attribute */
+    pthread_attr_init(&_attr);
+    pthread_attr_setdetachstate(&_attr, PTHREAD_CREATE_JOINABLE);
+  }
+  
+  thread::~thread () {
+    pthread_attr_destroy(&_attr);
+  }
+  
+
+  
+  /**
+   This function is a helper function. It has normal C linkage, and is
+   the base for newly created Thread objects. It runs the
+   run method on the thread object passed to it (as a void *).
+   */
+  void *thread_startup(void *args) {
+    
+    thread *t = (thread *)args;
+    t->run();
+    if ( t->destroy_when_ended () ) {
+      delete t;
+    }
+    
+    return (NULL);
   }
 
 } // namespace pthread

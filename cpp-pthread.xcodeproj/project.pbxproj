@@ -218,7 +218,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEPLOYMENT_LOCATION = YES;
+				INSTALL_PATH = /usr/local/bin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include;
 				USER_HEADER_SEARCH_PATHS = "/Users/herbert/Documents/c++/cpp-pthread/include";
 			};
 			name = Debug;
@@ -227,7 +230,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEPLOYMENT_LOCATION = YES;
+				INSTALL_PATH = /usr/local/bin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include;
 				USER_HEADER_SEARCH_PATHS = "/Users/herbert/Documents/c++/cpp-pthread/include";
 			};
 			name = Release;

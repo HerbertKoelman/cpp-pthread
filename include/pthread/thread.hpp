@@ -54,7 +54,7 @@ namespace pthread {
        *
        * @param destroy indicates that the thread should delete itself when ended.
        */
-      thread( bool destroy  = true );
+      thread( bool destroy  = false );
       
       /**
        * cleanup thread ressources.
@@ -130,6 +130,8 @@ namespace pthread {
       inline int status() { return _status ;};
       
       inline bool destroy_when_ended () { return _destroy;};
+      
+      static void sleep( const int millis);
       
     private:
       
