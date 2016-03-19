@@ -27,4 +27,4 @@
 *.out
 *.app
 
-cpp-pthread.xcodeproj/
+#cpp-pthread.xcodeproj/
