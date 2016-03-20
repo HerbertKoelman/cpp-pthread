@@ -14,6 +14,7 @@
 		E519A0FC1C9C6B3800ED113D /* lock_guard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E519A0E41C9C4B4F00ED113D /* lock_guard.cpp */; };
 		E519A1011C9C7CAB00ED113D /* thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E519A0FF1C9C7CAB00ED113D /* thread.cpp */; };
 		E519A1021C9C7CAB00ED113D /* thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E519A0FF1C9C7CAB00ED113D /* thread.cpp */; };
+		E5C4D71D1C9DC8C700D0E18C /* pthread in Headers */ = {isa = PBXBuildFile; fileRef = E5EC5B811C9C2C8B00E21131 /* pthread */; settings = {ATTRIBUTES = (Public, ); }; };
 		E5EC5B7D1C9C2C6B00E21131 /* condition_variable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5EC5B791C9C2C6B00E21131 /* condition_variable.cpp */; };
 		E5EC5B7F1C9C2C6B00E21131 /* mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5EC5B7B1C9C2C6B00E21131 /* mutex.cpp */; };
 /* End PBXBuildFile section */
@@ -112,6 +113,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5C4D71D1C9DC8C700D0E18C /* pthread in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +330,7 @@
 				EXECUTABLE_PREFIX = lib;
 				HEADER_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include;
 				USER_HEADER_SEARCH_PATHS = "/Users/herbert/Documents/c++/cpp-pthread/include";
 			};
 			name = Debug;
@@ -339,6 +342,7 @@
 				EXECUTABLE_PREFIX = lib;
 				HEADER_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include;
 				USER_HEADER_SEARCH_PATHS = "/Users/herbert/Documents/c++/cpp-pthread/include";
 			};
 			name = Release;

@@ -33,7 +33,8 @@ public:
       try {
         std::cout << "got mutex and start waiting for counter" << std::endl;
         
-        if ( condition.wait_for(mtx, 5000, [](){ return counter >= 100000 ;} ) ){
+//        if ( condition.wait_for(lck, 5000, [](){ return counter >= 100000 ;} ) ){
+        if ( condition.wait(lck, [](){ return counter >= 100000 ;} ) ){
           std::cout << "condition was true" << std::endl;
         } else {
           std::cout << "condition was false" << std::endl;
