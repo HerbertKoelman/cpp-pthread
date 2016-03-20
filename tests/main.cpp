@@ -7,6 +7,7 @@
 //
 
 #include <iostream>
+#include <string>
 #include "pthread/pthread.hpp"
 
 //#include "pthread/mutex.hpp"
@@ -33,8 +34,8 @@ public:
       try {
         std::cout << "got mutex and start waiting for counter" << std::endl;
         
-//        if ( condition.wait_for(lck, 5000, [](){ return counter >= 100000 ;} ) ){
-        if ( condition.wait(lck, [](){ return counter >= 100000 ;} ) ){
+        if ( condition.wait_for(lck, 60000, [](){ return counter >= 100000 ;} ) ){
+//        if ( condition.wait(lck, [](){ return counter >= 100000 ;} ) ){
           std::cout << "condition was true" << std::endl;
         } else {
           std::cout << "condition was false" << std::endl;
@@ -52,7 +53,7 @@ public:
 };
       
 int main(int argc, const char * argv[]) {
-  
+  std::string dummy;
   thread t ;
   t.start();
   
@@ -62,8 +63,11 @@ int main(int argc, const char * argv[]) {
     //condition.notify_one();
   }
   
-  message("sleeping for 10 seconds...");
-  pthread::thread::sleep(10*1000);
+  
+  std::getline(std::cin, dummy);
+  
+  message("sleeping for 5 seconds...");
+  pthread::thread::sleep(5*1000);
   
   message("woke up from sleep, main thread counted 100000, notifying all condition_variables");
   condition.notify_all();

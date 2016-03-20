@@ -38,7 +38,6 @@ namespace pthread {
   
   void mutex::unlock () {
     auto rc = pthread_mutex_unlock ( &_mutex );
-    
     if ( rc != 0 ){
       throw mutex_exception("pthread_mutex_unlock failed.", rc);
     }

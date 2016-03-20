@@ -61,6 +61,9 @@ namespace pthread {
     virtual ~condition_variable();
     
   private:
+    void milliseconds( int milliseconds);
+    
+    timespec timeout;
     pthread_cond_t _condition;
   };
   
@@ -92,42 +95,34 @@ namespace pthread {
     int rc = 0;
     cv_status status = cv_status::no_timeout;
     
-    timeval  now;
-    timespec timeout;
+    milliseconds(millis); // update timeout
+    bool stop_waiting = lambda(); // returns ​false if the waiting should be continued.
     
-    if ( gettimeofday ( &now, NULL ) == 0){
-      timeout.tv_sec = now.tv_sec; // + (millis * 0.001);
-      timeout.tv_nsec= now.tv_usec + (millis * 1000 * 1000); //now.tv_usec * 1000 ;
+    while(! stop_waiting && status == cv_status::no_timeout){
       
-      bool stop_waiting = lambda(); // returns ​false if the waiting should be continued.
+      rc  = pthread_cond_timedwait ( &_condition, &mtx._mutex, &timeout );
       
-      while(! stop_waiting && status == cv_status::no_timeout){
-        
-        rc  = pthread_cond_timedwait ( &_condition, &mtx._mutex, &timeout );
-        
-        switch (rc){
-            
-          case ETIMEDOUT:
-            status = cv_status::timeout;
-            break;
-            
-          case EINVAL:
-            throw condition_variable_exception("The value specified by abstime is invalid.", rc);
-            break;
-            
-          case EPERM:
-            throw condition_variable_exception("The mutex was not owned by the current thread at the time of the call.", rc);
-            break;
-          default:
-            status = cv_status::no_timeout ;
-            break;
-        }
-        
-        stop_waiting = !lambda();
+      switch (rc){
+          
+        case ETIMEDOUT:
+          status = cv_status::timeout;
+          break;
+          
+        case EINVAL:
+          throw condition_variable_exception("The value specified by abstime is invalid.", rc);
+          break;
+          
+        case EPERM:
+          throw condition_variable_exception("The mutex was not owned by the current thread at the time of the call.", rc);
+          break;
+        default:
+          status = cv_status::no_timeout ;
+          break;
       }
-    } else {
-      throw condition_variable_exception("failed to get current time.");
+      
+      stop_waiting = !lambda();
     }
+    
     
     return status == cv_status::no_timeout;
   };
