@@ -11,6 +11,8 @@
 
 #include <pthread.h>
 #include <string>
+#include <time.h>
+#include <sys/time.h>
 
 #include "pthread/pthread_exception.hpp"
 #include "pthread/mutex.hpp"
@@ -73,8 +75,10 @@ namespace pthread {
   // template implementation ----------------------
   
   template<class Lambda> bool condition_variable::wait( mutex &mtx, Lambda lambda){
-    while(!lambda()){
+    bool stop_waiting = lambda();
+    while(!stop_waiting){
       wait(mtx);
+      stop_waiting = lambda(); // handling spurious wakeups
     }
     return true;
   };
@@ -85,10 +89,44 @@ namespace pthread {
   };
   
   template<class Lambda> bool condition_variable::wait_for( mutex &mtx, int millis, Lambda lambda){
+    int rc = 0;
     cv_status status = cv_status::no_timeout;
     
-    while(!lambda() && status == cv_status::no_timeout){
-      status = wait_for(mtx, millis);
+    timeval  now;
+    timespec timeout;
+    
+    if ( gettimeofday ( &now, NULL ) == 0){
+      timeout.tv_sec = now.tv_sec; // + (millis * 0.001);
+      timeout.tv_nsec= now.tv_usec + (millis * 1000 * 1000); //now.tv_usec * 1000 ;
+      
+      bool stop_waiting = lambda(); // returns ​false if the waiting should be continued.
+      
+      while(! stop_waiting && status == cv_status::no_timeout){
+        
+        rc  = pthread_cond_timedwait ( &_condition, &mtx._mutex, &timeout );
+        
+        switch (rc){
+            
+          case ETIMEDOUT:
+            status = cv_status::timeout;
+            break;
+            
+          case EINVAL:
+            throw condition_variable_exception("The value specified by abstime is invalid.", rc);
+            break;
+            
+          case EPERM:
+            throw condition_variable_exception("The mutex was not owned by the current thread at the time of the call.", rc);
+            break;
+          default:
+            status = cv_status::no_timeout ;
+            break;
+        }
+        
+        stop_waiting = !lambda();
+      }
+    } else {
+      throw condition_variable_exception("failed to get current time.");
     }
     
     return status == cv_status::no_timeout;

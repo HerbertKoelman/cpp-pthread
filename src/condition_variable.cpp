@@ -2,10 +2,8 @@
  $Id: condition_variable.C 28 2007-08-06 22:29:28Z hkoelman $
  */
 
-#include <time.h>
-#include <sys/time.h>
-
 #include "pthread/condition_variable.hpp"
+
 
 namespace pthread {
   
@@ -22,8 +20,8 @@ namespace pthread {
     timespec timeout;
     
     if ( gettimeofday ( &now, NULL ) == 0){
-      timeout.tv_sec = now.tv_sec + (millis * 0.001);
-      timeout.tv_nsec= now.tv_usec * 1000 ;
+      timeout.tv_sec = now.tv_sec; // + (millis * 0.001);
+      timeout.tv_nsec= now.tv_usec + (millis * 1000 * 1000); //now.tv_usec * 1000 ;
       
       rc  = pthread_cond_timedwait ( &_condition, &mtx._mutex, &timeout );
       
