@@ -14,6 +14,7 @@
 
 #include "pthread/pthread_exception.hpp"
 #include "pthread/mutex.hpp"
+#include "pthread/lock_guard.hpp"
 
 namespace pthread {
   
@@ -30,14 +31,15 @@ namespace pthread {
     /** wait for condition to be signaled
      */
     void wait ( mutex &mtx );
-    
     template<class Lambda> bool wait( mutex &mtx, Lambda lambda);
+    template<class Lambda> bool wait( lock_guard &lck, Lambda lambda);
     
     /** wait for a condition to be signaled in a limited time frame.
      */
     cv_status wait_for (mutex &mtx, int millis );
     
     template<class Lambda> bool wait_for( mutex &mtx, int millis, Lambda lambda);
+    template<class Lambda> bool wait_for( lock_guard &lck, int millis, Lambda lambda);
     
     /** signal one waiting thread.
      *
@@ -68,6 +70,8 @@ namespace pthread {
     virtual ~condition_variable_exception(){};
   };
   
+  // template implementation ----------------------
+  
   template<class Lambda> bool condition_variable::wait( mutex &mtx, Lambda lambda){
     while(!lambda()){
       wait(mtx);
@@ -75,6 +79,11 @@ namespace pthread {
     return true;
   };
 
+  template<class Lambda> bool condition_variable::wait( lock_guard &lck, Lambda lambda){
+
+    return wait( *(lck.mutex()), lambda);
+  };
+  
   template<class Lambda> bool condition_variable::wait_for( mutex &mtx, int millis, Lambda lambda){
     cv_status status = cv_status::no_timeout;
     
@@ -83,6 +92,11 @@ namespace pthread {
     }
     
     return status == cv_status::no_timeout;
+  };
+  
+  template<class Lambda> bool condition_variable::wait_for( lock_guard &lck, int millis, Lambda lambda){
+    
+    return wait_for(*(lck.mutex()),millis, lambda);
   };
   
 } // namespace pthread
