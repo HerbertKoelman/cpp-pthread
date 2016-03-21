@@ -13,7 +13,7 @@ namespace pthread {
   /* Default millis is 0 */
   cv_status condition_variable::wait_for ( mutex &mtx, int millis ) {
     int rc = 0;
-    cv_status status = cv_status::no_timeout;
+    cv_status status = no_timeout;
     
     milliseconds(millis);
     rc  = pthread_cond_timedwait ( &_condition, &mtx._mutex, &timeout );
@@ -21,7 +21,7 @@ namespace pthread {
     switch (rc){
         
       case ETIMEDOUT:
-        status = cv_status::timeout;
+        status = timedout;
         break;
         
       case EINVAL:
@@ -32,7 +32,7 @@ namespace pthread {
         throw condition_variable_exception("The mutex was not owned by the current thread at the time of the call.", rc);
         break;
       default:
-        status = cv_status::no_timeout ;
+        status = no_timeout ;
         break;
     }
     

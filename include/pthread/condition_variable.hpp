@@ -20,9 +20,9 @@
 
 namespace pthread {
   
-  enum class cv_status {
+  enum cv_status {
     no_timeout,
-    timeout
+    timedout
   };
   
   /** pthread condition variable
@@ -173,19 +173,19 @@ namespace pthread {
   
   template<class Lambda> bool condition_variable::wait_for( mutex &mtx, int millis, Lambda lambda){
     int rc = 0;
-    cv_status status = cv_status::no_timeout;
+    cv_status status = no_timeout;
     
     milliseconds(millis); // update timeout
     bool stop_waiting = lambda(); // returns ​false if the waiting should be continued.
     
-    while(! stop_waiting && status == cv_status::no_timeout){
+    while(! stop_waiting && status == no_timeout){
       
       rc  = pthread_cond_timedwait ( &_condition, &mtx._mutex, &timeout );
       
       switch (rc){
           
         case ETIMEDOUT:
-          status = cv_status::timeout;
+          status = timedout;
           break;
           
         case EINVAL:
@@ -196,7 +196,7 @@ namespace pthread {
           throw condition_variable_exception("The mutex was not owned by the current thread at the time of the call.", rc);
           break;
         default:
-          status = cv_status::no_timeout ;
+          status = no_timeout ;
           break;
       }
       
