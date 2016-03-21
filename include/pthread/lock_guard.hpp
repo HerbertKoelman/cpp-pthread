@@ -47,5 +47,6 @@ namespace pthread {
     pthread::mutex *_mutex;
   };
   
-}
+} // namespace pthread
+
 #endif /* pthread_lock_guard_H */

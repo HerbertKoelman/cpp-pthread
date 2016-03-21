@@ -31,16 +31,93 @@ namespace pthread {
   public:
     
     /** wait for condition to be signaled
+     *
+     * This method atomically release mutex and cause the calling thread to block; atomically here means "atomically with respect to
+     * access by another thread to the mutex and then the condition variable". Call notify_one or notify_all to signal the condition.
+     *
+     * Upon successful return, the mutex has been locked and is owned by the calling thread.
+     *
+     * @param mtx ralated mutex, which must be locked by the current thread.
      */
     void wait ( mutex &mtx );
+    
+    /** wait for condition to be signaled
+     *
+     * This method atomically release mutex and cause the calling thread to block; atomically here means "atomically with respect to
+     * access by another thread to the mutex and then the condition variable". Call notify_one or notify_all to signal the condition.
+     *
+     * Upon successful return, the mutex has been locked and is owned by the calling thread.
+     *
+     * The lambda (closure) is run to check if the condition was met. Lambda should false if the waiting should be continued.
+     * The signature of the predicate function should be equivalent to the following: bool pred();
+     *
+     * @param mtx ralated mutex, which must be locked by the current thread.
+     * @param lambda run to check if condition was met.
+     * @return true if lmabda returned true.
+     */
     template<class Lambda> bool wait( mutex &mtx, Lambda lambda);
+    
+    /** wait for condition to be signaled
+     *
+     * This method atomically release mutex and cause the calling thread to block; atomically here means "atomically with respect to
+     * access by another thread to the mutex and then the condition variable". Call notify_one or notify_all to signal the condition.
+     *
+     * Upon successful return, the mutex has been locked and is owned by the calling thread.
+     *
+     * The lambda (closure) is run to check if the condition was met. Lambda should false if the waiting should be continued.
+     * The signature of the predicate function should be equivalent to the following: bool pred();
+     *
+     * @param lck ralated mutex lock_guard, which must be locked by the current thread.
+     * @param lambda run to check if condition was met.
+     * @return true if lmabda returned true.
+     */
     template<class Lambda> bool wait( lock_guard &lck, Lambda lambda);
     
-    /** wait for a condition to be signaled in a limited time frame.
+    /** wait for condition to be signaled within given time frame
+     *
+     * This method atomically release mutex and cause the calling thread to block; atomically here means "atomically with respect to
+     * access by another thread to the mutex and then the condition variable". Call notify_one or notify_all to signal the condition.
+     *
+     * Upon successful return, the mutex has been locked and is owned by the calling thread.
+     *
+     * @param mtx ralated mutex, which must be locked by the current thread.
+     * @param millis milliseconds to wait for this instance to signaled.
+     * @return cv_status (either timeout or no_timeout)
      */
     cv_status wait_for (mutex &mtx, int millis );
     
+    /** wait for condition to be signaled within a given time frame
+     *
+     * This method atomically release mutex and cause the calling thread to block; atomically here means "atomically with respect to
+     * access by another thread to the mutex and then the condition variable". Call notify_one or notify_all to signal the condition.
+     *
+     * Upon successful return, the mutex has been locked and is owned by the calling thread.
+     *
+     * The lambda (closure) is run to check if the condition was met. Lambda should false if the waiting should be continued.
+     * The signature of the predicate function should be equivalent to the following: bool lambda();
+     *
+     * @param mtx ralated mutex, which must be locked by the current thread.
+     * @param millis milli seconds to wait for condition to be signaled.
+     * @param lambda run to check if condition was met.
+     * @return true if lmabda returned true.
+     */
     template<class Lambda> bool wait_for( mutex &mtx, int millis, Lambda lambda);
+    
+    /** wait for condition to be signaled within a given time frame
+     *
+     * This method atomically release mutex and cause the calling thread to block; atomically here means "atomically with respect to
+     * access by another thread to the mutex and then the condition variable". Call notify_one or notify_all to signal the condition.
+     *
+     * Upon successful return, the mutex has been locked and is owned by the calling thread.
+     *
+     * The lambda (closure) is run to check if the condition was met. Lambda should false if the waiting should be continued.
+     * The signature of the predicate function should be equivalent to the following: bool lambda();
+     *
+     * @param mtx ralated mutex lock_guard, which must be locked by the current thread.
+     * @param millis milli seconds to wait for condition to be signaled.
+     * @param lambda run to check if condition was met.
+     * @return true if lmabda returned true.
+     */
     template<class Lambda> bool wait_for( lock_guard &lck, int millis, Lambda lambda);
     
     /** signal one waiting thread.
@@ -61,6 +138,9 @@ namespace pthread {
     virtual ~condition_variable();
     
   private:
+    void milliseconds( int milliseconds);
+    
+    timespec timeout;
     pthread_cond_t _condition;
   };
   
@@ -75,12 +155,15 @@ namespace pthread {
   // template implementation ----------------------
   
   template<class Lambda> bool condition_variable::wait( mutex &mtx, Lambda lambda){
+    
     bool stop_waiting = lambda();
+    
     while(!stop_waiting){
       wait(mtx);
       stop_waiting = lambda(); // handling spurious wakeups
     }
-    return true;
+    
+    return stop_waiting;
   };
 
   template<class Lambda> bool condition_variable::wait( lock_guard &lck, Lambda lambda){
@@ -92,44 +175,36 @@ namespace pthread {
     int rc = 0;
     cv_status status = cv_status::no_timeout;
     
-    timeval  now;
-    timespec timeout;
+    milliseconds(millis); // update timeout
+    bool stop_waiting = lambda(); // returns ​false if the waiting should be continued.
     
-    if ( gettimeofday ( &now, NULL ) == 0){
-      timeout.tv_sec = now.tv_sec; // + (millis * 0.001);
-      timeout.tv_nsec= now.tv_usec + (millis * 1000 * 1000); //now.tv_usec * 1000 ;
+    while(! stop_waiting && status == cv_status::no_timeout){
       
-      bool stop_waiting = lambda(); // returns ​false if the waiting should be continued.
+      rc  = pthread_cond_timedwait ( &_condition, &mtx._mutex, &timeout );
       
-      while(! stop_waiting && status == cv_status::no_timeout){
-        
-        rc  = pthread_cond_timedwait ( &_condition, &mtx._mutex, &timeout );
-        
-        switch (rc){
-            
-          case ETIMEDOUT:
-            status = cv_status::timeout;
-            break;
-            
-          case EINVAL:
-            throw condition_variable_exception("The value specified by abstime is invalid.", rc);
-            break;
-            
-          case EPERM:
-            throw condition_variable_exception("The mutex was not owned by the current thread at the time of the call.", rc);
-            break;
-          default:
-            status = cv_status::no_timeout ;
-            break;
-        }
-        
-        stop_waiting = !lambda();
+      switch (rc){
+          
+        case ETIMEDOUT:
+          status = cv_status::timeout;
+          break;
+          
+        case EINVAL:
+          throw condition_variable_exception("The value specified by abstime is invalid.", rc);
+          break;
+          
+        case EPERM:
+          throw condition_variable_exception("The mutex was not owned by the current thread at the time of the call.", rc);
+          break;
+        default:
+          status = cv_status::no_timeout ;
+          break;
       }
-    } else {
-      throw condition_variable_exception("failed to get current time.");
+      
+      stop_waiting = lambda();
     }
     
-    return status == cv_status::no_timeout;
+    
+    return stop_waiting ; //status == cv_status::no_timeout;
   };
   
   template<class Lambda> bool condition_variable::wait_for( lock_guard &lck, int millis, Lambda lambda){

@@ -1,9 +1,8 @@
-/*
+  /*
  $Id: condition_variable.C 28 2007-08-06 22:29:28Z hkoelman $
  */
 
 #include "pthread/condition_variable.hpp"
-
 
 namespace pthread {
   
@@ -16,34 +15,25 @@ namespace pthread {
     int rc = 0;
     cv_status status = cv_status::no_timeout;
     
-    timeval  now;
-    timespec timeout;
+    milliseconds(millis);
+    rc  = pthread_cond_timedwait ( &_condition, &mtx._mutex, &timeout );
     
-    if ( gettimeofday ( &now, NULL ) == 0){
-      timeout.tv_sec = now.tv_sec; // + (millis * 0.001);
-      timeout.tv_nsec= now.tv_usec + (millis * 1000 * 1000); //now.tv_usec * 1000 ;
-      
-      rc  = pthread_cond_timedwait ( &_condition, &mtx._mutex, &timeout );
-      
-      switch (rc){
-          
-        case ETIMEDOUT:
-          status = cv_status::timeout;
-          break;
-          
-        case EINVAL:
-          throw condition_variable_exception("The value specified by abstime is invalid.", rc);
-          break;
-          
-        case EPERM:
-          throw condition_variable_exception("The mutex was not owned by the current thread at the time of the call.", rc);
-          break;
-        default:
-          status = cv_status::no_timeout ;
-          break;
-      }
-    } else {
-      throw condition_variable_exception("failed to get current time.");
+    switch (rc){
+        
+      case ETIMEDOUT:
+        status = cv_status::timeout;
+        break;
+        
+      case EINVAL:
+        throw condition_variable_exception("The value specified by abstime is invalid.", rc);
+        break;
+        
+      case EPERM:
+        throw condition_variable_exception("The mutex was not owned by the current thread at the time of the call.", rc);
+        break;
+      default:
+        status = cv_status::no_timeout ;
+        break;
     }
     
     return status;
@@ -56,6 +46,20 @@ namespace pthread {
   void condition_variable::notify_all () noexcept{
     pthread_cond_broadcast ( &_condition );
     
+  }
+  
+  void condition_variable::milliseconds(int millis){
+    timeval  now;
+    
+    if ( gettimeofday ( &now, NULL ) == 0){
+      timeout.tv_sec = now.tv_sec;
+      timeout.tv_nsec= now.tv_usec * 1000 ;
+      
+      timeout.tv_sec  += millis / 1000;
+      timeout.tv_nsec += (millis % 1000) * 1000000;
+    } else {
+      throw condition_variable_exception("failed to get current time.");
+    }
   }
   
   // constuctors & destructors --------------
