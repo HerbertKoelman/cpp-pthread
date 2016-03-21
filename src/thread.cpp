@@ -16,7 +16,7 @@ namespace pthread {
   void thread::run () noexcept {
   }
   
-  void thread::sleep(const int millis){    
+  void thread::sleep(const int millis){
     usleep(millis * 1000);
   }
   
@@ -24,15 +24,19 @@ namespace pthread {
     
     int rc = 0;
     
-    rc = pthread_create(&_thread, &_attr, thread_startup, (void *) this);
-    
+    if ((rc = pthread_create(&_thread, &_attr, thread_startup, (void *) this)) != 0){
+      throw thread_exception{"pthread_create failed.", rc };
+    }
+      
     return rc;
   }
   
   int thread::join () {
     int rc = 0;
     
-    rc = pthread_join(_thread, (void **)&_status);
+    if ( (rc = pthread_join(_thread, (void **)&_status)) != 0){
+      throw thread_exception{"pthread_join failed.", rc };
+    }
     
     return rc;
   }
@@ -41,22 +45,29 @@ namespace pthread {
     int rc = 0;
     
     rc = pthread_cancel ( _thread );
-    
+
+    if ( rc == 0 ){
+      throw thread_exception{"pthread_ccancel failed.", rc };
+    }
+
     return rc;
   }
   
   thread::thread ( bool destroy ): _destroy{destroy} {
-    
+    int rc = 0 ;
     /* Initialize and set thread detached attribute */
-    pthread_attr_init(&_attr);
-    pthread_attr_setdetachstate(&_attr, PTHREAD_CREATE_JOINABLE);
+    if ( (rc = pthread_attr_init(&_attr)) != 0){
+      throw thread_exception{"pthread_attr_init failed.", rc };
+    }
+    
+    if ( (rc = pthread_attr_setdetachstate(&_attr, PTHREAD_CREATE_JOINABLE)) != 0 ){
+      throw thread_exception{"pthread_attr_setdetachstate failed.", rc };
+    }
   }
   
   thread::~thread () {
     pthread_attr_destroy(&_attr);
   }
-  
-
   
   /**
    This function is a helper function. It has normal C linkage, and is
@@ -73,5 +84,10 @@ namespace pthread {
     
     return (NULL);
   }
-
+  
+  // exception -------
+  
+  thread_exception::thread_exception(const string message, const int pthread_error): pthread_exception{message, pthread_error}{
+  }
+  
 } // namespace pthread

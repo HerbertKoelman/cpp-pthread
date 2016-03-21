@@ -34,7 +34,7 @@ public:
       try {
         std::cout << "got mutex and start waiting for counter" << std::endl;
         
-        if ( condition.wait_for(lck, 60000, [](){ return counter >= 100000 ;} ) ){
+        if ( condition.wait_for(lck, 20000, [](){ return counter >= 100000 ;} ) ){
 //        if ( condition.wait(lck, [](){ return counter >= 100000 ;} ) ){
           std::cout << "condition was true" << std::endl;
         } else {
@@ -63,7 +63,7 @@ int main(int argc, const char * argv[]) {
     //condition.notify_one();
   }
   
-  
+  std::cout << "hit enter to continue" << std::endl ;
   std::getline(std::cin, dummy);
   
   message("sleeping for 5 seconds...");
