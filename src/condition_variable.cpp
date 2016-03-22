@@ -55,8 +55,11 @@ namespace pthread {
       timeout.tv_sec = now.tv_sec;
       timeout.tv_nsec= now.tv_usec * 1000 ;
       
-      timeout.tv_sec  += millis / 1000;
-      timeout.tv_nsec += (millis % 1000) * 1000000;
+      auto seconds = millis / 1000;
+      auto nanos   = (millis % 1000) * 1000000 ;
+      
+      timeout.tv_sec  += seconds ;
+      timeout.tv_nsec += nanos;
     } else {
       throw condition_variable_exception("failed to get current time.");
     }
