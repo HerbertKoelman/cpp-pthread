@@ -56,10 +56,12 @@ namespace pthread {
       timeout.tv_nsec= now.tv_usec * 1000 ;
       
       auto seconds = millis / 1000;
-      auto nanos   = (millis % 1000) * 1000000 ;
+      auto nanos   = (now.tv_usec * 1000) + ((millis % 1000) * 1000000) ;
+      seconds     += nanos / 1000000000 ; // check if now + millis id not overflowing.
+      nanos        = nanos % 1000000000 ;
       
       timeout.tv_sec  += seconds ;
-      timeout.tv_nsec += nanos;
+      timeout.tv_nsec  = nanos;
     } else {
       throw condition_variable_exception("failed to get current time.");
     }
