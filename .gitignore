@@ -30,6 +30,7 @@
 #cpp-pthread.xcodeproj/
 
 # autoconf
+config.h
 autom4te.cache
 config.status
 config.log
