@@ -36,24 +36,19 @@ LDFLAGS=@LDFLAGS@
 
 OBJECTS=@OBJECTS@
 
-TARGETS=libcpp-pthread.a
+TARGETS=pthread-tests
 
 all:${TARGETS}
 
-libcpp-pthread.a: $(OBJECTS)
-	${AR} ${LIBDIR}/$@ $(OBJECTS)
-	$(RANLIB) ${LIBDIR}/$@
-
-dist:
-	$(MV) $(TARGETS) $(BINDIR)
+pthread-tests: $(OBJECTS)
     
-globber: clean
-	$(RM) -R Makefile autom4te.cache config.log config.status configure
+clean: globber
 
-clean:
+globber:
 	${RM} *.o core *.a
 	${RM} ${TARGETS}
 	$(RM) *unc-backup*~ *unc-backup*~
+	$(RM) ULOG*
 
 cxref:
 	cxref *.c -xref -index-all -latex209 -O${XREFDIR} -I${INCDIR} -I${INCTUX}

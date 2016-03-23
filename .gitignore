@@ -41,3 +41,4 @@ Makefile
 
 # layout
 lib/
+pthread-tests

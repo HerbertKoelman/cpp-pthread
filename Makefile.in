@@ -16,24 +16,15 @@ PTHREADLIB=libcpp-pthread.a
 all: 
 	cd src && $(MAKE) clean all
 
-# target used to deplay Tuxedo servers. Not used here.
-#deploy:
-#	cd src/utl ; $(MAKE) all deploy
-#	cd src/monitoring ; $(MAKE) all deploy
-#	cd src/security ; $(MAKE) all deploy
-#	cd src/tools ; $(MAKE) all deploy
-#	cd src/authorize ; $(MAKE) all deploy
-#	cd src/interbank ; $(MAKE) all deploy
-
 dist: 
 	cd src && $(MAKE) dist
 	tar cf - bin udataobj locale doc | gzip -c > distrib/$(PACKAGE)
 
 globber:clean
-	${RM} -R html man autom4te.cache config.status config.log
+	$(RM) -R Makefile autom4te.cache config.log config.status configure
+	cd src && $(MAKE) globber
 
 clean:
-	${RM} distrib/$(PACKAGE) include/substation.flds.h 
 	cd src && $(MAKE) clean
 
 doxygen:
@@ -46,3 +37,5 @@ install:
 	$(INSTALL) lib/libcpp-pthread.a ${prefix}/lib/
 
 uninstall:
+	$(RM) -R  ${prefix}/include/pthread
+	$(RM) ${prefix}/lib/libcpp-pthread.a
