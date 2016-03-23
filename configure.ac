@@ -3,6 +3,7 @@
 
 AC_PREREQ(2.69)
 AC_INIT([cpp-pthread],[1.0.0],[herbert.koelman@pmu.fr],[http://mut-mut-scmv1.dev.parimutuel.local/applications/cpp-pthread])
+AC_LANG(C++)
 
 AC_CONFIG_AUX_DIR([/usr/bin . bin])
 
@@ -18,46 +19,6 @@ then
   AC_MSG_RESULT([already there.])
 else
   mkdir -p ./lib && AC_MSG_RESULT([./lib created.])
-fi
-
-AC_MSG_CHECKING([whether target directory ./doc exists])
-if test -e ./doc
-then
-  AC_MSG_RESULT([already there.])
-else
-  mkdir -p ./doc && AC_MSG_RESULT([./doc created.])
-fi
-
-AC_MSG_CHECKING([whether wording directory ./locale exists])
-if test -e ./locale
-then
-  AC_MSG_RESULT([already there.])
-else
-  mkdir -p ./locale/en_US ./locale/fr_FR && AC_MSG_RESULT([./locale created.])
-fi
-
-AC_MSG_CHECKING([whether wording directory ./bin exists])
-if test -e ./bin
-then
-  AC_MSG_RESULT([already there.])
-else
-  mkdir -p ./bin && AC_MSG_RESULT([./bin created.])
-fi
-
-AC_MSG_CHECKING([whether wording directory ./app exists])
-if test -e ./app
-then
-  AC_MSG_RESULT([already there.])
-else
-  mkdir -p ./app && AC_MSG_RESULT([./app created.])
-fi
-
-AC_MSG_CHECKING([whether wording directory ./distrib exists])
-if test -e ./distrib
-then
-  AC_MSG_RESULT([already there.])
-else
-  mkdir -p ./distrib && AC_MSG_RESULT([./distrib created.])
 fi
 
 HEADERS=""

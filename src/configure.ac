@@ -43,8 +43,8 @@ case "$CXX" in
 	CXXFLAGS="-bh:5 -qwarn0x  -qsourcetype=c++ -O $CXXFLAGS"
   AC_MSG_RESULT([yes])
   ;;
-  g++)
-	CXXFLAGS="-x c++ -frtti $CXXFLAGS "
+  g++ | gcc)
+	CXXFLAGS="-x c++ -std=c++11 -frtti $CXXFLAGS "
   AC_MSG_RESULT([yes])
   ;;
   *)

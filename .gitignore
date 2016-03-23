@@ -27,7 +27,9 @@
 *.out
 *.app
 
+# Xcode
 #cpp-pthread.xcodeproj/
+DerivedData/
 
 # autoconf
 config.h
@@ -36,3 +38,6 @@ config.status
 config.log
 configure
 Makefile
+
+# layout
+lib/

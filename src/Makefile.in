@@ -53,7 +53,7 @@ globber:
 	${RM} *.o core *.a
 	${RM} ${TARGETS}
 	$(RM) *unc-backup*~ *unc-backup*~
-	$(RM) ULOG*
+	$(RM) -R Makefile autom4te.cache config.log config.status configure
 
 cxref:
 	cxref *.c -xref -index-all -latex209 -O${XREFDIR} -I${INCDIR} -I${INCTUX}
