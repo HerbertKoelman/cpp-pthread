@@ -1,0 +1,70 @@
+/*
+ * cpp_pthread_version config header (autoconf related)
+ *
+ * Copyright (C) 2006 - herbert koelman
+ *
+ * cpp_pthread_version is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * cpp_pthread_version is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with cpp_pthread_version; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor,
+ * Boston, MA  02110-1301  USA
+ */
+
+
+/* autoconf section ----------------------------------------------------------------------*/
+
+#ifdef __IBMCPP__
+#define noexcept throw()
+#endif
+
+#undef CPP_PTHREAD_VERSION
+
+/* Define DEBUG. */
+#undef _DEBUG_CPP_PTHREAD_
+
+/* Define to 1 if you have the `pthread' library (-lpthread). */
+#undef HAVE_LIBPTHREAD
+
+/* Defined if compiler support C++11 */
+#undef HAVE_CPP11_MUTEX
+#undef HAVE_CPP11_CHRONO
+#undef HAVE_CPP11_THREAD
+
+/* Define to the address where bug reports for this package should be sent. */
+#undef PACKAGE_BUGREPORT
+/* Define to the full name of this package. */
+#undef PACKAGE_NAME
+/* Define to the full name and version of this package. */
+#undef PACKAGE_STRING
+/* Define to the one symbol short name of this package. */
+#undef PACKAGE_TARNAME
+/* Define to the version of this package. */
+#undef PACKAGE_VERSION
+
+/* Define to empty if `const' does not conform to ANSI C. */
+#undef const
+
+/*
+ * Define to `__inline__' or `__inline' if that's what the C compiler
+ * calls it, or to nothing if 'inline' is not supported under any name. 
+ */
+#ifndef __cplusplus
+#undef inline
+#endif
+
+const char *cpp_pthread_version_version(){
+#ifndef CPP_PTHREAD_VERSION
+  return "missing CPP_PTHREAD_VERSION define. Re-run configure" ;
+#else
+  return CPP_PTHREAD_VERSION ;
+#endif
+}

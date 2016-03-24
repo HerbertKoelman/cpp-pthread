@@ -41,9 +41,12 @@ namespace pthread {
      */
     void operator=(lock_guard &);
     
+    mutex *mutex() const { return _mutex ;};
+    
   private:
-    mutex *_mutex;
+    pthread::mutex *_mutex;
   };
   
-}
+} // namespace pthread
+
 #endif /* pthread_lock_guard_H */

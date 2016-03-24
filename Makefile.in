@@ -1,0 +1,41 @@
+# Top makefile to build  @PACKAGE_STRING@
+#
+# @configure_input@
+#
+
+prefix=@prefix@
+
+INSTALL=@INSTALL@ 
+LOCALEDIR=@localedir@
+RM=@RM@
+MKDIR=@MKDIR_P@
+PACKAGE=@PACKAGE_NAME@-@PACKAGE_VERSION@-@build_os@.tar.gz
+HEADERS=@HEADERS@
+PTHREADLIB=libcpp-pthread.a
+
+all: 
+	cd src && $(MAKE) clean all
+
+dist: 
+	cd src && $(MAKE) dist
+	tar cf - bin udataobj locale doc | gzip -c > distrib/$(PACKAGE)
+
+globber:clean
+	$(RM) -R Makefile autom4te.cache config.log config.status configure
+	cd src && $(MAKE) globber
+
+clean:
+	cd src && $(MAKE) clean
+
+doxygen:
+	${DOXYGEN} doxyconf
+
+install:
+	$(MKDIR) ${prefix}/include/pthread
+	$(MKDIR) ${prefix}/lib/pthread
+	$(INSTALL) ${HEADERS} ${prefix}/include/pthread
+	$(INSTALL) lib/libcpp-pthread.a ${prefix}/lib/
+
+uninstall:
+	$(RM) -R  ${prefix}/include/pthread
+	$(RM) ${prefix}/lib/libcpp-pthread.a

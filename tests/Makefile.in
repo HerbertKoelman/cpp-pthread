@@ -1,0 +1,61 @@
+#
+# builds substation related programs
+
+# Compile c++ source code
+.SUFFIXES:.cpp
+
+BASEDIR=../
+XREFDIR=${BASEDIR}/xref/
+UDATAOBJ=$(BASEDIR)/udataobj/
+BINDIR=$(BASEDIR)/bin/
+APPDIR=$(BASEDIR)/app/
+INCDIR=$(BASEDIR)/include/
+LIBDIR=$(BASEDIR)/lib/
+LOCALEDIR=${BASEDIR}/locale
+
+CC=@CC@
+CCC=@CXX@
+CXX=$CCC
+RANLIB=@RANLIB@
+RM=rm -f
+AR=@AR@
+MV=@MV@
+BEAUTIFIER=@BEAUTIFIER@
+
+BITS=@BITS@
+OBJECT_MODE=$(BITS)
+
+#DEBUG=-g -bnoquiet
+#PROFILER=-p
+
+CXXFLAGS=@CXXFLAGS@
+CFLAGS=$(CXXFLAGS)
+CCFLAGS=$(CXXFLAGS)
+
+LDFLAGS=@LDFLAGS@
+
+OBJECTS=@OBJECTS@
+
+TARGETS=pthread-tests
+
+all:${TARGETS}
+
+pthread-tests: $(OBJECTS)
+    
+clean: globber
+
+globber:
+	${RM} *.o core *.a
+	${RM} ${TARGETS}
+	$(RM) *unc-backup*~ *unc-backup*~
+	$(RM) ULOG*
+
+cxref:
+	cxref *.c -xref -index-all -latex209 -O${XREFDIR} -I${INCDIR} -I${INCTUX}
+
+beautifull:
+	${BEAUTIFIER} *.bcl *.bsr
+
+# cpp build rule
+.cpp.o:
+	$(CCC) $(CCFLAGS) -c $<

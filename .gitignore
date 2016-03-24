@@ -27,4 +27,18 @@
 *.out
 *.app
 
+# Xcode
 #cpp-pthread.xcodeproj/
+DerivedData/
+
+# autoconf
+config.h
+autom4te.cache
+config.status
+config.log
+configure
+Makefile
+
+# layout
+lib/
+pthread-tests
