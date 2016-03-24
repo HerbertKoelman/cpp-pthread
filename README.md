@@ -15,3 +15,5 @@ Install moves files into your system's default localtion of headers and librarie
 ```
 configure --prefix=/usr/local
 ```
+
+More [here](https://github.com/HerbertKoelman/cpp-pthread/wiki)
