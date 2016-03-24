@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		E519A0E51C9C4B4F00ED113D /* lock_guard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E519A0E41C9C4B4F00ED113D /* lock_guard.cpp */; };
-		E519A0F51C9C64F600ED113D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E519A0F41C9C64F600ED113D /* main.cpp */; };
 		E519A0FA1C9C6B2F00ED113D /* condition_variable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5EC5B791C9C2C6B00E21131 /* condition_variable.cpp */; };
 		E519A0FB1C9C6B3300ED113D /* mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5EC5B7B1C9C2C6B00E21131 /* mutex.cpp */; };
 		E519A0FC1C9C6B3800ED113D /* lock_guard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E519A0E41C9C4B4F00ED113D /* lock_guard.cpp */; };
@@ -17,6 +16,7 @@
 		E5C4D71D1C9DC8C700D0E18C /* pthread in Headers */ = {isa = PBXBuildFile; fileRef = E5EC5B811C9C2C8B00E21131 /* pthread */; settings = {ATTRIBUTES = (Public, ); }; };
 		E5EC5B7D1C9C2C6B00E21131 /* condition_variable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5EC5B791C9C2C6B00E21131 /* condition_variable.cpp */; };
 		E5EC5B7F1C9C2C6B00E21131 /* mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5EC5B7B1C9C2C6B00E21131 /* mutex.cpp */; };
+		E5ECB7231CA440C50033A42D /* pthread-tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5ECB7211CA43E6C0033A42D /* pthread-tests.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,12 +34,12 @@
 /* Begin PBXFileReference section */
 		E519A0E41C9C4B4F00ED113D /* lock_guard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lock_guard.cpp; path = src/lock_guard.cpp; sourceTree = "<group>"; };
 		E519A0F21C9C64F600ED113D /* pthread_tests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = pthread_tests; sourceTree = BUILT_PRODUCTS_DIR; };
-		E519A0F41C9C64F600ED113D /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		E519A0FF1C9C7CAB00ED113D /* thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = thread.cpp; path = src/thread.cpp; sourceTree = "<group>"; };
 		E5EC5B711C9C2C3000E21131 /* libcpp-pthread.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcpp-pthread.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5EC5B791C9C2C6B00E21131 /* condition_variable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = condition_variable.cpp; path = src/condition_variable.cpp; sourceTree = "<group>"; };
 		E5EC5B7B1C9C2C6B00E21131 /* mutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mutex.cpp; path = src/mutex.cpp; sourceTree = "<group>"; };
 		E5EC5B811C9C2C8B00E21131 /* pthread */ = {isa = PBXFileReference; lastKnownFileType = folder; name = pthread; path = include/pthread; sourceTree = "<group>"; };
+		E5ECB7211CA43E6C0033A42D /* pthread-tests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "pthread-tests.cpp"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,7 +63,7 @@
 		E519A0F31C9C64F600ED113D /* tests */ = {
 			isa = PBXGroup;
 			children = (
-				E519A0F41C9C64F600ED113D /* main.cpp */,
+				E5ECB7211CA43E6C0033A42D /* pthread-tests.cpp */,
 			);
 			path = tests;
 			sourceTree = "<group>";
@@ -194,11 +194,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5ECB7231CA440C50033A42D /* pthread-tests.cpp in Sources */,
 				E519A1021C9C7CAB00ED113D /* thread.cpp in Sources */,
 				E519A0FC1C9C6B3800ED113D /* lock_guard.cpp in Sources */,
 				E519A0FB1C9C6B3300ED113D /* mutex.cpp in Sources */,
 				E519A0FA1C9C6B2F00ED113D /* condition_variable.cpp in Sources */,
-				E519A0F51C9C64F600ED113D /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

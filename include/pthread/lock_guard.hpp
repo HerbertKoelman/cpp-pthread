@@ -22,6 +22,7 @@ namespace pthread {
    The ScopedMutex lock the associated mutex once we instanciate the class and the lock is automatically unlocked
    once the object is destroyed. This allow us to correlate the lock with the scope of the object.
    */
+  template<class MutexType>
   class lock_guard {
     
   public:
@@ -41,10 +42,10 @@ namespace pthread {
      */
     void operator=(lock_guard &);
     
-    mutex *mutex() const { return _mutex ;};
+    MutexType *mutex() const { return _mutex ;};
     
   private:
-    pthread::mutex *_mutex;
+    MutexType *_mutex;
   };
   
 } // namespace pthread

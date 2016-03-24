@@ -71,7 +71,7 @@ namespace pthread {
      * @param lambda run to check if condition was met.
      * @return true if lmabda returned true.
      */
-    template<class Lambda> bool wait( lock_guard &lck, Lambda lambda);
+    template<class Lambda> bool wait( lock_guard<pthread::mutex> &lck, Lambda lambda);
     
     /** wait for condition to be signaled within given time frame
      *
@@ -118,7 +118,7 @@ namespace pthread {
      * @param lambda run to check if condition was met.
      * @return true if lmabda returned true.
      */
-    template<class Lambda> bool wait_for( lock_guard &lck, int millis, Lambda lambda);
+    template<class Lambda> bool wait_for( lock_guard<pthread::mutex> &lck, int millis, Lambda lambda);
     
     /** signal one waiting thread.
      *
@@ -166,7 +166,7 @@ namespace pthread {
     return stop_waiting;
   };
 
-  template<class Lambda> bool condition_variable::wait( lock_guard &lck, Lambda lambda){
+  template<class Lambda> bool condition_variable::wait( lock_guard<pthread::mutex> &lck, Lambda lambda){
 
     return wait( *(lck.mutex()), lambda);
   };
@@ -207,7 +207,7 @@ namespace pthread {
     return stop_waiting ; //status == cv_status::no_timeout;
   };
   
-  template<class Lambda> bool condition_variable::wait_for( lock_guard &lck, int millis, Lambda lambda){
+  template<class Lambda> bool condition_variable::wait_for( lock_guard<pthread::mutex> &lck, int millis, Lambda lambda){
     
     return wait_for(*(lck.mutex()),millis, lambda);
   };
