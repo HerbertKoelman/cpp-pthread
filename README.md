@@ -34,7 +34,6 @@ pthread::mutex mtx;
 
   // do something critical
   ...
-
 } // lock_guard is freed and the mutex is unlock
 
 ```
