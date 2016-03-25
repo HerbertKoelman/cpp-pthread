@@ -8,72 +8,83 @@
 
 #include <iostream>
 #include <string>
+#include <list>
 #include "pthread/pthread.hpp"
-
-//#include "pthread/mutex.hpp"
-//#include "pthread/lock_guard.hpp"
-//#include "pthread/condition_variable.hpp"
 
 pthread::condition_variable condition;
 pthread::mutex mtx;
-
+pthread::mutex cout_mtx;
 int counter = 0;
 
 
-void message ( const char *m){
-  pthread::lock_guard lck{mtx};
+void message ( const std::string m){
+  pthread::lock_guard<pthread::mutex> lck{cout_mtx};
   std::cout << m << std::endl;
 }
 
-class thread: public pthread::thread {
+class worker: public pthread::runnable {
 public:
   
+  ~worker(){
+    message("deallocating worker");
+  };
+  
   void run() noexcept override {
-    {
-      pthread::lock_guard lck{mtx};
-      try {
-        std::cout << "got mutex and start waiting for counter" << std::endl;
-        
-        if ( condition.wait_for(lck, 20000, [](){ return counter >= 100000 ;} ) ){
-//        if ( condition.wait(lck, [](){ return counter >= 100000 ;} ) ){
-          std::cout << "condition was true" << std::endl;
-        } else {
-          std::cout << "condition was false" << std::endl;
-        }
-        
-        std::cout << "end off wait" << std::endl ;
-      } catch ( pthread::pthread_exception &err){
-          std::cerr << "thread failed. " << err.what() << " " << err.pthread_errmsg() << std::endl;
-      }
+    message("waiting 200ms");
+    pthread::this_thread::sleep(20000);
+    message("thread wokeup");
+
+    pthread::lock_guard<pthread::mutex> lck(mtx);
+    
+    message("running");
+    if ( condition.wait_for(lck, 20*1000, [this]{ return counter >= 10000;})){
+      message("counter >= 10000");
+    } else {
+      message("counter < 10000");
     }
     
-    sleep(10*1000);
-    message("thread woke up from a 10s nap");
-  }
+    message("worker is ending");
+  };
+  
 };
-      
+
+void start_thread(std::string m){
+  message(m);
+}
+
 int main(int argc, const char * argv[]) {
   std::string dummy;
-  thread t ;
-  t.start();
   
-  for ( auto x = 100000; x > 0 ; x--){
-    pthread::lock_guard lck{mtx};
+//  pthread::thread{start_thread, "hello"};
+  
+  std::list<pthread::thread> threads;
+  for ( auto x = 10; x > 0 ; x--){
+    worker w;
+    threads.push_back(pthread::thread{w}) ;
+  }
+
+  for ( auto x = 1000000; x > 0 ; x--){
+    pthread::lock_guard<pthread::mutex> lck{mtx};
     counter++ ;
-    //condition.notify_one();
+    condition.notify_one();
   }
   
-  std::cout << "hit enter to continue" << std::endl ;
-  std::getline(std::cin, dummy);
+//  std::cout << "hit enter to continue" << std::endl ;
+//  std::getline(std::cin, dummy);
   
   message("sleeping for 5 seconds...");
-  pthread::thread::sleep(5*1000);
+  pthread::this_thread::sleep(5*1000);
   
   message("woke up from sleep, main thread counted 100000, notifying all condition_variables");
   condition.notify_all();
   
-  message("joining waiting trhreads");
-  t.join();
+  message("main waiting for threads to end");
+  
+  std::for_each( threads.begin(), threads.end(), [](pthread::thread &t){
+    message("main joining thread");
+    t.join();
+  });
+  
   message( "end reached");
   
 }
