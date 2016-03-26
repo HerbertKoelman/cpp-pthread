@@ -15,6 +15,7 @@
 
 #include "pthread/pthread_exception.hpp"
 #include "pthread/mutex.hpp"
+#include "pthread/lock_guard.hpp"
 
 namespace pthread {
   
@@ -24,14 +25,6 @@ namespace pthread {
   enum class thread_status{
     not_a_thread,
     a_thread
-  };
-  
-  namespace this_thread{
-    /** let the current thread sleep for the given milli seconds.
-     *
-     * @param milis time to wait.
-     */
-    void sleep(const int millis);
   };
   
   /**
@@ -97,7 +90,7 @@ namespace pthread {
     virtual ~thread();
     
     /**
-     * The join method blocks the calling thread until the thread terminates. The target thread's 
+     * The join method blocks the calling thread until the thread terminates. The target thread's
      * termination status is returned in the status parameter.
      *
      * If the target thread is already terminated, the method returns immediately.
@@ -153,35 +146,36 @@ namespace pthread {
   
   template<class Function, class... Args>
   thread::thread(Function&& func, Args&&... args){
-    int rc = 0 ;
-
+//    int rc = 0 ;
+    
     auto work = std::bind(func, std::forward<Args>(args)...);
-   
-//    action();
     
-    /* Initialize and set thread detached attribute */
-    if ( (rc = pthread_attr_init(&_attr)) != 0){
-      throw thread_exception{"pthread_attr_init failed.", rc };
-    }
+    //work();
     
-    if ( (rc = pthread_attr_setdetachstate(&_attr, PTHREAD_CREATE_JOINABLE)) != 0 ){
-      throw thread_exception{"pthread_attr_setdetachstate failed.", rc };
-    }
-    
-    
-    if ((rc = pthread_create(&_thread, &_attr, thread_statup_function, (void *) []{work();} )) != 0){
-    if ((rc = pthread_create(&_thread, &_attr, [&work](void *)->void *{ work(); }, (void *) nullptr)) != 0){
-      throw thread_exception{"pthread_create failed.", rc };
-    } else {
-      _status = thread_status::a_thread;
-    }
-
-    
-//    std::function<Function> function{Func};
-//    auto f = std::bind(std::forward<Function>(func), std::forward<Args>(args)...);
-    
+//    /* Initialize and set thread detached attribute */
+//    if ( (rc = pthread_attr_init(&_attr)) != 0){
+//      throw thread_exception{"pthread_attr_init failed.", rc };
+//    }
+//    
+//    if ( (rc = pthread_attr_setdetachstate(&_attr, PTHREAD_CREATE_JOINABLE)) != 0 ){
+//      throw thread_exception{"pthread_attr_setdetachstate failed.", rc };
+//    }
+//    
+//    
+//    if ((rc = pthread_create(&_thread, &_attr, thread_statup_function, (void *) []{work();} )) != 0){
+//        throw thread_exception{"pthread_create failed.", rc };
+//      } else {
+//        _status = thread_status::a_thread;
+//      }
   }
   
- 
-} // pthread
+  namespace this_thread{
+    /** let the current thread sleep for the given milli seconds.
+     *
+     * @param milis time to wait.
+     */
+    void sleep(const int millis);
+  }
+  
+} // namespace pthread
 #endif /* thread_hpp */

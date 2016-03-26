@@ -8,12 +8,13 @@
 
 #include "pthread/thread.hpp"
 #include <unistd.h>
-#include "pthread/lock_guard.hpp"
 
 namespace pthread {
-  
-  void this_thread::sleep(const int millis){
-    usleep(millis * 1000);
+
+  namespace this_thread {
+    void sleep(const int millis){
+      usleep(millis * 1000);
+    }
   }
   
   int thread::join () {
