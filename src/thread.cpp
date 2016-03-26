@@ -12,8 +12,6 @@
 
 namespace pthread {
   
-  extern "C" void * thread_startup (void *);
-  
   void this_thread::sleep(const int millis){
     usleep(millis * 1000);
   }
@@ -64,7 +62,7 @@ namespace pthread {
       throw thread_exception{"pthread_attr_setdetachstate failed.", rc };
     }
     
-    if ((rc = pthread_create(&_thread, &_attr, thread_startup, (void *) &work)) != 0){
+    if ((rc = pthread_create(&_thread, &_attr, thread_startup_runnable, (void *) &work)) != 0){
       throw thread_exception{"pthread_create failed.", rc };
     } else {
       _status = thread_status::a_thread;
@@ -107,12 +105,16 @@ namespace pthread {
    the base for newly created Thread objects. It runs the
    run method on the thread object passed to it (as a void *).
    */
-  extern "C" void *thread_startup(void *args) {
+  extern "C" void *thread_startup_runnable(void *runner) {
     
-    runnable *t = (runnable *)args;
-    t->run();
+    static_cast<runnable *>(runner)->run();
     
     return (NULL);
+  }
+  
+  extern "C" void *thread_statup_function(void *function){
+   
+   return NULL;
   }
   
   // exception -------

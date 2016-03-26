@@ -18,6 +18,9 @@
 
 namespace pthread {
   
+  extern "C" void *thread_startup_runnable (void *);
+  extern "C" void *thread_statup_function(void *arg);
+  
   enum class thread_status{
     not_a_thread,
     a_thread
@@ -76,8 +79,7 @@ namespace pthread {
      */
     thread( const runnable &runner );
     
-//    template<class Function, class... Args>
-//    thread(Function&& f, Args&&... args);
+    template<class Function, class... Args> thread(Function&& f, Args&&... args);
     
     /** move contructor
      *
@@ -140,17 +142,46 @@ namespace pthread {
     thread_status  _status;
   };
   
-//  template<class Function, class... Args>
-//  thread::thread(Function&& func, Args&&... args){
-//    auto f = std::bind(std::forward<Function>(func), std::forward<Args>(args)...);
-//    std::function<void()> func_ = [f] { f(); };
-//  }
-  
   // exception & errors --------
   
   class thread_exception: public pthread_exception {
   public:
     thread_exception(const string message, const int pthread_error = 0);
   };
+  
+  // template implementations ------
+  
+  template<class Function, class... Args>
+  thread::thread(Function&& func, Args&&... args){
+    int rc = 0 ;
+
+    auto work = std::bind(func, std::forward<Args>(args)...);
+   
+//    action();
+    
+    /* Initialize and set thread detached attribute */
+    if ( (rc = pthread_attr_init(&_attr)) != 0){
+      throw thread_exception{"pthread_attr_init failed.", rc };
+    }
+    
+    if ( (rc = pthread_attr_setdetachstate(&_attr, PTHREAD_CREATE_JOINABLE)) != 0 ){
+      throw thread_exception{"pthread_attr_setdetachstate failed.", rc };
+    }
+    
+    
+    if ((rc = pthread_create(&_thread, &_attr, thread_statup_function, (void *) []{work();} )) != 0){
+    if ((rc = pthread_create(&_thread, &_attr, [&work](void *)->void *{ work(); }, (void *) nullptr)) != 0){
+      throw thread_exception{"pthread_create failed.", rc };
+    } else {
+      _status = thread_status::a_thread;
+    }
+
+    
+//    std::function<Function> function{Func};
+//    auto f = std::bind(std::forward<Function>(func), std::forward<Args>(args)...);
+    
+  }
+  
+ 
 } // pthread
 #endif /* thread_hpp */

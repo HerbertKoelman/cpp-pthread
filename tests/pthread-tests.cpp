@@ -53,13 +53,15 @@ void start_thread(std::string m){
 }
 
 int main(int argc, const char * argv[]) {
+  
   std::string dummy;
   
-//  pthread::thread{start_thread, "hello"};
+  //pthread::thread{start_thread, "hello"};
   
   std::list<pthread::thread> threads;
   for ( auto x = 10; x > 0 ; x--){
     worker w;
+    
     threads.push_back(pthread::thread{w}) ;
   }
 
