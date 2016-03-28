@@ -39,7 +39,7 @@ namespace pthread {
     }
       
     if((rc = pthread_cancel ( _thread )) != 0){
-      throw thread_exception{"pthread_ccancel failed.", rc };
+      throw thread_exception{"pthread_cancel failed.", rc };
     } else {
       _status = thread_status::not_a_thread;
     }
@@ -47,7 +47,7 @@ namespace pthread {
     return rc;
   }
   
-  thread::thread(): _status{thread_status::not_a_thread} {
+  thread::thread(): _status{thread_status::not_a_thread}, _attr{0}, _thread{nullptr}{
     
   }
   
@@ -71,28 +71,24 @@ namespace pthread {
 
   }
   
+  /* move constructor */
   thread::thread(thread&& other){
    
-    move(std::move(other));
+    swap(other);
   }
   
+  /* move operator */
   thread& thread::operator=(thread&& other){
   
-    move(std::move(other));
+    swap(other);
+    
     return *this;
   }
   
-  void thread::move(thread&& other){
-    lock_guard<mutex> lck(_mtx);
-    
-    if ( other._status == thread_status::not_a_thread ){
-      throw thread_exception{"not a thread, move constructor failed."};
-    }
-    
-    _thread = std::move(other._thread);
-    _attr   = std::move(other._attr);
-    _status = thread_status::a_thread;
-    other._status = thread_status::not_a_thread;
+  void thread::swap(thread& other){    
+    std::swap(_thread, other._thread);
+    std::swap(_attr,   other._attr);
+    std::swap(_status, other._status);
   }
   
   thread::~thread () {
@@ -106,16 +102,11 @@ namespace pthread {
    the base for newly created Thread objects. It runs the
    run method on the thread object passed to it (as a void *).
    */
-  extern "C" void *thread_startup_runnable(void *runner) {
+  void *thread_startup_runnable(void *runner) {
     
     static_cast<runnable *>(runner)->run();
     
     return (NULL);
-  }
-  
-  extern "C" void *thread_statup_function(void *function){
-   
-   return NULL;
   }
   
   // exception -------

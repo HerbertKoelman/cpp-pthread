@@ -9,6 +9,7 @@
 #include <iostream>
 #include <string>
 #include <list>
+//#include <thread>
 #include "pthread/pthread.hpp"
 
 pthread::condition_variable condition;
@@ -22,6 +23,23 @@ void message ( const std::string m){
   std::cout << m << std::endl;
 }
 
+void worker_function(std::string msg) {
+  message("waiting 2s: " + msg);
+  pthread::this_thread::sleep(2000);
+  message(msg + " thread wokeup");
+  
+  pthread::lock_guard<pthread::mutex> lck(mtx);
+ 
+  for ( auto x = 100000; x > 0 ; x--){
+    counter++ ;
+  }
+  
+  std::string dummy;
+  message(msg + " thread stopped, type enter to continue and exit thread");
+  std::getline(std::cin, dummy);
+  message(msg + " worker is ending");
+};
+
 class worker: public pthread::runnable {
 public:
   
@@ -30,8 +48,8 @@ public:
   };
   
   void run() noexcept override {
-    message("waiting 200ms");
-    pthread::this_thread::sleep(20000);
+    message("waiting 2s");
+    pthread::this_thread::sleep(2000);
     message("thread wokeup");
 
     pthread::lock_guard<pthread::mutex> lck(mtx);
@@ -54,38 +72,20 @@ void start_thread(std::string m){
 
 int main(int argc, const char * argv[]) {
   
+  std::decay<pthread::thread>::type dt;
   std::string dummy;
+  pthread::thread t0;
+  pthread::thread t2{worker_function,"herbert"};
   
-  //pthread::thread{start_thread, "hello"};
+  t0 = std::move(t2) ;
   
-  std::list<pthread::thread> threads;
-  for ( auto x = 10; x > 0 ; x--){
-    worker w;
-    
-    threads.push_back(pthread::thread{w}) ;
-  }
-
-  for ( auto x = 1000000; x > 0 ; x--){
-    pthread::lock_guard<pthread::mutex> lck{mtx};
-    counter++ ;
-    condition.notify_one();
-  }
+  pthread::thread t4{std::move(t0)};
+  pthread::thread t1{worker_function, "laura"};
   
-//  std::cout << "hit enter to continue" << std::endl ;
-//  std::getline(std::cin, dummy);
   
-  message("sleeping for 5 seconds...");
-  pthread::this_thread::sleep(5*1000);
+//  std::thread t1{worker_function};
   
-  message("woke up from sleep, main thread counted 100000, notifying all condition_variables");
-  condition.notify_all();
-  
-  message("main waiting for threads to end");
-  
-  std::for_each( threads.begin(), threads.end(), [](pthread::thread &t){
-    message("main joining thread");
-    t.join();
-  });
+  t1.join();
   
   message( "end reached");
   

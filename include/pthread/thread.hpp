@@ -12,6 +12,7 @@
 #include <pthread.h>
 #include <string>
 #include <functional>
+#include <memory>
 
 #include "pthread/pthread_exception.hpp"
 #include "pthread/mutex.hpp"
@@ -19,8 +20,7 @@
 
 namespace pthread {
   
-  extern "C" void *thread_startup_runnable (void *);
-  extern "C" void *thread_statup_function(void *arg);
+  void *thread_startup_runnable (void *);
   
   enum class thread_status{
     not_a_thread,
@@ -72,7 +72,12 @@ namespace pthread {
      */
     thread( const runnable &runner );
     
-    template<class Function, class... Args> thread(Function&& f, Args&&... args);
+    /** Starts running given function in a new trhread.
+     * 
+     * @param f function to run in thread
+     * @param args function paramleters/arguments.
+     */
+    template<class Function, class... Args> explicit thread(Function&& f, Args&&... args);
     
     /** move contructor
      *
@@ -127,8 +132,12 @@ namespace pthread {
     thread& operator=(thread&& other);
     
   private:
-    void move ( thread&& other );
-    mutex          _mtx;
+    /** Exchanges the underlying handles of two thread objects.
+     *
+     * @param other the thread to swap with
+     */
+    void swap ( thread& other );
+    
     pthread_t      _thread;
     pthread_attr_t _attr;
     
@@ -144,33 +153,61 @@ namespace pthread {
   
   // template implementations ------
   
+  template <class _Fp, class ..._Args, size_t ..._Indices>
+  inline
+  void __thread_execute(tuple<_Fp, _Args...>& __t, __tuple_indices<_Indices...>)
+  {
+    __invoke(std::move(std::get<0>(__t)), std::move(std::get<_Indices>(__t))...);
+  }
+  
+  template <class _Fp>
+  void* __thread_proxy(void* __vp) {
+    
+//    __thread_local_data().reset(new __thread_struct);
+    
+    std::unique_ptr<_Fp> __p(static_cast<_Fp*>(__vp));
+    auto function = std::get<0>(*__p);
+    auto args     = std::get<1>(*__p);
+    auto work = std::bind(function, args);
+    work();
+    typedef typename __make_tuple_indices<std::tuple_size<_Fp>::value, 1>::type _Index;
+//    __thread_execute(*__p, _Index());
+    return nullptr;
+  }
+
   template<class Function, class... Args>
   thread::thread(Function&& func, Args&&... args){
-//    int rc = 0 ;
+    int rc = 0 ;
     
-    auto work = std::bind(func, std::forward<Args>(args)...);
+    typedef std::tuple<typename std::decay<Function>::type, typename std::decay<Args>::type...> _Gp;
+    
+//    std::unique_ptr<_Gp> __p(new _Gp(__decay_copy(std::forward<Function>(func)), __decay_copy(std::forward<Args>(args))...));
+    std::unique_ptr<_Gp> __p(new _Gp(std::forward<Function>(func), std::forward<Args>(args))...);
+    
+    //auto work = std::bind(func, std::forward<Args>(args)...);
     
     //work();
     
-//    /* Initialize and set thread detached attribute */
-//    if ( (rc = pthread_attr_init(&_attr)) != 0){
-//      throw thread_exception{"pthread_attr_init failed.", rc };
-//    }
-//    
-//    if ( (rc = pthread_attr_setdetachstate(&_attr, PTHREAD_CREATE_JOINABLE)) != 0 ){
-//      throw thread_exception{"pthread_attr_setdetachstate failed.", rc };
-//    }
-//    
-//    
-//    if ((rc = pthread_create(&_thread, &_attr, thread_statup_function, (void *) []{work();} )) != 0){
-//        throw thread_exception{"pthread_create failed.", rc };
-//      } else {
-//        _status = thread_status::a_thread;
-//      }
+    /* Initialize and set thread detached attribute */
+    if ( (rc = pthread_attr_init(&_attr)) != 0){
+      throw thread_exception{"pthread_attr_init failed.", rc };
+    }
+    
+    if ( (rc = pthread_attr_setdetachstate(&_attr, PTHREAD_CREATE_JOINABLE)) != 0 ){
+      throw thread_exception{"pthread_attr_setdetachstate failed.", rc };
+    }
+    
+    if ((rc = pthread_create(&_thread, &_attr, &__thread_proxy<_Gp>, __p.get())) != 0) {
+      throw thread_exception{"pthread_create failed.", rc };
+    } else {
+      __p.release();
+      _status = thread_status::a_thread;
+    }
+    
   }
   
   namespace this_thread{
-    /** let the current thread sleep for the given milli seconds.
+    /** let the current thread sleep for the given milliseconds.
      *
      * @param milis time to wait.
      */
