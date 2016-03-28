@@ -9,7 +9,7 @@
 #include <iostream>
 #include <string>
 #include <list>
-#include <thread>
+//#include <thread>
 #include "pthread/pthread.hpp"
 
 pthread::condition_variable condition;
@@ -22,40 +22,51 @@ void message ( const std::string m){
   std::cout << m << std::endl;
 }
 
+void worker_function(std::string msg, int y) ;
+
+
 class worker: public pthread::runnable {
 public:
+  
+  worker(const std::string m = "anonymous worker"): msg{m}{
+    
+  };
   
   ~worker(){
     message("deallocating worker");
   };
   
   void run() noexcept override {
-    message("waiting 2s");
-    pthread::this_thread::sleep(2000);
-    message("thread wokeup");
-
-    pthread::lock_guard<pthread::mutex> lck(mtx);
     
-    message("running");
-    if ( condition.wait_for(lck, 20*1000, [this]{ return counter >= 10000;})){
-      message("counter >= 10000");
-    } else {
-      message("counter < 10000");
+    worker_function("worker_function: " + msg, 10000);
+    
+    {
+      pthread::lock_guard<pthread::mutex> lck(mtx);
+      
+      message("running worker class. wait max 20s for condition to be signaled");
+      if ( condition.wait_for(lck, 20*1000, [this]{ return counter >= 10000;})){
+        message("worker class, counter >= 10000");
+      } else {
+        message("worker class, counter < 10000");
+      }
     }
     
-    message("worker is ending");
+    pthread::this_thread::sleep(20*1000);
+    message("worker class is ending, counter actually was: "+ std::to_string(counter));
   };
   
+private:
+  std::string    msg ;
 };
 
-void worker_function(std::string msg, int y, worker &w) {
-  //  std::string msg = "fall back";
+void worker_function(std::string msg, int y) {
   message("waiting 2s: " + msg);
   pthread::this_thread::sleep(2000);
   message(msg + " thread wokeup");
   
   pthread::lock_guard<pthread::mutex> lck(mtx);
   
+  message("looping: " + std::to_string(y));
   for ( auto x = y; x > 0 ; x--){
     counter++ ;
   }
@@ -73,19 +84,26 @@ void start_thread(std::string m){
 int main(int argc, const char * argv[]) {
   
   pthread::string dummy;
-  worker w;
+  worker w{"laura"};
   pthread::thread t0;
-  pthread::thread t2{worker_function, "herbert", 10000, &w};
+  pthread::thread t2{w};
   
   t0 = std::move(t2) ;
   
   pthread::thread t4{std::move(t0)};
-  pthread::thread t1{worker_function, "laura", 20000, &w};
+  pthread::thread t1{w};
   
-//  t0.join();
-  t1.join();
-  t4.join();
-//  t2.join();
+  std::list<pthread::thread> threads;
+  threads.push_back(std::move(t1));
+  threads.push_back(std::move(t4));
+  threads.push_back(pthread::thread{w});
+  threads.push_back(pthread::thread{worker{"herbert's worker"}});
+  
+  message("main is waiting for threads to finish");
+  
+  for_each(threads.begin(), threads.end(), [&](pthread::thread &thrd){
+    thrd.join();
+  });
 
   message( "end reached");
   

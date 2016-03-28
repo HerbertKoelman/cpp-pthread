@@ -97,7 +97,6 @@ namespace pthread {
   
   void thread::swap(thread& other){
     std::swap(_thread, other._thread);
-// moved into thread creation routine, not an object data anymore - std::swap(_attr,   other._attr);
     std::swap(_status, other._status);
   }
   
