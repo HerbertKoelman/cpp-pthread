@@ -20,9 +20,9 @@
 
 namespace pthread {
   
-  enum class cv_status {
+  enum cv_status {
     no_timeout,
-    timeout
+    timedout
   };
   
   /** pthread condition variable
@@ -71,7 +71,7 @@ namespace pthread {
      * @param lambda run to check if condition was met.
      * @return true if lmabda returned true.
      */
-    template<class Lambda> bool wait( lock_guard &lck, Lambda lambda);
+    template<class Lambda> bool wait( lock_guard<pthread::mutex> &lck, Lambda lambda);
     
     /** wait for condition to be signaled within given time frame
      *
@@ -118,7 +118,7 @@ namespace pthread {
      * @param lambda run to check if condition was met.
      * @return true if lmabda returned true.
      */
-    template<class Lambda> bool wait_for( lock_guard &lck, int millis, Lambda lambda);
+    template<class Lambda> bool wait_for( lock_guard<pthread::mutex> &lck, int millis, Lambda lambda);
     
     /** signal one waiting thread.
      *
@@ -166,26 +166,26 @@ namespace pthread {
     return stop_waiting;
   };
 
-  template<class Lambda> bool condition_variable::wait( lock_guard &lck, Lambda lambda){
+  template<class Lambda> bool condition_variable::wait( lock_guard<pthread::mutex> &lck, Lambda lambda){
 
     return wait( *(lck.mutex()), lambda);
   };
   
   template<class Lambda> bool condition_variable::wait_for( mutex &mtx, int millis, Lambda lambda){
     int rc = 0;
-    cv_status status = cv_status::no_timeout;
+    cv_status status = no_timeout;
     
     milliseconds(millis); // update timeout
     bool stop_waiting = lambda(); // returns ​false if the waiting should be continued.
     
-    while(! stop_waiting && status == cv_status::no_timeout){
+    while(! stop_waiting && status == no_timeout){
       
       rc  = pthread_cond_timedwait ( &_condition, &mtx._mutex, &timeout );
       
       switch (rc){
           
         case ETIMEDOUT:
-          status = cv_status::timeout;
+          status = timedout;
           break;
           
         case EINVAL:
@@ -196,7 +196,7 @@ namespace pthread {
           throw condition_variable_exception("The mutex was not owned by the current thread at the time of the call.", rc);
           break;
         default:
-          status = cv_status::no_timeout ;
+          status = no_timeout ;
           break;
       }
       
@@ -207,7 +207,7 @@ namespace pthread {
     return stop_waiting ; //status == cv_status::no_timeout;
   };
   
-  template<class Lambda> bool condition_variable::wait_for( lock_guard &lck, int millis, Lambda lambda){
+  template<class Lambda> bool condition_variable::wait_for( lock_guard<pthread::mutex> &lck, int millis, Lambda lambda){
     
     return wait_for(*(lck.mutex()),millis, lambda);
   };

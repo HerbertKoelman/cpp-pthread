@@ -10,29 +10,27 @@
 #include <unistd.h>
 
 namespace pthread {
-  
-  extern "C" void * thread_startup (void *);
-  
-  void thread::run () noexcept {
-  }
-  
-  void thread::sleep(const int millis){
-    usleep(millis * 1000);
-  }
-  
-  int thread::start () {
+
+  namespace this_thread {
     
-    int rc = 0;
-    
-    if ((rc = pthread_create(&_thread, &_attr, thread_startup, (void *) this)) != 0){
-      throw thread_exception{"pthread_create failed.", rc };
+    void sleep(const int millis){
+      usleep(millis * 1000);
     }
-      
-    return rc;
+    
+    pthread_t get_id(){
+      return pthread_self();
+    }
   }
   
   int thread::join () {
     int rc = 0;
+    
+    if ( _thread == this_thread::get_id()){
+      throw pthread_exception{"join failed, join yourself would endup in deadlock."};
+    }
+    if ( _status == thread_status::not_a_thread ){
+      throw pthread_exception{"join failed, this is not a thread."};
+    }
     
     if ( (rc = pthread_join(_thread, (void **)&_status)) != 0){
       throw thread_exception{"pthread_join failed.", rc };
@@ -40,33 +38,72 @@ namespace pthread {
     
     return rc;
   }
-  
+
   int thread::cancel () {
     int rc = 0;
     
-    rc = pthread_cancel ( _thread );
-
-    if ( rc == 0 ){
-      throw thread_exception{"pthread_ccancel failed.", rc };
+    if ( _status == thread_status::not_a_thread ){
+      throw pthread_exception{"cancel failed, this is not a thread."};
+    }
+      
+    if((rc = pthread_cancel ( _thread )) != 0){
+      throw thread_exception{"pthread_cancel failed.", rc };
+    } else {
+      _status = thread_status::not_a_thread;
     }
 
     return rc;
   }
   
-  thread::thread ( bool destroy ): _destroy{destroy} {
+  thread::thread(): _status{thread_status::not_a_thread}, _thread{nullptr}{
+    
+  }
+  
+  thread::thread (const runnable &work): thread{}{
     int rc = 0 ;
+    pthread_attr_t attr{0};
+    
     /* Initialize and set thread detached attribute */
-    if ( (rc = pthread_attr_init(&_attr)) != 0){
+    if ( (rc = pthread_attr_init(&attr)) != 0){
       throw thread_exception{"pthread_attr_init failed.", rc };
     }
     
-    if ( (rc = pthread_attr_setdetachstate(&_attr, PTHREAD_CREATE_JOINABLE)) != 0 ){
+    if ( (rc = pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE)) != 0 ){
       throw thread_exception{"pthread_attr_setdetachstate failed.", rc };
     }
+    
+    if ((rc = pthread_create(&_thread, &attr, thread_startup_runnable, (void *) &work)) != 0){
+      throw thread_exception{"pthread_create failed.", rc };
+    } else {
+      _status = thread_status::a_thread;
+      pthread_attr_destroy(&attr);
+    }
+
+  }
+  
+  /* move constructor */
+  thread::thread(thread&& other){
+   
+    swap(other);
+  }
+  
+  /* move operator */
+  thread& thread::operator=(thread&& other){
+  
+    swap(other);
+    
+    return *this;
+  }
+  
+  void thread::swap(thread& other){
+    std::swap(_thread, other._thread);
+    std::swap(_status, other._status);
   }
   
   thread::~thread () {
-    pthread_attr_destroy(&_attr);
+//    if ( _status == thread_status::a_thread ){
+//      pthread_attr_destroy(&_attr);
+//    }
   }
   
   /**
@@ -74,13 +111,9 @@ namespace pthread {
    the base for newly created Thread objects. It runs the
    run method on the thread object passed to it (as a void *).
    */
-  void *thread_startup(void *args) {
+  void *thread_startup_runnable(void *runner) {
     
-    thread *t = (thread *)args;
-    t->run();
-    if ( t->destroy_when_ended () ) {
-      delete t;
-    }
+    static_cast<runnable *>(runner)->run();
     
     return (NULL);
   }

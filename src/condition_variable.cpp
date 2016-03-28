@@ -13,7 +13,7 @@ namespace pthread {
   /* Default millis is 0 */
   cv_status condition_variable::wait_for ( mutex &mtx, int millis ) {
     int rc = 0;
-    cv_status status = cv_status::no_timeout;
+    cv_status status = no_timeout;
     
     milliseconds(millis);
     rc  = pthread_cond_timedwait ( &_condition, &mtx._mutex, &timeout );
@@ -21,7 +21,7 @@ namespace pthread {
     switch (rc){
         
       case ETIMEDOUT:
-        status = cv_status::timeout;
+        status = timedout;
         break;
         
       case EINVAL:
@@ -32,7 +32,7 @@ namespace pthread {
         throw condition_variable_exception("The mutex was not owned by the current thread at the time of the call.", rc);
         break;
       default:
-        status = cv_status::no_timeout ;
+        status = no_timeout ;
         break;
     }
     
@@ -55,8 +55,13 @@ namespace pthread {
       timeout.tv_sec = now.tv_sec;
       timeout.tv_nsec= now.tv_usec * 1000 ;
       
-      timeout.tv_sec  += millis / 1000;
-      timeout.tv_nsec += (millis % 1000) * 1000000;
+      auto seconds = millis / 1000;
+      auto nanos   = (now.tv_usec * 1000) + ((millis % 1000) * 1000000) ;
+      seconds     += nanos / 1000000000 ; // check if now + millis id not overflowing.
+      nanos        = nanos % 1000000000 ;
+      
+      timeout.tv_sec  += seconds ;
+      timeout.tv_nsec  = nanos;
     } else {
       throw condition_variable_exception("failed to get current time.");
     }
