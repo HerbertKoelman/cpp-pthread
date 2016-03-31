@@ -24,11 +24,36 @@ void message ( const std::string m){
 
 void worker_function(std::string msg, int y) ;
 
+class no_lambda_worker: public pthread::runnable {
+public:
 
+  no_lambda_worker(): _msg{"no_lambda_worker"}{
+    
+  }
+  
+  void run() noexcept override {
+    pthread::lock_guard<pthread::mutex> lck{mtx};
+    message("no_lambda_worker::run has started to execute: " + _msg);
+    bool stop_waiting = false ;
+    
+    while ( !(stop_waiting = (counter >= 10000)) && condition.wait_for(lck, 20*1000) == pthread::cv_status::no_timeout);
+    
+    if ( counter >= 10000 ){
+      message("counter was greater then 10000");
+    } else {
+      message("counter was not greater then 10000");
+    }
+  }
+private:
+  std::string _msg;
+};
+
+/** using lamdba
+ */
 class worker: public pthread::runnable {
 public:
   
-  worker(const std::string m = "anonymous worker"): msg{m}{
+  worker(const std::string m = "anonymous worker", int sleep = 2000): msg{m}, _sleep{sleep}{
     
   };
   
@@ -38,9 +63,7 @@ public:
   
   void run() noexcept override {
     
-    worker_function("worker_function: " + msg, 10000);
-    
-    {
+    { // cirtical section
       pthread::lock_guard<pthread::mutex> lck(mtx);
       
       message("running worker class. wait max 20s for condition to be signaled");
@@ -49,41 +72,24 @@ public:
       } else {
         message("worker class, counter < 10000");
       }
-    }
+    } // mutex is released
     
-    pthread::this_thread::sleep(20*1000);
+    pthread::this_thread::sleep(_sleep);
     message("worker class is ending, counter actually was: "+ std::to_string(counter));
   };
   
 private:
   std::string    msg ;
+  int            _sleep;
 };
 
-void worker_function(std::string msg, int y) {
-  message("waiting 2s: " + msg);
-  pthread::this_thread::sleep(2000);
-  message(msg + " thread wokeup");
-  
-  pthread::lock_guard<pthread::mutex> lck(mtx);
-  
-  message("looping: " + std::to_string(y));
-  for ( auto x = y; x > 0 ; x--){
-    counter++ ;
-  }
-  
-  std::string dummy;
-  message(msg + " thread stopped, type enter to continue and exit thread");
-  std::getline(std::cin, dummy);
-  message(msg + " worker is ending");
-};
-
-void start_thread(std::string m){
-  message(m);
-}
 
 int main(int argc, const char * argv[]) {
   
   pthread::string dummy;
+  pthread::thread t10{no_lambda_worker{}};
+  t10.join();
+  
   worker w{"laura"};
   pthread::thread t0;
   pthread::thread t2{w};
@@ -98,6 +104,14 @@ int main(int argc, const char * argv[]) {
   threads.push_back(std::move(t4));
   threads.push_back(pthread::thread{w});
   threads.push_back(pthread::thread{worker{"herbert's worker"}});
+  threads.push_back(pthread::thread {no_lambda_worker{}});
+  
+  for ( auto x = 100000; x > 0 ; x--){
+    pthread::lock_guard<pthread::mutex> lck{mtx};
+    counter++;
+  }
+  
+  condition.notify_all();
   
   message("main is waiting for threads to finish");
   

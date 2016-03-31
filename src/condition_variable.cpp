@@ -10,6 +10,14 @@ namespace pthread {
     pthread_cond_wait ( &_condition, &mtx._mutex);
   }
   
+  void condition_variable::wait(lock_guard<pthread::mutex> lck){
+    wait(*(lck.mutex()));
+  }
+  
+  cv_status condition_variable::wait_for (lock_guard<pthread::mutex> &lck, int millis ){
+    return wait_for(*(lck.mutex()), millis);
+  }
+  
   /* Default millis is 0 */
   cv_status condition_variable::wait_for ( mutex &mtx, int millis ) {
     int rc = 0;

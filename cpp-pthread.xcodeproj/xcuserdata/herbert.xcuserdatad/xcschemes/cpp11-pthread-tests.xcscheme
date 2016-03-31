@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E519A0F11C9C64F600ED113D"
-               BuildableName = "pthread_tests"
-               BlueprintName = "pthread_tests"
+               BlueprintIdentifier = "E54543341CAD21A30051A313"
+               BuildableName = "cpp11-pthread-tests"
+               BlueprintName = "cpp11-pthread-tests"
                ReferencedContainer = "container:cpp-pthread.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E519A0F11C9C64F600ED113D"
-            BuildableName = "pthread_tests"
-            BlueprintName = "pthread_tests"
+            BlueprintIdentifier = "E54543341CAD21A30051A313"
+            BuildableName = "cpp11-pthread-tests"
+            BlueprintName = "cpp11-pthread-tests"
             ReferencedContainer = "container:cpp-pthread.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -55,9 +55,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E519A0F11C9C64F600ED113D"
-            BuildableName = "pthread_tests"
-            BlueprintName = "pthread_tests"
+            BlueprintIdentifier = "E54543341CAD21A30051A313"
+            BuildableName = "cpp11-pthread-tests"
+            BlueprintName = "cpp11-pthread-tests"
             ReferencedContainer = "container:cpp-pthread.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -74,9 +74,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E519A0F11C9C64F600ED113D"
-            BuildableName = "pthread_tests"
-            BlueprintName = "pthread_tests"
+            BlueprintIdentifier = "E54543341CAD21A30051A313"
+            BuildableName = "cpp11-pthread-tests"
+            BlueprintName = "cpp11-pthread-tests"
             ReferencedContainer = "container:cpp-pthread.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
