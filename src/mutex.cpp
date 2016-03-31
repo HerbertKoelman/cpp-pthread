@@ -43,6 +43,7 @@ namespace pthread {
     }
   }
 
+  
   mutex_exception::mutex_exception( const string message, const int pthread_error): pthread_exception{message, pthread_error} {
   };
 }

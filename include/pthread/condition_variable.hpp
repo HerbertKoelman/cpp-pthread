@@ -20,9 +20,10 @@
 
 namespace pthread {
   
+  /** condition variable current wait status. */
   enum cv_status {
-    no_timeout,
-    timedout
+    no_timeout, /*!< unblocked before a timeout occured */
+    timedout    /*!< condition timedout */
   };
   
   /** pthread condition variable
@@ -40,6 +41,8 @@ namespace pthread {
    * to the waiting thread.
    *
    * Upon successful return, the mutex shall have been locked and shall be owned by the calling thread.
+   *
+   * @author herbert koelman
    */
   class condition_variable {
   public:
@@ -135,7 +138,7 @@ namespace pthread {
      * The lambda (closure) is run to check if the condition was met. Lambda should false if the waiting should be continued.
      * The signature of the predicate function should be equivalent to the following: bool lambda();
      *
-     * @param mtx ralated mutex lock_guard, which must be locked by the current thread.
+     * @param lck ralated mutex lock_guard, which must be locked by the current thread.
      * @param millis milli seconds to wait for condition to be signaled.
      * @param lambda run to check if condition was met.
      * @return true if lmabda returned true.

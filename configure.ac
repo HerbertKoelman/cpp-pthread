@@ -11,6 +11,7 @@ AC_CANONICAL_BUILD
 
 AC_PROG_INSTALL
 AC_CHECK_PROG([RM],[rm],[rm -f])
+AC_CHECK_PROG([DOXYGEN],[doxygen],[doxygen],[echo \"please install doxygen and re-run ./configure, or run it manualy doxygen \"])
 AC_PROG_MKDIR_P
 
 AC_MSG_CHECKING([whether target directory ./lib exists])

@@ -4,7 +4,7 @@
 AC_PREREQ(2.69)
 AC_INIT([cpp-pthread],[1.0.0],[herbert.koelman@pmu.fr])
 AC_LANG(C++)
-AC_CONFIG_SRCDIR([pthread-tests.cpp])
+AC_CONFIG_SRCDIR([with-cpp11-pthread-tests.cpp])
 AC_CONFIG_AUX_DIR([/usr/bin ../ ../bin])
 
 # Checks for programs.

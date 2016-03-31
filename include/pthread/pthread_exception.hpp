@@ -21,14 +21,21 @@ namespace pthread {
     
   public:
     
-    pthread_exception( const string message, const int pthread_number = 0 ): _message{message}, _pthread_errno{pthread_number}{};
+    /**
+     * @param message error message
+     * @param pthread_errno a pthread function return code.
+     */
+    pthread_exception( const string message, const int pthread_errno = 0 ): _message{message}, _pthread_errno{pthread_number}{};
     
     virtual ~pthread_exception(){};
     
+    /** @return the exception's error message. */
     virtual const char *what() const noexcept override { return _message.c_str();};
     
+    /** @return pthread error code that was at the orgin of the error */
     virtual int pthread_errno(){ return _pthread_errno ;};
     
+    /** @return related pthread_errno error message */
     virtual const char *pthread_errmsg(){ return strerror(_pthread_errno );};
     
   private:
@@ -41,6 +48,7 @@ namespace pthread {
    */
   class timeout_exception: public pthread_exception{
   public:
+    /** thrown when a time out occurs. */
     timeout_exception(const string message): pthread_exception{message, ETIMEDOUT}{};
   };
 
