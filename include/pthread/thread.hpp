@@ -20,17 +20,23 @@
 
 namespace pthread {
   
+  /** function used to startup a thread.
+   * 
+   * it expects a reference to a runnable instance
+   */
   void *thread_startup_runnable (void *);
   
+  /** current status of a thread instance
+  */
   enum class thread_status{
-    not_a_thread,
-    a_thread
+    not_a_thread, /*!< this not a thread (i.e. after a move operation) */
+    a_thread      /*!< a valid thread */
   };
   
   /**
    * Interface of a runnable class.
    *
-   * Yiou can write code to be run through a Thread by implementing this interface.
+   * You can write code to be run through a Thread by implementing this interface.
    */
   class runnable {
   private:
@@ -81,11 +87,13 @@ namespace pthread {
     
     /** move contructor
      *
-     * Used when pushing instances into containers (i.e. list vector). Once moved this not a thread anymore. Status is thread_status::not_a_thread
+     * once moved this not a thread anymore. Status is thread_status::not_a_thread
+     *
+     * @param other thread that will be moved, on completion other is no longer a thread.
      */
     thread( thread&& other);
     
-    /** copy constructor makes no sense.
+    /** copy constructor is flagged deleted because it makes no sense to copy a thread.
      */
     thread(const thread &) = delete ;
     
@@ -123,24 +131,26 @@ namespace pthread {
      */
     int cancel();
     
-    /** @return the status of the thread.
+    /** @return the status of the thread (thread::status).
      */
     inline thread_status status() { return _status ;};
     
-    /** copying doesn't make sense
+    /** copy operator is flagged deleted,  copying doesn't make sense
      */
     thread& operator=(const thread&) = delete ;
     
     /** move a thread to another thread.
      *
-     * The moved thread is not a thread anymore (thread_status::not_a_thread).
+     * @param other thread to move, on completion it is not a thread anymore (thread_status::not_a_thread).
+     * @return thread 
      */
     thread& operator=(thread&& other);
     
   private:
+
     /** Exchanges the underlying handles of two thread objects.
      *
-     * @param other the thread to swap with
+     * @param other the thread to swap with, on completion other is not a thread.
      */
     void swap ( thread& other );
     
@@ -151,8 +161,13 @@ namespace pthread {
   
   // exception & errors --------
   
+  /** thrown to indicate that something went wrong with a thread */
   class thread_exception: public pthread_exception {
   public:
+    /**
+     * @param message short error description.
+     * @param pthread_error value return by a function in the pthread library.
+     */
     thread_exception(const string message, const int pthread_error = 0);
   };
   
@@ -251,7 +266,12 @@ namespace pthread {
 //    
 //  }
   
+  /** \namespace this_thread
+   * 
+   * helper functions
+   */
   namespace this_thread{
+
     /** let the current thread sleep for the given milliseconds.
      *
      * @param milis time to wait.

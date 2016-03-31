@@ -11,6 +11,7 @@ RM=@RM@
 MKDIR=@MKDIR_P@
 PACKAGE=@PACKAGE_NAME@-@PACKAGE_VERSION@-@build_os@.tar.gz
 HEADERS=@HEADERS@
+DOXYGEN=@DOXYGEN@
 PTHREADLIB=libcpp-pthread.a
 
 all: 
@@ -28,7 +29,7 @@ clean:
 	cd src && $(MAKE) clean
 
 doxygen:
-	${DOXYGEN} doxyconf
+	${DOXYGEN} doxyfile
 
 install:
 	$(MKDIR) ${prefix}/include/pthread

@@ -29,7 +29,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "37"
             endingLineNumber = "37"
-            landmarkName = "~lock_guard()"
+            landmarkName = "lock_guard(mutex &amp;m)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

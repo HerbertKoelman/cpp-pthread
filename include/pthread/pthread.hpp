@@ -6,6 +6,11 @@
 //
 //
 
+/**
+ * \author herbert koelman
+ * \date 18/03/2016
+ */
+
 #ifndef pthread_pthread_hpp
 #define pthread_pthread_hpp
 
@@ -18,6 +23,10 @@
 #include "pthread/condition_variable.hpp"
 #include "pthread/thread.hpp"
 
+/** \namespace pthread 
+ *
+ * C++11 pthread mock implementations
+*/
 namespace pthread {
 
 }
