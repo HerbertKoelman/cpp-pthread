@@ -26,8 +26,22 @@ namespace pthread {
   };
   
   /** pthread condition variable
+   *
+   *The condition_variable class is a synchronization primitive that can be used to block a thread, or multiple threads
+   * at the same time, until another thread both modifies a shared variable (the condition), and notifies the 
+   * condition_variable.
+   *
+   * The thread that intends to modify the variable has to
+   * - acquire a std::mutex (typically via std::lock_guard)
+   * - perform the modification while the lock is held
+   * - execute notify_one or notify_all on the std::condition_variable (the lock does not need to be held for notification)
+   *
+   * Even if the shared variable is atomic, it must be modified under the mutex in order to correctly publish the modification
+   * to the waiting thread.
+   *
+   * Upon successful return, the mutex shall have been locked and shall be owned by the calling thread.
    */
-  class condition_variable { // : public pthread::mutex {
+  class condition_variable {
   public:
     
     /** wait for condition to be signaled
@@ -40,6 +54,10 @@ namespace pthread {
      * @param mtx ralated mutex, which must be locked by the current thread.
      */
     void wait ( mutex &mtx );
+    
+    /** @see wait
+     */
+    void wait ( lock_guard<pthread::mutex> lck);
     
     /** wait for condition to be signaled
      *
@@ -85,6 +103,10 @@ namespace pthread {
      * @return cv_status (either timeout or no_timeout)
      */
     cv_status wait_for (mutex &mtx, int millis );
+    
+    /** @see #wait_for (mutex &, int)
+     */
+    cv_status wait_for (lock_guard<pthread::mutex> &lck, int millis );
     
     /** wait for condition to be signaled within a given time frame
      *

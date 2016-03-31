@@ -9,15 +9,20 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>pthread_tests.xcscheme</key>
+		<key>cpp11-pthread-tests.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>2</integer>
+			<integer>5</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>E519A0F11C9C64F600ED113D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E54543341CAD21A30051A313</key>
 		<dict>
 			<key>primary</key>
 			<true/>
