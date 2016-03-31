@@ -20,7 +20,7 @@ Install moves files into your system's default localtion of headers and librarie
 configure --prefix=/usr/local
 ```
 
-Documentation can be generated with this command:
+[Documentation](http://herbertkoelman.github.io/cpp-pthread/doc/html/) can be generated with this command:
 ```
 make doxygen
 ...
@@ -42,6 +42,7 @@ It should now compile use this very simple (but often good enough) implementatio
 # Usefull links
 
 * [documentation](http://pubs.opengroup.org/onlinepubs/007908799/xsh/threads.html) of the underlying POSIX threading library 
+* [project's doxygen](http://herbertkoelman.github.io/cpp-pthread/doc/html/)
 * [std::thread](http://en.cppreference.com/w/cpp/thread/thread) implementation we try to mimic
 * [std::lock_guard](http://en.cppreference.com/w/cpp/thread/lock_guard/lock_guard)  implementation we try to mimic 
 * [std::mutex](http://en.cppreference.com/w/cpp/thread/mutex) implementation we try to mimic
