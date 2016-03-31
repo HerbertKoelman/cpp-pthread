@@ -1,0 +1,64 @@
+\section*{What it does}
+
+I\+BM\textquotesingle{}s compiler is not implementing all the features of C++11 standard, especially it\textquotesingle{}s lacking the concurrency features that the standard brings. This will at some point be fixed and was therfore looking at a way reduce the effort to switch from a specific implementation to the C++11 standard one. This projetc is the resulting code.\+:w
+
+This wrapper intends to bring these feature by implementing C++11 interface and using the pthread library. Of course, as it is a replacement of C++11 features, it is best to use the standard implementation if your compiler support it. This can be done rather easely by using the standard namespace {\ttfamily std} instead of this library\textquotesingle{}s specific one {\ttfamily pthread}.\+:w
+
+To use this library\+: 
+\begin{DoxyCode}
+1 configure
+2 make
+3 make install
+\end{DoxyCode}
+
+
+Install moves files into your system\textquotesingle{}s default localtion of headers and libraries (often /usr/local/include and /usr/local/lib). Use this command to change target directory\+: 
+\begin{DoxyCode}
+1 configure --prefix=/usr/local
+\end{DoxyCode}
+
+
+Documentation can be generated with this command\+: 
+\begin{DoxyCode}
+1 make doxygen
+2 ...
+\end{DoxyCode}
+
+
+This command creates a {\ttfamily doc} directory wich will contain the generated documentation.
+
+\begin{quote}
+{\bfseries warning} generating documentation requires that doxygen is installed. \end{quote}
+
+
+\section*{How to use it}
+
+Once compiled and installed in a location that suites you, use your compiler options to reference the headers and the libraries directory. In almoast all casses you can\+:
+\begin{DoxyItemize}
+\item include {\ttfamily \#include \char`\"{}pthread/phtread.\+hpp\char`\"{}} in your code.
+\item comment the c++11 standard includes in your code
+\item declare that you\textquotesingle{}re now using the namespace pthread ({\ttfamily using namespace pthread ;})
+\end{DoxyItemize}
+
+It should now compile use this very simple (but often good enough) implementation.
+
+\section*{Usefull links}
+
+
+\begin{DoxyItemize}
+\item \href{http://pubs.opengroup.org/onlinepubs/007908799/xsh/threads.html}{\tt documentation} of the underlying P\+O\+S\+IX threading library
+\item \href{http://en.cppreference.com/w/cpp/thread/thread}{\tt std\+::thread} implementation we try to mimic
+\item \href{http://en.cppreference.com/w/cpp/thread/lock_guard/lock_guard}{\tt std\+::lock\+\_\+guard} implementation we try to mimic
+\item \href{http://en.cppreference.com/w/cpp/thread/mutex}{\tt std\+::mutex} implementation we try to mimic
+\item \href{http://en.cppreference.com/w/cpp/thread/condition_variable}{\tt std\+::condition\+\_\+variable} implementation we try to mimic
+\end{DoxyItemize}
+
+More \href{https://github.com/HerbertKoelman/cpp-pthread/wiki}{\tt here}
+
+\section*{misc}
+
+
+\begin{DoxyItemize}
+\item author herbert koelman
+\item github \href{https://github.com/HerbertKoelman/cpp-pthread}{\tt cpp-\/pthread} 
+\end{DoxyItemize}

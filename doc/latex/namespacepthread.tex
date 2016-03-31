@@ -1,0 +1,92 @@
+\hypertarget{namespacepthread}{}\section{pthread Namespace Reference}
+\label{namespacepthread}\index{pthread@{pthread}}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classpthread_1_1condition__variable}{condition\+\_\+variable}
+\item 
+class \hyperlink{classpthread_1_1condition__variable__exception}{condition\+\_\+variable\+\_\+exception}
+\item 
+class \hyperlink{classpthread_1_1lock__guard}{lock\+\_\+guard}
+\item 
+class \hyperlink{classpthread_1_1mutex}{mutex}
+\item 
+class \hyperlink{classpthread_1_1mutex__exception}{mutex\+\_\+exception}
+\item 
+class \hyperlink{classpthread_1_1pthread__exception}{pthread\+\_\+exception}
+\item 
+class \hyperlink{classpthread_1_1runnable}{runnable}
+\item 
+class \hyperlink{classpthread_1_1thread}{thread}
+\item 
+class \hyperlink{classpthread_1_1thread__exception}{thread\+\_\+exception}
+\item 
+class \hyperlink{classpthread_1_1timeout__exception}{timeout\+\_\+exception}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{namespacepthread_a823f88a2bf448bd5bd5273b826830bdd}{cv\+\_\+status} \{ \hyperlink{namespacepthread_a823f88a2bf448bd5bd5273b826830bdda633b1bc5140f77a22f2c26bea4fa3398}{no\+\_\+timeout}, 
+\hyperlink{namespacepthread_a823f88a2bf448bd5bd5273b826830bdda1c2d3e88a4ad820053c817753867b31a}{timedout}
+ \}
+\item 
+enum \hyperlink{namespacepthread_ac4b6e78f3d72c946ace7a92f3bec4101}{thread\+\_\+status} \{ \hyperlink{namespacepthread_ac4b6e78f3d72c946ace7a92f3bec4101a8414cd8c988083af4eabb1311df873cf}{thread\+\_\+status\+::not\+\_\+a\+\_\+thread}, 
+\hyperlink{namespacepthread_ac4b6e78f3d72c946ace7a92f3bec4101a13b3689524b86ca2caaee82399099df1}{thread\+\_\+status\+::a\+\_\+thread}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void $\ast$ \hyperlink{namespacepthread_a4ca2138b7b0d82d63a05c708edd45a6f}{thread\+\_\+startup\+\_\+runnable} (void $\ast$)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+herbert koelman 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+18/03/2016
+\end{DoxyDate}
+C++11 pthread mock implementations 
+
+\subsection{Enumeration Type Documentation}
+\index{pthread@{pthread}!cv\+\_\+status@{cv\+\_\+status}}
+\index{cv\+\_\+status@{cv\+\_\+status}!pthread@{pthread}}
+\subsubsection[{\texorpdfstring{cv\+\_\+status}{cv_status}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf pthread\+::cv\+\_\+status}}\hypertarget{namespacepthread_a823f88a2bf448bd5bd5273b826830bdd}{}\label{namespacepthread_a823f88a2bf448bd5bd5273b826830bdd}
+condition variable current wait status. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{no\+\_\+timeout@{no\+\_\+timeout}!pthread@{pthread}}\index{pthread@{pthread}!no\+\_\+timeout@{no\+\_\+timeout}}\item[{\em 
+no\+\_\+timeout\hypertarget{namespacepthread_a823f88a2bf448bd5bd5273b826830bdda633b1bc5140f77a22f2c26bea4fa3398}{}\label{namespacepthread_a823f88a2bf448bd5bd5273b826830bdda633b1bc5140f77a22f2c26bea4fa3398}
+}]unblocked before a timeout occured \index{timedout@{timedout}!pthread@{pthread}}\index{pthread@{pthread}!timedout@{timedout}}\item[{\em 
+timedout\hypertarget{namespacepthread_a823f88a2bf448bd5bd5273b826830bdda1c2d3e88a4ad820053c817753867b31a}{}\label{namespacepthread_a823f88a2bf448bd5bd5273b826830bdda1c2d3e88a4ad820053c817753867b31a}
+}]condition timedout \end{description}
+\end{Desc}
+\index{pthread@{pthread}!thread\+\_\+status@{thread\+\_\+status}}
+\index{thread\+\_\+status@{thread\+\_\+status}!pthread@{pthread}}
+\subsubsection[{\texorpdfstring{thread\+\_\+status}{thread_status}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf pthread\+::thread\+\_\+status}\hspace{0.3cm}{\ttfamily [strong]}}\hypertarget{namespacepthread_ac4b6e78f3d72c946ace7a92f3bec4101}{}\label{namespacepthread_ac4b6e78f3d72c946ace7a92f3bec4101}
+current status of a thread instance \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{not\+\_\+a\+\_\+thread@{not\+\_\+a\+\_\+thread}!pthread@{pthread}}\index{pthread@{pthread}!not\+\_\+a\+\_\+thread@{not\+\_\+a\+\_\+thread}}\item[{\em 
+not\+\_\+a\+\_\+thread\hypertarget{namespacepthread_ac4b6e78f3d72c946ace7a92f3bec4101a8414cd8c988083af4eabb1311df873cf}{}\label{namespacepthread_ac4b6e78f3d72c946ace7a92f3bec4101a8414cd8c988083af4eabb1311df873cf}
+}]this not a thread (i.\+e. after a move operation) \index{a\+\_\+thread@{a\+\_\+thread}!pthread@{pthread}}\index{pthread@{pthread}!a\+\_\+thread@{a\+\_\+thread}}\item[{\em 
+a\+\_\+thread\hypertarget{namespacepthread_ac4b6e78f3d72c946ace7a92f3bec4101a13b3689524b86ca2caaee82399099df1}{}\label{namespacepthread_ac4b6e78f3d72c946ace7a92f3bec4101a13b3689524b86ca2caaee82399099df1}
+}]a valid thread \end{description}
+\end{Desc}
+
+
+\subsection{Function Documentation}
+\index{pthread@{pthread}!thread\+\_\+startup\+\_\+runnable@{thread\+\_\+startup\+\_\+runnable}}
+\index{thread\+\_\+startup\+\_\+runnable@{thread\+\_\+startup\+\_\+runnable}!pthread@{pthread}}
+\subsubsection[{\texorpdfstring{thread\+\_\+startup\+\_\+runnable(void $\ast$)}{thread_startup_runnable(void *)}}]{\setlength{\rightskip}{0pt plus 5cm}void $\ast$ pthread\+::thread\+\_\+startup\+\_\+runnable (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{runner}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacepthread_a4ca2138b7b0d82d63a05c708edd45a6f}{}\label{namespacepthread_a4ca2138b7b0d82d63a05c708edd45a6f}
+function used to startup a thread.
+
+it expects a reference to a runnable instance
+
+This function is a helper function. It has normal C linkage, and is the base for newly created Thread objects. It runs the run method on the thread object passed to it (as a void $\ast$). 

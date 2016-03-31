@@ -1,0 +1,75 @@
+\hypertarget{classpthread_1_1lock__guard}{}\section{pthread\+:\+:lock\+\_\+guard$<$ Mutex\+Type $>$ Class Template Reference}
+\label{classpthread_1_1lock__guard}\index{pthread\+::lock\+\_\+guard$<$ Mutex\+Type $>$@{pthread\+::lock\+\_\+guard$<$ Mutex\+Type $>$}}
+
+
+{\ttfamily \#include $<$lock\+\_\+guard.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classpthread_1_1lock__guard_a720070a45ed97c9234b980bd33328a4e}{lock\+\_\+guard} (\hyperlink{classpthread_1_1mutex}{mutex} \&m)
+\item 
+\hyperlink{classpthread_1_1lock__guard_a958884251adfb8d5f9bd7d643cc3949f}{$\sim$lock\+\_\+guard} ()
+\item 
+void {\bfseries operator=} (\hyperlink{classpthread_1_1lock__guard}{lock\+\_\+guard} \&)=delete\hypertarget{classpthread_1_1lock__guard_a1f9ab705f7ffe9eb8739ff3cf34cf7f2}{}\label{classpthread_1_1lock__guard_a1f9ab705f7ffe9eb8739ff3cf34cf7f2}
+
+\item 
+Mutex\+Type $\ast$ \hyperlink{classpthread_1_1lock__guard_a03f11b486e905ea9bca764686cd86fae}{mutex} () const 
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$class Mutex\+Type$>$\\*
+class pthread\+::lock\+\_\+guard$<$ Mutex\+Type $>$}
+
+This class was designed to encapsulate a mutex and automatically control the lock attribute.
+
+The \hyperlink{classpthread_1_1lock__guard}{lock\+\_\+guard} lock the associated mutex once we instanciate the class and the lock is automatically unlocked once the object is destroyed. This allow us to correlate the lock with the scope of the object.
+
+\begin{DoxyAuthor}{Author}
+herbert koelman 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{pthread\+::lock\+\_\+guard@{pthread\+::lock\+\_\+guard}!lock\+\_\+guard@{lock\+\_\+guard}}
+\index{lock\+\_\+guard@{lock\+\_\+guard}!pthread\+::lock\+\_\+guard@{pthread\+::lock\+\_\+guard}}
+\subsubsection[{\texorpdfstring{lock\+\_\+guard(mutex \&m)}{lock_guard(mutex &m)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Mutex\+Type$>$ {\bf pthread\+::lock\+\_\+guard}$<$ Mutex\+Type $>$\+::{\bf lock\+\_\+guard} (
+\begin{DoxyParamCaption}
+\item[{{\bf mutex} \&}]{m}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}\hypertarget{classpthread_1_1lock__guard_a720070a45ed97c9234b980bd33328a4e}{}\label{classpthread_1_1lock__guard_a720070a45ed97c9234b980bd33328a4e}
+The constructor is forced to only accept a mutex object or any object of a subclass.
+
+The mutex is locked up completion.
+
+
+\begin{DoxyParams}{Parameters}
+{\em m} & reference to a valid \hyperlink{classpthread_1_1mutex}{pthread\+::mutex} \\
+\hline
+\end{DoxyParams}
+\index{pthread\+::lock\+\_\+guard@{pthread\+::lock\+\_\+guard}!````~lock\+\_\+guard@{$\sim$lock\+\_\+guard}}
+\index{````~lock\+\_\+guard@{$\sim$lock\+\_\+guard}!pthread\+::lock\+\_\+guard@{pthread\+::lock\+\_\+guard}}
+\subsubsection[{\texorpdfstring{$\sim$lock\+\_\+guard()}{~lock_guard()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Mutex\+Type$>$ {\bf pthread\+::lock\+\_\+guard}$<$ Mutex\+Type $>$\+::$\sim${\bf lock\+\_\+guard} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classpthread_1_1lock__guard_a958884251adfb8d5f9bd7d643cc3949f}{}\label{classpthread_1_1lock__guard_a958884251adfb8d5f9bd7d643cc3949f}
+release the guared mutex. 
+
+\subsection{Member Function Documentation}
+\index{pthread\+::lock\+\_\+guard@{pthread\+::lock\+\_\+guard}!mutex@{mutex}}
+\index{mutex@{mutex}!pthread\+::lock\+\_\+guard@{pthread\+::lock\+\_\+guard}}
+\subsubsection[{\texorpdfstring{mutex() const }{mutex() const }}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Mutex\+Type$>$ Mutex\+Type$\ast$ {\bf pthread\+::lock\+\_\+guard}$<$ Mutex\+Type $>$\+::{\bf mutex} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classpthread_1_1lock__guard_a03f11b486e905ea9bca764686cd86fae}{}\label{classpthread_1_1lock__guard_a03f11b486e905ea9bca764686cd86fae}
+\begin{DoxyReturn}{Returns}
+a const reference to the guarded mutex 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/pthread/lock\+\_\+guard.\+hpp\end{DoxyCompactItemize}

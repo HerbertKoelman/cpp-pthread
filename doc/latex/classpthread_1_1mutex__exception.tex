@@ -1,0 +1,46 @@
+\hypertarget{classpthread_1_1mutex__exception}{}\section{pthread\+:\+:mutex\+\_\+exception Class Reference}
+\label{classpthread_1_1mutex__exception}\index{pthread\+::mutex\+\_\+exception@{pthread\+::mutex\+\_\+exception}}
+
+
+{\ttfamily \#include $<$mutex.\+hpp$>$}
+
+Inheritance diagram for pthread\+:\+:mutex\+\_\+exception\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classpthread_1_1mutex__exception}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classpthread_1_1mutex__exception_a86c160df1d364434fc8dd36a5a2111bc}{mutex\+\_\+exception} (const string message, const int pthread\+\_\+error=0)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+throw to indicate that something went wrong with a mutex. 
+
+\subsection{Constructor \& Destructor Documentation}
+\index{pthread\+::mutex\+\_\+exception@{pthread\+::mutex\+\_\+exception}!mutex\+\_\+exception@{mutex\+\_\+exception}}
+\index{mutex\+\_\+exception@{mutex\+\_\+exception}!pthread\+::mutex\+\_\+exception@{pthread\+::mutex\+\_\+exception}}
+\subsubsection[{\texorpdfstring{mutex\+\_\+exception(const string message, const int pthread\+\_\+error=0)}{mutex_exception(const string message, const int pthread_error=0)}}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+::mutex\+\_\+exception\+::mutex\+\_\+exception (
+\begin{DoxyParamCaption}
+\item[{const string}]{message, }
+\item[{const int}]{pthread\+\_\+error = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}\hypertarget{classpthread_1_1mutex__exception_a86c160df1d364434fc8dd36a5a2111bc}{}\label{classpthread_1_1mutex__exception_a86c160df1d364434fc8dd36a5a2111bc}
+thrown when mutex actions fail
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & short description \\
+\hline
+{\em pthread\+\_\+errno} & error returned by the pthread function \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/pthread/mutex.\+hpp\item 
+src/mutex.\+cpp\end{DoxyCompactItemize}
