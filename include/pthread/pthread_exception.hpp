@@ -9,6 +9,8 @@
 #ifndef pthread_pthread_exception_hpp
 #define pthread_pthread_exception_hpp
 
+#include "pthread/config.h"
+
 #include <errno.h>
 
 namespace pthread {
@@ -21,11 +23,15 @@ namespace pthread {
     
   public:
     
+#ifdef __IBMCPP__
+    pthread_exception( const string message, const int pthread_number = 0 ): _message(message), _pthread_errno(pthread_number){};
+#else
     pthread_exception( const string message, const int pthread_number = 0 ): _message{message}, _pthread_errno{pthread_number}{};
+#endif
     
     virtual ~pthread_exception(){};
     
-    virtual const char *what() const noexcept override { return _message.c_str();};
+    virtual const char *what() const __NOEXCEPT__ __OVERRIDE__ { return _message.c_str();};
     
     virtual int pthread_errno(){ return _pthread_errno ;};
     
@@ -41,7 +47,7 @@ namespace pthread {
    */
   class timeout_exception: public pthread_exception{
   public:
-    timeout_exception(const string message): pthread_exception{message, ETIMEDOUT}{};
+    timeout_exception(const string message): pthread_exception(message, ETIMEDOUT){};
   };
 
 } // namespace pthread

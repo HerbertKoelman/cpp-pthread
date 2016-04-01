@@ -14,6 +14,8 @@
 #include <functional>
 #include <memory>
 
+#include "pthread/config.h"
+
 #include "pthread/pthread_exception.hpp"
 #include "pthread/mutex.hpp"
 #include "pthread/lock_guard.hpp"
@@ -39,7 +41,7 @@ namespace pthread {
     /**
      * This method must be overriden
      */
-    virtual void run () noexcept = 0 ;
+    virtual void run () __NOEXCEPT__ = 0 ;
   };
   
   /**

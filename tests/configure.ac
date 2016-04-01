@@ -4,7 +4,7 @@
 AC_PREREQ(2.69)
 AC_INIT([cpp-pthread],[1.0.0],[herbert.koelman@pmu.fr])
 AC_LANG(C++)
-AC_CONFIG_SRCDIR([pthread-tests.cpp])
+AC_CONFIG_SRCDIR([without-cpp11-pthread-tests.cpp])
 AC_CONFIG_AUX_DIR([/usr/bin ../ ../bin])
 
 # Checks for programs.
@@ -38,7 +38,7 @@ AC_SUBST(OBJECTS,$OBJECTS)
 AC_MSG_CHECKING([for specific $CXX compiler options])
 case "$CXX" in
   xlC_r | xlC)
-	CXXFLAGS="-bh:5 -qwarn0x  -qsourcetype=c++ -O $CXXFLAGS"
+	CXXFLAGS="-bh:5 -qlanglvl=extended0x:decltype:static_assert:rvaluereferences:rvaluereferences -qwarn0x  -qsourcetype=c++ -O $CXXFLAGS"
   AC_MSG_RESULT([yes])
   ;;
   g++ | gcc)
@@ -53,7 +53,8 @@ CFLAGS=$CXXFLAGS
 CPPFLAGS="$CPPFLAGS $CFLAGS"
 
 # Checks for libraries.
-AC_CHECK_LIB([pthread], [pthread_create])
+AC_CHECK_LIB([pthread], [pthread_create],[],[AC_ERROR([missing pthread library.])])
+AC_CHECK_LIB([cpp-pthread], [cpp_pthread_version],[],[AC_ERROR([missing cpp-thread library.])])
 
 # Checks for header files.
 #AC_HEADER_STDC

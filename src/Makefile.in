@@ -52,7 +52,7 @@ globber: clean
 
 clean:
 	${RM} *.o core *.a
-	${RM} ${TARGETS}
+	${RM} $(LIBDIR)/libcpp-pthread.a ${TARGETS}
 	$(RM) *unc-backup*~ *unc-backup*~
 
 cxref:

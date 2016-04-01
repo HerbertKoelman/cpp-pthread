@@ -13,6 +13,8 @@
 #include <exception>
 #include <string>
 
+#include "pthread/config.h"
+
 #include "pthread/pthread_exception.hpp"
 
 namespace pthread {

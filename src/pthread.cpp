@@ -9,18 +9,17 @@
 #ifndef pthread_pthread_hpp
 #define pthread_pthread_hpp
 
-#include <errno.h>
-#include <exception>
-#include <string>
-
+#include "pthread/pthread.hpp"
 #include "pthread/config.h"
-
-#include "pthread/mutex.hpp"
-#include "pthread/lock_guard.hpp"
-#include "pthread/condition_variable.hpp"
-#include "pthread/thread.hpp"
 
 namespace pthread {
 
+  extern "C" const char *cpp_pthread_version(){
+#ifndef CPP_PTHREAD_VERSION
+    return "missing CPP_PTHREAD_VERSION define. Re-run configure" ;
+#else
+    return CPP_PTHREAD_VERSION ;
+#endif
+  }
 }
 #endif /* pthread_pthread_hpp */

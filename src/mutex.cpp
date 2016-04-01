@@ -22,8 +22,8 @@ namespace pthread {
   }
   
   void mutex::lock () {
-    auto rc = pthread_mutex_lock ( &_mutex );
-    if ( rc != 0 ){
+    int rc = -1;
+    if ((rc = pthread_mutex_lock ( &_mutex )) != 0){
       throw mutex_exception("pthread_mutex_lock failed.", rc);
     }
   }
@@ -43,6 +43,10 @@ namespace pthread {
     }
   }
 
+#ifdef __IBMCPP__
+  mutex_exception::mutex_exception( const string message, const int pthread_error): pthread_exception(message, pthread_error) {
+#else
   mutex_exception::mutex_exception( const string message, const int pthread_error): pthread_exception{message, pthread_error} {
+#endif
   };
 }
