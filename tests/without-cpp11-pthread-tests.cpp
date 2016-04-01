@@ -41,9 +41,9 @@ public:
     {
       pthread::lock_guard<pthread::mutex> lck(mtx);
       
-      message("running worker class. wait max 20s for condition to be signaled");
+      message("running worker class. wait max 2s for condition to be signaled");
       bool stop_waiting = true;
-      auto delay = 20*1000;
+      auto delay = _sleep;
       while ( ! (stop_waiting = (counter >= 10000)) && (condition.wait_for(mtx, delay) == pthread::cv_status::no_timeout)){
         delay = -1 ;
       }
@@ -54,7 +54,8 @@ public:
       }
     }
     
-    pthread::this_thread::sleep(_sleep);
+    message("worker sleeping");
+    pthread::this_thread::sleep(200);
     message("worker class is ending");
   };
   
@@ -75,17 +76,27 @@ int main(int argc, const char * argv[]) {
   std::auto_ptr<pthread::thread> pt0(new pthread::thread(w));
   pt0->join();
 
-  std::list<pthread::thread> threads;
+  std::list<std::auto_ptr<pthread::thread>> threads;
+  for (auto x = 20 ; x > 0 ; x--){
+    threads.push_back(std::auto_ptr<pthread::thread>(new pthread::thread(w)));
+  }
 //  threads.push_back(pthread::thread(w));
 //  threads.push_back(pthread::thread(w));
 //  threads.push_back(pthread::thread(w));
 //  threads.push_back(pthread::thread(worker("herbert's worker")));
   
+  message("increment counter");
+  for ( auto x = 20000 ; x > 0 ; x--){
+    pthread::lock_guard<pthread::mutex> lck(mtx);
+    counter++ ;
+    condition.notify_one();
+  }
   message("main is waiting for threads to finish");
   
-  std::list<pthread::thread>::iterator iterator;
+  std::list<std::auto_ptr<pthread::thread>>::iterator iterator;
   for(iterator = threads.begin(); iterator != threads.end(); iterator++){
-    iterator->join();
+    message("join a thread (loop)");
+    (*iterator)->join();
   }
 
   message( "end reached");
