@@ -42,7 +42,10 @@ public:
       
       message("running worker class. wait max 20s for condition to be signaled");
       bool stop_waiting = true;
-      while ( ! (stop_waiting = (counter >= 10000)) && condition.wait_for(lck, 20*1000));
+      auto delay = 20*1000;
+      while ( ! (stop_waiting = (counter >= 10000)) && (condition.wait_for(mtx, delay) == pthread::cv_status::no_timeout)){
+        delay = -1 ;
+      }
       if ( counter >= 10000 ) {
         message("worker class, counter >= 10000");
       } else {
@@ -84,7 +87,7 @@ int main(int argc, const char * argv[]) {
   
   std::list<pthread::thread>::iterator iterator;
   for(iterator = threads.begin(); iterator != threads.end(); iterator++){
-    *iterator->join();
+    iterator->join();
   }
 
   message( "end reached");

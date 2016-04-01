@@ -69,7 +69,7 @@ namespace pthread {
   thread::thread (const runnable &work): thread{}{
 #endif
     int rc = 0 ;
-    pthread_attr_t attr(0);
+    pthread_attr_t attr;
     
     /* Initialize and set thread detached attribute */
     if ( (rc = pthread_attr_init(&attr)) != 0){

@@ -8,19 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		E519A0E51C9C4B4F00ED113D /* lock_guard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E519A0E41C9C4B4F00ED113D /* lock_guard.cpp */; };
-		E519A0FA1C9C6B2F00ED113D /* condition_variable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5EC5B791C9C2C6B00E21131 /* condition_variable.cpp */; };
-		E519A0FB1C9C6B3300ED113D /* mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5EC5B7B1C9C2C6B00E21131 /* mutex.cpp */; };
-		E519A0FC1C9C6B3800ED113D /* lock_guard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E519A0E41C9C4B4F00ED113D /* lock_guard.cpp */; };
 		E519A1011C9C7CAB00ED113D /* thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E519A0FF1C9C7CAB00ED113D /* thread.cpp */; };
-		E519A1021C9C7CAB00ED113D /* thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E519A0FF1C9C7CAB00ED113D /* thread.cpp */; };
+		E5B044051CAE72EB005C89BB /* without-cpp11-pthread-tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B044041CAE72EB005C89BB /* without-cpp11-pthread-tests.cpp */; };
+		E5B044111CAE739C005C89BB /* condition_variable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5EC5B791C9C2C6B00E21131 /* condition_variable.cpp */; };
+		E5B044121CAE739C005C89BB /* mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5EC5B7B1C9C2C6B00E21131 /* mutex.cpp */; };
+		E5B044131CAE739C005C89BB /* lock_guard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E519A0E41C9C4B4F00ED113D /* lock_guard.cpp */; };
+		E5B044141CAE739C005C89BB /* thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E519A0FF1C9C7CAB00ED113D /* thread.cpp */; };
+		E5B044151CAE739C005C89BB /* without-cpp11-pthread-tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5B044041CAE72EB005C89BB /* without-cpp11-pthread-tests.cpp */; };
+		E5B044171CAE755D005C89BB /* ibm.hpp in Headers */ = {isa = PBXBuildFile; fileRef = E5B044161CAE755D005C89BB /* ibm.hpp */; };
 		E5C4D71D1C9DC8C700D0E18C /* pthread in Headers */ = {isa = PBXBuildFile; fileRef = E5EC5B811C9C2C8B00E21131 /* pthread */; settings = {ATTRIBUTES = (Public, ); }; };
 		E5EC5B7D1C9C2C6B00E21131 /* condition_variable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5EC5B791C9C2C6B00E21131 /* condition_variable.cpp */; };
 		E5EC5B7F1C9C2C6B00E21131 /* mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5EC5B7B1C9C2C6B00E21131 /* mutex.cpp */; };
-		E5ECB7231CA440C50033A42D /* pthread-tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5ECB7211CA43E6C0033A42D /* pthread-tests.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		E519A0F01C9C64F600ED113D /* CopyFiles */ = {
+		E5B044081CAE7342005C89BB /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -33,17 +35,19 @@
 
 /* Begin PBXFileReference section */
 		E519A0E41C9C4B4F00ED113D /* lock_guard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lock_guard.cpp; path = src/lock_guard.cpp; sourceTree = "<group>"; };
-		E519A0F21C9C64F600ED113D /* pthread_tests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = pthread_tests; sourceTree = BUILT_PRODUCTS_DIR; };
 		E519A0FF1C9C7CAB00ED113D /* thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = thread.cpp; path = src/thread.cpp; sourceTree = "<group>"; };
+		E5B044041CAE72EB005C89BB /* without-cpp11-pthread-tests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "without-cpp11-pthread-tests.cpp"; sourceTree = "<group>"; };
+		E5B0440A1CAE7342005C89BB /* without-cpp11-pthread-tests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "without-cpp11-pthread-tests"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5B0440C1CAE7342005C89BB /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		E5B044161CAE755D005C89BB /* ibm.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ibm.hpp; path = include/ibm.hpp; sourceTree = "<group>"; };
 		E5EC5B711C9C2C3000E21131 /* libcpp-pthread.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcpp-pthread.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5EC5B791C9C2C6B00E21131 /* condition_variable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = condition_variable.cpp; path = src/condition_variable.cpp; sourceTree = "<group>"; };
 		E5EC5B7B1C9C2C6B00E21131 /* mutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mutex.cpp; path = src/mutex.cpp; sourceTree = "<group>"; };
 		E5EC5B811C9C2C8B00E21131 /* pthread */ = {isa = PBXFileReference; lastKnownFileType = folder; name = pthread; path = include/pthread; sourceTree = "<group>"; };
-		E5ECB7211CA43E6C0033A42D /* pthread-tests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "pthread-tests.cpp"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		E519A0EF1C9C64F600ED113D /* Frameworks */ = {
+		E5B044071CAE7342005C89BB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -63,9 +67,17 @@
 		E519A0F31C9C64F600ED113D /* tests */ = {
 			isa = PBXGroup;
 			children = (
-				E5ECB7211CA43E6C0033A42D /* pthread-tests.cpp */,
+				E5B044041CAE72EB005C89BB /* without-cpp11-pthread-tests.cpp */,
 			);
 			path = tests;
+			sourceTree = "<group>";
+		};
+		E5B0440B1CAE7342005C89BB /* without-cpp11-pthread-tests */ = {
+			isa = PBXGroup;
+			children = (
+				E5B0440C1CAE7342005C89BB /* main.cpp */,
+			);
+			path = "without-cpp11-pthread-tests";
 			sourceTree = "<group>";
 		};
 		E5EC5B681C9C2C3000E21131 = {
@@ -74,6 +86,7 @@
 				E5EC5B821C9C2C9000E21131 /* include */,
 				E5EC5B801C9C2C7100E21131 /* src */,
 				E519A0F31C9C64F600ED113D /* tests */,
+				E5B0440B1CAE7342005C89BB /* without-cpp11-pthread-tests */,
 				E5EC5B721C9C2C3000E21131 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -82,7 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				E5EC5B711C9C2C3000E21131 /* libcpp-pthread.a */,
-				E519A0F21C9C64F600ED113D /* pthread_tests */,
+				E5B0440A1CAE7342005C89BB /* without-cpp11-pthread-tests */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -101,6 +114,7 @@
 		E5EC5B821C9C2C9000E21131 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				E5B044161CAE755D005C89BB /* ibm.hpp */,
 				E5EC5B811C9C2C8B00E21131 /* pthread */,
 			);
 			name = include;
@@ -114,27 +128,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5C4D71D1C9DC8C700D0E18C /* pthread in Headers */,
+				E5B044171CAE755D005C89BB /* ibm.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		E519A0F11C9C64F600ED113D /* pthread_tests */ = {
+		E5B044091CAE7342005C89BB /* without-cpp11-pthread-tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E519A0F61C9C64F600ED113D /* Build configuration list for PBXNativeTarget "pthread_tests" */;
+			buildConfigurationList = E5B0440E1CAE7342005C89BB /* Build configuration list for PBXNativeTarget "without-cpp11-pthread-tests" */;
 			buildPhases = (
-				E519A0EE1C9C64F600ED113D /* Sources */,
-				E519A0EF1C9C64F600ED113D /* Frameworks */,
-				E519A0F01C9C64F600ED113D /* CopyFiles */,
+				E5B044061CAE7342005C89BB /* Sources */,
+				E5B044071CAE7342005C89BB /* Frameworks */,
+				E5B044081CAE7342005C89BB /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = pthread_tests;
-			productName = pthread_tests;
-			productReference = E519A0F21C9C64F600ED113D /* pthread_tests */;
+			name = "without-cpp11-pthread-tests";
+			productName = "without-cpp11-pthread-tests";
+			productReference = E5B0440A1CAE7342005C89BB /* without-cpp11-pthread-tests */;
 			productType = "com.apple.product-type.tool";
 		};
 		E5EC5B701C9C2C3000E21131 /* cpp-pthread */ = {
@@ -163,8 +178,8 @@
 				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "urbix-software";
 				TargetAttributes = {
-					E519A0F11C9C64F600ED113D = {
-						CreatedOnToolsVersion = 7.2.1;
+					E5B044091CAE7342005C89BB = {
+						CreatedOnToolsVersion = 7.3;
 					};
 					E5EC5B701C9C2C3000E21131 = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -184,21 +199,21 @@
 			projectRoot = "";
 			targets = (
 				E5EC5B701C9C2C3000E21131 /* cpp-pthread */,
-				E519A0F11C9C64F600ED113D /* pthread_tests */,
+				E5B044091CAE7342005C89BB /* without-cpp11-pthread-tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		E519A0EE1C9C64F600ED113D /* Sources */ = {
+		E5B044061CAE7342005C89BB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5ECB7231CA440C50033A42D /* pthread-tests.cpp in Sources */,
-				E519A1021C9C7CAB00ED113D /* thread.cpp in Sources */,
-				E519A0FC1C9C6B3800ED113D /* lock_guard.cpp in Sources */,
-				E519A0FB1C9C6B3300ED113D /* mutex.cpp in Sources */,
-				E519A0FA1C9C6B2F00ED113D /* condition_variable.cpp in Sources */,
+				E5B044111CAE739C005C89BB /* condition_variable.cpp in Sources */,
+				E5B044121CAE739C005C89BB /* mutex.cpp in Sources */,
+				E5B044131CAE739C005C89BB /* lock_guard.cpp in Sources */,
+				E5B044141CAE739C005C89BB /* thread.cpp in Sources */,
+				E5B044151CAE739C005C89BB /* without-cpp11-pthread-tests.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,33 +225,28 @@
 				E5EC5B7D1C9C2C6B00E21131 /* condition_variable.cpp in Sources */,
 				E5EC5B7F1C9C2C6B00E21131 /* mutex.cpp in Sources */,
 				E519A1011C9C7CAB00ED113D /* thread.cpp in Sources */,
+				E5B044051CAE72EB005C89BB /* without-cpp11-pthread-tests.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		E519A0F71C9C64F600ED113D /* Debug */ = {
+		E5B0440F1CAE7342005C89BB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				DEPLOYMENT_LOCATION = YES;
-				INSTALL_PATH = /usr/local/bin;
+				CLANG_ANALYZER_NONNULL = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include;
-				USER_HEADER_SEARCH_PATHS = "/Users/herbert/Documents/c++/cpp-pthread/include";
 			};
 			name = Debug;
 		};
-		E519A0F81C9C64F600ED113D /* Release */ = {
+		E5B044101CAE7342005C89BB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				DEPLOYMENT_LOCATION = YES;
-				INSTALL_PATH = /usr/local/bin;
+				CLANG_ANALYZER_NONNULL = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include;
-				USER_HEADER_SEARCH_PATHS = "/Users/herbert/Documents/c++/cpp-pthread/include";
 			};
 			name = Release;
 		};
@@ -276,7 +286,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/include";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -315,7 +325,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/include";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
@@ -352,14 +362,13 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E519A0F61C9C64F600ED113D /* Build configuration list for PBXNativeTarget "pthread_tests" */ = {
+		E5B0440E1CAE7342005C89BB /* Build configuration list for PBXNativeTarget "without-cpp11-pthread-tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E519A0F71C9C64F600ED113D /* Debug */,
-				E519A0F81C9C64F600ED113D /* Release */,
+				E5B0440F1CAE7342005C89BB /* Debug */,
+				E5B044101CAE7342005C89BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
 		E5EC5B6C1C9C2C3000E21131 /* Build configuration list for PBXProject "cpp-pthread" */ = {
 			isa = XCConfigurationList;

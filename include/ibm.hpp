@@ -3,7 +3,7 @@
 // More here http://www.ibm.com/support/knowledgecenter/SSGH3R_13.1.2/com.ibm.xlcpp131.aix.doc/proguide/rvaluereferences.html
 //
 
-#ifdef __IBMCPP__
+//#ifdef __IBMCPP__
 
 namespace ibm {
     template <typename T> struct remove_reference { 
@@ -43,4 +43,4 @@ namespace ibm {
         return static_cast<typename remove_reference<T>::type &&>(t);
     }
 }
-#endif
+//#endif
