@@ -11,6 +11,7 @@
 #include <string>
 #include <list>
 #include <utility>
+#include <memory>
 #include "pthread/pthread.hpp"
 #include "ibm.hpp"
 
@@ -70,18 +71,15 @@ int main(int argc, const char * argv[]) {
   pthread::thread t2(w);
   t0 = ibm::move(t2) ;
   t0.join();
-//  
-//  pthread::thread t4(pthread::thread(w));
-//  pthread::thread t1(w);
-//  
-//  t1.join();
-//  t4.join();
+  
+  std::auto_ptr<pthread::thread> pt0(new pthread::thread(w));
+  pt0->join();
 
   std::list<pthread::thread> threads;
-  threads.push_back(pthread::thread(w));
-  threads.push_back(pthread::thread(w));
-  threads.push_back(pthread::thread(w));
-  threads.push_back(pthread::thread(worker("herbert's worker")));
+//  threads.push_back(pthread::thread(w));
+//  threads.push_back(pthread::thread(w));
+//  threads.push_back(pthread::thread(w));
+//  threads.push_back(pthread::thread(worker("herbert's worker")));
   
   message("main is waiting for threads to finish");
   

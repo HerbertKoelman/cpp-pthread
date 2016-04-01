@@ -34,13 +34,12 @@ CCFLAGS=$(CXXFLAGS)
 
 LDFLAGS=@LDFLAGS@
 
-OBJECTS=@OBJECTS@
-
-TARGETS=pthread-tests
+OBJECTS=without-cpp11-pthread-tests.o
+TARGETS=without-cpp11-pthread-tests 
 
 all:${TARGETS}
 
-pthread-tests: $(OBJECTS)
+without-cpp11-pthread-tests: without-cpp11-pthread-tests.o
     
 clean: globber
 
@@ -59,3 +58,6 @@ beautifull:
 # cpp build rule
 .cpp.o:
 	$(CCC) $(CCFLAGS) -c $<
+
+.cpp: 
+	$(CCC) $(CCFLAGS) $(LDFLAGS) $< -o $@
