@@ -76,28 +76,30 @@ int main(int argc, const char * argv[]) {
   std::auto_ptr<pthread::thread> pt0(new pthread::thread(w));
   pt0->join();
 
-  std::list<std::auto_ptr<pthread::thread>> threads;
+//  std::list<std::auto_ptr<pthread::thread>> threads;
+  std::list<pthread::thread> threads;
   for (auto x = 20 ; x > 0 ; x--){
-    threads.push_back(std::auto_ptr<pthread::thread>(new pthread::thread(w)));
+//    threads.push_back(std::auto_ptr<pthread::thread>(new pthread::thread(w)));
+    threads.push_back(ibm::move(pthread::thread(w)));
   }
 //  threads.push_back(pthread::thread(w));
 //  threads.push_back(pthread::thread(w));
 //  threads.push_back(pthread::thread(w));
 //  threads.push_back(pthread::thread(worker("herbert's worker")));
-  
-  message("increment counter");
-  for ( auto x = 20000 ; x > 0 ; x--){
-    pthread::lock_guard<pthread::mutex> lck(mtx);
-    counter++ ;
-    condition.notify_one();
-  }
-  message("main is waiting for threads to finish");
-  
-  std::list<std::auto_ptr<pthread::thread>>::iterator iterator;
-  for(iterator = threads.begin(); iterator != threads.end(); iterator++){
-    message("join a thread (loop)");
-    (*iterator)->join();
-  }
+//  
+//  message("increment counter");
+//  for ( auto x = 20000 ; x > 0 ; x--){
+//    pthread::lock_guard<pthread::mutex> lck(mtx);
+//    counter++ ;
+//    condition.notify_one();
+//  }
+//  message("main is waiting for threads to finish");
+//  
+//  std::list<std::auto_ptr<pthread::thread>>::iterator iterator;
+//  for(iterator = threads.begin(); iterator != threads.end(); iterator++){
+//    message("join a thread (loop)");
+//    (*iterator)->join();
+//  }
 
   message( "end reached");
   
