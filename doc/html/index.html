@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>C++ pThread wrapper: Main Page</title>
+<title>C++ pThread wrapper: What it does</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -40,7 +40,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -79,13 +78,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div class="header">
   <div class="headertitle">
-<div class="title">C++ pThread wrapper Documentation</div>  </div>
+<div class="title">What it does </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1>What it does</h1>
-<p>IBM's compiler is not implementing all the features of C++11 standard, especially it's lacking the concurrency features that the standard brings. This will at some point be fixed and was therfore looking at a way reduce the effort to switch from a specific implementation to the C++11 standard one. This projetc is the resulting code.:w</p>
+<div class="textblock"><p>IBM's compiler is not implementing all the features of C++11 standard, especially it's lacking the concurrency features that the standard brings. This will at some point be fixed and was therfore looking at a way reduce the effort to switch from a specific implementation to the C++11 standard one. This projetc is the resulting code.:w</p>
 <p>This wrapper intends to bring these feature by implementing C++11 interface and using the pthread library. Of course, as it is a replacement of C++11 features, it is best to use the standard implementation if your compiler support it. This can be done rather easely by using the standard namespace <code>std</code> instead of this library's specific one <code>pthread</code>.:w</p>
-<p>To use this library: </p><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;configure</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;make</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;make install</div></div><!-- fragment --><p>Install moves files into your system's default localtion of headers and libraries (often /usr/local/include and /usr/local/lib). Use this command to change target directory: </p><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;configure --prefix=/usr/local</div></div><!-- fragment --><p>Documentation can be generated with this command: </p><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;make doxygen</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;...</div></div><!-- fragment --><p>This command creates a <code>doc</code> directory wich will contain the generated documentation.</p>
+<p>To use this library: </p><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;configure</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;make</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;make install</div></div><!-- fragment --><p>Install moves files into your system's default localtion of headers and libraries (often /usr/local/include and /usr/local/lib). Use this command to change target directory: </p><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;configure --prefix=/usr/local</div></div><!-- fragment --><p><a href="http://herbertkoelman.github.io/cpp-pthread/doc/html/">Documentation</a> can be generated with this command: </p><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;make doxygen</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;...</div></div><!-- fragment --><p>This command creates a <code>doc</code> directory wich will contain the generated documentation.</p>
 <blockquote class="doxtable">
 <p><b>warning</b> generating documentation requires that doxygen is installed. </p>
 </blockquote>
@@ -99,6 +97,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <h1>Usefull links</h1>
 <ul>
 <li><a href="http://pubs.opengroup.org/onlinepubs/007908799/xsh/threads.html">documentation</a> of the underlying POSIX threading library</li>
+<li><a href="http://herbertkoelman.github.io/cpp-pthread/doc/html/">project's doxygen</a></li>
 <li><a href="http://en.cppreference.com/w/cpp/thread/thread">std::thread</a> implementation we try to mimic</li>
 <li><a href="http://en.cppreference.com/w/cpp/thread/lock_guard/lock_guard">std::lock_guard</a> implementation we try to mimic</li>
 <li><a href="http://en.cppreference.com/w/cpp/thread/mutex">std::mutex</a> implementation we try to mimic</li>

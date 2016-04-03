@@ -40,7 +40,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -122,10 +121,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5ee32edbf76592ec443e2544ecba811a"><td class="memTemplParams" colspan="2">template&lt;class Lambda &gt; </td></tr>
 <tr class="memitem:a5ee32edbf76592ec443e2544ecba811a"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpthread_1_1condition__variable.html#a5ee32edbf76592ec443e2544ecba811a">wait_for</a> (<a class="el" href="classpthread_1_1lock__guard.html">lock_guard</a>&lt; <a class="el" href="classpthread_1_1mutex.html">pthread::mutex</a> &gt; &amp;lck, int millis, Lambda lambda)</td></tr>
 <tr class="separator:a5ee32edbf76592ec443e2544ecba811a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae374b1e852f36fc5eac93ad90d9fc85a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1condition__variable.html#ae374b1e852f36fc5eac93ad90d9fc85a">notify_one</a> () noexcept</td></tr>
-<tr class="separator:ae374b1e852f36fc5eac93ad90d9fc85a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae40f0c9043ed693317bb9a07861efc65"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1condition__variable.html#ae40f0c9043ed693317bb9a07861efc65">notify_all</a> () noexcept</td></tr>
-<tr class="separator:ae40f0c9043ed693317bb9a07861efc65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afded612c4271bdc890e52d81a3c22422"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1condition__variable.html#afded612c4271bdc890e52d81a3c22422">notify_one</a> () __NOEXCEPT__</td></tr>
+<tr class="separator:afded612c4271bdc890e52d81a3c22422"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9faf121444ba2f696753456e9ab441a9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1condition__variable.html#a9faf121444ba2f696753456e9ab441a9">notify_all</a> () __NOEXCEPT__</td></tr>
+<tr class="separator:a9faf121444ba2f696753456e9ab441a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>pthread condition variable</p>
@@ -139,12 +138,9 @@ Public Member Functions</h2></td></tr>
 <p>Upon successful return, the mutex shall have been locked and shall be owned by the calling thread.</p>
 <dl class="section author"><dt>Author</dt><dd>herbert koelman </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="ae40f0c9043ed693317bb9a07861efc65"></a>
+<a class="anchor" id="a9faf121444ba2f696753456e9ab441a9"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void pthread::condition_variable::notify_all </td>
@@ -153,22 +149,14 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>signal all waiting threads The pthread_cond_broadcast() call unblocks all threads currently blocked on the specified condition variable cond. </p>
 
 </div>
 </div>
-<a class="anchor" id="ae374b1e852f36fc5eac93ad90d9fc85a"></a>
+<a class="anchor" id="afded612c4271bdc890e52d81a3c22422"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void pthread::condition_variable::notify_one </td>
@@ -177,11 +165,6 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>signal one waiting thread.</p>
 <p>The pthread_cond_signal() call unblocks at least one of the threads that are blocked on the specified condition variable cond (if any threads are blocked on cond). </p>
@@ -340,6 +323,7 @@ access by another thread to the mutex and then the condition variable". Call not
 <p>This method atomically release mutex and cause the calling thread to block; atomically here means "atomically with respect to
 access by another thread to the mutex and then the condition variable". Call notify_one or notify_all to signal the condition.</p>
 <p>Upon successful return, the mutex has been locked and is owned by the calling thread.</p>
+<p>If this method is called with millis &lt; 0 then the timeout time is not recalculated. This make it possible to handle spurious unblocking of condition variable without the need of a lambda expression. The call sequence is then: while(! check_condition() &amp;&amp; wait_for(lck, 200) == no_tiemout );</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">mtx</td><td>ralated mutex, which must be locked by the current thread. </td></tr>

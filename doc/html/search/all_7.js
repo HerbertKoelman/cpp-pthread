@@ -1,8 +1,4 @@
 var searchData=
 [
-  ['pthread',['pthread',['../namespacepthread.html',1,'']]],
-  ['pthread_5ferrmsg',['pthread_errmsg',['../classpthread_1_1pthread__exception.html#aa2371eb23800817723174186450e9716',1,'pthread::pthread_exception']]],
-  ['pthread_5ferrno',['pthread_errno',['../classpthread_1_1pthread__exception.html#a8a5c22a403ebd14635e912295fe02a1e',1,'pthread::pthread_exception']]],
-  ['pthread_5fexception',['pthread_exception',['../classpthread_1_1pthread__exception.html#a157d4379b6eddcc82ca504534c51abe6',1,'pthread::pthread_exception']]],
-  ['pthread_5fexception',['pthread_exception',['../classpthread_1_1pthread__exception.html',1,'pthread']]]
+  ['operator_3d',['operator=',['../classpthread_1_1thread.html#a09903f6b3f396f2ea046c9c1606f0f61',1,'pthread::thread::operator=(const thread &amp;)=delete'],['../classpthread_1_1thread.html#a8f9ab7d43ad9aee0368ccc4778cf40d0',1,'pthread::thread::operator=(thread &amp;&amp;other)']]]
 ];

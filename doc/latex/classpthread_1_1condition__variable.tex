@@ -23,9 +23,9 @@ void \hyperlink{classpthread_1_1condition__variable_a9bb3e49f17ec1470c305d8b21da
 \item 
 {\footnotesize template$<$class Lambda $>$ }\\bool \hyperlink{classpthread_1_1condition__variable_a5ee32edbf76592ec443e2544ecba811a}{wait\+\_\+for} (\hyperlink{classpthread_1_1lock__guard}{lock\+\_\+guard}$<$ \hyperlink{classpthread_1_1mutex}{pthread\+::mutex} $>$ \&lck, int millis, Lambda lambda)
 \item 
-void \hyperlink{classpthread_1_1condition__variable_ae374b1e852f36fc5eac93ad90d9fc85a}{notify\+\_\+one} () noexcept
+void \hyperlink{classpthread_1_1condition__variable_afded612c4271bdc890e52d81a3c22422}{notify\+\_\+one} () \+\_\+\+\_\+\+N\+O\+E\+X\+C\+E\+P\+T\+\_\+\+\_\+
 \item 
-void \hyperlink{classpthread_1_1condition__variable_ae40f0c9043ed693317bb9a07861efc65}{notify\+\_\+all} () noexcept
+void \hyperlink{classpthread_1_1condition__variable_a9faf121444ba2f696753456e9ab441a9}{notify\+\_\+all} () \+\_\+\+\_\+\+N\+O\+E\+X\+C\+E\+P\+T\+\_\+\+\_\+
 \end{DoxyCompactItemize}
 
 
@@ -53,18 +53,18 @@ herbert koelman
 \subsection{Member Function Documentation}
 \index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!notify\+\_\+all@{notify\+\_\+all}}
 \index{notify\+\_\+all@{notify\+\_\+all}!pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}}
-\subsubsection[{\texorpdfstring{notify\+\_\+all() noexcept}{notify_all() noexcept}}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::condition\+\_\+variable\+::notify\+\_\+all (
+\subsubsection[{\texorpdfstring{notify\+\_\+all() \+\_\+\+\_\+\+N\+O\+E\+X\+C\+E\+P\+T\+\_\+\+\_\+}{notify_all() __NOEXCEPT__}}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::condition\+\_\+variable\+::notify\+\_\+all (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [noexcept]}}\hypertarget{classpthread_1_1condition__variable_ae40f0c9043ed693317bb9a07861efc65}{}\label{classpthread_1_1condition__variable_ae40f0c9043ed693317bb9a07861efc65}
+)}\hypertarget{classpthread_1_1condition__variable_a9faf121444ba2f696753456e9ab441a9}{}\label{classpthread_1_1condition__variable_a9faf121444ba2f696753456e9ab441a9}
 signal all waiting threads The pthread\+\_\+cond\+\_\+broadcast() call unblocks all threads currently blocked on the specified condition variable cond. \index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!notify\+\_\+one@{notify\+\_\+one}}
 \index{notify\+\_\+one@{notify\+\_\+one}!pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}}
-\subsubsection[{\texorpdfstring{notify\+\_\+one() noexcept}{notify_one() noexcept}}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::condition\+\_\+variable\+::notify\+\_\+one (
+\subsubsection[{\texorpdfstring{notify\+\_\+one() \+\_\+\+\_\+\+N\+O\+E\+X\+C\+E\+P\+T\+\_\+\+\_\+}{notify_one() __NOEXCEPT__}}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::condition\+\_\+variable\+::notify\+\_\+one (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [noexcept]}}\hypertarget{classpthread_1_1condition__variable_ae374b1e852f36fc5eac93ad90d9fc85a}{}\label{classpthread_1_1condition__variable_ae374b1e852f36fc5eac93ad90d9fc85a}
+)}\hypertarget{classpthread_1_1condition__variable_afded612c4271bdc890e52d81a3c22422}{}\label{classpthread_1_1condition__variable_afded612c4271bdc890e52d81a3c22422}
 signal one waiting thread.
 
 The pthread\+\_\+cond\+\_\+signal() call unblocks at least one of the threads that are blocked on the specified condition variable cond (if any threads are blocked on cond). \index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!wait@{wait}}
@@ -164,6 +164,8 @@ This method atomically release mutex and cause the calling thread to block; atom
 access by another thread to the mutex and then the condition variable\char`\"{}. Call notify\+\_\+one or notify\+\_\+all to signal the condition.
 
 Upon successful return, the mutex has been locked and is owned by the calling thread.
+
+If this method is called with millis $<$ 0 then the timeout time is not recalculated. This make it possible to handle spurious unblocking of condition variable without the need of a lambda expression. The call sequence is then\+: while(! check\+\_\+condition() \&\& wait\+\_\+for(lck, 200) == no\+\_\+tiemout );
 
 
 \begin{DoxyParams}{Parameters}

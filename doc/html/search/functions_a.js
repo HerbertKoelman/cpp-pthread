@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['unlock',['unlock',['../classpthread_1_1mutex.html#adfac0bda708dd01320763c57d5a7a203',1,'pthread::mutex']]]
+  ['start',['start',['../classpthread_1_1thread__group.html#aaba00cf80d72cd986526384482457968',1,'pthread::thread_group']]],
+  ['status',['status',['../classpthread_1_1thread.html#a3e49c7d73cb8411258790ed2fc0cd818',1,'pthread::thread']]]
 ];

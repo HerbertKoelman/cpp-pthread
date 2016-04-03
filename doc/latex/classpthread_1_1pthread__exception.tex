@@ -13,9 +13,9 @@ Inheritance diagram for pthread\+:\+:pthread\+\_\+exception\+:\begin{figure}[H]
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classpthread_1_1pthread__exception_a157d4379b6eddcc82ca504534c51abe6}{pthread\+\_\+exception} (const string message, const int \hyperlink{classpthread_1_1pthread__exception_a8a5c22a403ebd14635e912295fe02a1e}{pthread\+\_\+errno}=0)
+\hyperlink{classpthread_1_1pthread__exception_ab7204244a70e74c239b284d9b9fad91c}{pthread\+\_\+exception} (const string message, const int pthread\+\_\+number=0)
 \item 
-virtual const char $\ast$ \hyperlink{classpthread_1_1pthread__exception_a908666a0dd622c9a2a008e89a15d8fc7}{what} () const  noexcept override
+virtual const char $\ast$ \hyperlink{classpthread_1_1pthread__exception_a6a4ff68b095f2e0ddb646b75af790c73}{what} () const \+\_\+\+\_\+\+N\+O\+E\+X\+C\+E\+P\+T\+\_\+\+\_\+ \+\_\+\+\_\+\+O\+V\+E\+R\+R\+I\+D\+E\+\_\+\+\_\+
 \item 
 virtual int \hyperlink{classpthread_1_1pthread__exception_a8a5c22a403ebd14635e912295fe02a1e}{pthread\+\_\+errno} ()
 \item 
@@ -29,12 +29,12 @@ general purpose pthread exception.
 \subsection{Constructor \& Destructor Documentation}
 \index{pthread\+::pthread\+\_\+exception@{pthread\+::pthread\+\_\+exception}!pthread\+\_\+exception@{pthread\+\_\+exception}}
 \index{pthread\+\_\+exception@{pthread\+\_\+exception}!pthread\+::pthread\+\_\+exception@{pthread\+::pthread\+\_\+exception}}
-\subsubsection[{\texorpdfstring{pthread\+\_\+exception(const string message, const int pthread\+\_\+errno=0)}{pthread_exception(const string message, const int pthread_errno=0)}}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+::pthread\+\_\+exception\+::pthread\+\_\+exception (
+\subsubsection[{\texorpdfstring{pthread\+\_\+exception(const string message, const int pthread\+\_\+number=0)}{pthread_exception(const string message, const int pthread_number=0)}}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+::pthread\+\_\+exception\+::pthread\+\_\+exception (
 \begin{DoxyParamCaption}
 \item[{const string}]{message, }
-\item[{const int}]{pthread\+\_\+errno = {\ttfamily 0}}
+\item[{const int}]{pthread\+\_\+number = {\ttfamily 0}}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classpthread_1_1pthread__exception_a157d4379b6eddcc82ca504534c51abe6}{}\label{classpthread_1_1pthread__exception_a157d4379b6eddcc82ca504534c51abe6}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classpthread_1_1pthread__exception_ab7204244a70e74c239b284d9b9fad91c}{}\label{classpthread_1_1pthread__exception_ab7204244a70e74c239b284d9b9fad91c}
 
 \begin{DoxyParams}{Parameters}
 {\em message} & error message \\
@@ -67,11 +67,11 @@ pthread error code that was at the orgin of the error
 \end{DoxyReturn}
 \index{pthread\+::pthread\+\_\+exception@{pthread\+::pthread\+\_\+exception}!what@{what}}
 \index{what@{what}!pthread\+::pthread\+\_\+exception@{pthread\+::pthread\+\_\+exception}}
-\subsubsection[{\texorpdfstring{what() const  noexcept override}{what() const  noexcept override}}]{\setlength{\rightskip}{0pt plus 5cm}virtual const char$\ast$ pthread\+::pthread\+\_\+exception\+::what (
+\subsubsection[{\texorpdfstring{what() const \+\_\+\+\_\+\+N\+O\+E\+X\+C\+E\+P\+T\+\_\+\+\_\+ \+\_\+\+\_\+\+O\+V\+E\+R\+R\+I\+D\+E\+\_\+\+\_\+}{what() const __NOEXCEPT__ __OVERRIDE__}}]{\setlength{\rightskip}{0pt plus 5cm}virtual const char$\ast$ pthread\+::pthread\+\_\+exception\+::what (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [noexcept]}}\hypertarget{classpthread_1_1pthread__exception_a908666a0dd622c9a2a008e89a15d8fc7}{}\label{classpthread_1_1pthread__exception_a908666a0dd622c9a2a008e89a15d8fc7}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\hypertarget{classpthread_1_1pthread__exception_a6a4ff68b095f2e0ddb646b75af790c73}{}\label{classpthread_1_1pthread__exception_a6a4ff68b095f2e0ddb646b75af790c73}
 \begin{DoxyReturn}{Returns}
 the exception\textquotesingle{}s error message. 
 \end{DoxyReturn}

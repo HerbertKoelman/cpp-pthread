@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['readme',['README',['../md_README.html',1,'']]]
+  ['what_20it_20does',['What it does',['../index.html',1,'']]]
 ];
