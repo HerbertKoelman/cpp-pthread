@@ -1,6 +1,6 @@
 # What it does
 
-IBM's compiler is not implementing all the features of C++11 standard, especially it's lacking the concurrency features that the standard brings. This will at some point be fixed and was therfore looking at a way reduce the effort to switch from a specific implementation to the C++11 standard one. This projetc is the resulting code.:w
+IBM's compiler is not implementing all the features of C++11 standard, especially it's lacking the concurrency features that the standard brings. This will at some point be fixed and was therfore looking at a way reduce the effort to switch from a specific implementation to the C++11 standard one. This projetc is the resulting code.
 
 
 This wrapper intends to bring these feature by implementing C++11 interface and using the  pthread library.  Of course, as it is a replacement of C++11 features, it is best to use the standard implementation if your compiler support it. This can be done rather easely by using the standard namespace `std` instead of this library's specific one `pthread`.:w
@@ -40,6 +40,7 @@ It should now compile use this very simple (but often good enough) implementatio
 # Usefull links
 
 * [documentation](http://pubs.opengroup.org/onlinepubs/007908799/xsh/threads.html) of the underlying POSIX threading library 
+* [project's home](https://github.com/HerbertKoelman/cpp-pthread)
 * [project's doxygen](http://herbertkoelman.github.io/cpp-pthread/doc/html/)
 * [std::thread](http://en.cppreference.com/w/cpp/thread/thread) implementation we try to mimic
 * [std::lock_guard](http://en.cppreference.com/w/cpp/thread/lock_guard/lock_guard)  implementation we try to mimic 
