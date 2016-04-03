@@ -55,19 +55,11 @@ namespace pthread {
     return rc;
   }
   
-#ifdef __IBMCPP__
   thread::thread(): _status(thread_status::not_a_thread), _thread(0){
-#else
-  thread::thread(): _status{thread_status::not_a_thread}, _thread{nullptr}{
-#endif
     
   }
   
-#ifdef __IBMCPP__
   thread::thread (const runnable &work): thread(){
-#else
-  thread::thread (const runnable &work): thread{}{
-#endif
     int rc = 0 ;
     pthread_attr_t attr;
     
@@ -109,9 +101,50 @@ namespace pthread {
   }
   
   thread::~thread () {
-//    if ( _status == thread_status::a_thread ){
-//      pthread_attr_destroy(&_attr);
-//    }
+  }
+  
+  abstract_thread::~abstract_thread(){
+  
+    delete _thread;
+  }
+  
+  void abstract_thread::start(){
+    
+    _thread = new pthread::thread(*this);
+  }
+  
+  thread_group::thread_group(bool destructor_joins_first ) __NOEXCEPT__: _destructor_joins_first(destructor_joins_first){
+    
+  }
+  
+  thread_group::~thread_group(){
+    while(! _threads.empty()){
+      std::auto_ptr<pthread::abstract_thread> pat(_threads.front());
+      _threads.pop_front();
+      
+      if ( _destructor_joins_first ){
+        try {
+          pat->join();
+        } catch ( ... ){};
+      }
+    }
+  }
+  
+  void thread_group::add(pthread::abstract_thread *thread){
+    
+    _threads.push_back(thread);
+  }
+  
+  void thread_group::start(){
+      for(auto iterator = _threads.begin(); iterator != _threads.end(); iterator++){
+        (*iterator)->start();
+      }
+  }
+  
+  void thread_group::join(){
+    for(auto iterator = _threads.begin(); iterator != _threads.end(); iterator++){
+      (*iterator)->join();
+    }
   }
   
   /**
@@ -128,11 +161,7 @@ namespace pthread {
   
   // exception -------
   
-#ifdef __IBMCPP__
   thread_exception::thread_exception(const string message, const int pthread_error): pthread_exception(message, pthread_error){
-#else
-  thread_exception::thread_exception(const string message, const int pthread_error): pthread_exception{message, pthread_error}{
-#endif
   }
   
 } // namespace pthread
