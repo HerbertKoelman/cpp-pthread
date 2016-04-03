@@ -112,8 +112,6 @@ namespace pthread {
      */
     cv_status wait_for (mutex &mtx, int millis );
 
-    cv_status wait_for (lock_guard<pthread::mutex> &lck, int millis );
-    
     /** @see #wait_for (mutex &, int)
      */
     cv_status wait_for (lock_guard<pthread::mutex> &lck, int millis );

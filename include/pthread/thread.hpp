@@ -162,6 +162,63 @@ namespace pthread {
     thread_status  _status;
   };
   
+  /** base class of a thread.
+   * 
+   * utility class, that wraps a thread.
+   * <pre><code>
+   class worker: public pthread::abstract_thread {
+   public:
+   
+     worker(const std::string m = "anonymous worker", int sleep = 2*1000): msg(m), _sleep(sleep){
+     };
+     
+     ~worker(){
+     };
+     
+     void run() __NOEXCEPT__ __OVERRIDE__ {
+       { // critical section scope
+         pthread::lock_guard<pthread::mutex> lck(mtx);
+   
+         bool stop_waiting = true; // if lambda syntax is not availbale then use this kind of implementation
+         auto delay = _sleep; // use sleep seconds to calculate point in time timeout
+         while ( ! (stop_waiting = (counter >= 10000)) && (condition.wait_for(mtx, delay) == pthread::cv_status::no_timeout)){
+           delay = -1 ; // if timeout millis is negatif, then we keep last timeout calculation.
+         }
+     
+         if ( counter >= 10000 ) {
+           message("worker class, counter >= 10000");
+         } else {
+           message("worker class, counter < 10000");
+         }
+       } // end of critical section
+   
+       pthread::this_thread::sleep(200);
+     };
+   
+   private:
+     std::string    msg ;
+     int            _sleep;
+   };
+
+   int main(int argc, const char * argv[]) {
+   
+     pthread::thread_group threads(true); // indicate that we want to join referenced threads when deallocating this instance.
+     for (auto x = 10 ; x > 0 ; x--){
+       threads.add( new worker("herbert"));
+     }
+     
+     threads.start(); // start running all threads
+   
+     for ( auto x = 20000 ; x > 0 ; x--){
+       pthread::lock_guard<pthread::mutex> lck(mtx);
+       counter++ ;
+     }
+   
+     condition.notify_all();
+   }
+
+   * </code></pre>
+   */
   class abstract_thread: public runnable {
   public:
     virtual ~abstract_thread();
@@ -174,19 +231,23 @@ namespace pthread {
     pthread::thread *_thread;
   };
   
-  /** group (list) of abstract_threads.
+  /** Group of abstract_threads pointers.
    *
-   * method in this class apply's to all threads in the group. this means that when an thread_group instance is deallocated, all threads it references are deleted.
+   * This helper class is in charge of handling group of threads as a whole. Method in this class apply to all threads in the group.
+   *
+   * To avoid memory lose of resources, a thread_group deletes the thread that were registered/added.
    */
   class thread_group{
   public:
     /** Setup a thread container/list.
      *
-     * @param destructor_joins_first if true then destructor tries to join all regsitered threads before deleting thread instances.
+     * @param destructor_joins_first if true then destructor tries to wait for all registered threads to join the calling one before deleting thread instances.
      */
     thread_group( bool destructor_joins_first = false ) __NOEXCEPT__;
     
-    /** delete all threads referenced by the thread_group.
+    /** delete all abstract_thread referenced by the thread_group.
+     *
+     * If destructor_joins_first is true then the method abstract_thread::join() is called before deleting the referenced abstract_thread.
      */
     virtual ~thread_group();
     
@@ -202,6 +263,10 @@ namespace pthread {
     /** what for all threads to join the caller of this method.
      */
     void join();
+    
+    /** return if thread_group should wait for all referenced abstract_thread terminate
+     */
+    const bool destructor_joins_first(){ return _destructor_joins_first;};
     
   private:
     std::list<pthread::abstract_thread*> _threads;
