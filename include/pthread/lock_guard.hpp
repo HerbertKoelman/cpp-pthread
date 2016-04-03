@@ -11,6 +11,8 @@
 
 #include <pthread.h>
 
+#include "pthread/config.h"
+
 #include "pthread/mutex.hpp"
 
 namespace pthread {

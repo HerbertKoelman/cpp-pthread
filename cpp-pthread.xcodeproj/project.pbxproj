@@ -45,7 +45,6 @@
 		E519A0E41C9C4B4F00ED113D /* lock_guard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lock_guard.cpp; path = src/lock_guard.cpp; sourceTree = "<group>"; };
 		E519A0FF1C9C7CAB00ED113D /* thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = thread.cpp; path = src/thread.cpp; sourceTree = "<group>"; };
 		E54543351CAD21A30051A313 /* cpp11-pthread-tests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "cpp11-pthread-tests"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E54543371CAD21A30051A313 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E5EC5B711C9C2C3000E21131 /* libcpp-pthread.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcpp-pthread.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5EC5B791C9C2C6B00E21131 /* condition_variable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = condition_variable.cpp; path = src/condition_variable.cpp; sourceTree = "<group>"; };
 		E5EC5B7B1C9C2C6B00E21131 /* mutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mutex.cpp; path = src/mutex.cpp; sourceTree = "<group>"; };
@@ -79,21 +78,12 @@
 			path = tests;
 			sourceTree = "<group>";
 		};
-		E54543361CAD21A30051A313 /* cpp11-pthread-tests */ = {
-			isa = PBXGroup;
-			children = (
-				E54543371CAD21A30051A313 /* main.m */,
-			);
-			path = "cpp11-pthread-tests";
-			sourceTree = "<group>";
-		};
 		E5EC5B681C9C2C3000E21131 = {
 			isa = PBXGroup;
 			children = (
 				E5EC5B821C9C2C9000E21131 /* include */,
 				E5EC5B801C9C2C7100E21131 /* src */,
 				E519A0F31C9C64F600ED113D /* tests */,
-				E54543361CAD21A30051A313 /* cpp11-pthread-tests */,
 				E5EC5B721C9C2C3000E21131 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -382,6 +372,7 @@
 				E545433B1CAD21A30051A313 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E5EC5B6C1C9C2C3000E21131 /* Build configuration list for PBXProject "cpp-pthread" */ = {
 			isa = XCConfigurationList;

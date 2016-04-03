@@ -13,6 +13,9 @@
 #include <string>
 #include <functional>
 #include <memory>
+#include <list>
+
+#include "pthread/config.h"
 
 #include "pthread/pthread_exception.hpp"
 #include "pthread/mutex.hpp"
@@ -45,7 +48,7 @@ namespace pthread {
     /**
      * This method must be overriden
      */
-    virtual void run () noexcept = 0 ;
+    virtual void run () __NOEXCEPT__ = 0 ;
   };
   
   /**
@@ -157,6 +160,52 @@ namespace pthread {
     pthread_t      _thread;
     
     thread_status  _status;
+  };
+  
+  class abstract_thread: public runnable {
+  public:
+    virtual ~abstract_thread();
+    
+    void start();
+    
+    int join() { return _thread->join() ;};
+    
+  private:
+    pthread::thread *_thread;
+  };
+  
+  /** group (list) of abstract_threads.
+   *
+   * method in this class apply's to all threads in the group. this means that when an thread_group instance is deallocated, all threads it references are deleted.
+   */
+  class thread_group{
+  public:
+    /** Setup a thread container/list.
+     *
+     * @param destructor_joins_first if true then destructor tries to join all regsitered threads before deleting thread instances.
+     */
+    thread_group( bool destructor_joins_first = false ) __NOEXCEPT__;
+    
+    /** delete all threads referenced by the thread_group.
+     */
+    virtual ~thread_group();
+    
+    /** @param add/register a thread to the group.
+     */
+    void add(abstract_thread *thread);
+    
+    /** start run all registered threads.
+     * @see add(abstract_thread *thread)
+     */
+    void start();
+    
+    /** what for all threads to join the caller of this method.
+     */
+    void join();
+    
+  private:
+    std::list<pthread::abstract_thread*> _threads;
+    bool                                 _destructor_joins_first;
   };
   
   // exception & errors --------

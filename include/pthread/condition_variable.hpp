@@ -14,6 +14,8 @@
 #include <time.h>
 #include <sys/time.h>
 
+#include "pthread/config.h"
+
 #include "pthread/pthread_exception.hpp"
 #include "pthread/mutex.hpp"
 #include "pthread/lock_guard.hpp"
@@ -101,11 +103,16 @@ namespace pthread {
      *
      * Upon successful return, the mutex has been locked and is owned by the calling thread.
      *
+     * If this method is called with millis < 0 then the timeout time is not recalculated. This make it possible to handle spurious 
+     * unblocking of condition variable without the need of a lambda expression. The call sequence is then: while(! check_condition() && wait_for(lck, 200) == no_tiemout );
+     *
      * @param mtx ralated mutex, which must be locked by the current thread.
      * @param millis milliseconds to wait for this instance to signaled.
      * @return cv_status (either timeout or no_timeout)
      */
     cv_status wait_for (mutex &mtx, int millis );
+
+    cv_status wait_for (lock_guard<pthread::mutex> &lck, int millis );
     
     /** @see #wait_for (mutex &, int)
      */
@@ -150,12 +157,12 @@ namespace pthread {
      * The pthread_cond_signal() call unblocks at least one of the threads that are blocked
      * on the specified condition variable cond (if any threads are blocked on cond).
      */
-    void notify_one () noexcept;
+    void notify_one () __NOEXCEPT__;
     
     /** signal all waiting threads
      * The pthread_cond_broadcast() call unblocks all threads currently blocked on the specified condition variable cond.
      */
-    void notify_all () noexcept;
+    void notify_all () __NOEXCEPT__;
     
     // constructor/destructor ------------------------------------------------
     

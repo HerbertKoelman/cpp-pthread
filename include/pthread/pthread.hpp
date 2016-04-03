@@ -18,6 +18,8 @@
 #include <exception>
 #include <string>
 
+#include "pthread/config.h"
+
 #include "pthread/mutex.hpp"
 #include "pthread/lock_guard.hpp"
 #include "pthread/condition_variable.hpp"
