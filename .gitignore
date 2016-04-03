@@ -1,0 +1,8 @@
+*
+!.gitignore
+!doc/
+!images
+!index.html
+!javascripts
+!params.json
+!stylesheets
