@@ -126,9 +126,14 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Handles POSIX (Portable Operating System Interface) threads.</p>
-<p><code> class reader_thread: public runnable { public: void run() {...} };</code></p>
-<p><code> reade_thread rt; thread t{rt}; t.join(); </code> </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<pre><code>
+    class reader_thread: public runnable {
+    public:
+      void run() {...}
+    };</code></pre><pre><code>    reader_thread rt;
+    thread t{rt};
+    t.join();
+</code></pre> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a60ac91ccf3de6e36258aa741af015095"></a>
 <div class="memitem">
 <div class="memproto">

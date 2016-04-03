@@ -34,9 +34,20 @@ int \hyperlink{classpthread_1_1thread_a89b64810871feee5c2d2659f3ae2f668}{cancel}
 \subsection{Detailed Description}
 Handles P\+O\+S\+IX (Portable Operating System Interface) threads.
 
-{\ttfamily  class reader\+\_\+thread\+: public runnable \{ public\+: void run() \{...\} \};}
 
-{\ttfamily  reade\+\_\+thread rt; thread t\{rt\}; t.\+join(); } 
+\begin{DoxyPre}{\ttfamily 
+    class reader\_thread: public runnable \{
+    public:
+      void run() \{...\}
+    \};}\end{DoxyPre}
+
+
+
+\begin{DoxyPre}{\ttfamily     reader\_thread rt;
+    thread t\{rt\};
+    t.join();
+}\end{DoxyPre}
+ 
 
 \subsection{Constructor \& Destructor Documentation}
 \index{pthread\+::thread@{pthread\+::thread}!thread@{thread}}

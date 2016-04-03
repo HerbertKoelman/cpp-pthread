@@ -117,8 +117,13 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Group of abstract_threads pointers.</p>
 <p>This helper class is in charge of handling group of threads as a whole. Method in this class apply to all threads in the group.</p>
-<p>To avoid memory lose of resources, a <a class="el" href="classpthread_1_1thread__group.html">thread_group</a> deletes the thread that were registered/added. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<p><b>A <a class="el" href="classpthread_1_1thread__group.html">thread_group</a> deletes the thread that were registered/added to it.</b></p>
+<pre><code>
+int main(int argc, const char * argv[]) {</code></pre><pre><code>  <a class="el" href="classpthread_1_1thread__group.html">pthread::thread_group</a> threads; // this instance will free any registered thread when it will get out of scope</code></pre><pre><code>  for (auto x = 10 ; x &gt; 0 ; x&ndash;){
+    threads.add( new worker("herbert")); // register threads, they will run when <a class="el" href="classpthread_1_1thread__group.html#aaba00cf80d72cd986526384482457968">start()</a> is called
+  }</code></pre><pre><code>  threads.start(); // start running all threads
+  threads.join(); // wait for registered threads to join
+} // scope end</code></pre><pre><code>  </code></pre> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="ab4a8be5396449131ce2817db0e6ea2c2"></a>
 <div class="memitem">
 <div class="memproto">
