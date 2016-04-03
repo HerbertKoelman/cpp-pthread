@@ -14,20 +14,39 @@
 #include <time.h>
 #include <sys/time.h>
 
+#include "pthread/config.h"
+
 #include "pthread/pthread_exception.hpp"
 #include "pthread/mutex.hpp"
 #include "pthread/lock_guard.hpp"
 
 namespace pthread {
   
+  /** condition variable current wait status. */
   enum cv_status {
-    no_timeout,
-    timedout
+    no_timeout, /*!< unblocked before a timeout occured */
+    timedout    /*!< condition timedout */
   };
   
   /** pthread condition variable
+   *
+   *The condition_variable class is a synchronization primitive that can be used to block a thread, or multiple threads
+   * at the same time, until another thread both modifies a shared variable (the condition), and notifies the 
+   * condition_variable.
+   *
+   * The thread that intends to modify the variable has to
+   * - acquire a std::mutex (typically via std::lock_guard)
+   * - perform the modification while the lock is held
+   * - execute notify_one or notify_all on the std::condition_variable (the lock does not need to be held for notification)
+   *
+   * Even if the shared variable is atomic, it must be modified under the mutex in order to correctly publish the modification
+   * to the waiting thread.
+   *
+   * Upon successful return, the mutex shall have been locked and shall be owned by the calling thread.
+   *
+   * @author herbert koelman
    */
-  class condition_variable { // : public pthread::mutex {
+  class condition_variable {
   public:
     
     /** wait for condition to be signaled
@@ -40,6 +59,10 @@ namespace pthread {
      * @param mtx ralated mutex, which must be locked by the current thread.
      */
     void wait ( mutex &mtx );
+    
+    /** @see wait
+     */
+    void wait ( lock_guard<pthread::mutex> lck);
     
     /** wait for condition to be signaled
      *
@@ -80,11 +103,18 @@ namespace pthread {
      *
      * Upon successful return, the mutex has been locked and is owned by the calling thread.
      *
+     * If this method is called with millis < 0 then the timeout time is not recalculated. This make it possible to handle spurious 
+     * unblocking of condition variable without the need of a lambda expression. The call sequence is then: while(! check_condition() && wait_for(lck, 200) == no_tiemout );
+     *
      * @param mtx ralated mutex, which must be locked by the current thread.
      * @param millis milliseconds to wait for this instance to signaled.
      * @return cv_status (either timeout or no_timeout)
      */
     cv_status wait_for (mutex &mtx, int millis );
+
+    /** @see #wait_for (mutex &, int)
+     */
+    cv_status wait_for (lock_guard<pthread::mutex> &lck, int millis );
     
     /** wait for condition to be signaled within a given time frame
      *
@@ -113,7 +143,7 @@ namespace pthread {
      * The lambda (closure) is run to check if the condition was met. Lambda should false if the waiting should be continued.
      * The signature of the predicate function should be equivalent to the following: bool lambda();
      *
-     * @param mtx ralated mutex lock_guard, which must be locked by the current thread.
+     * @param lck ralated mutex lock_guard, which must be locked by the current thread.
      * @param millis milli seconds to wait for condition to be signaled.
      * @param lambda run to check if condition was met.
      * @return true if lmabda returned true.
@@ -125,12 +155,12 @@ namespace pthread {
      * The pthread_cond_signal() call unblocks at least one of the threads that are blocked
      * on the specified condition variable cond (if any threads are blocked on cond).
      */
-    void notify_one () noexcept;
+    void notify_one () __NOEXCEPT__;
     
     /** signal all waiting threads
      * The pthread_cond_broadcast() call unblocks all threads currently blocked on the specified condition variable cond.
      */
-    void notify_all () noexcept;
+    void notify_all () __NOEXCEPT__;
     
     // constructor/destructor ------------------------------------------------
     

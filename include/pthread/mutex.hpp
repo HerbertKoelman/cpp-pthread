@@ -13,6 +13,8 @@
 #include <exception>
 #include <string>
 
+#include "pthread/config.h"
+
 #include "pthread/pthread_exception.hpp"
 
 namespace pthread {
@@ -21,6 +23,11 @@ namespace pthread {
   
   class condition_variable;
   
+  /** The mutex class is a synchronization primitive that can be used to protect shared data from being simultaneously accessed by multiple threads.
+   *
+   * @author herbert koelman
+   * @date 18/3/2016
+   */
   class mutex {
     
     friend class condition_variable;
@@ -63,8 +70,15 @@ namespace pthread {
     pthread_mutex_t _mutex;
   };
 
+  /** throw to indicate that something went wrong with a mutex.
+   */
   class mutex_exception: public pthread_exception {
   public:
+    /** thrown when mutex actions fail
+     *
+     * @param message short description
+     * @param pthread_errno error returned by the pthread function
+     */
     mutex_exception( const string message, const int pthread_error = 0) ;
     
   };

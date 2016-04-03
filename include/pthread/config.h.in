@@ -22,8 +22,19 @@
 
 /* autoconf section ----------------------------------------------------------------------*/
 
+#ifndef pthread_config_h
+#define pthread_config_h
+
 #ifdef __IBMCPP__
-#define noexcept throw()
+
+#define __NOEXCEPT__ throw()
+#define __OVERRIDE__ 
+
+#else
+
+#define __NOEXCEPT__ noexcept
+#define __OVERRIDE__ override
+
 #endif
 
 #undef CPP_PTHREAD_VERSION
@@ -61,10 +72,4 @@
 #undef inline
 #endif
 
-const char *cpp_pthread_version_version(){
-#ifndef CPP_PTHREAD_VERSION
-  return "missing CPP_PTHREAD_VERSION define. Re-run configure" ;
-#else
-  return CPP_PTHREAD_VERSION ;
-#endif
-}
+#endif /* pthread_config_h */

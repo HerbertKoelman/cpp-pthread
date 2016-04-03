@@ -26,14 +26,14 @@ namespace pthread {
     int rc = 0;
     
     if ( _thread == this_thread::get_id()){
-      throw pthread_exception{"join failed, join yourself would endup in deadlock."};
+      throw pthread_exception("join failed, join yourself would endup in deadlock.");
     }
     if ( _status == thread_status::not_a_thread ){
-      throw pthread_exception{"join failed, this is not a thread."};
+      throw pthread_exception("join failed, this is not a thread.");
     }
     
     if ( (rc = pthread_join(_thread, (void **)&_status)) != 0){
-      throw thread_exception{"pthread_join failed.", rc };
+      throw thread_exception("pthread_join failed.", rc );
     }
     
     return rc;
@@ -43,11 +43,11 @@ namespace pthread {
     int rc = 0;
     
     if ( _status == thread_status::not_a_thread ){
-      throw pthread_exception{"cancel failed, this is not a thread."};
+      throw pthread_exception("cancel failed, this is not a thread.");
     }
       
     if((rc = pthread_cancel ( _thread )) != 0){
-      throw thread_exception{"pthread_cancel failed.", rc };
+      throw thread_exception("pthread_cancel failed.", rc );
     } else {
       _status = thread_status::not_a_thread;
     }
@@ -55,25 +55,25 @@ namespace pthread {
     return rc;
   }
   
-  thread::thread(): _status{thread_status::not_a_thread}, _thread{nullptr}{
+  thread::thread(): _status(thread_status::not_a_thread), _thread(0){
     
   }
   
-  thread::thread (const runnable &work): thread{}{
+  thread::thread (const runnable &work): thread(){
     int rc = 0 ;
-    pthread_attr_t attr{0};
+    pthread_attr_t attr;
     
     /* Initialize and set thread detached attribute */
     if ( (rc = pthread_attr_init(&attr)) != 0){
-      throw thread_exception{"pthread_attr_init failed.", rc };
+      throw thread_exception("pthread_attr_init failed.", rc );
     }
     
     if ( (rc = pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE)) != 0 ){
-      throw thread_exception{"pthread_attr_setdetachstate failed.", rc };
+      throw thread_exception("pthread_attr_setdetachstate failed.", rc );
     }
     
     if ((rc = pthread_create(&_thread, &attr, thread_startup_runnable, (void *) &work)) != 0){
-      throw thread_exception{"pthread_create failed.", rc };
+      throw thread_exception("pthread_create failed.", rc );
     } else {
       _status = thread_status::a_thread;
       pthread_attr_destroy(&attr);
@@ -101,9 +101,50 @@ namespace pthread {
   }
   
   thread::~thread () {
-//    if ( _status == thread_status::a_thread ){
-//      pthread_attr_destroy(&_attr);
-//    }
+  }
+  
+  abstract_thread::~abstract_thread(){
+  
+    delete _thread;
+  }
+  
+  void abstract_thread::start(){
+    
+    _thread = new pthread::thread(*this);
+  }
+  
+  thread_group::thread_group(bool destructor_joins_first ) __NOEXCEPT__: _destructor_joins_first(destructor_joins_first){
+    
+  }
+  
+  thread_group::~thread_group(){
+    while(! _threads.empty()){
+      std::auto_ptr<pthread::abstract_thread> pat(_threads.front());
+      _threads.pop_front();
+      
+      if ( _destructor_joins_first ){
+        try {
+          pat->join();
+        } catch ( ... ){};
+      }
+    }
+  }
+  
+  void thread_group::add(pthread::abstract_thread *thread){
+    
+    _threads.push_back(thread);
+  }
+  
+  void thread_group::start(){
+      for(auto iterator = _threads.begin(); iterator != _threads.end(); iterator++){
+        (*iterator)->start();
+      }
+  }
+  
+  void thread_group::join(){
+    for(auto iterator = _threads.begin(); iterator != _threads.end(); iterator++){
+      (*iterator)->join();
+    }
   }
   
   /**
@@ -120,7 +161,7 @@ namespace pthread {
   
   // exception -------
   
-  thread_exception::thread_exception(const string message, const int pthread_error): pthread_exception{message, pthread_error}{
+  thread_exception::thread_exception(const string message, const int pthread_error): pthread_exception(message, pthread_error){
   }
   
 } // namespace pthread

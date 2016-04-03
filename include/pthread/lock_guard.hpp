@@ -11,6 +11,8 @@
 
 #include <pthread.h>
 
+#include "pthread/config.h"
+
 #include "pthread/mutex.hpp"
 
 namespace pthread {
@@ -19,20 +21,29 @@ namespace pthread {
   
   /**
    This class was designed to encapsulate a mutex and automatically control the lock attribute.
-   The ScopedMutex lock the associated mutex once we instanciate the class and the lock is automatically unlocked
+
+   The lock_guard lock the associated mutex once we instanciate the class and the lock is automatically unlocked
    once the object is destroyed. This allow us to correlate the lock with the scope of the object.
+   
+   @author herbert koelman
    */
   template<class MutexType>
   class lock_guard {
     
   public:
-    /*
-     constructors and destructors. The constructor is forced to only accept a mutex object or any object of a subclass.
+    /**
+     * The constructor is forced to only accept a mutex object or any object of a subclass.
+     * 
+     * The mutex is locked up completion.
+     *
+     * @param m reference to a valid pthread::mutex
      */
     explicit lock_guard(mutex &m) : _mutex(&m) {
       _mutex->lock();
     }
     
+    /** release the guared mutex.
+     */
     ~lock_guard() {
       _mutex->unlock();
     }
@@ -40,8 +51,9 @@ namespace pthread {
     /*
      Desabling the = operator.
      */
-    void operator=(lock_guard &);
+    void operator=(lock_guard &) = delete;
     
+    /** @return a const reference to the guarded mutex */
     MutexType *mutex() const { return _mutex ;};
     
   private:

@@ -13,6 +13,9 @@
 #include <string>
 #include <functional>
 #include <memory>
+#include <list>
+
+#include "pthread/config.h"
 
 #include "pthread/pthread_exception.hpp"
 #include "pthread/mutex.hpp"
@@ -20,17 +23,23 @@
 
 namespace pthread {
   
+  /** function used to startup a thread.
+   * 
+   * it expects a reference to a runnable instance
+   */
   void *thread_startup_runnable (void *);
   
+  /** current status of a thread instance
+  */
   enum class thread_status{
-    not_a_thread,
-    a_thread
+    not_a_thread, /*!< this not a thread (i.e. after a move operation) */
+    a_thread      /*!< a valid thread */
   };
   
   /**
    * Interface of a runnable class.
    *
-   * Yiou can write code to be run through a Thread by implementing this interface.
+   * You can write code to be run through a Thread by implementing this interface.
    */
   class runnable {
   private:
@@ -39,22 +48,22 @@ namespace pthread {
     /**
      * This method must be overriden
      */
-    virtual void run () noexcept = 0 ;
+    virtual void run () __NOEXCEPT__ = 0 ;
   };
   
   /**
    * Handles POSIX (Portable Operating System Interface) threads.
    *
-   * <code>
+   * <pre><code>
    *     class reader_thread: public runnable {
    *     public:
    *       void run() {...}
    *     };
    *
-   *     reade_thread rt;
+   *     reader_thread rt;
    *     thread t{rt};
    *     t.join();
-   * </code>
+   * </code></pre>
    */
   class thread {
   public:
@@ -81,11 +90,13 @@ namespace pthread {
     
     /** move contructor
      *
-     * Used when pushing instances into containers (i.e. list vector). Once moved this not a thread anymore. Status is thread_status::not_a_thread
+     * once moved this not a thread anymore. Status is thread_status::not_a_thread
+     *
+     * @param other thread that will be moved, on completion other is no longer a thread.
      */
     thread( thread&& other);
     
-    /** copy constructor makes no sense.
+    /** copy constructor is flagged deleted because it makes no sense to copy a thread.
      */
     thread(const thread &) = delete ;
     
@@ -123,24 +134,26 @@ namespace pthread {
      */
     int cancel();
     
-    /** @return the status of the thread.
+    /** @return the status of the thread (thread::status).
      */
     inline thread_status status() { return _status ;};
     
-    /** copying doesn't make sense
+    /** copy operator is flagged deleted,  copying doesn't make sense
      */
     thread& operator=(const thread&) = delete ;
     
     /** move a thread to another thread.
      *
-     * The moved thread is not a thread anymore (thread_status::not_a_thread).
+     * @param other thread to move, on completion it is not a thread anymore (thread_status::not_a_thread).
+     * @return thread 
      */
     thread& operator=(thread&& other);
     
   private:
+
     /** Exchanges the underlying handles of two thread objects.
      *
-     * @param other the thread to swap with
+     * @param other the thread to swap with, on completion other is not a thread.
      */
     void swap ( thread& other );
     
@@ -149,10 +162,141 @@ namespace pthread {
     thread_status  _status;
   };
   
+  /** base class of a thread.
+   * 
+   * utility class, that wraps a thread.
+   * <pre><code>
+   class worker: public pthread::abstract_thread {
+   public:
+   
+     worker(const std::string m = "anonymous worker", int sleep = 2*1000): msg(m), _sleep(sleep){
+     };
+     
+     ~worker(){
+     };
+     
+     void run() __NOEXCEPT__ __OVERRIDE__ {
+       { // critical section scope
+         pthread::lock_guard<pthread::mutex> lck(mtx);
+   
+         bool stop_waiting = true; // if lambda syntax is not availbale then use this kind of implementation
+         auto delay = _sleep; // use sleep seconds to calculate point in time timeout
+         while ( ! (stop_waiting = (counter >= 10000)) && (condition.wait_for(mtx, delay) == pthread::cv_status::no_timeout)){
+           delay = -1 ; // if timeout millis is negatif, then we keep last timeout calculation.
+         }
+     
+         if ( counter >= 10000 ) {
+           message("worker class, counter >= 10000");
+         } else {
+           message("worker class, counter < 10000");
+         }
+       } // end of critical section
+   
+       pthread::this_thread::sleep(200);
+     };
+   
+   private:
+     std::string    msg ;
+     int            _sleep;
+   };
+
+   int main(int argc, const char * argv[]) {
+   
+     pthread::thread_group threads(true); // indicate that we want to join referenced threads when deallocating this instance.
+     for (auto x = 10 ; x > 0 ; x--){
+       threads.add( new worker("herbert"));
+     }
+     
+     threads.start(); // start running all threads
+   
+     for ( auto x = 20000 ; x > 0 ; x--){
+       pthread::lock_guard<pthread::mutex> lck(mtx);
+       counter++ ;
+     }
+   
+     condition.notify_all();
+   }
+
+   * </code></pre>
+   */
+  class abstract_thread: public runnable {
+  public:
+    virtual ~abstract_thread();
+    
+    void start();
+    
+    int join() { return _thread->join() ;};
+    
+  private:
+    pthread::thread *_thread;
+  };
+  
+  /** Group of abstract_threads pointers.
+   *
+   * This helper class is in charge of handling group of threads as a whole. Method in this class apply to all threads in the group.
+   *
+   * **A thread_group deletes the thread that were registered/added to it.**
+   *
+   <pre><code>
+   int main(int argc, const char * argv[]) {
+   
+     pthread::thread_group threads; // this instance will free any registered thread when it will get out of scope
+   
+     for (auto x = 10 ; x > 0 ; x--){
+       threads.add( new worker("herbert")); // register threads, they will run when start() is called
+     }
+   
+     threads.start(); // start running all threads
+     threads.join(); // wait for registered threads to join
+   } // scope end
+   
+   * </code></pre>
+   */
+  class thread_group{
+  public:
+    /** Setup a thread container/list.
+     *
+     * @param destructor_joins_first if true then destructor tries to wait for all registered threads to join the calling one before deleting thread instances.
+     */
+    thread_group( bool destructor_joins_first = false ) __NOEXCEPT__;
+    
+    /** delete all abstract_thread referenced by the thread_group.
+     *
+     * If destructor_joins_first is true then the method abstract_thread::join() is called before deleting the referenced abstract_thread.
+     */
+    virtual ~thread_group();
+    
+    /** @param add/register a thread to the group.
+     */
+    void add(abstract_thread *thread);
+    
+    /** start run all registered threads.
+     * @see add(abstract_thread *thread)
+     */
+    void start();
+    
+    /** what for all threads to join the caller of this method.
+     */
+    void join();
+    
+    /** return if thread_group should wait for all referenced abstract_thread terminate
+     */
+    const bool destructor_joins_first(){ return _destructor_joins_first;};
+    
+  private:
+    std::list<pthread::abstract_thread*> _threads;
+    bool                                 _destructor_joins_first;
+  };
+  
   // exception & errors --------
   
+  /** thrown to indicate that something went wrong with a thread */
   class thread_exception: public pthread_exception {
   public:
+    /**
+     * @param message short error description.
+     * @param pthread_error value return by a function in the pthread library.
+     */
     thread_exception(const string message, const int pthread_error = 0);
   };
   
@@ -251,7 +395,12 @@ namespace pthread {
 //    
 //  }
   
+  /** \namespace this_thread
+   * 
+   * helper functions
+   */
   namespace this_thread{
+
     /** let the current thread sleep for the given milliseconds.
      *
      * @param milis time to wait.
