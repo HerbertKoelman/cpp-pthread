@@ -29,11 +29,11 @@
       <div class="inner clearfix">
         <section id="main-content">
           <h1>
-<a id="what-it-does" class="anchor" href="#what-it-does" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>what it does</h1>
+<a id="what-it-does" class="anchor" href="#what-it-does" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What it does</h1>
 
-<p>IBM's compiler is not implementing all the features of C++11 standard, especially it's laking the concurrency features that the standard brings.</p>
+<p>IBM's compiler is not implementing all the features of C++11 standard, especially it's lacking the concurrency features that the standard brings. This will at some point be fixed and was therfore looking at a way reduce the effort to switch from a specific implementation to the C++11 standard one. This projetc is the resulting code.</p>
 
-<p>This wrapper intends to bring these feature by wrapping the pthread library.  Of course, as it is a replacement of C++11 features, it is best to use the standard implementation if your compiler support it.</p>
+<p>This wrapper intends to bring these feature by implementing C++11 interface and using the  pthread library.  Of course, as it is a replacement of C++11 features, it is best to use the standard implementation if your compiler support it. This can be done rather easely by using the standard namespace <code>std</code> instead of this library's specific one <code>pthread</code>.</p>
 
 <p>To use this library:</p>
 
@@ -47,7 +47,59 @@ make install
 <pre><code>configure --prefix=/usr/local
 </code></pre>
 
+<p><a href="http://herbertkoelman.github.io/cpp-pthread/doc/html/">Documentation</a> can be generated with this command:</p>
+
+<pre><code>make doxygen
+...
+</code></pre>
+
+<p>This command creates a <code>doc</code> directory wich will contain the generated documentation.</p>
+
+<blockquote>
+<p><strong>warning</strong> generating documentation requires that doxygen is installed.</p>
+</blockquote>
+
+<h1>
+<a id="how-to-use-it" class="anchor" href="#how-to-use-it" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How to use it</h1>
+
+<p>Once compiled and installed in a location that suites you, use your compiler options to reference the headers and the libraries directory. In almoast all casses you can:</p>
+
+<ul>
+<li>include <code>#include "pthread/phtread.hpp"</code> in your code.</li>
+<li>comment the c++11 standard includes in your code</li>
+<li>declare that you're now using the namespace pthread (<code>using namespace pthread ;</code>)</li>
+</ul>
+
+<p>It should now compile use this very simple (but often good enough) implementation.</p>
+
+<h1>
+<a id="usefull-links" class="anchor" href="#usefull-links" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usefull links</h1>
+
+<ul>
+<li>
+<a href="http://pubs.opengroup.org/onlinepubs/007908799/xsh/threads.html">documentation</a> of the underlying POSIX threading library </li>
+<li><a href="https://github.com/HerbertKoelman/cpp-pthread">project's home</a></li>
+<li><a href="http://herbertkoelman.github.io/cpp-pthread/doc/html/">project's doxygen</a></li>
+<li>
+<a href="http://en.cppreference.com/w/cpp/thread/thread">std::thread</a> implementation we try to mimic</li>
+<li>
+<a href="http://en.cppreference.com/w/cpp/thread/lock_guard/lock_guard">std::lock_guard</a>  implementation we try to mimic </li>
+<li>
+<a href="http://en.cppreference.com/w/cpp/thread/mutex">std::mutex</a> implementation we try to mimic</li>
+<li>
+<a href="http://en.cppreference.com/w/cpp/thread/condition_variable">std::condition_variable</a> implementation we try to mimic</li>
+</ul>
+
 <p>More <a href="https://github.com/HerbertKoelman/cpp-pthread/wiki">here</a></p>
+
+<h1>
+<a id="misc" class="anchor" href="#misc" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>misc</h1>
+
+<ul>
+<li>author herbert koelman</li>
+<li>github <a href="https://github.com/HerbertKoelman/cpp-pthread">cpp-pthread</a>
+</li>
+</ul>
         </section>
 
         <aside id="sidebar">
