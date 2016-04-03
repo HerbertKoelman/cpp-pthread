@@ -14,6 +14,8 @@
 		E54543411CAD23690051A313 /* mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5EC5B7B1C9C2C6B00E21131 /* mutex.cpp */; };
 		E54543421CAD23690051A313 /* lock_guard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E519A0E41C9C4B4F00ED113D /* lock_guard.cpp */; };
 		E54543431CAD23690051A313 /* thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E519A0FF1C9C7CAB00ED113D /* thread.cpp */; };
+		E5BF2B651CB13C8100B158E3 /* without-cpp11-pthread-tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5BF2B631CB13C7700B158E3 /* without-cpp11-pthread-tests.cpp */; };
+		E5BF2B661CB13C8900B158E3 /* libcpp-pthread.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5EC5B711C9C2C3000E21131 /* libcpp-pthread.a */; };
 		E5C4D71D1C9DC8C700D0E18C /* pthread in Headers */ = {isa = PBXBuildFile; fileRef = E5EC5B811C9C2C8B00E21131 /* pthread */; settings = {ATTRIBUTES = (Public, ); }; };
 		E5EC5B7D1C9C2C6B00E21131 /* condition_variable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5EC5B791C9C2C6B00E21131 /* condition_variable.cpp */; };
 		E5EC5B7F1C9C2C6B00E21131 /* mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5EC5B7B1C9C2C6B00E21131 /* mutex.cpp */; };
@@ -21,6 +23,13 @@
 
 /* Begin PBXContainerItemProxy section */
 		E545433E1CAD22180051A313 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E5EC5B691C9C2C3000E21131 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E5EC5B701C9C2C3000E21131;
+			remoteInfo = "cpp-pthread";
+		};
+		E5BF2B611CB13C5A00B158E3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E5EC5B691C9C2C3000E21131 /* Project object */;
 			proxyType = 1;
@@ -39,12 +48,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		E5BF2B581CB13C3D00B158E3 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		E519A0E41C9C4B4F00ED113D /* lock_guard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lock_guard.cpp; path = src/lock_guard.cpp; sourceTree = "<group>"; };
 		E519A0FF1C9C7CAB00ED113D /* thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = thread.cpp; path = src/thread.cpp; sourceTree = "<group>"; };
 		E54543351CAD21A30051A313 /* cpp11-pthread-tests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "cpp11-pthread-tests"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5BF2B5A1CB13C3D00B158E3 /* without-cpp11-pthread-tests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "without-cpp11-pthread-tests"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5BF2B631CB13C7700B158E3 /* without-cpp11-pthread-tests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "without-cpp11-pthread-tests.cpp"; sourceTree = "<group>"; };
 		E5EC5B711C9C2C3000E21131 /* libcpp-pthread.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcpp-pthread.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5EC5B791C9C2C6B00E21131 /* condition_variable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = condition_variable.cpp; path = src/condition_variable.cpp; sourceTree = "<group>"; };
 		E5EC5B7B1C9C2C6B00E21131 /* mutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mutex.cpp; path = src/mutex.cpp; sourceTree = "<group>"; };
@@ -57,6 +77,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5BF2B571CB13C3D00B158E3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E5BF2B661CB13C8900B158E3 /* libcpp-pthread.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,6 +101,7 @@
 		E519A0F31C9C64F600ED113D /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				E5BF2B631CB13C7700B158E3 /* without-cpp11-pthread-tests.cpp */,
 				E5ECB7211CA43E6C0033A42D /* with-cpp11-pthread-tests.cpp */,
 			);
 			path = tests;
@@ -93,6 +122,7 @@
 			children = (
 				E5EC5B711C9C2C3000E21131 /* libcpp-pthread.a */,
 				E54543351CAD21A30051A313 /* cpp11-pthread-tests */,
+				E5BF2B5A1CB13C3D00B158E3 /* without-cpp11-pthread-tests */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -148,6 +178,24 @@
 			productReference = E54543351CAD21A30051A313 /* cpp11-pthread-tests */;
 			productType = "com.apple.product-type.tool";
 		};
+		E5BF2B591CB13C3D00B158E3 /* without-cpp11-pthread-tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E5BF2B5E1CB13C3D00B158E3 /* Build configuration list for PBXNativeTarget "without-cpp11-pthread-tests" */;
+			buildPhases = (
+				E5BF2B561CB13C3D00B158E3 /* Sources */,
+				E5BF2B571CB13C3D00B158E3 /* Frameworks */,
+				E5BF2B581CB13C3D00B158E3 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E5BF2B621CB13C5A00B158E3 /* PBXTargetDependency */,
+			);
+			name = "without-cpp11-pthread-tests";
+			productName = "without-cpp11-pthread-tests";
+			productReference = E5BF2B5A1CB13C3D00B158E3 /* without-cpp11-pthread-tests */;
+			productType = "com.apple.product-type.tool";
+		};
 		E5EC5B701C9C2C3000E21131 /* cpp-pthread */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E5EC5B751C9C2C3000E21131 /* Build configuration list for PBXNativeTarget "cpp-pthread" */;
@@ -177,6 +225,9 @@
 					E54543341CAD21A30051A313 = {
 						CreatedOnToolsVersion = 7.3;
 					};
+					E5BF2B591CB13C3D00B158E3 = {
+						CreatedOnToolsVersion = 7.3;
+					};
 					E5EC5B701C9C2C3000E21131 = {
 						CreatedOnToolsVersion = 7.2.1;
 					};
@@ -196,6 +247,7 @@
 			targets = (
 				E5EC5B701C9C2C3000E21131 /* cpp-pthread */,
 				E54543341CAD21A30051A313 /* cpp11-pthread-tests */,
+				E5BF2B591CB13C3D00B158E3 /* without-cpp11-pthread-tests */,
 			);
 		};
 /* End PBXProject section */
@@ -210,6 +262,14 @@
 				E54543421CAD23690051A313 /* lock_guard.cpp in Sources */,
 				E54543431CAD23690051A313 /* thread.cpp in Sources */,
 				E545433C1CAD21AD0051A313 /* with-cpp11-pthread-tests.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5BF2B561CB13C3D00B158E3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E5BF2B651CB13C8100B158E3 /* without-cpp11-pthread-tests.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,6 +292,11 @@
 			target = E5EC5B701C9C2C3000E21131 /* cpp-pthread */;
 			targetProxy = E545433E1CAD22180051A313 /* PBXContainerItemProxy */;
 		};
+		E5BF2B621CB13C5A00B158E3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E5EC5B701C9C2C3000E21131 /* cpp-pthread */;
+			targetProxy = E5BF2B611CB13C5A00B158E3 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -245,6 +310,24 @@
 			name = Debug;
 		};
 		E545433B1CAD21A30051A313 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		E5BF2B5F1CB13C3D00B158E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E5BF2B601CB13C3D00B158E3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -289,7 +372,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../include";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -328,7 +411,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../include";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
@@ -373,6 +456,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		E5BF2B5E1CB13C3D00B158E3 /* Build configuration list for PBXNativeTarget "without-cpp11-pthread-tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E5BF2B5F1CB13C3D00B158E3 /* Debug */,
+				E5BF2B601CB13C3D00B158E3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		E5EC5B6C1C9C2C3000E21131 /* Build configuration list for PBXProject "cpp-pthread" */ = {
 			isa = XCConfigurationList;
