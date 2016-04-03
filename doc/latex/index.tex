@@ -1,4 +1,4 @@
-I\+BM\textquotesingle{}s compiler is not implementing all the features of C++11 standard, especially it\textquotesingle{}s lacking the concurrency features that the standard brings. This will at some point be fixed and was therfore looking at a way reduce the effort to switch from a specific implementation to the C++11 standard one. This projetc is the resulting code.\+:w
+I\+BM\textquotesingle{}s compiler is not implementing all the features of C++11 standard, especially it\textquotesingle{}s lacking the concurrency features that the standard brings. This will at some point be fixed and was therfore looking at a way reduce the effort to switch from a specific implementation to the C++11 standard one. This projetc is the resulting code.
 
 This wrapper intends to bring these feature by implementing C++11 interface and using the pthread library. Of course, as it is a replacement of C++11 features, it is best to use the standard implementation if your compiler support it. This can be done rather easely by using the standard namespace {\ttfamily std} instead of this library\textquotesingle{}s specific one {\ttfamily pthread}.\+:w
 
@@ -45,6 +45,7 @@ It should now compile use this very simple (but often good enough) implementatio
 
 \begin{DoxyItemize}
 \item \href{http://pubs.opengroup.org/onlinepubs/007908799/xsh/threads.html}{\tt documentation} of the underlying P\+O\+S\+IX threading library
+\item \href{https://github.com/HerbertKoelman/cpp-pthread}{\tt project\textquotesingle{}s home}
 \item \href{http://herbertkoelman.github.io/cpp-pthread/doc/html/}{\tt project\textquotesingle{}s doxygen}
 \item \href{http://en.cppreference.com/w/cpp/thread/thread}{\tt std\+::thread} implementation we try to mimic
 \item \href{http://en.cppreference.com/w/cpp/thread/lock_guard/lock_guard}{\tt std\+::lock\+\_\+guard} implementation we try to mimic
