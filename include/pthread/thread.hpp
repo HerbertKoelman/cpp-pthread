@@ -54,16 +54,16 @@ namespace pthread {
   /**
    * Handles POSIX (Portable Operating System Interface) threads.
    *
-   * <code>
+   * <pre><code>
    *     class reader_thread: public runnable {
    *     public:
    *       void run() {...}
    *     };
    *
-   *     reade_thread rt;
+   *     reader_thread rt;
    *     thread t{rt};
    *     t.join();
-   * </code>
+   * </code></pre>
    */
   class thread {
   public:
@@ -235,7 +235,22 @@ namespace pthread {
    *
    * This helper class is in charge of handling group of threads as a whole. Method in this class apply to all threads in the group.
    *
-   * To avoid memory lose of resources, a thread_group deletes the thread that were registered/added.
+   * **A thread_group deletes the thread that were registered/added to it.**
+   *
+   <pre><code>
+   int main(int argc, const char * argv[]) {
+   
+     pthread::thread_group threads; // this instance will free any registered thread when it will get out of scope
+   
+     for (auto x = 10 ; x > 0 ; x--){
+       threads.add( new worker("herbert")); // register threads, they will run when start() is called
+     }
+   
+     threads.start(); // start running all threads
+     threads.join(); // wait for registered threads to join
+   } // scope end
+   
+   * </code></pre>
    */
   class thread_group{
   public:
