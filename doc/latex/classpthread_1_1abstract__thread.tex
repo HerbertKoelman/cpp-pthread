@@ -1,0 +1,112 @@
+\hypertarget{classpthread_1_1abstract__thread}{}\section{pthread\+:\+:abstract\+\_\+thread Class Reference}
+\label{classpthread_1_1abstract__thread}\index{pthread\+::abstract\+\_\+thread@{pthread\+::abstract\+\_\+thread}}
+
+
+{\ttfamily \#include $<$thread.\+hpp$>$}
+
+Inheritance diagram for pthread\+:\+:abstract\+\_\+thread\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classpthread_1_1abstract__thread}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries start} ()\hypertarget{classpthread_1_1abstract__thread_ab121718028f3ca68d45db84d10ff2a3a}{}\label{classpthread_1_1abstract__thread_ab121718028f3ca68d45db84d10ff2a3a}
+
+\item 
+int {\bfseries join} ()\hypertarget{classpthread_1_1abstract__thread_aedac81bb9eb76ba92c49c48d797ea25b}{}\label{classpthread_1_1abstract__thread_aedac81bb9eb76ba92c49c48d797ea25b}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+base class of a thread.
+
+utility class, that wraps a thread. 
+\begin{DoxyPre}{\ttfamily 
+class worker: public \hyperlink{classpthread_1_1abstract__thread}{pthread::abstract\_thread} \{
+public:}\end{DoxyPre}
+
+
+
+\begin{DoxyPre}{\ttfamily   worker(const std::string m = "anonymous worker", int sleep = 2*1000): msg(m), \_sleep(sleep)\{
+  \};}\end{DoxyPre}
+
+
+
+\begin{DoxyPre}{\ttfamily   ~worker()\{
+  \};}\end{DoxyPre}
+
+
+
+\begin{DoxyPre}{\ttfamily   void \hyperlink{classpthread_1_1runnable_a68ce0e65d5714457bcf3f5ef38b33fa7}{run()} {\bfseries NOEXCEPT} {\bfseries OVERRIDE} \{
+    \{ // critical section scope
+      pthread::lock\_guard<pthread::mutex> lck(mtx);}\end{DoxyPre}
+
+
+
+\begin{DoxyPre}{\ttfamily       bool stop\_waiting = true; // if lambda syntax is not availbale then use this kind of implementation
+      auto delay = \_sleep; // use sleep seconds to calculate point in time timeout
+      while ( ! (stop\_waiting = (counter >= 10000)) \&\& (condition.wait\_for(mtx, delay) == pthread::cv\_status::no\_timeout))\{
+        delay = -1 ; // if timeout millis is negatif, then we keep last timeout calculation.
+      \}}\end{DoxyPre}
+
+
+
+\begin{DoxyPre}{\ttfamily       if ( counter >= 10000 ) \{
+        message("worker class, counter >= 10000");
+      \} else \{
+        message("worker class, counter < 10000");
+      \}
+    \} // end of critical section}\end{DoxyPre}
+
+
+
+\begin{DoxyPre}{\ttfamily     pthread::this\_thread::sleep(200);
+  \};}\end{DoxyPre}
+
+
+
+\begin{DoxyPre}{\ttfamily private:
+  std::string    msg ;
+  int            \_sleep;
+\};}\end{DoxyPre}
+
+
+
+\begin{DoxyPre}{\ttfamily int main(int argc, const char * argv[]) \{}\end{DoxyPre}
+
+
+
+\begin{DoxyPre}{\ttfamily   \hyperlink{classpthread_1_1thread__group}{pthread::thread\_group} threads(true); // indicate that we want to join referenced threads when deallocating this instance.
+  for (auto x = 10 ; x > 0 ; x--)\{
+    threads.add( new worker("herbert"));
+  \}}\end{DoxyPre}
+
+
+
+\begin{DoxyPre}{\ttfamily   threads.start(); // start running all threads}\end{DoxyPre}
+
+
+
+\begin{DoxyPre}{\ttfamily   for ( auto x = 20000 ; x > 0 ; x--)\{
+    pthread::lock\_guard<pthread::mutex> lck(mtx);
+    counter++ ;
+  \}}\end{DoxyPre}
+
+
+
+\begin{DoxyPre}{\ttfamily   condition.notify\_all();
+\}}\end{DoxyPre}
+
+
+
+\begin{DoxyPre}{\ttfamily   }\end{DoxyPre}
+ 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/pthread/thread.\+hpp\item 
+src/thread.\+cpp\end{DoxyCompactItemize}
