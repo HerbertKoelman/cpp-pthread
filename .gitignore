@@ -17,6 +17,7 @@
 *.mod
 
 # Compiled Static libraries
+*.dSYM
 *.lai
 *.la
 *.a

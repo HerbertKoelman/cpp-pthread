@@ -38,8 +38,6 @@ OBJECTS=without-cpp11-pthread-tests.o
 TARGETS=without-cpp11-pthread-tests 
 
 all:${TARGETS}
-
-without-cpp11-pthread-tests: without-cpp11-pthread-tests.o
     
 clean: globber
 

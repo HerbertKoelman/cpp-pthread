@@ -2,15 +2,15 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.69)
-AC_INIT([cpp-pthread],[1.0.0],[herbert.koelman@pmu.fr])
+AC_INIT([cpp-pthread],[m4_esyscmd_s(echo $(git describe --always --abbrev=0))],[herbert.koelman@me.com],[],[http://herbertkoelman.github.io/cpp-pthread/])
 AC_LANG(C++)
 AC_CONFIG_SRCDIR([thread.cpp])
 AC_CONFIG_AUX_DIR([/usr/bin ../ ../bin])
 AC_CONFIG_HEADERS([../include/pthread/config.h])
-AC_DEFINE_UNQUOTED(CPP_THREAD_VERSION, ["version: $PACKAGE_VERSION - branch: <branch> - compiled on `uname -sv`."], [pthread C++ wrapper.])
+AC_DEFINE_UNQUOTED(CPP_PTHREAD_VERSION, ["version: $PACKAGE_VERSION - commit: $(git log --pretty='%H' | head -1) - compiled on `uname -sv`."], [pthread C++ wrapper.])
 
 # Checks for programs.
-AC_PROG_CXX([xlC_r xlC gcc cl KCC CC cxx cc++ aCC c++ g++])
+AC_PROG_CXX([xlC_r xlC g++ c++ gcc cl KCC CC cxx cc++ aCC ])
 AC_PROG_CC([xlc xlc_r gcc cl cc])
 AC_CHECK_PROG([AR],[ar],[ar -rv])
 AC_CHECK_PROG([MV],[mv],[mv],[echo "no mv command found"])
