@@ -7,7 +7,7 @@ AC_LANG(C++)
 AC_CONFIG_SRCDIR([thread.cpp])
 AC_CONFIG_AUX_DIR([/usr/bin ../ ../bin])
 AC_CONFIG_HEADERS([../include/pthread/config.h])
-AC_DEFINE_UNQUOTED(CPP_PTHREAD_VERSION, ["version: $PACKAGE_VERSION - commit: $(git log --pretty='%H' | head -1) - compiled on `uname -sv`."], [pthread C++ wrapper.])
+AC_DEFINE_UNQUOTED(CPP_PTHREAD_VERSION, ["$PACKAGE_NAME $PACKAGE_VERSION - $(git log --pretty='%H' | head -1) - compiled on `uname -sv`."], [pthread C++ wrapper.])
 
 # Checks for programs.
 AC_PROG_CXX([xlC_r xlC g++ c++ gcc cl KCC CC cxx cc++ aCC ])
