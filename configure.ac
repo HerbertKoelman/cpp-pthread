@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.69)
-AC_INIT([cpp-pthread],[1.0.0],[herbert.koelman@pmu.fr],[http://mut-mut-scmv1.dev.parimutuel.local/applications/cpp-pthread])
+AC_INIT([cpp-pthread],[m4_esyscmd_s(echo $(git describe --always))],[herbert.koelman@pmu.fr],[])
 AC_LANG(C++)
 
 AC_CONFIG_AUX_DIR([/usr/bin . bin])
