@@ -14,6 +14,7 @@
 #include <memory>
 #include "pthread/pthread.hpp"
 #include "ibm.hpp"
+// workaround  - #include "ibm.hpp"
 
 pthread::condition_variable condition;
 pthread::mutex mtx;
@@ -97,7 +98,7 @@ int main(int argc, const char * argv[]) {
   condition.notify_all();
   
 //  message("main is waiting for threads to finish");
-//  threads.join();
+  threads.join();
   message( "end reached");
   
 }
