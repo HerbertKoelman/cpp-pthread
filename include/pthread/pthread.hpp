@@ -31,5 +31,7 @@
 */
 namespace pthread {
 
+  extern "C" const char *cpp_pthread_version();
+  
 }
 #endif /* pthread_pthread_hpp */

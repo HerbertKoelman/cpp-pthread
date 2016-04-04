@@ -66,6 +66,8 @@ private:
 
 int main(int argc, const char * argv[]) {
   
+  std::cout << "version: " << pthread::cpp_pthread_version() << std::endl;
+
   pthread::string dummy;
   
   {
