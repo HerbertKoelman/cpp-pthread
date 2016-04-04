@@ -26,6 +26,8 @@
 *.exe
 *.out
 *.app
+without-cpp11-pthread-tests
+with-cpp11-pthread-tests
 
 # Xcode
 #cpp-pthread.xcodeproj/
