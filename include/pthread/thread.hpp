@@ -223,8 +223,14 @@ namespace pthread {
   public:
     virtual ~abstract_thread();
     
+    /** start running the `run()` method in a new thread.
+     */
     void start();
     
+    /** joins this thread.
+     *
+     * an exception is thrown if deadlock condition are detected.
+     */
     int join() { return _thread->join() ;};
     
   private:
