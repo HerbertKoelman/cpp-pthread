@@ -44,11 +44,8 @@ libcpp-pthread.a: $(OBJECTS)
 	${AR} ${LIBDIR}/$@ $(OBJECTS)
 	$(RANLIB) ${LIBDIR}/$@
 
-dist:
-	$(MV) $(TARGETS) $(BINDIR)
-    
 globber: clean
-	$(RM) -R Makefile autom4te.cache config.log config.status configure
+	-$(RM) -R Makefile autom4te.cache config.log config.status 
 
 clean:
 	${RM} *.o core *.a
