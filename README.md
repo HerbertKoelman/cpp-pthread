@@ -16,15 +16,24 @@ Install moves files into your system's default localtion of headers and librarie
 configure --prefix=/usr/local
 ```
 
-[Documentation](http://herbertkoelman.github.io/cpp-pthread/doc/html/) can be generated with this command:
+[Doxygen documentation](http://herbertkoelman.github.io/cpp-pthread/doc/html/) can be generated with this command:
 ```
 make doxygen
 ...
 ```
 
+The target `pkg` will produce au tar.gz.
+
 This command creates a `doc` directory wich will contain the generated documentation.
 
 > **warning** generating documentation requires that doxygen is installed.
+
+The confugre file is not versionned, therefore it is required to run `autoconf` to generate one
+```
+autoconf
+( cd src && autoconf )
+( cd tests && autoconf )
+```
 
 ### How to use it
 
