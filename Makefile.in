@@ -18,14 +18,14 @@ all:
 	cd src && $(MAKE) clean all
 
 pkg: 
-	tar cf - ./  | gzip -c > distrib/$(PACKAGE)
+	$(MKDIR) distrib
+	tar cf - `git ls-files`  | gzip -c > distrib/$(PACKAGE)
 
 globber:clean
 	-$(RM) -R Makefile autom4te.cache config.log config.status 
-	-(cd src && $(MAKE) globber)
 
 clean:
-	cd src && $(MAKE) clean
+	-(cd src && $(MAKE) clean)
 
 doxygen:
 	${DOXYGEN} doxyfile

@@ -50,6 +50,8 @@ config.log
 Makefile
 
 # layout
+doxyfile
+distrib/
 lib/
 doc/
 pthread-tests
