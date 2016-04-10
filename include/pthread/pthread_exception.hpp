@@ -27,7 +27,7 @@ namespace pthread {
      * @param message error message
      * @param pthread_errno a pthread function return code.
      */
-    pthread_exception( const string message, const int pthread_number = 0 ): _message(message), _pthread_errno(pthread_number){};
+    pthread_exception( const string message, const int pthread_errno = 0 ): _message(message), _pthread_errno(pthread_number){};
 
     virtual ~pthread_exception(){};
     
@@ -50,7 +50,10 @@ namespace pthread {
    */
   class timeout_exception: public pthread_exception{
   public:
-    /** thrown when a time out occurs. */
+    /** thrown when a time out occurs.
+     *
+     * @param message timeout condition
+     */
     timeout_exception(const string message): pthread_exception(message, ETIMEDOUT){};
   };
 

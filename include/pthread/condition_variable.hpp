@@ -178,7 +178,13 @@ namespace pthread {
    */
   class condition_variable_exception: public pthread_exception {
   public:
-    condition_variable_exception( const string message, const int pthread_error = 0);
+
+    /** thrown when mutex actions fail
+     *
+     * @param message short description
+     * @param pthread_errno error returned by the pthread function
+     */
+    condition_variable_exception( const string message, const int pthread_errno = 0);
     virtual ~condition_variable_exception(){};
   };
   
