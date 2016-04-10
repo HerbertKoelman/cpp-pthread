@@ -112,8 +112,7 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:aac562c2ef4664af42fcc24298b00df47"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aac562c2ef4664af42fcc24298b00df47"></a>
-pthread_mutex_t&#160;</td><td class="memItemRight" valign="bottom"><b>_mutex</b></td></tr>
+<tr class="memitem:aac562c2ef4664af42fcc24298b00df47"><td class="memItemLeft" align="right" valign="top">pthread_mutex_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1mutex.html#aac562c2ef4664af42fcc24298b00df47">_mutex</a></td></tr>
 <tr class="separator:aac562c2ef4664af42fcc24298b00df47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
@@ -172,6 +171,28 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>condition_variable</
       </table>
 </div><div class="memdoc">
 <p>The pthread_mutex_unlock function releases the mutex object referenced by mutex. The manner in which a mutex is released is dependent upon the mutex's type attribute. If there are threads blocked on the mutex object referenced by mutex when pthread_mutex_unlock is called, resulting in the mutex becoming available, the scheduling policy is used to determine which thread shall acquire the mutex. (In the case of PTHREAD_mutex_RECURSIVE mutexes, the mutex becomes available when the count reaches zero and the calling thread no longer has any locks on this mutex). </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="aac562c2ef4664af42fcc24298b00df47"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">pthread_mutex_t pthread::mutex::_mutex</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>pthread mutex structure </p>
 
 </div>
 </div>

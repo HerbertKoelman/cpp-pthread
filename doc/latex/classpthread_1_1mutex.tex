@@ -16,8 +16,7 @@ void \hyperlink{classpthread_1_1mutex_adfac0bda708dd01320763c57d5a7a203}{unlock}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
-pthread\+\_\+mutex\+\_\+t {\bfseries \+\_\+mutex}\hypertarget{classpthread_1_1mutex_aac562c2ef4664af42fcc24298b00df47}{}\label{classpthread_1_1mutex_aac562c2ef4664af42fcc24298b00df47}
-
+pthread\+\_\+mutex\+\_\+t \hyperlink{classpthread_1_1mutex_aac562c2ef4664af42fcc24298b00df47}{\+\_\+mutex}
 \end{DoxyCompactItemize}
 \subsection*{Friends}
 \begin{DoxyCompactItemize}
@@ -61,6 +60,12 @@ The function pthread\+\_\+mutex\+\_\+trylock is identical to pthread\+\_\+mutex\
 \end{DoxyParamCaption}
 )}\hypertarget{classpthread_1_1mutex_adfac0bda708dd01320763c57d5a7a203}{}\label{classpthread_1_1mutex_adfac0bda708dd01320763c57d5a7a203}
 The pthread\+\_\+mutex\+\_\+unlock function releases the mutex object referenced by mutex. The manner in which a mutex is released is dependent upon the mutex\textquotesingle{}s type attribute. If there are threads blocked on the mutex object referenced by mutex when pthread\+\_\+mutex\+\_\+unlock is called, resulting in the mutex becoming available, the scheduling policy is used to determine which thread shall acquire the mutex. (In the case of P\+T\+H\+R\+E\+A\+D\+\_\+mutex\+\_\+\+R\+E\+C\+U\+R\+S\+I\+VE mutexes, the mutex becomes available when the count reaches zero and the calling thread no longer has any locks on this mutex). 
+
+\subsection{Member Data Documentation}
+\index{pthread\+::mutex@{pthread\+::mutex}!\+\_\+mutex@{\+\_\+mutex}}
+\index{\+\_\+mutex@{\+\_\+mutex}!pthread\+::mutex@{pthread\+::mutex}}
+\subsubsection[{\texorpdfstring{\+\_\+mutex}{_mutex}}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+\_\+mutex\+\_\+t pthread\+::mutex\+::\+\_\+mutex\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classpthread_1_1mutex_aac562c2ef4664af42fcc24298b00df47}{}\label{classpthread_1_1mutex_aac562c2ef4664af42fcc24298b00df47}
+pthread mutex structure 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
