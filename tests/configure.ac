@@ -8,7 +8,7 @@ AC_CONFIG_SRCDIR([with-cpp11-pthread-tests.cpp])
 AC_CONFIG_AUX_DIR([/usr/bin ../ ../bin])
 
 # Checks for programs.
-AC_PROG_CXX([xlC_r xlC gcc cl KCC CC cxx cc++ aCC c++ g++])
+AC_PROG_CXX([xlC_r xlC g++ c++ gcc cl KCC CC cxx cc++ aCC ])
 AC_PROG_CC([xlc xlc_r gcc cl cc])
 AC_CHECK_PROG([AR],[ar],[ar -rv])
 AC_CHECK_PROG([MV],[mv],[mv],[echo "no mv command found"])
@@ -54,7 +54,7 @@ CPPFLAGS="$CPPFLAGS $CFLAGS"
 
 # Checks for libraries.
 AC_CHECK_LIB([pthread], [pthread_create],[],[AC_ERROR([missing pthread library.])])
-AC_CHECK_LIB([cpp-pthread], [cpp_pthread_version],[],[AC_ERROR([missing cpp-thread library.])])
+#AC_CHECK_LIB([cpp-pthread], [cpp_pthread_version],[],[AC_ERROR([missing cpp-thread library.])])
 
 # Checks for header files.
 #AC_HEADER_STDC
