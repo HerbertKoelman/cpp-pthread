@@ -83,8 +83,8 @@ namespace pthread {
     
 //    /** Starts running given function in a new trhread.
 //     * 
-//     * @param f function to run in thread
-//     * @param args function paramleters/arguments.
+//     * param f function to run in thread
+//     * param args function paramleters/arguments.
 //     */
 //    template<class Function, class... Args> explicit thread(Function&& f, Args&&... args);
     
@@ -272,7 +272,7 @@ namespace pthread {
      */
     virtual ~thread_group();
     
-    /** @param add/register a thread to the group.
+    /** @param thread add/register a thread to the group.
      */
     void add(abstract_thread *thread);
     
@@ -306,6 +306,22 @@ namespace pthread {
     thread_exception(const string message, const int pthread_error = 0);
   };
   
+  /** \namespace pthread::this_thread
+   * 
+   * helper functions
+   */
+  namespace this_thread{
+
+    /** let the current thread sleep for the given milliseconds.
+     *
+     * @param millis time to wait.
+     */
+    void sleep(const int millis);
+    
+    /** @return current thread id/reference */
+    pthread_t get_id() ;
+  }
+
   // template implementations ------
 
 //  // GCC magic
@@ -401,20 +417,6 @@ namespace pthread {
 //    
 //  }
   
-  /** \namespace this_thread
-   * 
-   * helper functions
-   */
-  namespace this_thread{
-
-    /** let the current thread sleep for the given milliseconds.
-     *
-     * @param milis time to wait.
-     */
-    void sleep(const int millis);
-    
-    pthread_t get_id() ;
-  }
   
 } // namespace pthread
 #endif /* thread_hpp */

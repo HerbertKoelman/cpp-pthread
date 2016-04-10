@@ -31,6 +31,7 @@
 */
 namespace pthread {
 
+  /** @return library version */
   extern "C" const char *cpp_pthread_version();
   
 }
