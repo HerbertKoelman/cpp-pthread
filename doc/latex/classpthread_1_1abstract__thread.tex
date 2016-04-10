@@ -13,11 +13,9 @@ Inheritance diagram for pthread\+:\+:abstract\+\_\+thread\+:\begin{figure}[H]
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-void {\bfseries start} ()\hypertarget{classpthread_1_1abstract__thread_ab121718028f3ca68d45db84d10ff2a3a}{}\label{classpthread_1_1abstract__thread_ab121718028f3ca68d45db84d10ff2a3a}
-
+void \hyperlink{classpthread_1_1abstract__thread_ab121718028f3ca68d45db84d10ff2a3a}{start} ()
 \item 
-int {\bfseries join} ()\hypertarget{classpthread_1_1abstract__thread_aedac81bb9eb76ba92c49c48d797ea25b}{}\label{classpthread_1_1abstract__thread_aedac81bb9eb76ba92c49c48d797ea25b}
-
+int \hyperlink{classpthread_1_1abstract__thread_aedac81bb9eb76ba92c49c48d797ea25b}{join} ()
 \end{DoxyCompactItemize}
 
 
@@ -105,6 +103,25 @@ public:}\end{DoxyPre}
 
 \begin{DoxyPre}{\ttfamily   }\end{DoxyPre}
  
+
+\subsection{Member Function Documentation}
+\index{pthread\+::abstract\+\_\+thread@{pthread\+::abstract\+\_\+thread}!join@{join}}
+\index{join@{join}!pthread\+::abstract\+\_\+thread@{pthread\+::abstract\+\_\+thread}}
+\subsubsection[{\texorpdfstring{join()}{join()}}]{\setlength{\rightskip}{0pt plus 5cm}int pthread\+::abstract\+\_\+thread\+::join (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classpthread_1_1abstract__thread_aedac81bb9eb76ba92c49c48d797ea25b}{}\label{classpthread_1_1abstract__thread_aedac81bb9eb76ba92c49c48d797ea25b}
+joins this thread.
+
+an exception is thrown if deadlock condition are detected. \index{pthread\+::abstract\+\_\+thread@{pthread\+::abstract\+\_\+thread}!start@{start}}
+\index{start@{start}!pthread\+::abstract\+\_\+thread@{pthread\+::abstract\+\_\+thread}}
+\subsubsection[{\texorpdfstring{start()}{start()}}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::abstract\+\_\+thread\+::start (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{classpthread_1_1abstract__thread_ab121718028f3ca68d45db84d10ff2a3a}{}\label{classpthread_1_1abstract__thread_ab121718028f3ca68d45db84d10ff2a3a}
+start running the {\ttfamily \hyperlink{classpthread_1_1runnable_a68ce0e65d5714457bcf3f5ef38b33fa7}{run()}} method in a new thread. 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 

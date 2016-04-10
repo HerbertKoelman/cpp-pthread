@@ -24,7 +24,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">C++ pThread wrapper
-   &#160;<span id="projectnumber">v1.2.0</span>
+   &#160;<span id="projectnumber">(v1.2.0)</span>
    </div>
    <div id="projectbrief">Simple C++ wrapper to pthread functions.</div>
   </td>
@@ -83,29 +83,31 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <div class="textblock"><p>IBM's compiler is not implementing all the features of C++11 standard, especially it's lacking the concurrency features that the standard brings. This will at some point be fixed and was therfore looking at a way reduce the effort to switch from a specific implementation to the C++11 standard one. This projetc is the resulting code.</p>
 <p>This wrapper intends to bring these feature by implementing C++11 interface and using the pthread library. Of course, as it is a replacement of C++11 features, it is best to use the standard implementation if your compiler support it. This can be done rather easely by using the standard namespace <code>std</code> instead of this library's specific one <code>pthread</code>.</p>
-<p>To use this library: </p><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;configure</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;make</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;make install</div></div><!-- fragment --><p>Install moves files into your system's default localtion of headers and libraries (often /usr/local/include and /usr/local/lib). Use this command to change target directory: </p><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;configure --prefix=/usr/local</div></div><!-- fragment --><p><a href="http://herbertkoelman.github.io/cpp-pthread/doc/html/">Documentation</a> can be generated with this command: </p><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;make doxygen</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;...</div></div><!-- fragment --><p>This command creates a <code>doc</code> directory wich will contain the generated documentation.</p>
-<blockquote class="doxtable">
-<p><b>warning</b> generating documentation requires that doxygen is installed. </p>
+<p>To use this library: </p><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;configure</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;make</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;make install</div></div><!-- fragment --><p>Install moves files into your system's default localtion of headers and libraries (often /usr/local/include and /usr/local/lib). Use this command to change target directory: </p><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;configure --prefix=/usr/local</div></div><!-- fragment --><p><a href="http://herbertkoelman.github.io/cpp-pthread/doc/html/">Doxygen documentation</a> can be generated with this command. I hope this help make things easier to use and understand. </p><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;make doxygen</div></div><!-- fragment --><blockquote class="doxtable">
+<p>Doxygen can be downloaded <a href="http://www.stack.nl/~dimitri/doxygen/index.html">here</a>. </p>
 </blockquote>
-<h1>How to use it</h1>
-<p>Once compiled and installed in a location that suites you, use your compiler options to reference the headers and the libraries directory. In almoast all casses you can:</p><ul>
+<p>The <code>make</code> target <code>pkg</code> will produce au tar.gz that can be distributed.</p>
+<h3>How to use it</h3>
+<p>Once compiled and installed in a location that suites you, use your compiler options to reference the headers and the library directory. In almoast all casses you can:</p><ul>
 <li>include <code>#include "pthread/phtread.hpp"</code> in your code.</li>
 <li>comment the c++11 standard includes in your code</li>
 <li>declare that you're now using the namespace pthread (<code>using namespace pthread ;</code>)</li>
 </ul>
-<p>It should now compile use this very simple (but often good enough) implementation.</p>
-<h1>Usefull links</h1>
+<p>Sample code can be found in the <code>tests</code> directory. To use it, run the following commands: </p><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;cd tests</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;./configure</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;./make</div></div><!-- fragment --><h3>Usefull links</h3>
+<h4>project links</h4>
 <ul>
-<li><a href="http://pubs.opengroup.org/onlinepubs/007908799/xsh/threads.html">documentation</a> of the underlying POSIX threading library</li>
 <li><a href="https://github.com/HerbertKoelman/cpp-pthread">project's home</a></li>
 <li><a href="http://herbertkoelman.github.io/cpp-pthread/doc/html/">project's doxygen</a></li>
+</ul>
+<h4>other</h4>
+<ul>
+<li>POSIX Threads <a href="http://pubs.opengroup.org/onlinepubs/007908799/xsh/threads.html">documentation</a></li>
 <li><a href="http://en.cppreference.com/w/cpp/thread/thread">std::thread</a> implementation we try to mimic</li>
 <li><a href="http://en.cppreference.com/w/cpp/thread/lock_guard/lock_guard">std::lock_guard</a> implementation we try to mimic</li>
 <li><a href="http://en.cppreference.com/w/cpp/thread/mutex">std::mutex</a> implementation we try to mimic</li>
 <li><a href="http://en.cppreference.com/w/cpp/thread/condition_variable">std::condition_variable</a> implementation we try to mimic</li>
 </ul>
-<p>More <a href="https://github.com/HerbertKoelman/cpp-pthread/wiki">here</a></p>
-<h1>misc</h1>
+<h3>misc</h3>
 <ul>
 <li>author herbert koelman</li>
 <li>github <a href="https://github.com/HerbertKoelman/cpp-pthread">cpp-pthread</a> </li>

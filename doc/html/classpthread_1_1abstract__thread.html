@@ -24,7 +24,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">C++ pThread wrapper
-   &#160;<span id="projectnumber">v1.2.0</span>
+   &#160;<span id="projectnumber">(v1.2.0)</span>
    </div>
    <div id="projectbrief">Simple C++ wrapper to pthread functions.</div>
   </td>
@@ -110,11 +110,9 @@ Inheritance diagram for pthread::abstract_thread:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab121718028f3ca68d45db84d10ff2a3a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab121718028f3ca68d45db84d10ff2a3a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>start</b> ()</td></tr>
+<tr class="memitem:ab121718028f3ca68d45db84d10ff2a3a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1abstract__thread.html#ab121718028f3ca68d45db84d10ff2a3a">start</a> ()</td></tr>
 <tr class="separator:ab121718028f3ca68d45db84d10ff2a3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aedac81bb9eb76ba92c49c48d797ea25b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aedac81bb9eb76ba92c49c48d797ea25b"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>join</b> ()</td></tr>
+<tr class="memitem:aedac81bb9eb76ba92c49c48d797ea25b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1abstract__thread.html#aedac81bb9eb76ba92c49c48d797ea25b">join</a> ()</td></tr>
 <tr class="separator:aedac81bb9eb76ba92c49c48d797ea25b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classpthread_1_1runnable"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classpthread_1_1runnable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classpthread_1_1runnable.html">pthread::runnable</a></td></tr>
 <tr class="memitem:a68ce0e65d5714457bcf3f5ef38b33fa7 inherit pub_methods_classpthread_1_1runnable"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1runnable.html#a68ce0e65d5714457bcf3f5ef38b33fa7">run</a> () __NOEXCEPT__=0</td></tr>
@@ -148,7 +146,49 @@ public:</code></pre><pre><code>  worker(const std::string m = "anonymous worker"
     pthread::lock_guard&lt;pthread::mutex&gt; lck(mtx);
     counter++ ;
   }</code></pre><pre><code>  condition.notify_all();
-}</code></pre><pre><code>  </code></pre> </div><hr/>The documentation for this class was generated from the following files:<ul>
+}</code></pre><pre><code>  </code></pre> </div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="aedac81bb9eb76ba92c49c48d797ea25b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int pthread::abstract_thread::join </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>joins this thread.</p>
+<p>an exception is thrown if deadlock condition are detected. </p>
+
+</div>
+</div>
+<a class="anchor" id="ab121718028f3ca68d45db84d10ff2a3a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void pthread::abstract_thread::start </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>start running the <code><a class="el" href="classpthread_1_1runnable.html#a68ce0e65d5714457bcf3f5ef38b33fa7">run()</a></code> method in a new thread. </p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/pthread/<a class="el" href="thread_8hpp_source.html">thread.hpp</a></li>
 <li>src/thread.cpp</li>
 </ul>
