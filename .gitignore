@@ -17,6 +17,7 @@
 *.mod
 
 # Compiled Static libraries
+*.dSYM
 *.lai
 *.la
 *.a
@@ -26,20 +27,31 @@
 *.exe
 *.out
 *.app
+without-cpp11-pthread-tests
+with-cpp11-pthread-tests
 
 # Xcode
-#cpp-pthread.xcodeproj/
+*.xcodeproj/
 DerivedData/
+
+# MAc OS X
+.DS_Store
+
+# MAc OS X
+.DS_Store
+._*
 
 # autoconf
 config.h
 autom4te.cache
 config.status
 config.log
-configure
+#configure
 Makefile
 
 # layout
+doxyfile
+distrib/
 lib/
 doc/
 pthread-tests

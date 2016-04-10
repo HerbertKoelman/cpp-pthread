@@ -17,16 +17,15 @@ PTHREADLIB=libcpp-pthread.a
 all: 
 	cd src && $(MAKE) clean all
 
-dist: 
-	cd src && $(MAKE) dist
-	tar cf - bin udataobj locale doc | gzip -c > distrib/$(PACKAGE)
+pkg: 
+	$(MKDIR) distrib
+	tar cf - `git ls-files`  | gzip -c > distrib/$(PACKAGE)
 
 globber:clean
-	$(RM) -R Makefile autom4te.cache config.log config.status configure
-	cd src && $(MAKE) globber
+	-$(RM) -R Makefile autom4te.cache config.log config.status 
 
 clean:
-	cd src && $(MAKE) clean
+	-(cd src && $(MAKE) clean)
 
 doxygen:
 	${DOXYGEN} doxyfile

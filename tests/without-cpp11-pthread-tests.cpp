@@ -13,7 +13,7 @@
 #include <utility>
 #include <memory>
 #include "pthread/pthread.hpp"
-#include "ibm.hpp"
+// workaround  - #include "ibm.hpp"
 
 pthread::condition_variable condition;
 pthread::mutex mtx;
@@ -66,6 +66,8 @@ private:
 
 int main(int argc, const char * argv[]) {
   
+  std::cout << "version: " << pthread::cpp_pthread_version() << std::endl;
+
   pthread::string dummy;
   
   {
@@ -97,7 +99,7 @@ int main(int argc, const char * argv[]) {
   condition.notify_all();
   
 //  message("main is waiting for threads to finish");
-//  threads.join();
+  threads.join();
   message( "end reached");
   
 }
