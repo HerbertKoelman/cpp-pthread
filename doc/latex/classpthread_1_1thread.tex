@@ -11,9 +11,9 @@
 \item 
 \hyperlink{classpthread_1_1thread_a978cf4c628ece8a58e75c70f85b043ea}{thread} (const \hyperlink{classpthread_1_1runnable}{runnable} \&runner)
 \item 
-\hyperlink{classpthread_1_1thread_a928b41a7587eba3e5e39237b4b2f655a}{thread} (thread \&\&other)
+\hyperlink{classpthread_1_1thread_a928b41a7587eba3e5e39237b4b2f655a}{thread} (\hyperlink{classpthread_1_1thread}{thread} \&\&other)
 \item 
-\hyperlink{classpthread_1_1thread_ab9ddf5aa6697287269dc2804051b6378}{thread} (const thread \&)=delete
+\hyperlink{classpthread_1_1thread_ab9ddf5aa6697287269dc2804051b6378}{thread} (const \hyperlink{classpthread_1_1thread}{thread} \&)=delete
 \item 
 virtual \hyperlink{classpthread_1_1thread_aa4920e15c3a033f94c6be462c5cbcecf}{$\sim$thread} ()
 \item 
@@ -25,9 +25,9 @@ int \hyperlink{classpthread_1_1thread_a89b64810871feee5c2d2659f3ae2f668}{cancel}
 \item 
 \hyperlink{namespacepthread_ac4b6e78f3d72c946ace7a92f3bec4101}{thread\+\_\+status} \hyperlink{classpthread_1_1thread_a3e49c7d73cb8411258790ed2fc0cd818}{status} ()
 \item 
-thread \& \hyperlink{classpthread_1_1thread_a09903f6b3f396f2ea046c9c1606f0f61}{operator=} (const thread \&)=delete
+\hyperlink{classpthread_1_1thread}{thread} \& \hyperlink{classpthread_1_1thread_a09903f6b3f396f2ea046c9c1606f0f61}{operator=} (const \hyperlink{classpthread_1_1thread}{thread} \&)=delete
 \item 
-thread \& \hyperlink{classpthread_1_1thread_a8f9ab7d43ad9aee0368ccc4778cf40d0}{operator=} (thread \&\&other)
+\hyperlink{classpthread_1_1thread}{thread} \& \hyperlink{classpthread_1_1thread_a8f9ab7d43ad9aee0368ccc4778cf40d0}{operator=} (\hyperlink{classpthread_1_1thread}{thread} \&\&other)
 \end{DoxyCompactItemize}
 
 
@@ -77,7 +77,7 @@ The new thread is made runnable, and will start executing the run routine, with.
 \index{thread@{thread}!pthread\+::thread@{pthread\+::thread}}
 \subsubsection[{\texorpdfstring{thread(thread \&\&other)}{thread(thread &&other)}}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+::thread\+::thread (
 \begin{DoxyParamCaption}
-\item[{thread \&\&}]{other}
+\item[{{\bf thread} \&\&}]{other}
 \end{DoxyParamCaption}
 )}\hypertarget{classpthread_1_1thread_a928b41a7587eba3e5e39237b4b2f655a}{}\label{classpthread_1_1thread_a928b41a7587eba3e5e39237b4b2f655a}
 Starts running given function in a new trhread.
@@ -95,7 +95,7 @@ once moved this not a thread anymore. Status is \hyperlink{namespacepthread_ac4b
 \index{thread@{thread}!pthread\+::thread@{pthread\+::thread}}
 \subsubsection[{\texorpdfstring{thread(const thread \&)=delete}{thread(const thread &)=delete}}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+::thread\+::thread (
 \begin{DoxyParamCaption}
-\item[{const thread \&}]{}
+\item[{const {\bf thread} \&}]{}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [delete]}}\hypertarget{classpthread_1_1thread_ab9ddf5aa6697287269dc2804051b6378}{}\label{classpthread_1_1thread_ab9ddf5aa6697287269dc2804051b6378}
 copy constructor is flagged deleted because it makes no sense to copy a thread. \index{pthread\+::thread@{pthread\+::thread}!````~thread@{$\sim$thread}}
@@ -149,16 +149,16 @@ true if this thread can be joined.
 \end{DoxyReturn}
 \index{pthread\+::thread@{pthread\+::thread}!operator=@{operator=}}
 \index{operator=@{operator=}!pthread\+::thread@{pthread\+::thread}}
-\subsubsection[{\texorpdfstring{operator=(const thread \&)=delete}{operator=(const thread &)=delete}}]{\setlength{\rightskip}{0pt plus 5cm}thread\& pthread\+::thread\+::operator= (
+\subsubsection[{\texorpdfstring{operator=(const thread \&)=delete}{operator=(const thread &)=delete}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf thread}\& pthread\+::thread\+::operator= (
 \begin{DoxyParamCaption}
-\item[{const thread \&}]{}
+\item[{const {\bf thread} \&}]{}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [delete]}}\hypertarget{classpthread_1_1thread_a09903f6b3f396f2ea046c9c1606f0f61}{}\label{classpthread_1_1thread_a09903f6b3f396f2ea046c9c1606f0f61}
 copy operator is flagged deleted, copying doesn\textquotesingle{}t make sense \index{pthread\+::thread@{pthread\+::thread}!operator=@{operator=}}
 \index{operator=@{operator=}!pthread\+::thread@{pthread\+::thread}}
-\subsubsection[{\texorpdfstring{operator=(thread \&\&other)}{operator=(thread &&other)}}]{\setlength{\rightskip}{0pt plus 5cm}thread \& pthread\+::thread\+::operator= (
+\subsubsection[{\texorpdfstring{operator=(thread \&\&other)}{operator=(thread &&other)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf thread} \& pthread\+::thread\+::operator= (
 \begin{DoxyParamCaption}
-\item[{thread \&\&}]{other}
+\item[{{\bf thread} \&\&}]{other}
 \end{DoxyParamCaption}
 )}\hypertarget{classpthread_1_1thread_a8f9ab7d43ad9aee0368ccc4778cf40d0}{}\label{classpthread_1_1thread_a8f9ab7d43ad9aee0368ccc4778cf40d0}
 move a thread to another thread.
@@ -179,7 +179,7 @@ thread
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classpthread_1_1thread_a3e49c7d73cb8411258790ed2fc0cd818}{}\label{classpthread_1_1thread_a3e49c7d73cb8411258790ed2fc0cd818}
 \begin{DoxyReturn}{Returns}
-the status of the thread (thread\+::status). 
+the status of the thread (\hyperlink{classpthread_1_1thread_a3e49c7d73cb8411258790ed2fc0cd818}{thread\+::status}). 
 \end{DoxyReturn}
 
 
