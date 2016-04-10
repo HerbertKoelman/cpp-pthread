@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E5B044091CAE7342005C89BB"
+               BlueprintIdentifier = "E5BF2B591CB13C3D00B158E3"
                BuildableName = "without-cpp11-pthread-tests"
                BlueprintName = "without-cpp11-pthread-tests"
                ReferencedContainer = "container:cpp-pthread.xcodeproj">
@@ -32,7 +32,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E5B044091CAE7342005C89BB"
+            BlueprintIdentifier = "E5BF2B591CB13C3D00B158E3"
             BuildableName = "without-cpp11-pthread-tests"
             BlueprintName = "without-cpp11-pthread-tests"
             ReferencedContainer = "container:cpp-pthread.xcodeproj">
@@ -55,7 +55,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E5B044091CAE7342005C89BB"
+            BlueprintIdentifier = "E5BF2B591CB13C3D00B158E3"
             BuildableName = "without-cpp11-pthread-tests"
             BlueprintName = "without-cpp11-pthread-tests"
             ReferencedContainer = "container:cpp-pthread.xcodeproj">
@@ -74,7 +74,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E5B044091CAE7342005C89BB"
+            BlueprintIdentifier = "E5BF2B591CB13C3D00B158E3"
             BuildableName = "without-cpp11-pthread-tests"
             BlueprintName = "without-cpp11-pthread-tests"
             ReferencedContainer = "container:cpp-pthread.xcodeproj">
