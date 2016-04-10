@@ -285,6 +285,8 @@ namespace pthread {
      */
     void join();
     
+    unsigned long size();
+    
     /** return if thread_group should wait for all referenced abstract_thread terminate
      */
     const bool destructor_joins_first(){ return _destructor_joins_first;};

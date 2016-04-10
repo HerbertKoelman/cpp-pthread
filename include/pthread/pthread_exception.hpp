@@ -27,7 +27,7 @@ namespace pthread {
      * @param message error message
      * @param pthread_errno a pthread function return code.
      */
-    pthread_exception( const string message, const int pthread_errno = 0 ): _message(message), _pthread_errno(pthread_number){};
+    pthread_exception( const string message, const int pthread_errno = 0 ): _message(message), _pthread_errno(pthread_errno){};
 
     virtual ~pthread_exception(){};
     

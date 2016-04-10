@@ -147,6 +147,10 @@ namespace pthread {
     }
   }
   
+  unsigned long thread_group::size(){
+    return _threads.size();
+  }
+  
   /**
    This function is a helper function. It has normal C linkage, and is
    the base for newly created Thread objects. It runs the
