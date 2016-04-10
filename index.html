@@ -29,7 +29,7 @@
       <div class="inner clearfix">
         <section id="main-content">
           <h3>
-<a id="what-it-does" class="anchor" href="#what-it-does" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What it does</h1>
+<a id="what-it-does" class="anchor" href="#what-it-does" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What it does</h3>
 
 <p>IBM's compiler is not implementing all the features of C++11 standard, especially it's lacking the concurrency features that the standard brings. This will at some point be fixed and was therfore looking at a way reduce the effort to switch from a specific implementation to the C++11 standard one. This projetc is the resulting code.</p>
 
@@ -47,22 +47,21 @@ make install
 <pre><code>configure --prefix=/usr/local
 </code></pre>
 
-<p><a href="http://herbertkoelman.github.io/cpp-pthread/doc/html/">Documentation</a> can be generated with this command:</p>
+<p><a href="http://herbertkoelman.github.io/cpp-pthread/doc/html/">Doxygen documentation</a> can be generated with this command. I hope this help make things easier to use and understand.</p>
 
 <pre><code>make doxygen
-...
 </code></pre>
 
-<p>This command creates a <code>doc</code> directory wich will contain the generated documentation.</p>
-
 <blockquote>
-<p><strong>warning</strong> generating documentation requires that doxygen is installed.</p>
+<p>Doxygen can be downloaded <a href="http://www.stack.nl/%7Edimitri/doxygen/index.html">here</a>.</p>
 </blockquote>
 
-<h3>
-<a id="how-to-use-it" class="anchor" href="#how-to-use-it" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How to use it</h1>
+<p>The <code>make</code> target <code>pkg</code> will produce au tar.gz that can be distributed.</p>
 
-<p>Once compiled and installed in a location that suites you, use your compiler options to reference the headers and the libraries directory. In almoast all casses you can:</p>
+<h3>
+<a id="how-to-use-it" class="anchor" href="#how-to-use-it" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How to use it</h3>
+
+<p>Once compiled and installed in a location that suites you, use your compiler options to reference the headers and the library directory. In almoast all casses you can:</p>
 
 <ul>
 <li>include <code>#include "pthread/phtread.hpp"</code> in your code.</li>
@@ -70,16 +69,30 @@ make install
 <li>declare that you're now using the namespace pthread (<code>using namespace pthread ;</code>)</li>
 </ul>
 
-<p>It should now compile use this very simple (but often good enough) implementation.</p>
+<p>Sample code can be found in the <code>tests</code> directory. To use it, run the following commands:</p>
+
+<pre><code>cd tests
+./configure
+./make
+</code></pre>
 
 <h3>
-<a id="usefull-links" class="anchor" href="#usefull-links" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usefull links</h1>
+<a id="usefull-links" class="anchor" href="#usefull-links" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usefull links</h3>
+
+<h4>
+<a id="project-links" class="anchor" href="#project-links" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>project links</h4>
 
 <ul>
-<li>
-<a href="http://pubs.opengroup.org/onlinepubs/007908799/xsh/threads.html">documentation</a> of the underlying POSIX threading library </li>
 <li><a href="https://github.com/HerbertKoelman/cpp-pthread">project's home</a></li>
 <li><a href="http://herbertkoelman.github.io/cpp-pthread/doc/html/">project's doxygen</a></li>
+</ul>
+
+<h4>
+<a id="other" class="anchor" href="#other" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>other</h4>
+
+<ul>
+<li>POSIX Threads <a href="http://pubs.opengroup.org/onlinepubs/007908799/xsh/threads.html">documentation</a>
+</li>
 <li>
 <a href="http://en.cppreference.com/w/cpp/thread/thread">std::thread</a> implementation we try to mimic</li>
 <li>
@@ -90,10 +103,8 @@ make install
 <a href="http://en.cppreference.com/w/cpp/thread/condition_variable">std::condition_variable</a> implementation we try to mimic</li>
 </ul>
 
-<p>More <a href="https://github.com/HerbertKoelman/cpp-pthread/wiki">here</a></p>
-
 <h3>
-<a id="misc" class="anchor" href="#misc" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>misc</h1>
+<a id="misc" class="anchor" href="#misc" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>misc</h3>
 
 <ul>
 <li>author herbert koelman</li>
