@@ -1,8 +1,57 @@
-*
-!.gitignore
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+
+# Compiled Static libraries
+*.dSYM
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+without-cpp11-pthread-tests
+with-cpp11-pthread-tests
+
+# Xcode
+*.xcodeproj/
+DerivedData/
+
+# MAc OS X
+.DS_Store
+
+# MAc OS X
+.DS_Store
+._*
+
+# autoconf
+config.h
+autom4te.cache
+config.status
+config.log
+#configure
+Makefile
+
+# layout
+doxyfile
+distrib/
+lib/
 !doc/
-!images
-!index.html
-!javascripts
-!params.json
-!stylesheets
+pthread-tests
