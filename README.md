@@ -16,45 +16,43 @@ Install moves files into your system's default localtion of headers and librarie
 configure --prefix=/usr/local
 ```
 
-[Doxygen documentation](http://herbertkoelman.github.io/cpp-pthread/doc/html/) can be generated with this command:
+[Doxygen documentation](http://herbertkoelman.github.io/cpp-pthread/doc/html/) can be generated with this command. I hope this help make things easier to use and understand.
 ```
 make doxygen
-...
 ```
 
-The target `pkg` will produce au tar.gz.
+> Doxygen can be downloaded [here](http://www.stack.nl/~dimitri/doxygen/index.html).
 
-This command creates a `doc` directory wich will contain the generated documentation.
-
-> **warning** generating documentation requires that doxygen is installed.
-
-The confugre file is not versionned, therefore it is required to run `autoconf` to generate one
-```
-autoconf
-( cd src && autoconf )
-( cd tests && autoconf )
-```
+The `make` target `pkg` will produce au tar.gz that can be distributed.
 
 ### How to use it
 
-Once compiled and installed in a location that suites you, use your compiler options to reference the headers and the libraries directory. In almoast all casses you can:
+Once compiled and installed in a location that suites you, use your compiler options to reference the headers and the library directory. In almoast all casses you can:
 * include `#include "pthread/phtread.hpp"` in your code.
 * comment the c++11 standard includes in your code
 * declare that you're now using the namespace pthread (`using namespace pthread ;`)
 
-It should now compile use this very simple (but often good enough) implementation.
+Sample code can be found in the `tests` directory. To use it, run the following commands:
+```
+cd tests
+./configure
+./make
+```
 
 ### Usefull links
 
-* [documentation](http://pubs.opengroup.org/onlinepubs/007908799/xsh/threads.html) of the underlying POSIX threading library 
+#### project links
+
 * [project's home](https://github.com/HerbertKoelman/cpp-pthread)
 * [project's doxygen](http://herbertkoelman.github.io/cpp-pthread/doc/html/)
+
+#### other
+
+* POSIX Threads [documentation](http://pubs.opengroup.org/onlinepubs/007908799/xsh/threads.html)
 * [std::thread](http://en.cppreference.com/w/cpp/thread/thread) implementation we try to mimic
 * [std::lock_guard](http://en.cppreference.com/w/cpp/thread/lock_guard/lock_guard)  implementation we try to mimic 
 * [std::mutex](http://en.cppreference.com/w/cpp/thread/mutex) implementation we try to mimic
 * [std::condition_variable](http://en.cppreference.com/w/cpp/thread/condition_variable) implementation we try to mimic
-
-More [here](https://github.com/HerbertKoelman/cpp-pthread/wiki)
 
 ### misc
 

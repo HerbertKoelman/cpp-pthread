@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.69)
-AC_INIT([cpp-pthread],[m4_esyscmd_s(echo $(git describe --always))],[herbert.koelman@pmu.fr],[])
+AC_INIT([cpp-pthread],[m4_esyscmd_s(echo $(git describe --always --abbrev=0))],[herbert.koelman@me.com],[],[http://herbertkoelman.github.io/cpp-pthread/])
 AC_LANG(C++)
 
 AC_CONFIG_AUX_DIR([/usr/bin . bin])
@@ -29,7 +29,7 @@ do
 done
 AC_SUBST(HEADERS,$HEADERS)
 
-AC_CONFIG_SUBDIRS(src tests)
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_SUBDIRS(src)
+AC_CONFIG_FILES([Makefile doxyfile])
 AC_OUTPUT
 

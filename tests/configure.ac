@@ -54,7 +54,7 @@ CPPFLAGS="$CPPFLAGS $CFLAGS"
 
 # Checks for libraries.
 AC_CHECK_LIB([pthread], [pthread_create],[],[AC_ERROR([missing pthread library.])])
-#AC_CHECK_LIB([cpp-pthread], [cpp_pthread_version],[],[AC_ERROR([missing cpp-thread library.])])
+AC_CHECK_LIB([cpp-pthread], [cpp_pthread_version],[],[AC_ERROR([missing cpp-thread library.])])
 
 # Checks for header files.
 #AC_HEADER_STDC
