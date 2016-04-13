@@ -48,11 +48,19 @@ namespace pthread {
     return status;
   }
   
-  void condition_variable::notify_one() __NOEXCEPT__ {
+#if __cplusplus < 201103L
+  void condition_variable::notify_one() throw() {
+#else
+  void condition_variable::notify_one() noexcept {
+#endif
     pthread_cond_signal ( &_condition );
   }
   
-  void condition_variable::notify_all () __NOEXCEPT__{
+#if __cplusplus < 201103L
+  void condition_variable::notify_all () throw(){
+#else
+  void condition_variable::notify_all () noexcept{
+#endif
     pthread_cond_broadcast ( &_condition );
     
   }

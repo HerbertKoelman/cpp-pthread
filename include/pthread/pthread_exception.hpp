@@ -32,8 +32,11 @@ namespace pthread {
     virtual ~pthread_exception(){};
     
     /** @return the exception's error message. */
-    virtual const char *what() const __NOEXCEPT__ __OVERRIDE__ { return _message.c_str();};
-    
+#if __cplusplus < 201103L
+    virtual const char *what() const throw() { return _message.c_str();};
+#else
+    virtual const char *what() const noexcept override{ return _message.c_str();};
+#endif    
     /** @return pthread error code that was at the orgin of the error */
     virtual int pthread_errno(){ return _pthread_errno ;};
     
