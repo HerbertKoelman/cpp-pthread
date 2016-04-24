@@ -30,6 +30,9 @@
 without-cpp11-pthread-tests
 with-cpp11-pthread-tests
 
+# emacs
+*~
+
 # Xcode
 *.xcodeproj/
 DerivedData/
