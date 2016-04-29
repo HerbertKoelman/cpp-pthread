@@ -83,6 +83,6 @@ AC_CHECK_FUNCS([gettimeofday])
 
 LDFLAGS="$LDFLAGS $LIBS"
 
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile pthread.cpp])
 AC_OUTPUT
 

@@ -1,7 +1,3 @@
-  /*
- $Id: condition_variable.C 28 2007-08-06 22:29:28Z hkoelman $
- */
-
 #include "pthread/condition_variable.hpp"
 
 namespace pthread {
@@ -101,11 +97,7 @@ namespace pthread {
   
   // excpetions -------
   
-#ifdef __IBMCPP__
   condition_variable_exception::condition_variable_exception( const string message, const int pthread_error): pthread_exception(message, pthread_error){
-#else
-  condition_variable_exception::condition_variable_exception( const string message, const int pthread_error): pthread_exception{message, pthread_error}{
-#endif
   };
   
   
