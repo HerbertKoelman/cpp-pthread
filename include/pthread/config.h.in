@@ -25,12 +25,6 @@
 #ifndef pthread_config_h
 #define pthread_config_h
 
-#ifdef __IBMCPP__
-
-#else
-
-#endif
-
 #undef CPP_PTHREAD_VERSION
 
 /* Define DEBUG. */
@@ -43,17 +37,6 @@
 #undef HAVE_CPP11_MUTEX
 #undef HAVE_CPP11_CHRONO
 #undef HAVE_CPP11_THREAD
-
-/* Define to the address where bug reports for this package should be sent. */
-#undef PACKAGE_BUGREPORT
-/* Define to the full name of this package. */
-#undef PACKAGE_NAME
-/* Define to the full name and version of this package. */
-#undef PACKAGE_STRING
-/* Define to the one symbol short name of this package. */
-#undef PACKAGE_TARNAME
-/* Define to the version of this package. */
-#undef PACKAGE_VERSION
 
 /* Define to empty if `const' does not conform to ANSI C. */
 #undef const

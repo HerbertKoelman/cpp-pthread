@@ -12,6 +12,7 @@
 #include "pthread/config.h"
 
 #include <errno.h>
+#include <cstring>
 
 namespace pthread {
   

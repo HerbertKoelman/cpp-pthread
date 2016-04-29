@@ -155,12 +155,21 @@ namespace pthread {
      * The pthread_cond_signal() call unblocks at least one of the threads that are blocked
      * on the specified condition variable cond (if any threads are blocked on cond).
      */
-    void notify_one () __NOEXCEPT__;
+#if __cplusplus < 201103L
+    void notify_one () throw() ;
+#else
+    void notify_one () noexcept;
+#endif
+
     
     /** signal all waiting threads
      * The pthread_cond_broadcast() call unblocks all threads currently blocked on the specified condition variable cond.
      */
-    void notify_all () __NOEXCEPT__;
+#if __cplusplus < 201103L
+    void notify_all () throw() ;
+#else
+    void notify_all () noexcept ;
+#endif
     
     // constructor/destructor ------------------------------------------------
     

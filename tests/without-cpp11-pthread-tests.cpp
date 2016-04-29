@@ -71,7 +71,7 @@ int main(int argc, const char * argv[]) {
   
   std::cout << "version: " << pthread::cpp_pthread_version() << std::endl;
 
-  pthread::string dummy;
+//  std::string dummy;
   
   pthread::thread_group threads(true);
   for (auto x = 10 ; x > 0 ; x--){
