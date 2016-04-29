@@ -160,7 +160,6 @@ namespace pthread {
 #else
     void notify_one () noexcept;
 #endif
-
     
     /** signal all waiting threads
      * The pthread_cond_broadcast() call unblocks all threads currently blocked on the specified condition variable cond.
