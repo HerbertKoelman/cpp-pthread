@@ -293,6 +293,9 @@ namespace pthread {
      */
     void join();
     
+    /**
+     * @return the number of threads in the thread_group
+     */
     unsigned long size();
     
     /** return if thread_group should wait for all referenced abstract_thread terminate
