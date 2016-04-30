@@ -123,7 +123,12 @@ namespace pthread {
   
   thread_group::~thread_group(){
     while(! _threads.empty()){
+#if __cplusplus < 201103L
       std::auto_ptr<pthread::abstract_thread> pat(_threads.front());
+#else
+      std::unique_ptr<pthread::abstract_thread> pat(_threads.front());
+#endif
+
       _threads.pop_front();
       
       if ( _destructor_joins_first ){
