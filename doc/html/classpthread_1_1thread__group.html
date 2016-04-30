@@ -24,7 +24,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">C++ pThread wrapper
-   &#160;<span id="projectnumber">(v1.2.1)</span>
+   &#160;<span id="projectnumber">(v1.2.2)</span>
    </div>
    <div id="projectbrief">Simple C++ wrapper to pthread functions.</div>
   </td>
@@ -101,8 +101,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab4a8be5396449131ce2817db0e6ea2c2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1thread__group.html#ab4a8be5396449131ce2817db0e6ea2c2">thread_group</a> (bool <a class="el" href="classpthread_1_1thread__group.html#a67df7bb484fb8657228a909a126489d3">destructor_joins_first</a>=false) __NOEXCEPT__</td></tr>
-<tr class="separator:ab4a8be5396449131ce2817db0e6ea2c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e9881c6e01fda143a3f0080f0a196d8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1thread__group.html#a9e9881c6e01fda143a3f0080f0a196d8">thread_group</a> (bool <a class="el" href="classpthread_1_1thread__group.html#a67df7bb484fb8657228a909a126489d3">destructor_joins_first</a>=false)  throw ()</td></tr>
+<tr class="separator:a9e9881c6e01fda143a3f0080f0a196d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2aeeb86d1523e2a7c175df3162331e4f"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1thread__group.html#a2aeeb86d1523e2a7c175df3162331e4f">~thread_group</a> ()</td></tr>
 <tr class="separator:a2aeeb86d1523e2a7c175df3162331e4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9fa9ce6e7b4c2222d04a446b3c23ca0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1thread__group.html#ae9fa9ce6e7b4c2222d04a446b3c23ca0">add</a> (<a class="el" href="classpthread_1_1abstract__thread.html">abstract_thread</a> *<a class="el" href="classpthread_1_1thread.html">thread</a>)</td></tr>
@@ -111,6 +111,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aaba00cf80d72cd986526384482457968"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a39937a77e1059e352c9b39407a866f6e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1thread__group.html#a39937a77e1059e352c9b39407a866f6e">join</a> ()</td></tr>
 <tr class="separator:a39937a77e1059e352c9b39407a866f6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b1a04ee731bba608193b089cc1d50a1"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1thread__group.html#a4b1a04ee731bba608193b089cc1d50a1">size</a> ()</td></tr>
+<tr class="separator:a4b1a04ee731bba608193b089cc1d50a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67df7bb484fb8657228a909a126489d3"><td class="memItemLeft" align="right" valign="top">const bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1thread__group.html#a67df7bb484fb8657228a909a126489d3">destructor_joins_first</a> ()</td></tr>
 <tr class="separator:a67df7bb484fb8657228a909a126489d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -123,8 +125,8 @@ int main(int argc, const char * argv[]) {</code></pre><pre><code>  <a class="el"
     threads.add( new worker("herbert")); // register threads, they will run when <a class="el" href="classpthread_1_1thread__group.html#aaba00cf80d72cd986526384482457968">start()</a> is called
   }</code></pre><pre><code>  threads.start(); // start running all threads
   threads.join(); // wait for registered threads to join
-} // scope end</code></pre><pre><code>  </code></pre> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ab4a8be5396449131ce2817db0e6ea2c2"></a>
+} // scope end</code></pre><pre><code></code></pre> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a9e9881c6e01fda143a3f0080f0a196d8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -134,6 +136,12 @@ int main(int argc, const char * argv[]) {</code></pre><pre><code>  <a class="el"
           <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>destructor_joins_first</em> = <code>false</code></td><td>)</td>
           <td></td>
+        </tr>
+        <tr>
+          <td align="right">throw </td><td>(</td><td colspan="2"></td>
+        </tr>
+        <tr>
+          <td align="right"></td><td>)</td><td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -232,6 +240,22 @@ int main(int argc, const char * argv[]) {</code></pre><pre><code>  <a class="el"
       </table>
 </div><div class="memdoc">
 <p>what for all threads to join the caller of this method. </p>
+
+</div>
+</div>
+<a class="anchor" id="a4b1a04ee731bba608193b089cc1d50a1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long pthread::thread_group::size </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>the number of threads in the <a class="el" href="classpthread_1_1thread__group.html">thread_group</a> </dd></dl>
 
 </div>
 </div>

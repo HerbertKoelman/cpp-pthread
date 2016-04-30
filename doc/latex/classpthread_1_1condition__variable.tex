@@ -23,9 +23,9 @@ void \hyperlink{classpthread_1_1condition__variable_a9bb3e49f17ec1470c305d8b21da
 \item 
 {\footnotesize template$<$class Lambda $>$ }\\bool \hyperlink{classpthread_1_1condition__variable_a5ee32edbf76592ec443e2544ecba811a}{wait\+\_\+for} (\hyperlink{classpthread_1_1lock__guard}{lock\+\_\+guard}$<$ \hyperlink{classpthread_1_1mutex}{pthread\+::mutex} $>$ \&lck, int millis, Lambda lambda)
 \item 
-void \hyperlink{classpthread_1_1condition__variable_afded612c4271bdc890e52d81a3c22422}{notify\+\_\+one} () \+\_\+\+\_\+\+N\+O\+E\+X\+C\+E\+P\+T\+\_\+\+\_\+
+void \hyperlink{classpthread_1_1condition__variable_a71a7f70ef29da791b1525d1ab8af01ea}{notify\+\_\+one} ()  throw ()
 \item 
-void \hyperlink{classpthread_1_1condition__variable_a9faf121444ba2f696753456e9ab441a9}{notify\+\_\+all} () \+\_\+\+\_\+\+N\+O\+E\+X\+C\+E\+P\+T\+\_\+\+\_\+
+void \hyperlink{classpthread_1_1condition__variable_a8aed3a66334aec0e3a82090ac4d05483}{notify\+\_\+all} ()  throw ()
 \end{DoxyCompactItemize}
 
 
@@ -53,18 +53,18 @@ herbert koelman
 \subsection{Member Function Documentation}
 \index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!notify\+\_\+all@{notify\+\_\+all}}
 \index{notify\+\_\+all@{notify\+\_\+all}!pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}}
-\subsubsection[{\texorpdfstring{notify\+\_\+all() \+\_\+\+\_\+\+N\+O\+E\+X\+C\+E\+P\+T\+\_\+\+\_\+}{notify_all() __NOEXCEPT__}}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::condition\+\_\+variable\+::notify\+\_\+all (
+\subsubsection[{\texorpdfstring{notify\+\_\+all()}{notify_all()}}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::condition\+\_\+variable\+::notify\+\_\+all (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}\hypertarget{classpthread_1_1condition__variable_a9faf121444ba2f696753456e9ab441a9}{}\label{classpthread_1_1condition__variable_a9faf121444ba2f696753456e9ab441a9}
+) throw  ) }\hypertarget{classpthread_1_1condition__variable_a8aed3a66334aec0e3a82090ac4d05483}{}\label{classpthread_1_1condition__variable_a8aed3a66334aec0e3a82090ac4d05483}
 signal all waiting threads The pthread\+\_\+cond\+\_\+broadcast() call unblocks all threads currently blocked on the specified condition variable cond. \index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!notify\+\_\+one@{notify\+\_\+one}}
 \index{notify\+\_\+one@{notify\+\_\+one}!pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}}
-\subsubsection[{\texorpdfstring{notify\+\_\+one() \+\_\+\+\_\+\+N\+O\+E\+X\+C\+E\+P\+T\+\_\+\+\_\+}{notify_one() __NOEXCEPT__}}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::condition\+\_\+variable\+::notify\+\_\+one (
+\subsubsection[{\texorpdfstring{notify\+\_\+one()}{notify_one()}}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::condition\+\_\+variable\+::notify\+\_\+one (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}\hypertarget{classpthread_1_1condition__variable_afded612c4271bdc890e52d81a3c22422}{}\label{classpthread_1_1condition__variable_afded612c4271bdc890e52d81a3c22422}
+) throw  ) }\hypertarget{classpthread_1_1condition__variable_a71a7f70ef29da791b1525d1ab8af01ea}{}\label{classpthread_1_1condition__variable_a71a7f70ef29da791b1525d1ab8af01ea}
 signal one waiting thread.
 
 The pthread\+\_\+cond\+\_\+signal() call unblocks at least one of the threads that are blocked on the specified condition variable cond (if any threads are blocked on cond). \index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!wait@{wait}}

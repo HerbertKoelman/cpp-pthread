@@ -7,7 +7,7 @@
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classpthread_1_1thread__group_ab4a8be5396449131ce2817db0e6ea2c2}{thread\+\_\+group} (bool \hyperlink{classpthread_1_1thread__group_a67df7bb484fb8657228a909a126489d3}{destructor\+\_\+joins\+\_\+first}=false) \+\_\+\+\_\+\+N\+O\+E\+X\+C\+E\+P\+T\+\_\+\+\_\+
+\hyperlink{classpthread_1_1thread__group_a9e9881c6e01fda143a3f0080f0a196d8}{thread\+\_\+group} (bool \hyperlink{classpthread_1_1thread__group_a67df7bb484fb8657228a909a126489d3}{destructor\+\_\+joins\+\_\+first}=false)  throw ()
 \item 
 virtual \hyperlink{classpthread_1_1thread__group_a2aeeb86d1523e2a7c175df3162331e4f}{$\sim$thread\+\_\+group} ()
 \item 
@@ -16,6 +16,8 @@ void \hyperlink{classpthread_1_1thread__group_ae9fa9ce6e7b4c2222d04a446b3c23ca0}
 void \hyperlink{classpthread_1_1thread__group_aaba00cf80d72cd986526384482457968}{start} ()
 \item 
 void \hyperlink{classpthread_1_1thread__group_a39937a77e1059e352c9b39407a866f6e}{join} ()
+\item 
+unsigned long \hyperlink{classpthread_1_1thread__group_a4b1a04ee731bba608193b089cc1d50a1}{size} ()
 \item 
 const bool \hyperlink{classpthread_1_1thread__group_a67df7bb484fb8657228a909a126489d3}{destructor\+\_\+joins\+\_\+first} ()
 \end{DoxyCompactItemize}
@@ -50,17 +52,17 @@ int main(int argc, const char * argv[]) \{}\end{DoxyPre}
 
 
 
-\begin{DoxyPre}{\ttfamily   }\end{DoxyPre}
+\begin{DoxyPre}{\ttfamily }\end{DoxyPre}
  
 
 \subsection{Constructor \& Destructor Documentation}
 \index{pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}!thread\+\_\+group@{thread\+\_\+group}}
 \index{thread\+\_\+group@{thread\+\_\+group}!pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}}
-\subsubsection[{\texorpdfstring{thread\+\_\+group(bool destructor\+\_\+joins\+\_\+first=false) \+\_\+\+\_\+\+N\+O\+E\+X\+C\+E\+P\+T\+\_\+\+\_\+}{thread_group(bool destructor_joins_first=false) __NOEXCEPT__}}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+::thread\+\_\+group\+::thread\+\_\+group (
+\subsubsection[{\texorpdfstring{thread\+\_\+group(bool destructor\+\_\+joins\+\_\+first=false)}{thread_group(bool destructor_joins_first=false)}}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+::thread\+\_\+group\+::thread\+\_\+group (
 \begin{DoxyParamCaption}
 \item[{bool}]{destructor\+\_\+joins\+\_\+first = {\ttfamily false}}
 \end{DoxyParamCaption}
-)}\hypertarget{classpthread_1_1thread__group_ab4a8be5396449131ce2817db0e6ea2c2}{}\label{classpthread_1_1thread__group_ab4a8be5396449131ce2817db0e6ea2c2}
+) throw  ) }\hypertarget{classpthread_1_1thread__group_a9e9881c6e01fda143a3f0080f0a196d8}{}\label{classpthread_1_1thread__group_a9e9881c6e01fda143a3f0080f0a196d8}
 Setup a thread container/list.
 
 
@@ -106,7 +108,17 @@ return if \hyperlink{classpthread_1_1thread__group}{thread\+\_\+group} should wa
 {}
 \end{DoxyParamCaption}
 )}\hypertarget{classpthread_1_1thread__group_a39937a77e1059e352c9b39407a866f6e}{}\label{classpthread_1_1thread__group_a39937a77e1059e352c9b39407a866f6e}
-what for all threads to join the caller of this method. \index{pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}!start@{start}}
+what for all threads to join the caller of this method. \index{pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}!size@{size}}
+\index{size@{size}!pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}}
+\subsubsection[{\texorpdfstring{size()}{size()}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long pthread\+::thread\+\_\+group\+::size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{classpthread_1_1thread__group_a4b1a04ee731bba608193b089cc1d50a1}{}\label{classpthread_1_1thread__group_a4b1a04ee731bba608193b089cc1d50a1}
+\begin{DoxyReturn}{Returns}
+the number of threads in the \hyperlink{classpthread_1_1thread__group}{thread\+\_\+group} 
+\end{DoxyReturn}
+\index{pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}!start@{start}}
 \index{start@{start}!pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}}
 \subsubsection[{\texorpdfstring{start()}{start()}}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::thread\+\_\+group\+::start (
 \begin{DoxyParamCaption}

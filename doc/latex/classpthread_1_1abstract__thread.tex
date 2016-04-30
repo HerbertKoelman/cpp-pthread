@@ -39,7 +39,7 @@ public:}\end{DoxyPre}
 
 
 
-\begin{DoxyPre}{\ttfamily   void \hyperlink{classpthread_1_1runnable_a68ce0e65d5714457bcf3f5ef38b33fa7}{run()} {\bfseries NOEXCEPT} {\bfseries OVERRIDE} \{
+\begin{DoxyPre}{\ttfamily   void \hyperlink{classpthread_1_1runnable_ad5cfd01857f1d51c42d6a16d09efe930}{run()} noexcept override \{
     \{ // critical section scope
       pthread::lock\_guard<pthread::mutex> lck(mtx);}\end{DoxyPre}
 
@@ -101,7 +101,7 @@ public:}\end{DoxyPre}
 
 
 
-\begin{DoxyPre}{\ttfamily   }\end{DoxyPre}
+\begin{DoxyPre}{\ttfamily }\end{DoxyPre}
  
 
 \subsection{Member Function Documentation}
@@ -121,7 +121,7 @@ an exception is thrown if deadlock condition are detected. \index{pthread\+::abs
 {}
 \end{DoxyParamCaption}
 )}\hypertarget{classpthread_1_1abstract__thread_ab121718028f3ca68d45db84d10ff2a3a}{}\label{classpthread_1_1abstract__thread_ab121718028f3ca68d45db84d10ff2a3a}
-start running the {\ttfamily \hyperlink{classpthread_1_1runnable_a68ce0e65d5714457bcf3f5ef38b33fa7}{run()}} method in a new thread. 
+start running the {\ttfamily \hyperlink{classpthread_1_1runnable_ad5cfd01857f1d51c42d6a16d09efe930}{run()}} method in a new thread. 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
