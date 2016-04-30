@@ -12,6 +12,7 @@
 #include "pthread/config.h"
 
 #include <errno.h>
+#include <cstring>
 
 namespace pthread {
   
@@ -27,13 +28,16 @@ namespace pthread {
      * @param message error message
      * @param pthread_errno a pthread function return code.
      */
-    pthread_exception( const string message, const int pthread_errno = 0 ): _message(message), _pthread_errno(pthread_number){};
+    pthread_exception( const string message, const int pthread_errno = 0 ): _message(message), _pthread_errno(pthread_errno){};
 
     virtual ~pthread_exception(){};
     
     /** @return the exception's error message. */
-    virtual const char *what() const __NOEXCEPT__ __OVERRIDE__ { return _message.c_str();};
-    
+#if __cplusplus < 201103L
+    virtual const char *what() const throw() { return _message.c_str();};
+#else
+    virtual const char *what() const noexcept override{ return _message.c_str();};
+#endif    
     /** @return pthread error code that was at the orgin of the error */
     virtual int pthread_errno(){ return _pthread_errno ;};
     

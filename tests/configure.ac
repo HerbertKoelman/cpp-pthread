@@ -22,9 +22,11 @@ AC_CHECK_SIZEOF([long])
 if test $ac_cv_sizeof_long == "8" 
 then
   AC_SUBST(BITS,"64")
+  #CXXFLAGS="-m$ac_cv_sizeof_long $CXXFLAGS -I ../include -I ./"
 else
   AC_MSG_RESULT([using 32 bits (default)])
   AC_SUBST(BITS,"32")
+  #CXXFLAGS="-m$ac_cv_sizeof_long $CXXFLAGS -I ../include -I ./"
 fi
 
 OBJECTS=""

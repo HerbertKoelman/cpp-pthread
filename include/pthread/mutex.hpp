@@ -19,7 +19,6 @@
 
 namespace pthread {
 
-  using namespace std ;
   
   class condition_variable;
   
@@ -81,7 +80,7 @@ namespace pthread {
      * @param message short description
      * @param pthread_errno error returned by the pthread function
      */
-    mutex_exception( const string message, const int pthread_errno = 0) ;
+    mutex_exception( const std::string message, const int pthread_errno = 0) ;
     
   };
   

@@ -13,7 +13,6 @@
 #include <utility>
 #include <memory>
 #include "pthread/pthread.hpp"
-// workaround  - #include "ibm.hpp"
 
 pthread::condition_variable condition;
 pthread::mutex mtx;
@@ -36,7 +35,11 @@ public:
     message("deallocating worker");
   };
   
-  void run() __NOEXCEPT__ __OVERRIDE__ {
+#if __cplusplus < 201103L
+  void run() throw()  {
+#else
+  void run() noexcept override {
+#endif
     message("worker: " + msg);
     {
       pthread::lock_guard<pthread::mutex> lck(mtx);
@@ -68,22 +71,8 @@ int main(int argc, const char * argv[]) {
   
   std::cout << "version: " << pthread::cpp_pthread_version() << std::endl;
 
-  pthread::string dummy;
+//  std::string dummy;
   
-  {
-    worker w1("herbert", 2);
-    w1.start();
-    w1.join();
-  }
-//  worker w("laura");
-//  pthread::thread t0;
-//  pthread::thread t2(w);
-//  t0 = ibm::move(t2) ;
-//  t0.join();
-//  
-//  std::auto_ptr<pthread::thread> pt0(new pthread::thread(worker("laura")));
-//  pt0->join();
-
   pthread::thread_group threads(true);
   for (auto x = 10 ; x > 0 ; x--){
     threads.add( new worker("herbert"));
@@ -98,7 +87,7 @@ int main(int argc, const char * argv[]) {
   }
   condition.notify_all();
   
-//  message("main is waiting for threads to finish");
+  message("main is waiting for threads to finish");
   threads.join();
   message( "end reached");
   

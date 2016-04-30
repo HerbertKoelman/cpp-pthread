@@ -12,7 +12,7 @@
 #include <pthread.h>
 #include <string>
 #include <functional>
-#include <memory>
+#include <memory> // std::auto_ptr, std::unique_ptr
 #include <list>
 
 #include "pthread/config.h"
@@ -48,7 +48,11 @@ namespace pthread {
     /**
      * This method must be overriden
      */
-    virtual void run () __NOEXCEPT__ = 0 ;
+#if __cplusplus < 201103L
+    virtual void run () throw() = 0 ;
+#else
+    virtual void run () noexcept = 0 ;
+#endif
   };
   
   /**
@@ -166,57 +170,57 @@ namespace pthread {
    * 
    * utility class, that wraps a thread.
    * <pre><code>
-   class worker: public pthread::abstract_thread {
-   public:
-   
-     worker(const std::string m = "anonymous worker", int sleep = 2*1000): msg(m), _sleep(sleep){
-     };
-     
-     ~worker(){
-     };
-     
-     void run() __NOEXCEPT__ __OVERRIDE__ {
-       { // critical section scope
-         pthread::lock_guard<pthread::mutex> lck(mtx);
-   
-         bool stop_waiting = true; // if lambda syntax is not availbale then use this kind of implementation
-         auto delay = _sleep; // use sleep seconds to calculate point in time timeout
-         while ( ! (stop_waiting = (counter >= 10000)) && (condition.wait_for(mtx, delay) == pthread::cv_status::no_timeout)){
-           delay = -1 ; // if timeout millis is negatif, then we keep last timeout calculation.
-         }
-     
-         if ( counter >= 10000 ) {
-           message("worker class, counter >= 10000");
-         } else {
-           message("worker class, counter < 10000");
-         }
-       } // end of critical section
-   
-       pthread::this_thread::sleep(200);
-     };
-   
-   private:
-     std::string    msg ;
-     int            _sleep;
-   };
-
-   int main(int argc, const char * argv[]) {
-   
-     pthread::thread_group threads(true); // indicate that we want to join referenced threads when deallocating this instance.
-     for (auto x = 10 ; x > 0 ; x--){
-       threads.add( new worker("herbert"));
-     }
-     
-     threads.start(); // start running all threads
-   
-     for ( auto x = 20000 ; x > 0 ; x--){
-       pthread::lock_guard<pthread::mutex> lck(mtx);
-       counter++ ;
-     }
-   
-     condition.notify_all();
-   }
-
+   * class worker: public pthread::abstract_thread {
+   * public:
+   * 
+   *   worker(const std::string m = "anonymous worker", int sleep = 2*1000): msg(m), _sleep(sleep){
+   *   };
+   *   
+   *   ~worker(){
+   *   };
+   *   
+   *   void run() noexcept override {
+   *     { // critical section scope
+   *       pthread::lock_guard<pthread::mutex> lck(mtx);
+   * 
+   *       bool stop_waiting = true; // if lambda syntax is not availbale then use this kind of implementation
+   *       auto delay = _sleep; // use sleep seconds to calculate point in time timeout
+   *       while ( ! (stop_waiting = (counter >= 10000)) && (condition.wait_for(mtx, delay) == pthread::cv_status::no_timeout)){
+   *         delay = -1 ; // if timeout millis is negatif, then we keep last timeout calculation.
+   *       }
+   *   
+   *       if ( counter >= 10000 ) {
+   *         message("worker class, counter >= 10000");
+   *       } else {
+   *         message("worker class, counter < 10000");
+   *       }
+   *     } // end of critical section
+   * 
+   *     pthread::this_thread::sleep(200);
+   *   };
+   * 
+   * private:
+   *   std::string    msg ;
+   *   int            _sleep;
+   * };
+   *
+   * int main(int argc, const char * argv[]) {
+   * 
+   *   pthread::thread_group threads(true); // indicate that we want to join referenced threads when deallocating this instance.
+   *   for (auto x = 10 ; x > 0 ; x--){
+   *     threads.add( new worker("herbert"));
+   *   }
+   *   
+   *   threads.start(); // start running all threads
+   * 
+   *   for ( auto x = 20000 ; x > 0 ; x--){
+   *     pthread::lock_guard<pthread::mutex> lck(mtx);
+   *     counter++ ;
+   *   }
+   * 
+   *   condition.notify_all();
+   * }
+   *
    * </code></pre>
    */
   class abstract_thread: public runnable {
@@ -243,19 +247,19 @@ namespace pthread {
    *
    * **A thread_group deletes the thread that were registered/added to it.**
    *
-   <pre><code>
-   int main(int argc, const char * argv[]) {
-   
-     pthread::thread_group threads; // this instance will free any registered thread when it will get out of scope
-   
-     for (auto x = 10 ; x > 0 ; x--){
-       threads.add( new worker("herbert")); // register threads, they will run when start() is called
-     }
-   
-     threads.start(); // start running all threads
-     threads.join(); // wait for registered threads to join
-   } // scope end
-   
+   * <pre><code>
+   * int main(int argc, const char * argv[]) {
+   * 
+   *   pthread::thread_group threads; // this instance will free any registered thread when it will get out of scope
+   * 
+   *   for (auto x = 10 ; x > 0 ; x--){
+   *     threads.add( new worker("herbert")); // register threads, they will run when start() is called
+   *   }
+   * 
+   *   threads.start(); // start running all threads
+   *   threads.join(); // wait for registered threads to join
+   * } // scope end
+   * 
    * </code></pre>
    */
   class thread_group{
@@ -264,7 +268,11 @@ namespace pthread {
      *
      * @param destructor_joins_first if true then destructor tries to wait for all registered threads to join the calling one before deleting thread instances.
      */
-    thread_group( bool destructor_joins_first = false ) __NOEXCEPT__;
+#if __cplusplus < 201103L
+    thread_group( bool destructor_joins_first = false ) throw();
+#else
+    thread_group( bool destructor_joins_first = false ) noexcept;
+#endif
     
     /** delete all abstract_thread referenced by the thread_group.
      *
@@ -284,6 +292,11 @@ namespace pthread {
     /** what for all threads to join the caller of this method.
      */
     void join();
+    
+    /**
+     * @return the number of threads in the thread_group
+     */
+    unsigned long size();
     
     /** return if thread_group should wait for all referenced abstract_thread terminate
      */

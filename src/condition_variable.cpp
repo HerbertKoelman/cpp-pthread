@@ -1,7 +1,3 @@
-  /*
- $Id: condition_variable.C 28 2007-08-06 22:29:28Z hkoelman $
- */
-
 #include "pthread/condition_variable.hpp"
 
 namespace pthread {
@@ -11,11 +7,13 @@ namespace pthread {
   }
   
   void condition_variable::wait(lock_guard<pthread::mutex> lck){
-    wait(*(lck.mutex()));
+    // wait(*(lck.mutex()));
+    wait(*(lck._mutex));
   }
   
   cv_status condition_variable::wait_for (lock_guard<pthread::mutex> &lck, int millis ){
-    return wait_for(*(lck.mutex()), millis);
+    // return wait_for(*(lck.mutex()), millis);
+    return wait_for(*(lck._mutex), millis);
   }
   
   /* Default millis is 0 */
@@ -48,11 +46,19 @@ namespace pthread {
     return status;
   }
   
-  void condition_variable::notify_one() __NOEXCEPT__ {
+#if __cplusplus < 201103L
+  void condition_variable::notify_one() throw() {
+#else
+  void condition_variable::notify_one() noexcept {
+#endif
     pthread_cond_signal ( &_condition );
   }
   
-  void condition_variable::notify_all () __NOEXCEPT__{
+#if __cplusplus < 201103L
+  void condition_variable::notify_all () throw(){
+#else
+  void condition_variable::notify_all () noexcept{
+#endif
     pthread_cond_broadcast ( &_condition );
     
   }
@@ -93,11 +99,7 @@ namespace pthread {
   
   // excpetions -------
   
-#ifdef __IBMCPP__
   condition_variable_exception::condition_variable_exception( const string message, const int pthread_error): pthread_exception(message, pthread_error){
-#else
-  condition_variable_exception::condition_variable_exception( const string message, const int pthread_error): pthread_exception{message, pthread_error}{
-#endif
   };
   
   

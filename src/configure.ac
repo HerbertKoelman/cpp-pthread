@@ -44,6 +44,7 @@ case "$CXX" in
   AC_MSG_RESULT([yes])
   ;;
   g++ | gcc)
+	#permissive is not required anymore - CXXFLAGS="-x c++ -std=c++11 -frtti -fpermissive $CXXFLAGS "
 	CXXFLAGS="-x c++ -std=c++11 -frtti $CXXFLAGS "
   AC_MSG_RESULT([yes])
   ;;
@@ -83,6 +84,6 @@ AC_CHECK_FUNCS([gettimeofday])
 
 LDFLAGS="$LDFLAGS $LIBS"
 
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile pthread.cpp])
 AC_OUTPUT
 

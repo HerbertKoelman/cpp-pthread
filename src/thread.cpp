@@ -113,13 +113,22 @@ namespace pthread {
     _thread = new pthread::thread(*this);
   }
   
-  thread_group::thread_group(bool destructor_joins_first ) __NOEXCEPT__: _destructor_joins_first(destructor_joins_first){
+#if __cplusplus < 201103L
+  thread_group::thread_group(bool destructor_joins_first ) throw(): _destructor_joins_first(destructor_joins_first){
+#else
+  thread_group::thread_group(bool destructor_joins_first ) noexcept: _destructor_joins_first(destructor_joins_first){
+#endif
     
   }
   
   thread_group::~thread_group(){
     while(! _threads.empty()){
+#if __cplusplus < 201103L
       std::auto_ptr<pthread::abstract_thread> pat(_threads.front());
+#else
+      std::unique_ptr<pthread::abstract_thread> pat(_threads.front());
+#endif
+
       _threads.pop_front();
       
       if ( _destructor_joins_first ){
@@ -145,6 +154,10 @@ namespace pthread {
     for(auto iterator = _threads.begin(); iterator != _threads.end(); iterator++){
       (*iterator)->join();
     }
+  }
+  
+  unsigned long thread_group::size(){
+    return _threads.size();
   }
   
   /**

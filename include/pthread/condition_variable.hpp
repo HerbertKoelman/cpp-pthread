@@ -155,12 +155,20 @@ namespace pthread {
      * The pthread_cond_signal() call unblocks at least one of the threads that are blocked
      * on the specified condition variable cond (if any threads are blocked on cond).
      */
-    void notify_one () __NOEXCEPT__;
+#if __cplusplus < 201103L
+    void notify_one () throw() ;
+#else
+    void notify_one () noexcept;
+#endif
     
     /** signal all waiting threads
      * The pthread_cond_broadcast() call unblocks all threads currently blocked on the specified condition variable cond.
      */
-    void notify_all () __NOEXCEPT__;
+#if __cplusplus < 201103L
+    void notify_all () throw() ;
+#else
+    void notify_all () noexcept ;
+#endif
     
     // constructor/destructor ------------------------------------------------
     
@@ -204,7 +212,8 @@ namespace pthread {
 
   template<class Lambda> bool condition_variable::wait( lock_guard<pthread::mutex> &lck, Lambda lambda){
 
-    return wait( *(lck.mutex()), lambda);
+    //return wait( *(lck.mutex()), lambda);
+    return wait( *(lck._mutex), lambda);
   };
   
   template<class Lambda> bool condition_variable::wait_for( mutex &mtx, int millis, Lambda lambda){
@@ -245,7 +254,8 @@ namespace pthread {
   
   template<class Lambda> bool condition_variable::wait_for( lock_guard<pthread::mutex> &lck, int millis, Lambda lambda){
     
-    return wait_for(*(lck.mutex()),millis, lambda);
+    // return wait_for(*(lck.mutex()),millis, lambda);
+    return wait_for(*(lck._mutex),millis, lambda);
   };
   
 } // namespace pthread
