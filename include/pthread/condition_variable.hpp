@@ -212,7 +212,8 @@ namespace pthread {
 
   template<class Lambda> bool condition_variable::wait( lock_guard<pthread::mutex> &lck, Lambda lambda){
 
-    return wait( *(lck.mutex()), lambda);
+    //return wait( *(lck.mutex()), lambda);
+    return wait( *(lck._mutex), lambda);
   };
   
   template<class Lambda> bool condition_variable::wait_for( mutex &mtx, int millis, Lambda lambda){
@@ -253,7 +254,8 @@ namespace pthread {
   
   template<class Lambda> bool condition_variable::wait_for( lock_guard<pthread::mutex> &lck, int millis, Lambda lambda){
     
-    return wait_for(*(lck.mutex()),millis, lambda);
+    // return wait_for(*(lck.mutex()),millis, lambda);
+    return wait_for(*(lck._mutex),millis, lambda);
   };
   
 } // namespace pthread

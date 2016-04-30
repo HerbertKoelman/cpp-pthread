@@ -58,4 +58,4 @@ beautifull:
 	$(CCC) $(CCFLAGS) -c $<
 
 .cpp: 
-	$(CCC) $(CCFLAGS) $(LDFLAGS) $< -o $@
+	$(CCC) $(CCFLAGS) $< -o $@ $(LDFLAGS)
