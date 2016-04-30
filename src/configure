@@ -3937,6 +3937,7 @@ case "$CXX" in
 $as_echo "yes" >&6; }
   ;;
   g++ | gcc)
+	#CXXFLAGS="-x c++ -std=c++11 -frtti -fpermissive $CXXFLAGS "
 	CXXFLAGS="-x c++ -std=c++11 -frtti $CXXFLAGS "
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }

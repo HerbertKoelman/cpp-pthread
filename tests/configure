@@ -3904,11 +3904,13 @@ if test $ac_cv_sizeof_long == "8"
 then
   BITS="64"
 
+  #CXXFLAGS="-m$ac_cv_sizeof_long $CXXFLAGS -I ../include -I ./"
 else
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: using 32 bits (default)" >&5
 $as_echo "using 32 bits (default)" >&6; }
   BITS="32"
 
+  #CXXFLAGS="-m$ac_cv_sizeof_long $CXXFLAGS -I ../include -I ./"
 fi
 
 OBJECTS=""

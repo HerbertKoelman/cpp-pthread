@@ -12,7 +12,7 @@
 #include <pthread.h>
 #include <string>
 #include <functional>
-#include <memory>
+#include <memory> // std::auto_ptr, std::unique_ptr
 #include <list>
 
 #include "pthread/config.h"

@@ -12,13 +12,14 @@
 #include <pthread.h>
 
 #include "pthread/config.h"
-
 #include "pthread/mutex.hpp"
 
 namespace pthread {
   
   using namespace std ;
   
+  class condition_variable ;
+
   /**
    This class was designed to encapsulate a mutex and automatically control the lock attribute.
 
@@ -29,7 +30,9 @@ namespace pthread {
    */
   template<class MutexType>
   class lock_guard {
-    
+
+    friend class condition_variable;
+
   public:
     /**
      * The constructor is forced to only accept a mutex object or any object of a subclass.
@@ -38,23 +41,25 @@ namespace pthread {
      *
      * @param m reference to a valid pthread::mutex
      */
-    explicit lock_guard(mutex &m) : _mutex(&m) {
-      _mutex->lock();
+    explicit lock_guard(MutexType &m): _mutex(&m) {
+        _mutex->lock();
     }
     
     /** release the guared mutex.
      */
-    ~lock_guard() {
+   virtual ~lock_guard() {
       _mutex->unlock();
+   }
+    
+    /** @return a const reference to the guarded mutex */
+    MutexType *internal_mutex() {
+      return _mutex ;
     }
     
     /*
      Desabling the = operator.
      */
     void operator=(lock_guard &) = delete;
-    
-    /** @return a const reference to the guarded mutex */
-    MutexType *mutex() const { return _mutex ;};
     
   private:
     MutexType *_mutex;

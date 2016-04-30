@@ -7,11 +7,13 @@ namespace pthread {
   }
   
   void condition_variable::wait(lock_guard<pthread::mutex> lck){
-    wait(*(lck.mutex()));
+    // wait(*(lck.mutex()));
+    wait(*(lck._mutex));
   }
   
   cv_status condition_variable::wait_for (lock_guard<pthread::mutex> &lck, int millis ){
-    return wait_for(*(lck.mutex()), millis);
+    // return wait_for(*(lck.mutex()), millis);
+    return wait_for(*(lck._mutex), millis);
   }
   
   /* Default millis is 0 */
