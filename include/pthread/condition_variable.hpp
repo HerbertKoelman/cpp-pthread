@@ -28,16 +28,16 @@ namespace pthread {
     timedout    /*!< condition timedout */
   };
   
-  /** pthread condition variable
+  /** pthread condition variable.
    *
-   *The condition_variable class is a synchronization primitive that can be used to block a thread, or multiple threads
+   * The condition_variable class is a synchronization primitive that can be used to block a thread, or multiple threads
    * at the same time, until another thread both modifies a shared variable (the condition), and notifies the 
    * condition_variable.
    *
    * The thread that intends to modify the variable has to
-   * - acquire a std::mutex (typically via std::lock_guard)
+   * - acquire a pthread::mutex (typically via pthread::lock_guard)
    * - perform the modification while the lock is held
-   * - execute notify_one or notify_all on the std::condition_variable (the lock does not need to be held for notification)
+   * - execute notify_one or notify_all on the pthread::condition_variable (the lock does not need to be held for notification)
    *
    * Even if the shared variable is atomic, it must be modified under the mutex in order to correctly publish the modification
    * to the waiting thread.
@@ -49,7 +49,7 @@ namespace pthread {
   class condition_variable {
   public:
     
-    /** wait for condition to be signaled
+    /** Wait for condition to be signaled.
      *
      * This method atomically release mutex and cause the calling thread to block; atomically here means "atomically with respect to
      * access by another thread to the mutex and then the condition variable". Call notify_one or notify_all to signal the condition.
@@ -57,6 +57,8 @@ namespace pthread {
      * Upon successful return, the mutex has been locked and is owned by the calling thread.
      *
      * @param mtx ralated mutex, which must be locked by the current thread.
+     * @see notify_one
+     * @see notify_all
      */
     void wait ( mutex &mtx );
     
@@ -152,8 +154,7 @@ namespace pthread {
     
     /** signal one waiting thread.
      *
-     * The pthread_cond_signal() call unblocks at least one of the threads that are blocked
-     * on the specified condition variable cond (if any threads are blocked on cond).
+     * The call unblocks at least one of the threads that are blocked on the specified condition variable cond (if any threads are blocked on cond).
      */
 #if __cplusplus < 201103L
     void notify_one () throw() ;
@@ -161,8 +162,9 @@ namespace pthread {
     void notify_one () noexcept;
 #endif
     
-    /** signal all waiting threads
-     * The pthread_cond_broadcast() call unblocks all threads currently blocked on the specified condition variable cond.
+    /** signal all waiting threads.
+     *
+     * The call unblocks all threads currently blocked on the specified condition variable cond.
      */
 #if __cplusplus < 201103L
     void notify_all () throw() ;
