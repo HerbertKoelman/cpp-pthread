@@ -40,6 +40,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -138,7 +139,12 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>condition_variable</
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The mutex object is locked by calling pthread_mutex_lock. If the mutex is already locked, the calling thread blocks until the mutex becomes available. This operation returns with the mutex object referenced by mutex in the locked state with the calling thread as its owner. </p>
+<p>The mutex object is locked (by calling pthread_mutex_lock). If the mutex is already locked, the calling thread blocks until the mutex becomes available. This operation returns with the mutex object referenced by mutex in the locked state with the calling thread as its owner. </p><dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classpthread_1_1mutex__exception.html">mutex_exception</a></td><td>if error conditions preventing this method to succeed. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -154,7 +160,14 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>condition_variable</
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The function pthread_mutex_trylock is identical to pthread_mutex_lock except that if the mutex object referenced by mutex is currently locked (by any thread, including the current thread), the call returns immediately. </p>
+<p>The function pthread_mutex_trylock is identical to pthread_mutex_lock except that if the mutex object referenced by mutex is currently locked (by any thread, including the current thread), the call returns immediately.</p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classpthread_1_1mutex__exception.html">mutex_exception</a></td><td>if error conditions preventing this method to succeed. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classpthread_1_1mutex.html#a49f2565e6ba9f206d7f367897fca9435">lock</a> </dd></dl>
 
 </div>
 </div>
@@ -170,7 +183,12 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>condition_variable</
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The pthread_mutex_unlock function releases the mutex object referenced by mutex. The manner in which a mutex is released is dependent upon the mutex's type attribute. If there are threads blocked on the mutex object referenced by mutex when pthread_mutex_unlock is called, resulting in the mutex becoming available, the scheduling policy is used to determine which thread shall acquire the mutex. (In the case of PTHREAD_mutex_RECURSIVE mutexes, the mutex becomes available when the count reaches zero and the calling thread no longer has any locks on this mutex). </p>
+<p>The pthread_mutex_unlock function releases the mutex object referenced by mutex. The manner in which a mutex is released is dependent upon the mutex's type attribute. If there are threads blocked on the mutex object referenced by mutex when unlock is called, resulting in the mutex becoming available, the scheduling policy is used to determine which thread shall acquire the mutex. </p><dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classpthread_1_1mutex__exception.html">mutex_exception</a></td><td>if error conditions preventing this method to succeed. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

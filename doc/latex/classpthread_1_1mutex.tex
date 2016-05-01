@@ -45,21 +45,41 @@ herbert koelman
 {}
 \end{DoxyParamCaption}
 )}\hypertarget{classpthread_1_1mutex_a49f2565e6ba9f206d7f367897fca9435}{}\label{classpthread_1_1mutex_a49f2565e6ba9f206d7f367897fca9435}
-The mutex object is locked by calling pthread\+\_\+mutex\+\_\+lock. If the mutex is already locked, the calling thread blocks until the mutex becomes available. This operation returns with the mutex object referenced by mutex in the locked state with the calling thread as its owner. \index{pthread\+::mutex@{pthread\+::mutex}!try\+\_\+lock@{try\+\_\+lock}}
+The mutex object is locked (by calling pthread\+\_\+mutex\+\_\+lock). If the mutex is already locked, the calling thread blocks until the mutex becomes available. This operation returns with the mutex object referenced by mutex in the locked state with the calling thread as its owner. 
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{classpthread_1_1mutex__exception}{mutex\+\_\+exception}} & if error conditions preventing this method to succeed. \\
+\hline
+\end{DoxyExceptions}
+\index{pthread\+::mutex@{pthread\+::mutex}!try\+\_\+lock@{try\+\_\+lock}}
 \index{try\+\_\+lock@{try\+\_\+lock}!pthread\+::mutex@{pthread\+::mutex}}
 \subsubsection[{\texorpdfstring{try\+\_\+lock()}{try_lock()}}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::mutex\+::try\+\_\+lock (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
 )}\hypertarget{classpthread_1_1mutex_af718b37e950e7928617b264915af0a73}{}\label{classpthread_1_1mutex_af718b37e950e7928617b264915af0a73}
-The function pthread\+\_\+mutex\+\_\+trylock is identical to pthread\+\_\+mutex\+\_\+lock except that if the mutex object referenced by mutex is currently locked (by any thread, including the current thread), the call returns immediately. \index{pthread\+::mutex@{pthread\+::mutex}!unlock@{unlock}}
+The function pthread\+\_\+mutex\+\_\+trylock is identical to pthread\+\_\+mutex\+\_\+lock except that if the mutex object referenced by mutex is currently locked (by any thread, including the current thread), the call returns immediately.
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{classpthread_1_1mutex__exception}{mutex\+\_\+exception}} & if error conditions preventing this method to succeed. \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classpthread_1_1mutex_a49f2565e6ba9f206d7f367897fca9435}{lock} 
+\end{DoxySeeAlso}
+\index{pthread\+::mutex@{pthread\+::mutex}!unlock@{unlock}}
 \index{unlock@{unlock}!pthread\+::mutex@{pthread\+::mutex}}
 \subsubsection[{\texorpdfstring{unlock()}{unlock()}}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::mutex\+::unlock (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
 )}\hypertarget{classpthread_1_1mutex_adfac0bda708dd01320763c57d5a7a203}{}\label{classpthread_1_1mutex_adfac0bda708dd01320763c57d5a7a203}
-The pthread\+\_\+mutex\+\_\+unlock function releases the mutex object referenced by mutex. The manner in which a mutex is released is dependent upon the mutex\textquotesingle{}s type attribute. If there are threads blocked on the mutex object referenced by mutex when pthread\+\_\+mutex\+\_\+unlock is called, resulting in the mutex becoming available, the scheduling policy is used to determine which thread shall acquire the mutex. (In the case of P\+T\+H\+R\+E\+A\+D\+\_\+mutex\+\_\+\+R\+E\+C\+U\+R\+S\+I\+VE mutexes, the mutex becomes available when the count reaches zero and the calling thread no longer has any locks on this mutex). 
+The pthread\+\_\+mutex\+\_\+unlock function releases the mutex object referenced by mutex. The manner in which a mutex is released is dependent upon the mutex\textquotesingle{}s type attribute. If there are threads blocked on the mutex object referenced by mutex when unlock is called, resulting in the mutex becoming available, the scheduling policy is used to determine which thread shall acquire the mutex. 
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{classpthread_1_1mutex__exception}{mutex\+\_\+exception}} & if error conditions preventing this method to succeed. \\
+\hline
+\end{DoxyExceptions}
+
 
 \subsection{Member Data Documentation}
 \index{pthread\+::mutex@{pthread\+::mutex}!\+\_\+mutex@{\+\_\+mutex}}

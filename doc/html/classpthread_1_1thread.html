@@ -40,6 +40,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -188,7 +189,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Starts running given function in a new trhread.</p>
-<p>param f function to run in thread param args function paramleters/arguments. move contructor</p>
+<p>param f function to run in thread param args function paramleters/arguments. Move contructor.</p>
 <p>once moved this not a thread anymore. Status is <a class="el" href="namespacepthread.html#ac4b6e78f3d72c946ace7a92f3bec4101a8414cd8c988083af4eabb1311df873cf">thread_status::not_a_thread</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -220,7 +221,7 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>copy constructor is flagged deleted because it makes no sense to copy a thread. </p>
+<p>Copy constructor is flagged deleted because it makes no sense to copy a thread. </p>
 
 </div>
 </div>
@@ -262,7 +263,11 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>The cancel method requests the cancellation of the thread. The action depends on the cancelability of the target thread:</p>
-<p>o If its cancelability is disabled, the cancellation request is set pending. o If its cancelability is deferred, the cancellation request is set pending till the thread reaches a cancellation point. o If its cancelability is asynchronous, the cancellation request is acted upon immediately; in some cases, it may result in unexpected behaviour.</p>
+<ul>
+<li>If its cancelability is disabled, the cancellation request is set pending.</li>
+<li>If its cancelability is deferred, the cancellation request is set pending till the thread reaches a cancellation point.</li>
+<li>If its cancelability is asynchronous, the cancellation request is acted upon immediately; in some cases, it may result in unexpected behaviour.</li>
+</ul>
 <p>The cancellation of a thread terminates it safely, using the same termination procedure as the pthread_exit subroutine. </p>
 
 </div>
@@ -360,7 +365,7 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>thread </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>a thread </dd></dl>
 
 </div>
 </div>

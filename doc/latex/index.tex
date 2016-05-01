@@ -1,6 +1,8 @@
-I\+BM\textquotesingle{}s compiler is not implementing all the features of C++11 standard, especially it\textquotesingle{}s lacking the concurrency features that the standard brings. This will at some point be fixed and was therfore looking at a way reduce the effort to switch from a specific implementation to the C++11 standard one. This projetc is the resulting code.
+Some C/\+C++ compilers are not implementing all of C++11 and above standard, it\textquotesingle{}s often lacking the concurrency features that the standard brings. These compilers will at some point be fixed and we were therefore looking at a way to reduce the effort of switching from a specific implementation to the C++11 standard one.
 
-This wrapper intends to bring these feature by implementing C++11 interface and using the pthread library. Of course, as it is a replacement of C++11 features, it is best to use the standard implementation if your compiler support it. This can be done rather easely by using the standard namespace {\ttfamily std} instead of this library\textquotesingle{}s specific one {\ttfamily pthread}.
+This projetc is the resulting code.
+
+Of course, this library is a replacement of C++11 features, it is best to use the standard implementation if your compiler support it.
 
 To use this library\+: 
 \begin{DoxyCode}
@@ -10,7 +12,7 @@ To use this library\+:
 \end{DoxyCode}
 
 
-Install moves files into your system\textquotesingle{}s default localtion of headers and libraries (often /usr/local/include and /usr/local/lib). Use this command to change target directory\+: 
+Install moves files into your system\textquotesingle{}s default localtion for headers and libraries (often /usr/local/include and /usr/local/lib). Use this command to change install target directory\+: 
 \begin{DoxyCode}
 1 configure --prefix=/usr/local
 \end{DoxyCode}
@@ -32,9 +34,9 @@ The {\ttfamily make} target {\ttfamily pkg} will produce au tar.\+gz that can be
 
 Once compiled and installed in a location that suites you, use your compiler options to reference the headers and the library directory. In almoast all casses you can\+:
 \begin{DoxyItemize}
-\item include {\ttfamily \#include \char`\"{}pthread/phtread.\+hpp\char`\"{}} in your code.
-\item comment the c++11 standard includes in your code
-\item declare that you\textquotesingle{}re now using the namespace pthread ({\ttfamily using namespace pthread ;})
+\item include {\ttfamily \#include \char`\"{}pthread/phtread.\+hpp\char`\"{}} in your code to replace of the standard includes.
+\item comment out or the c++11 standard includes in your code
+\item replace {\ttfamily std} namespace with {\ttfamily pthread} ( std\+::condition\+\_\+variable becomes \hyperlink{classpthread_1_1condition__variable}{pthread\+::condition\+\_\+variable}, etc)
 \end{DoxyItemize}
 
 Sample code can be found in the {\ttfamily tests} directory. To use it, run the following commands\+: 

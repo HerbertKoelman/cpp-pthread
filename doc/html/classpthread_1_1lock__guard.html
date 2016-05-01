@@ -40,6 +40,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -150,7 +151,7 @@ template&lt;class MutexType&gt; </div>
 </table>
 </div><div class="memdoc">
 <p>The constructor is forced to only accept a mutex object or any object of a subclass.</p>
-<p>The mutex is locked up completion.</p>
+<p>The mutex is locked up upon completion.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">m</td><td>reference to a valid <a class="el" href="classpthread_1_1mutex.html">pthread::mutex</a> </td></tr>
@@ -182,7 +183,7 @@ template&lt;class MutexType&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>release the guared mutex. </p>
+<p>The destructor release the guarded mutex. </p>
 
 </div>
 </div>
@@ -209,7 +210,8 @@ template&lt;class MutexType&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>a const reference to the guarded mutex </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>a const reference to the guarded mutex</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd><a class="el" href="classpthread_1_1condition__variable.html">condition_variable</a> is now a friend class </dd></dl>
 
 </div>
 </div>

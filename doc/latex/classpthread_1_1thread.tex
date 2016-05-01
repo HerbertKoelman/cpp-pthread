@@ -82,7 +82,7 @@ The new thread is made runnable, and will start executing the run routine, with.
 )}\hypertarget{classpthread_1_1thread_a928b41a7587eba3e5e39237b4b2f655a}{}\label{classpthread_1_1thread_a928b41a7587eba3e5e39237b4b2f655a}
 Starts running given function in a new trhread.
 
-param f function to run in thread param args function paramleters/arguments. move contructor
+param f function to run in thread param args function paramleters/arguments. Move contructor.
 
 once moved this not a thread anymore. Status is \hyperlink{namespacepthread_ac4b6e78f3d72c946ace7a92f3bec4101a8414cd8c988083af4eabb1311df873cf}{thread\+\_\+status\+::not\+\_\+a\+\_\+thread}
 
@@ -98,7 +98,7 @@ once moved this not a thread anymore. Status is \hyperlink{namespacepthread_ac4b
 \item[{const {\bf thread} \&}]{}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [delete]}}\hypertarget{classpthread_1_1thread_ab9ddf5aa6697287269dc2804051b6378}{}\label{classpthread_1_1thread_ab9ddf5aa6697287269dc2804051b6378}
-copy constructor is flagged deleted because it makes no sense to copy a thread. \index{pthread\+::thread@{pthread\+::thread}!````~thread@{$\sim$thread}}
+Copy constructor is flagged deleted because it makes no sense to copy a thread. \index{pthread\+::thread@{pthread\+::thread}!````~thread@{$\sim$thread}}
 \index{````~thread@{$\sim$thread}!pthread\+::thread@{pthread\+::thread}}
 \subsubsection[{\texorpdfstring{$\sim$thread()}{~thread()}}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+::thread\+::$\sim$thread (
 \begin{DoxyParamCaption}
@@ -117,7 +117,12 @@ cleanup thread ressources.
 )}\hypertarget{classpthread_1_1thread_a89b64810871feee5c2d2659f3ae2f668}{}\label{classpthread_1_1thread_a89b64810871feee5c2d2659f3ae2f668}
 The cancel method requests the cancellation of the thread. The action depends on the cancelability of the target thread\+:
 
-o If its cancelability is disabled, the cancellation request is set pending. o If its cancelability is deferred, the cancellation request is set pending till the thread reaches a cancellation point. o If its cancelability is asynchronous, the cancellation request is acted upon immediately; in some cases, it may result in unexpected behaviour.
+
+\begin{DoxyItemize}
+\item If its cancelability is disabled, the cancellation request is set pending.
+\item If its cancelability is deferred, the cancellation request is set pending till the thread reaches a cancellation point.
+\item If its cancelability is asynchronous, the cancellation request is acted upon immediately; in some cases, it may result in unexpected behaviour.
+\end{DoxyItemize}
 
 The cancellation of a thread terminates it safely, using the same termination procedure as the pthread\+\_\+exit subroutine. \index{pthread\+::thread@{pthread\+::thread}!join@{join}}
 \index{join@{join}!pthread\+::thread@{pthread\+::thread}}
@@ -169,7 +174,7 @@ move a thread to another thread.
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-thread 
+a thread 
 \end{DoxyReturn}
 \index{pthread\+::thread@{pthread\+::thread}!status@{status}}
 \index{status@{status}!pthread\+::thread@{pthread\+::thread}}

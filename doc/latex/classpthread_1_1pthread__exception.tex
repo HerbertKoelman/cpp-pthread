@@ -15,7 +15,7 @@ Inheritance diagram for pthread\+:\+:pthread\+\_\+exception\+:\begin{figure}[H]
 \item 
 \hyperlink{classpthread_1_1pthread__exception_a157d4379b6eddcc82ca504534c51abe6}{pthread\+\_\+exception} (const string message, const int \hyperlink{classpthread_1_1pthread__exception_a8a5c22a403ebd14635e912295fe02a1e}{pthread\+\_\+errno}=0)
 \item 
-virtual const char $\ast$ \hyperlink{classpthread_1_1pthread__exception_afaf1eff0f0fb8cf06412c6db0c3b5cd9}{what} () const   throw ()
+virtual const char $\ast$ \hyperlink{classpthread_1_1pthread__exception_a908666a0dd622c9a2a008e89a15d8fc7}{what} () const  noexcept override
 \item 
 virtual int \hyperlink{classpthread_1_1pthread__exception_a8a5c22a403ebd14635e912295fe02a1e}{pthread\+\_\+errno} ()
 \item 
@@ -53,7 +53,7 @@ general purpose pthread exception.
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\hypertarget{classpthread_1_1pthread__exception_aa2371eb23800817723174186450e9716}{}\label{classpthread_1_1pthread__exception_aa2371eb23800817723174186450e9716}
 \begin{DoxyReturn}{Returns}
-related pthread\+\_\+errno error message 
+related pthread\+\_\+errno error message using strerror 
 \end{DoxyReturn}
 \index{pthread\+::pthread\+\_\+exception@{pthread\+::pthread\+\_\+exception}!pthread\+\_\+errno@{pthread\+\_\+errno}}
 \index{pthread\+\_\+errno@{pthread\+\_\+errno}!pthread\+::pthread\+\_\+exception@{pthread\+::pthread\+\_\+exception}}
@@ -67,13 +67,13 @@ pthread error code that was at the orgin of the error
 \end{DoxyReturn}
 \index{pthread\+::pthread\+\_\+exception@{pthread\+::pthread\+\_\+exception}!what@{what}}
 \index{what@{what}!pthread\+::pthread\+\_\+exception@{pthread\+::pthread\+\_\+exception}}
-\subsubsection[{\texorpdfstring{what() const }{what() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual const char$\ast$ pthread\+::pthread\+\_\+exception\+::what (
+\subsubsection[{\texorpdfstring{what() const  noexcept override}{what() const  noexcept override}}]{\setlength{\rightskip}{0pt plus 5cm}virtual const char$\ast$ pthread\+::pthread\+\_\+exception\+::what (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const throw  ) \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\hypertarget{classpthread_1_1pthread__exception_afaf1eff0f0fb8cf06412c6db0c3b5cd9}{}\label{classpthread_1_1pthread__exception_afaf1eff0f0fb8cf06412c6db0c3b5cd9}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [noexcept]}}\hypertarget{classpthread_1_1pthread__exception_a908666a0dd622c9a2a008e89a15d8fc7}{}\label{classpthread_1_1pthread__exception_a908666a0dd622c9a2a008e89a15d8fc7}
 \begin{DoxyReturn}{Returns}
-the exception\textquotesingle{}s error message. 
+exception\textquotesingle{}s error message. 
 \end{DoxyReturn}
 
 

@@ -23,22 +23,22 @@ void \hyperlink{classpthread_1_1condition__variable_a9bb3e49f17ec1470c305d8b21da
 \item 
 {\footnotesize template$<$class Lambda $>$ }\\bool \hyperlink{classpthread_1_1condition__variable_a5ee32edbf76592ec443e2544ecba811a}{wait\+\_\+for} (\hyperlink{classpthread_1_1lock__guard}{lock\+\_\+guard}$<$ \hyperlink{classpthread_1_1mutex}{pthread\+::mutex} $>$ \&lck, int millis, Lambda lambda)
 \item 
-void \hyperlink{classpthread_1_1condition__variable_a71a7f70ef29da791b1525d1ab8af01ea}{notify\+\_\+one} ()  throw ()
+void \hyperlink{classpthread_1_1condition__variable_ae374b1e852f36fc5eac93ad90d9fc85a}{notify\+\_\+one} () noexcept
 \item 
-void \hyperlink{classpthread_1_1condition__variable_a8aed3a66334aec0e3a82090ac4d05483}{notify\+\_\+all} ()  throw ()
+void \hyperlink{classpthread_1_1condition__variable_ae40f0c9043ed693317bb9a07861efc65}{notify\+\_\+all} () noexcept
 \end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-pthread condition variable
+Condition variable.
 
 The \hyperlink{classpthread_1_1condition__variable}{condition\+\_\+variable} class is a synchronization primitive that can be used to block a thread, or multiple threads at the same time, until another thread both modifies a shared variable (the condition), and notifies the \hyperlink{classpthread_1_1condition__variable}{condition\+\_\+variable}.
 
 The thread that intends to modify the variable has to
 \begin{DoxyItemize}
-\item acquire a std\+::mutex (typically via std\+::lock\+\_\+guard)
+\item acquire a \hyperlink{classpthread_1_1mutex}{pthread\+::mutex} (typically via \hyperlink{classpthread_1_1lock__guard}{pthread\+::lock\+\_\+guard})
 \item perform the modification while the lock is held
-\item execute notify\+\_\+one or notify\+\_\+all on the std\+::condition\+\_\+variable (the lock does not need to be held for notification)
+\item execute notify\+\_\+one or notify\+\_\+all on the \hyperlink{classpthread_1_1condition__variable}{pthread\+::condition\+\_\+variable} (the lock does not need to be held for notification)
 \end{DoxyItemize}
 
 Even if the shared variable is atomic, it must be modified under the mutex in order to correctly publish the modification to the waiting thread.
@@ -53,28 +53,30 @@ herbert koelman
 \subsection{Member Function Documentation}
 \index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!notify\+\_\+all@{notify\+\_\+all}}
 \index{notify\+\_\+all@{notify\+\_\+all}!pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}}
-\subsubsection[{\texorpdfstring{notify\+\_\+all()}{notify_all()}}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::condition\+\_\+variable\+::notify\+\_\+all (
+\subsubsection[{\texorpdfstring{notify\+\_\+all() noexcept}{notify_all() noexcept}}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::condition\+\_\+variable\+::notify\+\_\+all (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) throw  ) }\hypertarget{classpthread_1_1condition__variable_a8aed3a66334aec0e3a82090ac4d05483}{}\label{classpthread_1_1condition__variable_a8aed3a66334aec0e3a82090ac4d05483}
-signal all waiting threads The pthread\+\_\+cond\+\_\+broadcast() call unblocks all threads currently blocked on the specified condition variable cond. \index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!notify\+\_\+one@{notify\+\_\+one}}
-\index{notify\+\_\+one@{notify\+\_\+one}!pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}}
-\subsubsection[{\texorpdfstring{notify\+\_\+one()}{notify_one()}}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::condition\+\_\+variable\+::notify\+\_\+one (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-) throw  ) }\hypertarget{classpthread_1_1condition__variable_a71a7f70ef29da791b1525d1ab8af01ea}{}\label{classpthread_1_1condition__variable_a71a7f70ef29da791b1525d1ab8af01ea}
-signal one waiting thread.
+)\hspace{0.3cm}{\ttfamily [noexcept]}}\hypertarget{classpthread_1_1condition__variable_ae40f0c9043ed693317bb9a07861efc65}{}\label{classpthread_1_1condition__variable_ae40f0c9043ed693317bb9a07861efc65}
+Signal all waiting threads.
 
-The pthread\+\_\+cond\+\_\+signal() call unblocks at least one of the threads that are blocked on the specified condition variable cond (if any threads are blocked on cond). \index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!wait@{wait}}
+The call unblocks all threads currently blocked on the specified condition variable cond. \index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!notify\+\_\+one@{notify\+\_\+one}}
+\index{notify\+\_\+one@{notify\+\_\+one}!pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}}
+\subsubsection[{\texorpdfstring{notify\+\_\+one() noexcept}{notify_one() noexcept}}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::condition\+\_\+variable\+::notify\+\_\+one (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [noexcept]}}\hypertarget{classpthread_1_1condition__variable_ae374b1e852f36fc5eac93ad90d9fc85a}{}\label{classpthread_1_1condition__variable_ae374b1e852f36fc5eac93ad90d9fc85a}
+Signal one waiting thread.
+
+The call unblocks at least one of the threads that are blocked on the specified condition variable cond (if any threads are blocked on cond). \index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!wait@{wait}}
 \index{wait@{wait}!pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}}
 \subsubsection[{\texorpdfstring{wait(mutex \&mtx)}{wait(mutex &mtx)}}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::condition\+\_\+variable\+::wait (
 \begin{DoxyParamCaption}
 \item[{{\bf mutex} \&}]{mtx}
 \end{DoxyParamCaption}
 )}\hypertarget{classpthread_1_1condition__variable_a34247dacb9da1856f3a65bc868b6abb8}{}\label{classpthread_1_1condition__variable_a34247dacb9da1856f3a65bc868b6abb8}
-wait for condition to be signaled
+Wait for condition to be signaled.
 
 This method atomically release mutex and cause the calling thread to block; atomically here means \char`\"{}atomically with respect to
 access by another thread to the mutex and then the condition variable\char`\"{}. Call notify\+\_\+one or notify\+\_\+all to signal the condition.
@@ -86,6 +88,11 @@ Upon successful return, the mutex has been locked and is owned by the calling th
 {\em mtx} & ralated mutex, which must be locked by the current thread. \\
 \hline
 \end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classpthread_1_1condition__variable_ae374b1e852f36fc5eac93ad90d9fc85a}{notify\+\_\+one} 
+
+\hyperlink{classpthread_1_1condition__variable_ae40f0c9043ed693317bb9a07861efc65}{notify\+\_\+all} 
+\end{DoxySeeAlso}
 \index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!wait@{wait}}
 \index{wait@{wait}!pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}}
 \subsubsection[{\texorpdfstring{wait(lock\+\_\+guard$<$ pthread\+::mutex $>$ lck)}{wait(lock_guard< pthread::mutex > lck)}}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::condition\+\_\+variable\+::wait (
@@ -104,14 +111,14 @@ Upon successful return, the mutex has been locked and is owned by the calling th
 \item[{Lambda}]{lambda}
 \end{DoxyParamCaption}
 )}\hypertarget{classpthread_1_1condition__variable_a251a506415355171be3052b68bc8d2ec}{}\label{classpthread_1_1condition__variable_a251a506415355171be3052b68bc8d2ec}
-wait for condition to be signaled
+Wait for condition to be signaled.
 
 This method atomically release mutex and cause the calling thread to block; atomically here means \char`\"{}atomically with respect to
 access by another thread to the mutex and then the condition variable\char`\"{}. Call notify\+\_\+one or notify\+\_\+all to signal the condition.
 
 Upon successful return, the mutex has been locked and is owned by the calling thread.
 
-The lambda (closure) is run to check if the condition was met. Lambda should false if the waiting should be continued. The signature of the predicate function should be equivalent to the following\+: bool pred();
+The lambda (closure) is run to check if the condition was met. Lambda should return false if the waiting should be continued. The signature of the predicate function should be equivalent to the following\+: bool pred();
 
 
 \begin{DoxyParams}{Parameters}
@@ -123,6 +130,11 @@ The lambda (closure) is run to check if the condition was met. Lambda should fal
 \begin{DoxyReturn}{Returns}
 true if lmabda returned true. 
 \end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classpthread_1_1condition__variable_ae374b1e852f36fc5eac93ad90d9fc85a}{notify\+\_\+one} 
+
+\hyperlink{classpthread_1_1condition__variable_ae40f0c9043ed693317bb9a07861efc65}{notify\+\_\+all} 
+\end{DoxySeeAlso}
 \index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!wait@{wait}}
 \index{wait@{wait}!pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}}
 \subsubsection[{\texorpdfstring{wait(lock\+\_\+guard$<$ pthread\+::mutex $>$ \&lck, Lambda lambda)}{wait(lock_guard< pthread::mutex > &lck, Lambda lambda)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Lambda $>$ bool pthread\+::condition\+\_\+variable\+::wait (
@@ -131,14 +143,14 @@ true if lmabda returned true.
 \item[{Lambda}]{lambda}
 \end{DoxyParamCaption}
 )}\hypertarget{classpthread_1_1condition__variable_a7b6c075d1588178301547bc60c59ceba}{}\label{classpthread_1_1condition__variable_a7b6c075d1588178301547bc60c59ceba}
-wait for condition to be signaled
+Wait for condition to be signaled.
 
 This method atomically release mutex and cause the calling thread to block; atomically here means \char`\"{}atomically with respect to
 access by another thread to the mutex and then the condition variable\char`\"{}. Call notify\+\_\+one or notify\+\_\+all to signal the condition.
 
 Upon successful return, the mutex has been locked and is owned by the calling thread.
 
-The lambda (closure) is run to check if the condition was met. Lambda should false if the waiting should be continued. The signature of the predicate function should be equivalent to the following\+: bool pred();
+The lambda (closure) is run to check if the condition was met. Lambda should return false if the waiting should be continued. The signature of the predicate function should be equivalent to the following\+: bool pred();
 
 
 \begin{DoxyParams}{Parameters}
@@ -150,6 +162,11 @@ The lambda (closure) is run to check if the condition was met. Lambda should fal
 \begin{DoxyReturn}{Returns}
 true if lmabda returned true. 
 \end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classpthread_1_1condition__variable_ae374b1e852f36fc5eac93ad90d9fc85a}{notify\+\_\+one} 
+
+\hyperlink{classpthread_1_1condition__variable_ae40f0c9043ed693317bb9a07861efc65}{notify\+\_\+all} 
+\end{DoxySeeAlso}
 \index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!wait\+\_\+for@{wait\+\_\+for}}
 \index{wait\+\_\+for@{wait\+\_\+for}!pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}}
 \subsubsection[{\texorpdfstring{wait\+\_\+for(mutex \&mtx, int millis)}{wait_for(mutex &mtx, int millis)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf cv\+\_\+status} pthread\+::condition\+\_\+variable\+::wait\+\_\+for (
@@ -158,7 +175,7 @@ true if lmabda returned true.
 \item[{int}]{millis}
 \end{DoxyParamCaption}
 )}\hypertarget{classpthread_1_1condition__variable_a804a305eefb4da8abecd1e6326b82785}{}\label{classpthread_1_1condition__variable_a804a305eefb4da8abecd1e6326b82785}
-wait for condition to be signaled within given time frame
+Wait for condition to be signaled within given time frame.
 
 This method atomically release mutex and cause the calling thread to block; atomically here means \char`\"{}atomically with respect to
 access by another thread to the mutex and then the condition variable\char`\"{}. Call notify\+\_\+one or notify\+\_\+all to signal the condition.
@@ -177,6 +194,16 @@ If this method is called with millis $<$ 0 then the timeout time is not recalcul
 \begin{DoxyReturn}{Returns}
 cv\+\_\+status (either timeout or no\+\_\+timeout) 
 \end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{classpthread_1_1condition__variable__exception}{condition\+\_\+variable\+\_\+exception}} & is thrown either if timeout calculation failed or mutex ownership was wrong. \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classpthread_1_1condition__variable_ae374b1e852f36fc5eac93ad90d9fc85a}{notify\+\_\+one} 
+
+\hyperlink{classpthread_1_1condition__variable_ae40f0c9043ed693317bb9a07861efc65}{notify\+\_\+all} 
+\end{DoxySeeAlso}
 \index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!wait\+\_\+for@{wait\+\_\+for}}
 \index{wait\+\_\+for@{wait\+\_\+for}!pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}}
 \subsubsection[{\texorpdfstring{wait\+\_\+for(lock\+\_\+guard$<$ pthread\+::mutex $>$ \&lck, int millis)}{wait_for(lock_guard< pthread::mutex > &lck, int millis)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf cv\+\_\+status} pthread\+::condition\+\_\+variable\+::wait\+\_\+for (
@@ -197,14 +224,14 @@ cv\+\_\+status (either timeout or no\+\_\+timeout)
 \item[{Lambda}]{lambda}
 \end{DoxyParamCaption}
 )}\hypertarget{classpthread_1_1condition__variable_a82fb3ff516ffef37c68f58e277fad855}{}\label{classpthread_1_1condition__variable_a82fb3ff516ffef37c68f58e277fad855}
-wait for condition to be signaled within a given time frame
+Wait for condition to be signaled within a given time frame.
 
 This method atomically release mutex and cause the calling thread to block; atomically here means \char`\"{}atomically with respect to
 access by another thread to the mutex and then the condition variable\char`\"{}. Call notify\+\_\+one or notify\+\_\+all to signal the condition.
 
 Upon successful return, the mutex has been locked and is owned by the calling thread.
 
-The lambda (closure) is run to check if the condition was met. Lambda should false if the waiting should be continued. The signature of the predicate function should be equivalent to the following\+: bool lambda();
+The lambda (closure) is run to check if the condition was met. Lambda should return false if the waiting should be continued. The signature of the predicate function should be equivalent to the following\+: bool lambda();
 
 
 \begin{DoxyParams}{Parameters}
@@ -218,6 +245,11 @@ The lambda (closure) is run to check if the condition was met. Lambda should fal
 \begin{DoxyReturn}{Returns}
 true if lmabda returned true. 
 \end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classpthread_1_1condition__variable_ae374b1e852f36fc5eac93ad90d9fc85a}{notify\+\_\+one} 
+
+\hyperlink{classpthread_1_1condition__variable_ae40f0c9043ed693317bb9a07861efc65}{notify\+\_\+all} 
+\end{DoxySeeAlso}
 \index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!wait\+\_\+for@{wait\+\_\+for}}
 \index{wait\+\_\+for@{wait\+\_\+for}!pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}}
 \subsubsection[{\texorpdfstring{wait\+\_\+for(lock\+\_\+guard$<$ pthread\+::mutex $>$ \&lck, int millis, Lambda lambda)}{wait_for(lock_guard< pthread::mutex > &lck, int millis, Lambda lambda)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Lambda $>$ bool pthread\+::condition\+\_\+variable\+::wait\+\_\+for (
@@ -227,14 +259,14 @@ true if lmabda returned true.
 \item[{Lambda}]{lambda}
 \end{DoxyParamCaption}
 )}\hypertarget{classpthread_1_1condition__variable_a5ee32edbf76592ec443e2544ecba811a}{}\label{classpthread_1_1condition__variable_a5ee32edbf76592ec443e2544ecba811a}
-wait for condition to be signaled within a given time frame
+Wait for condition to be signaled within a given time frame.
 
 This method atomically release mutex and cause the calling thread to block; atomically here means \char`\"{}atomically with respect to
 access by another thread to the mutex and then the condition variable\char`\"{}. Call notify\+\_\+one or notify\+\_\+all to signal the condition.
 
 Upon successful return, the mutex has been locked and is owned by the calling thread.
 
-The lambda (closure) is run to check if the condition was met. Lambda should false if the waiting should be continued. The signature of the predicate function should be equivalent to the following\+: bool lambda();
+The lambda (closure) is run to check if the condition was met. Lambda should return false if the waiting should be continued. The signature of the predicate function should be equivalent to the following\+: bool lambda();
 
 
 \begin{DoxyParams}{Parameters}
@@ -248,6 +280,11 @@ The lambda (closure) is run to check if the condition was met. Lambda should fal
 \begin{DoxyReturn}{Returns}
 true if lmabda returned true. 
 \end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classpthread_1_1condition__variable_ae374b1e852f36fc5eac93ad90d9fc85a}{notify\+\_\+one} 
+
+\hyperlink{classpthread_1_1condition__variable_ae40f0c9043ed693317bb9a07861efc65}{notify\+\_\+all} 
+\end{DoxySeeAlso}
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}

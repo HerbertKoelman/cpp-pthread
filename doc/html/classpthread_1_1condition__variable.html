@@ -40,6 +40,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -121,26 +122,29 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5ee32edbf76592ec443e2544ecba811a"><td class="memTemplParams" colspan="2">template&lt;class Lambda &gt; </td></tr>
 <tr class="memitem:a5ee32edbf76592ec443e2544ecba811a"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpthread_1_1condition__variable.html#a5ee32edbf76592ec443e2544ecba811a">wait_for</a> (<a class="el" href="classpthread_1_1lock__guard.html">lock_guard</a>&lt; <a class="el" href="classpthread_1_1mutex.html">pthread::mutex</a> &gt; &amp;lck, int millis, Lambda lambda)</td></tr>
 <tr class="separator:a5ee32edbf76592ec443e2544ecba811a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71a7f70ef29da791b1525d1ab8af01ea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1condition__variable.html#a71a7f70ef29da791b1525d1ab8af01ea">notify_one</a> ()  throw ()</td></tr>
-<tr class="separator:a71a7f70ef29da791b1525d1ab8af01ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8aed3a66334aec0e3a82090ac4d05483"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1condition__variable.html#a8aed3a66334aec0e3a82090ac4d05483">notify_all</a> ()  throw ()</td></tr>
-<tr class="separator:a8aed3a66334aec0e3a82090ac4d05483"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae374b1e852f36fc5eac93ad90d9fc85a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1condition__variable.html#ae374b1e852f36fc5eac93ad90d9fc85a">notify_one</a> () noexcept</td></tr>
+<tr class="separator:ae374b1e852f36fc5eac93ad90d9fc85a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae40f0c9043ed693317bb9a07861efc65"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1condition__variable.html#ae40f0c9043ed693317bb9a07861efc65">notify_all</a> () noexcept</td></tr>
+<tr class="separator:ae40f0c9043ed693317bb9a07861efc65"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>pthread condition variable</p>
+<div class="textblock"><p>Condition variable.</p>
 <p>The <a class="el" href="classpthread_1_1condition__variable.html">condition_variable</a> class is a synchronization primitive that can be used to block a thread, or multiple threads at the same time, until another thread both modifies a shared variable (the condition), and notifies the <a class="el" href="classpthread_1_1condition__variable.html">condition_variable</a>.</p>
 <p>The thread that intends to modify the variable has to</p><ul>
-<li>acquire a std::mutex (typically via std::lock_guard)</li>
+<li>acquire a <a class="el" href="classpthread_1_1mutex.html">pthread::mutex</a> (typically via <a class="el" href="classpthread_1_1lock__guard.html">pthread::lock_guard</a>)</li>
 <li>perform the modification while the lock is held</li>
-<li>execute notify_one or notify_all on the std::condition_variable (the lock does not need to be held for notification)</li>
+<li>execute notify_one or notify_all on the <a class="el" href="classpthread_1_1condition__variable.html">pthread::condition_variable</a> (the lock does not need to be held for notification)</li>
 </ul>
 <p>Even if the shared variable is atomic, it must be modified under the mutex in order to correctly publish the modification to the waiting thread.</p>
 <p>Upon successful return, the mutex shall have been locked and shall be owned by the calling thread.</p>
 <dl class="section author"><dt>Author</dt><dd>herbert koelman </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a8aed3a66334aec0e3a82090ac4d05483"></a>
+<a class="anchor" id="ae40f0c9043ed693317bb9a07861efc65"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void pthread::condition_variable::notify_all </td>
@@ -148,21 +152,24 @@ Public Member Functions</h2></td></tr>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
-        <tr>
-          <td align="right">throw </td><td>(</td><td colspan="2"></td>
-        </tr>
-        <tr>
-          <td align="right"></td><td>)</td><td></td><td></td>
-        </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>signal all waiting threads The pthread_cond_broadcast() call unblocks all threads currently blocked on the specified condition variable cond. </p>
+<p>Signal all waiting threads.</p>
+<p>The call unblocks all threads currently blocked on the specified condition variable cond. </p>
 
 </div>
 </div>
-<a class="anchor" id="a71a7f70ef29da791b1525d1ab8af01ea"></a>
+<a class="anchor" id="ae374b1e852f36fc5eac93ad90d9fc85a"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void pthread::condition_variable::notify_one </td>
@@ -170,16 +177,15 @@ Public Member Functions</h2></td></tr>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
-        <tr>
-          <td align="right">throw </td><td>(</td><td colspan="2"></td>
-        </tr>
-        <tr>
-          <td align="right"></td><td>)</td><td></td><td></td>
-        </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>signal one waiting thread.</p>
-<p>The pthread_cond_signal() call unblocks at least one of the threads that are blocked on the specified condition variable cond (if any threads are blocked on cond). </p>
+<p>Signal one waiting thread.</p>
+<p>The call unblocks at least one of the threads that are blocked on the specified condition variable cond (if any threads are blocked on cond). </p>
 
 </div>
 </div>
@@ -196,7 +202,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>wait for condition to be signaled</p>
+<p>Wait for condition to be signaled.</p>
 <p>This method atomically release mutex and cause the calling thread to block; atomically here means "atomically with respect to
 access by another thread to the mutex and then the condition variable". Call notify_one or notify_all to signal the condition.</p>
 <p>Upon successful return, the mutex has been locked and is owned by the calling thread.</p>
@@ -206,6 +212,9 @@ access by another thread to the mutex and then the condition variable". Call not
   </table>
   </dd>
 </dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classpthread_1_1condition__variable.html#ae374b1e852f36fc5eac93ad90d9fc85a">notify_one</a> </dd>
+<dd>
+<a class="el" href="classpthread_1_1condition__variable.html#ae40f0c9043ed693317bb9a07861efc65">notify_all</a> </dd></dl>
 
 </div>
 </div>
@@ -251,11 +260,11 @@ template&lt;class Lambda &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>wait for condition to be signaled</p>
+<p>Wait for condition to be signaled.</p>
 <p>This method atomically release mutex and cause the calling thread to block; atomically here means "atomically with respect to
 access by another thread to the mutex and then the condition variable". Call notify_one or notify_all to signal the condition.</p>
 <p>Upon successful return, the mutex has been locked and is owned by the calling thread.</p>
-<p>The lambda (closure) is run to check if the condition was met. Lambda should false if the waiting should be continued. The signature of the predicate function should be equivalent to the following: bool pred();</p>
+<p>The lambda (closure) is run to check if the condition was met. Lambda should return false if the waiting should be continued. The signature of the predicate function should be equivalent to the following: bool pred();</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">mtx</td><td>ralated mutex, which must be locked by the current thread. </td></tr>
@@ -264,6 +273,9 @@ access by another thread to the mutex and then the condition variable". Call not
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if lmabda returned true. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classpthread_1_1condition__variable.html#ae374b1e852f36fc5eac93ad90d9fc85a">notify_one</a> </dd>
+<dd>
+<a class="el" href="classpthread_1_1condition__variable.html#ae40f0c9043ed693317bb9a07861efc65">notify_all</a> </dd></dl>
 
 </div>
 </div>
@@ -292,11 +304,11 @@ template&lt;class Lambda &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>wait for condition to be signaled</p>
+<p>Wait for condition to be signaled.</p>
 <p>This method atomically release mutex and cause the calling thread to block; atomically here means "atomically with respect to
 access by another thread to the mutex and then the condition variable". Call notify_one or notify_all to signal the condition.</p>
 <p>Upon successful return, the mutex has been locked and is owned by the calling thread.</p>
-<p>The lambda (closure) is run to check if the condition was met. Lambda should false if the waiting should be continued. The signature of the predicate function should be equivalent to the following: bool pred();</p>
+<p>The lambda (closure) is run to check if the condition was met. Lambda should return false if the waiting should be continued. The signature of the predicate function should be equivalent to the following: bool pred();</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">lck</td><td>ralated mutex <a class="el" href="classpthread_1_1lock__guard.html">lock_guard</a>, which must be locked by the current thread. </td></tr>
@@ -305,6 +317,9 @@ access by another thread to the mutex and then the condition variable". Call not
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if lmabda returned true. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classpthread_1_1condition__variable.html#ae374b1e852f36fc5eac93ad90d9fc85a">notify_one</a> </dd>
+<dd>
+<a class="el" href="classpthread_1_1condition__variable.html#ae40f0c9043ed693317bb9a07861efc65">notify_all</a> </dd></dl>
 
 </div>
 </div>
@@ -331,7 +346,7 @@ access by another thread to the mutex and then the condition variable". Call not
         </tr>
       </table>
 </div><div class="memdoc">
-<p>wait for condition to be signaled within given time frame</p>
+<p>Wait for condition to be signaled within given time frame.</p>
 <p>This method atomically release mutex and cause the calling thread to block; atomically here means "atomically with respect to
 access by another thread to the mutex and then the condition variable". Call notify_one or notify_all to signal the condition.</p>
 <p>Upon successful return, the mutex has been locked and is owned by the calling thread.</p>
@@ -344,6 +359,15 @@ access by another thread to the mutex and then the condition variable". Call not
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>cv_status (either timeout or no_timeout) </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classpthread_1_1condition__variable__exception.html">condition_variable_exception</a></td><td>is thrown either if timeout calculation failed or mutex ownership was wrong. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classpthread_1_1condition__variable.html#ae374b1e852f36fc5eac93ad90d9fc85a">notify_one</a> </dd>
+<dd>
+<a class="el" href="classpthread_1_1condition__variable.html#ae40f0c9043ed693317bb9a07861efc65">notify_all</a> </dd></dl>
 
 </div>
 </div>
@@ -405,11 +429,11 @@ template&lt;class Lambda &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>wait for condition to be signaled within a given time frame</p>
+<p>Wait for condition to be signaled within a given time frame.</p>
 <p>This method atomically release mutex and cause the calling thread to block; atomically here means "atomically with respect to
 access by another thread to the mutex and then the condition variable". Call notify_one or notify_all to signal the condition.</p>
 <p>Upon successful return, the mutex has been locked and is owned by the calling thread.</p>
-<p>The lambda (closure) is run to check if the condition was met. Lambda should false if the waiting should be continued. The signature of the predicate function should be equivalent to the following: bool lambda();</p>
+<p>The lambda (closure) is run to check if the condition was met. Lambda should return false if the waiting should be continued. The signature of the predicate function should be equivalent to the following: bool lambda();</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">mtx</td><td>ralated mutex, which must be locked by the current thread. </td></tr>
@@ -419,6 +443,9 @@ access by another thread to the mutex and then the condition variable". Call not
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if lmabda returned true. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classpthread_1_1condition__variable.html#ae374b1e852f36fc5eac93ad90d9fc85a">notify_one</a> </dd>
+<dd>
+<a class="el" href="classpthread_1_1condition__variable.html#ae40f0c9043ed693317bb9a07861efc65">notify_all</a> </dd></dl>
 
 </div>
 </div>
@@ -453,11 +480,11 @@ template&lt;class Lambda &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>wait for condition to be signaled within a given time frame</p>
+<p>Wait for condition to be signaled within a given time frame.</p>
 <p>This method atomically release mutex and cause the calling thread to block; atomically here means "atomically with respect to
 access by another thread to the mutex and then the condition variable". Call notify_one or notify_all to signal the condition.</p>
 <p>Upon successful return, the mutex has been locked and is owned by the calling thread.</p>
-<p>The lambda (closure) is run to check if the condition was met. Lambda should false if the waiting should be continued. The signature of the predicate function should be equivalent to the following: bool lambda();</p>
+<p>The lambda (closure) is run to check if the condition was met. Lambda should return false if the waiting should be continued. The signature of the predicate function should be equivalent to the following: bool lambda();</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">lck</td><td>ralated mutex <a class="el" href="classpthread_1_1lock__guard.html">lock_guard</a>, which must be locked by the current thread. </td></tr>
@@ -467,6 +494,9 @@ access by another thread to the mutex and then the condition variable". Call not
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if lmabda returned true. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classpthread_1_1condition__variable.html#ae374b1e852f36fc5eac93ad90d9fc85a">notify_one</a> </dd>
+<dd>
+<a class="el" href="classpthread_1_1condition__variable.html#ae40f0c9043ed693317bb9a07861efc65">notify_all</a> </dd></dl>
 
 </div>
 </div>

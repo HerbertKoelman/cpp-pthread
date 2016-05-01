@@ -7,7 +7,7 @@
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classpthread_1_1thread__group_a9e9881c6e01fda143a3f0080f0a196d8}{thread\+\_\+group} (bool \hyperlink{classpthread_1_1thread__group_a67df7bb484fb8657228a909a126489d3}{destructor\+\_\+joins\+\_\+first}=false)  throw ()
+\hyperlink{classpthread_1_1thread__group_a9aeb2ffef16dc16d2753f2e6c63ff466}{thread\+\_\+group} (bool \hyperlink{classpthread_1_1thread__group_a67df7bb484fb8657228a909a126489d3}{destructor\+\_\+joins\+\_\+first}=false) noexcept
 \item 
 virtual \hyperlink{classpthread_1_1thread__group_a2aeeb86d1523e2a7c175df3162331e4f}{$\sim$thread\+\_\+group} ()
 \item 
@@ -28,7 +28,7 @@ Group of abstract\+\_\+threads pointers.
 
 This helper class is in charge of handling group of threads as a whole. Method in this class apply to all threads in the group.
 
-{\bfseries A \hyperlink{classpthread_1_1thread__group}{thread\+\_\+group} deletes the thread that were registered/added to it.}
+{\bfseries When destroyed, a \hyperlink{classpthread_1_1thread__group}{thread\+\_\+group} deletes the thread that were registered/added to it.}
 
 
 \begin{DoxyPre}{\ttfamily 
@@ -58,11 +58,11 @@ int main(int argc, const char * argv[]) \{}\end{DoxyPre}
 \subsection{Constructor \& Destructor Documentation}
 \index{pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}!thread\+\_\+group@{thread\+\_\+group}}
 \index{thread\+\_\+group@{thread\+\_\+group}!pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}}
-\subsubsection[{\texorpdfstring{thread\+\_\+group(bool destructor\+\_\+joins\+\_\+first=false)}{thread_group(bool destructor_joins_first=false)}}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+::thread\+\_\+group\+::thread\+\_\+group (
+\subsubsection[{\texorpdfstring{thread\+\_\+group(bool destructor\+\_\+joins\+\_\+first=false) noexcept}{thread_group(bool destructor_joins_first=false) noexcept}}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+::thread\+\_\+group\+::thread\+\_\+group (
 \begin{DoxyParamCaption}
 \item[{bool}]{destructor\+\_\+joins\+\_\+first = {\ttfamily false}}
 \end{DoxyParamCaption}
-) throw  ) }\hypertarget{classpthread_1_1thread__group_a9e9881c6e01fda143a3f0080f0a196d8}{}\label{classpthread_1_1thread__group_a9e9881c6e01fda143a3f0080f0a196d8}
+)\hspace{0.3cm}{\ttfamily [noexcept]}}\hypertarget{classpthread_1_1thread__group_a9aeb2ffef16dc16d2753f2e6c63ff466}{}\label{classpthread_1_1thread__group_a9aeb2ffef16dc16d2753f2e6c63ff466}
 Setup a thread container/list.
 
 
@@ -91,7 +91,7 @@ If destructor\+\_\+joins\+\_\+first is true then the method \hyperlink{classpthr
 )}\hypertarget{classpthread_1_1thread__group_ae9fa9ce6e7b4c2222d04a446b3c23ca0}{}\label{classpthread_1_1thread__group_ae9fa9ce6e7b4c2222d04a446b3c23ca0}
 
 \begin{DoxyParams}{Parameters}
-{\em thread} & add/register a thread to the group. \\
+{\em thread} & add/register a thread. \\
 \hline
 \end{DoxyParams}
 \index{pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}!destructor\+\_\+joins\+\_\+first@{destructor\+\_\+joins\+\_\+first}}
@@ -101,14 +101,24 @@ If destructor\+\_\+joins\+\_\+first is true then the method \hyperlink{classpthr
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classpthread_1_1thread__group_a67df7bb484fb8657228a909a126489d3}{}\label{classpthread_1_1thread__group_a67df7bb484fb8657228a909a126489d3}
-return if \hyperlink{classpthread_1_1thread__group}{thread\+\_\+group} should wait for all referenced \hyperlink{classpthread_1_1abstract__thread}{abstract\+\_\+thread} terminate \index{pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}!join@{join}}
+\begin{DoxyReturn}{Returns}
+current value of destructor\+\_\+joins\+\_\+first property. If true the destructor shall try to join registered threads before destroying them. 
+\end{DoxyReturn}
+\index{pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}!join@{join}}
 \index{join@{join}!pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}}
 \subsubsection[{\texorpdfstring{join()}{join()}}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::thread\+\_\+group\+::join (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
 )}\hypertarget{classpthread_1_1thread__group_a39937a77e1059e352c9b39407a866f6e}{}\label{classpthread_1_1thread__group_a39937a77e1059e352c9b39407a866f6e}
-what for all threads to join the caller of this method. \index{pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}!size@{size}}
+Wait for all registered threads to join the caller thread.
+
+The method iterates the list of \hyperlink{classpthread_1_1abstract__thread}{abstract\+\_\+thread} and calls the join method of each entry found.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classpthread_1_1abstract__thread_aedac81bb9eb76ba92c49c48d797ea25b}{abstract\+\_\+thread\+::join()} 
+\end{DoxySeeAlso}
+\index{pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}!size@{size}}
 \index{size@{size}!pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}}
 \subsubsection[{\texorpdfstring{size()}{size()}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long pthread\+::thread\+\_\+group\+::size (
 \begin{DoxyParamCaption}
@@ -125,7 +135,9 @@ the number of threads in the \hyperlink{classpthread_1_1thread__group}{thread\+\
 {}
 \end{DoxyParamCaption}
 )}\hypertarget{classpthread_1_1thread__group_aaba00cf80d72cd986526384482457968}{}\label{classpthread_1_1thread__group_aaba00cf80d72cd986526384482457968}
-start run all registered threads. \begin{DoxySeeAlso}{See also}
+Start running all registered threads.
+
+\begin{DoxySeeAlso}{See also}
 \hyperlink{classpthread_1_1thread__group_ae9fa9ce6e7b4c2222d04a446b3c23ca0}{add(abstract\+\_\+thread $\ast$thread)} 
 \end{DoxySeeAlso}
 

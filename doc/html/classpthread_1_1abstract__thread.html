@@ -40,6 +40,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -115,8 +116,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aedac81bb9eb76ba92c49c48d797ea25b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1abstract__thread.html#aedac81bb9eb76ba92c49c48d797ea25b">join</a> ()</td></tr>
 <tr class="separator:aedac81bb9eb76ba92c49c48d797ea25b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classpthread_1_1runnable"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classpthread_1_1runnable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classpthread_1_1runnable.html">pthread::runnable</a></td></tr>
-<tr class="memitem:ad5cfd01857f1d51c42d6a16d09efe930 inherit pub_methods_classpthread_1_1runnable"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1runnable.html#ad5cfd01857f1d51c42d6a16d09efe930">run</a> ()=0  throw ()</td></tr>
-<tr class="separator:ad5cfd01857f1d51c42d6a16d09efe930 inherit pub_methods_classpthread_1_1runnable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e0ce933602df83c096a37974ebedf84 inherit pub_methods_classpthread_1_1runnable"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1runnable.html#a4e0ce933602df83c096a37974ebedf84">run</a> () noexcept=0</td></tr>
+<tr class="separator:a4e0ce933602df83c096a37974ebedf84 inherit pub_methods_classpthread_1_1runnable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>base class of a thread.</p>
@@ -124,7 +125,7 @@ Public Member Functions</h2></td></tr>
 class worker: public <a class="el" href="classpthread_1_1abstract__thread.html">pthread::abstract_thread</a> {
 public:</code></pre><pre><code>  worker(const std::string m = "anonymous worker", int sleep = 2*1000): msg(m), _sleep(sleep){
   };</code></pre><pre><code>  ~worker(){
-  };</code></pre><pre><code>  void <a class="el" href="classpthread_1_1runnable.html#ad5cfd01857f1d51c42d6a16d09efe930">run()</a> noexcept override {
+  };</code></pre><pre><code>  void <a class="el" href="classpthread_1_1runnable.html#a4e0ce933602df83c096a37974ebedf84">run()</a> noexcept override {
     { // critical section scope
       pthread::lock_guard&lt;pthread::mutex&gt; lck(mtx);</code></pre><pre><code>      bool stop_waiting = true; // if lambda syntax is not availbale then use this kind of implementation
       auto delay = _sleep; // use sleep seconds to calculate point in time timeout
@@ -168,7 +169,12 @@ public:</code></pre><pre><code>  worker(const std::string m = "anonymous worker"
 </table>
 </div><div class="memdoc">
 <p>joins this thread.</p>
-<p>an exception is thrown if deadlock condition are detected. </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classpthread_1_1pthread__exception.html">pthread_exception</a></td><td>if deadlock conditions are detected. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -184,7 +190,7 @@ public:</code></pre><pre><code>  worker(const std::string m = "anonymous worker"
         </tr>
       </table>
 </div><div class="memdoc">
-<p>start running the <code><a class="el" href="classpthread_1_1runnable.html#ad5cfd01857f1d51c42d6a16d09efe930">run()</a></code> method in a new thread. </p>
+<p>start running the <code><a class="el" href="classpthread_1_1runnable.html#a4e0ce933602df83c096a37974ebedf84">run()</a></code> method in a new thread. </p>
 
 </div>
 </div>

@@ -40,6 +40,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -115,8 +116,8 @@ Inheritance diagram for pthread::pthread_exception:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a157d4379b6eddcc82ca504534c51abe6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1pthread__exception.html#a157d4379b6eddcc82ca504534c51abe6">pthread_exception</a> (const string message, const int <a class="el" href="classpthread_1_1pthread__exception.html#a8a5c22a403ebd14635e912295fe02a1e">pthread_errno</a>=0)</td></tr>
 <tr class="separator:a157d4379b6eddcc82ca504534c51abe6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afaf1eff0f0fb8cf06412c6db0c3b5cd9"><td class="memItemLeft" align="right" valign="top">virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1pthread__exception.html#afaf1eff0f0fb8cf06412c6db0c3b5cd9">what</a> () const   throw ()</td></tr>
-<tr class="separator:afaf1eff0f0fb8cf06412c6db0c3b5cd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a908666a0dd622c9a2a008e89a15d8fc7"><td class="memItemLeft" align="right" valign="top">virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1pthread__exception.html#a908666a0dd622c9a2a008e89a15d8fc7">what</a> () const  noexcept override</td></tr>
+<tr class="separator:a908666a0dd622c9a2a008e89a15d8fc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a5c22a403ebd14635e912295fe02a1e"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1pthread__exception.html#a8a5c22a403ebd14635e912295fe02a1e">pthread_errno</a> ()</td></tr>
 <tr class="separator:a8a5c22a403ebd14635e912295fe02a1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa2371eb23800817723174186450e9716"><td class="memItemLeft" align="right" valign="top">virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1pthread__exception.html#aa2371eb23800817723174186450e9716">pthread_errmsg</a> ()</td></tr>
@@ -187,7 +188,7 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>related pthread_errno error message </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>related pthread_errno error message using strerror </dd></dl>
 
 </div>
 </div>
@@ -215,7 +216,7 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="afaf1eff0f0fb8cf06412c6db0c3b5cd9"></a>
+<a class="anchor" id="a908666a0dd622c9a2a008e89a15d8fc7"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -228,20 +229,14 @@ Public Member Functions</h2></td></tr>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
         </tr>
-        <tr>
-          <td align="right">throw </td><td>(</td><td colspan="2"></td>
-        </tr>
-        <tr>
-          <td align="right"></td><td>)</td><td></td><td></td>
-        </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>the exception's error message. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>exception's error message. </dd></dl>
 
 </div>
 </div>

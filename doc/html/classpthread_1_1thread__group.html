@@ -40,6 +40,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -101,8 +102,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9e9881c6e01fda143a3f0080f0a196d8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1thread__group.html#a9e9881c6e01fda143a3f0080f0a196d8">thread_group</a> (bool <a class="el" href="classpthread_1_1thread__group.html#a67df7bb484fb8657228a909a126489d3">destructor_joins_first</a>=false)  throw ()</td></tr>
-<tr class="separator:a9e9881c6e01fda143a3f0080f0a196d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9aeb2ffef16dc16d2753f2e6c63ff466"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1thread__group.html#a9aeb2ffef16dc16d2753f2e6c63ff466">thread_group</a> (bool <a class="el" href="classpthread_1_1thread__group.html#a67df7bb484fb8657228a909a126489d3">destructor_joins_first</a>=false) noexcept</td></tr>
+<tr class="separator:a9aeb2ffef16dc16d2753f2e6c63ff466"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2aeeb86d1523e2a7c175df3162331e4f"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1thread__group.html#a2aeeb86d1523e2a7c175df3162331e4f">~thread_group</a> ()</td></tr>
 <tr class="separator:a2aeeb86d1523e2a7c175df3162331e4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9fa9ce6e7b4c2222d04a446b3c23ca0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpthread_1_1thread__group.html#ae9fa9ce6e7b4c2222d04a446b3c23ca0">add</a> (<a class="el" href="classpthread_1_1abstract__thread.html">abstract_thread</a> *<a class="el" href="classpthread_1_1thread.html">thread</a>)</td></tr>
@@ -119,16 +120,19 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Group of abstract_threads pointers.</p>
 <p>This helper class is in charge of handling group of threads as a whole. Method in this class apply to all threads in the group.</p>
-<p><b>A <a class="el" href="classpthread_1_1thread__group.html">thread_group</a> deletes the thread that were registered/added to it.</b></p>
+<p><b>When destroyed, a <a class="el" href="classpthread_1_1thread__group.html">thread_group</a> deletes the thread that were registered/added to it.</b></p>
 <pre><code>
 int main(int argc, const char * argv[]) {</code></pre><pre><code>  <a class="el" href="classpthread_1_1thread__group.html">pthread::thread_group</a> threads; // this instance will free any registered thread when it will get out of scope</code></pre><pre><code>  for (auto x = 10 ; x &gt; 0 ; x&ndash;){
     threads.add( new worker("herbert")); // register threads, they will run when <a class="el" href="classpthread_1_1thread__group.html#aaba00cf80d72cd986526384482457968">start()</a> is called
   }</code></pre><pre><code>  threads.start(); // start running all threads
   threads.join(); // wait for registered threads to join
 } // scope end</code></pre><pre><code></code></pre> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a9e9881c6e01fda143a3f0080f0a196d8"></a>
+<a class="anchor" id="a9aeb2ffef16dc16d2753f2e6c63ff466"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">pthread::thread_group::thread_group </td>
@@ -137,13 +141,12 @@ int main(int argc, const char * argv[]) {</code></pre><pre><code>  <a class="el"
           <td class="paramname"><em>destructor_joins_first</em> = <code>false</code></td><td>)</td>
           <td></td>
         </tr>
-        <tr>
-          <td align="right">throw </td><td>(</td><td colspan="2"></td>
-        </tr>
-        <tr>
-          <td align="right"></td><td>)</td><td></td><td></td>
-        </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>Setup a thread container/list.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -196,7 +199,7 @@ int main(int argc, const char * argv[]) {</code></pre><pre><code>  <a class="el"
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">thread</td><td>add/register a thread to the group. </td></tr>
+    <tr><td class="paramname">thread</td><td>add/register a thread. </td></tr>
   </table>
   </dd>
 </dl>
@@ -223,7 +226,7 @@ int main(int argc, const char * argv[]) {</code></pre><pre><code>  <a class="el"
   </tr>
 </table>
 </div><div class="memdoc">
-<p>return if <a class="el" href="classpthread_1_1thread__group.html">thread_group</a> should wait for all referenced <a class="el" href="classpthread_1_1abstract__thread.html">abstract_thread</a> terminate </p>
+<dl class="section return"><dt>Returns</dt><dd>current value of destructor_joins_first property. If true the destructor shall try to join registered threads before destroying them. </dd></dl>
 
 </div>
 </div>
@@ -239,7 +242,9 @@ int main(int argc, const char * argv[]) {</code></pre><pre><code>  <a class="el"
         </tr>
       </table>
 </div><div class="memdoc">
-<p>what for all threads to join the caller of this method. </p>
+<p>Wait for all registered threads to join the caller thread.</p>
+<p>The method iterates the list of <a class="el" href="classpthread_1_1abstract__thread.html">abstract_thread</a> and calls the join method of each entry found.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classpthread_1_1abstract__thread.html#aedac81bb9eb76ba92c49c48d797ea25b">abstract_thread::join()</a> </dd></dl>
 
 </div>
 </div>
@@ -271,7 +276,8 @@ int main(int argc, const char * argv[]) {</code></pre><pre><code>  <a class="el"
         </tr>
       </table>
 </div><div class="memdoc">
-<p>start run all registered threads. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="classpthread_1_1thread__group.html#ae9fa9ce6e7b4c2222d04a446b3c23ca0">add(abstract_thread *thread)</a> </dd></dl>
+<p>Start running all registered threads.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classpthread_1_1thread__group.html#ae9fa9ce6e7b4c2222d04a446b3c23ca0">add(abstract_thread *thread)</a> </dd></dl>
 
 </div>
 </div>
