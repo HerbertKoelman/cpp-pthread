@@ -1,10 +1,10 @@
 ### What it does
 
-Some C/C++ compilers are not implementing all the features of C++11 standard, especially it's often lacking the concurrency features that the standard brings. These compilers will at some point be fixed and we were therefore looking at a way to reduce the effort of switching from a specific implementation to the C++11 standard one.
+Some C/C++ compilers are not implementing all of C++11 and above standard, it's often lacking the concurrency features that the standard brings. These compilers will at some point be fixed and we were therefore looking at a way to reduce the effort of switching from a specific implementation to the C++11 standard one.
 
 This projetc is the resulting code.
 
-This wrapper intends to bring these feature by implementing C++11 interface and using the  pthread library.  Of course, as it is a replacement of C++11 features, it is best to use the standard implementation if your compiler support it. This can be done rather easely by using the standard namespace `std` instead of this library's specific one `pthread`.
+Of course, this library is a replacement of C++11 features, it is best to use the standard implementation if your compiler support it.
 
 To use this library:
 ```
@@ -13,7 +13,7 @@ make
 make install
 ```
 
-Install moves files into your system's default localtion of headers and libraries (often /usr/local/include and /usr/local/lib). Use this command to change target directory:
+Install moves files into your system's default localtion for headers and libraries (often /usr/local/include and /usr/local/lib). Use this command to change install target directory:
 ```
 configure --prefix=/usr/local
 ```
@@ -30,9 +30,9 @@ The `make` target `pkg` will produce au tar.gz that can be distributed.
 ### How to use it
 
 Once compiled and installed in a location that suites you, use your compiler options to reference the headers and the library directory. In almoast all casses you can:
-* include `#include "pthread/phtread.hpp"` in your code.
-* comment the c++11 standard includes in your code
-* declare that you're now using the namespace pthread (`using namespace pthread ;`)
+* include `#include "pthread/phtread.hpp"` in your code to replace of the standard includes.
+* comment out or the c++11 standard includes in your code
+* replace `std` namespace  with `pthread` ( std::condition_variable becomes pthread::condition_variable, etc)
 
 Sample code can be found in the `tests` directory. To use it, run the following commands:
 ```
