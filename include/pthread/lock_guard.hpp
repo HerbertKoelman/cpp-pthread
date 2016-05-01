@@ -37,7 +37,7 @@ namespace pthread {
     /**
      * The constructor is forced to only accept a mutex object or any object of a subclass.
      * 
-     * The mutex is locked up completion.
+     * The mutex is locked up upon completion.
      *
      * @param m reference to a valid pthread::mutex
      */
@@ -45,13 +45,16 @@ namespace pthread {
         _mutex->lock();
     }
     
-    /** release the guared mutex.
+    /** The destructor release the guarded mutex.
      */
    virtual ~lock_guard() {
       _mutex->unlock();
    }
     
-    /** @return a const reference to the guarded mutex */
+    /** @return a const reference to the guarded mutex
+     *
+     * @deprecated condition_variable is now a friend class
+     */
     MutexType *internal_mutex() {
       return _mutex ;
     }

@@ -23,7 +23,7 @@
 
 namespace pthread {
   
-  /** function used to startup a thread.
+  /** Function used to startup a thread.
    * 
    * it expects a reference to a runnable instance
    */
@@ -92,7 +92,7 @@ namespace pthread {
 //     */
 //    template<class Function, class... Args> explicit thread(Function&& f, Args&&... args);
     
-    /** move contructor
+    /** Move contructor.
      *
      * once moved this not a thread anymore. Status is thread_status::not_a_thread
      *
@@ -100,7 +100,7 @@ namespace pthread {
      */
     thread( thread&& other);
     
-    /** copy constructor is flagged deleted because it makes no sense to copy a thread.
+    /** Copy constructor is flagged deleted because it makes no sense to copy a thread.
      */
     thread(const thread &) = delete ;
     
@@ -129,9 +129,9 @@ namespace pthread {
      * The cancel method requests the cancellation of the thread. The action depends on the
      * cancelability of the target thread:
      *
-     * o If its cancelability is disabled, the cancellation request is set pending.
-     * o If its cancelability is deferred, the cancellation request is set pending till the thread reaches a cancellation point.
-     * o If its cancelability is asynchronous, the cancellation request is acted upon immediately; in some cases, it may result in unexpected behaviour.
+     * - If its cancelability is disabled, the cancellation request is set pending.
+     * - If its cancelability is deferred, the cancellation request is set pending till the thread reaches a cancellation point.
+     * - If its cancelability is asynchronous, the cancellation request is acted upon immediately; in some cases, it may result in unexpected behaviour.
      *
      * The cancellation of a thread terminates it safely, using the same termination
      * procedure as the pthread_exit subroutine.
@@ -149,7 +149,7 @@ namespace pthread {
     /** move a thread to another thread.
      *
      * @param other thread to move, on completion it is not a thread anymore (thread_status::not_a_thread).
-     * @return thread 
+     * @return a thread 
      */
     thread& operator=(thread&& other);
     
@@ -233,7 +233,7 @@ namespace pthread {
     
     /** joins this thread.
      *
-     * an exception is thrown if deadlock condition are detected.
+     * @throw pthread_exception if deadlock conditions are detected.
      */
     int join() { return _thread->join() ;};
     
@@ -245,7 +245,7 @@ namespace pthread {
    *
    * This helper class is in charge of handling group of threads as a whole. Method in this class apply to all threads in the group.
    *
-   * **A thread_group deletes the thread that were registered/added to it.**
+   * **When destroyed, a thread_group deletes the thread that were registered/added to it.**
    *
    * <pre><code>
    * int main(int argc, const char * argv[]) {
@@ -280,16 +280,21 @@ namespace pthread {
      */
     virtual ~thread_group();
     
-    /** @param thread add/register a thread to the group.
+    /** @param thread add/register a thread.
      */
     void add(abstract_thread *thread);
     
-    /** start run all registered threads.
+    /** Start running all registered threads.
+     *
      * @see add(abstract_thread *thread)
      */
     void start();
     
-    /** what for all threads to join the caller of this method.
+    /** Wait for all registered threads to join the caller thread.
+     *
+     * The method iterates the list of abstract_thread and calls the join method of each entry found.
+     *
+     * @see abstract_thread::join()
      */
     void join();
     
@@ -298,7 +303,7 @@ namespace pthread {
      */
     unsigned long size();
     
-    /** return if thread_group should wait for all referenced abstract_thread terminate
+    /** @return current value of destructor_joins_first property. If true the destructor shall try to join registered threads before destroying them.
      */
     const bool destructor_joins_first(){ return _destructor_joins_first;};
     
