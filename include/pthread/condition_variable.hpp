@@ -1,7 +1,4 @@
 //
-//  csfi_consumer.hpp
-//  substation
-//
 //  Created by herbert koelman on 13/03/2016.
 //  Copyright © 2016 urbix-software. All rights reserved.
 //
@@ -28,7 +25,7 @@ namespace pthread {
     timedout    /*!< condition timedout */
   };
   
-  /** pthread condition variable.
+  /** Condition variable.
    *
    * The condition_variable class is a synchronization primitive that can be used to block a thread, or multiple threads
    * at the same time, until another thread both modifies a shared variable (the condition), and notifies the 
@@ -66,39 +63,43 @@ namespace pthread {
      */
     void wait ( lock_guard<pthread::mutex> lck);
     
-    /** wait for condition to be signaled
+    /** Wait for condition to be signaled.
      *
      * This method atomically release mutex and cause the calling thread to block; atomically here means "atomically with respect to
      * access by another thread to the mutex and then the condition variable". Call notify_one or notify_all to signal the condition.
      *
      * Upon successful return, the mutex has been locked and is owned by the calling thread.
      *
-     * The lambda (closure) is run to check if the condition was met. Lambda should false if the waiting should be continued.
+     * The lambda (closure) is run to check if the condition was met. Lambda should return false if the waiting should be continued.
      * The signature of the predicate function should be equivalent to the following: bool pred();
      *
      * @param mtx ralated mutex, which must be locked by the current thread.
      * @param lambda run to check if condition was met.
      * @return true if lmabda returned true.
+     * @see notify_one
+     * @see notify_all
      */
     template<class Lambda> bool wait( mutex &mtx, Lambda lambda);
     
-    /** wait for condition to be signaled
+    /** Wait for condition to be signaled.
      *
      * This method atomically release mutex and cause the calling thread to block; atomically here means "atomically with respect to
      * access by another thread to the mutex and then the condition variable". Call notify_one or notify_all to signal the condition.
      *
      * Upon successful return, the mutex has been locked and is owned by the calling thread.
      *
-     * The lambda (closure) is run to check if the condition was met. Lambda should false if the waiting should be continued.
+     * The lambda (closure) is run to check if the condition was met. Lambda should return false if the waiting should be continued.
      * The signature of the predicate function should be equivalent to the following: bool pred();
      *
      * @param lck ralated mutex lock_guard, which must be locked by the current thread.
      * @param lambda run to check if condition was met.
      * @return true if lmabda returned true.
+     * @see notify_one
+     * @see notify_all
      */
     template<class Lambda> bool wait( lock_guard<pthread::mutex> &lck, Lambda lambda);
     
-    /** wait for condition to be signaled within given time frame
+    /** Wait for condition to be signaled within given time frame.
      *
      * This method atomically release mutex and cause the calling thread to block; atomically here means "atomically with respect to
      * access by another thread to the mutex and then the condition variable". Call notify_one or notify_all to signal the condition.
@@ -111,6 +112,9 @@ namespace pthread {
      * @param mtx ralated mutex, which must be locked by the current thread.
      * @param millis milliseconds to wait for this instance to signaled.
      * @return cv_status (either timeout or no_timeout)
+     * @throw condition_variable_exception is thrown either if timeout calculation failed or mutex ownership was wrong.
+     * @see notify_one
+     * @see notify_all
      */
     cv_status wait_for (mutex &mtx, int millis );
 
@@ -118,41 +122,45 @@ namespace pthread {
      */
     cv_status wait_for (lock_guard<pthread::mutex> &lck, int millis );
     
-    /** wait for condition to be signaled within a given time frame
+    /** Wait for condition to be signaled within a given time frame.
      *
      * This method atomically release mutex and cause the calling thread to block; atomically here means "atomically with respect to
      * access by another thread to the mutex and then the condition variable". Call notify_one or notify_all to signal the condition.
      *
      * Upon successful return, the mutex has been locked and is owned by the calling thread.
      *
-     * The lambda (closure) is run to check if the condition was met. Lambda should false if the waiting should be continued.
+     * The lambda (closure) is run to check if the condition was met. Lambda should return false if the waiting should be continued.
      * The signature of the predicate function should be equivalent to the following: bool lambda();
      *
      * @param mtx ralated mutex, which must be locked by the current thread.
      * @param millis milli seconds to wait for condition to be signaled.
      * @param lambda run to check if condition was met.
      * @return true if lmabda returned true.
+     * @see notify_one
+     * @see notify_all
      */
     template<class Lambda> bool wait_for( mutex &mtx, int millis, Lambda lambda);
     
-    /** wait for condition to be signaled within a given time frame
+    /** Wait for condition to be signaled within a given time frame.
      *
      * This method atomically release mutex and cause the calling thread to block; atomically here means "atomically with respect to
      * access by another thread to the mutex and then the condition variable". Call notify_one or notify_all to signal the condition.
      *
      * Upon successful return, the mutex has been locked and is owned by the calling thread.
      *
-     * The lambda (closure) is run to check if the condition was met. Lambda should false if the waiting should be continued.
+     * The lambda (closure) is run to check if the condition was met. Lambda should return false if the waiting should be continued.
      * The signature of the predicate function should be equivalent to the following: bool lambda();
      *
      * @param lck ralated mutex lock_guard, which must be locked by the current thread.
      * @param millis milli seconds to wait for condition to be signaled.
      * @param lambda run to check if condition was met.
      * @return true if lmabda returned true.
+     * @see notify_one
+     * @see notify_all
      */
     template<class Lambda> bool wait_for( lock_guard<pthread::mutex> &lck, int millis, Lambda lambda);
     
-    /** signal one waiting thread.
+    /** Signal one waiting thread.
      *
      * The call unblocks at least one of the threads that are blocked on the specified condition variable cond (if any threads are blocked on cond).
      */
@@ -162,7 +170,7 @@ namespace pthread {
     void notify_one () noexcept;
 #endif
     
-    /** signal all waiting threads.
+    /** Signal all waiting threads.
      *
      * The call unblocks all threads currently blocked on the specified condition variable cond.
      */
@@ -184,7 +192,7 @@ namespace pthread {
     pthread_cond_t _condition;
   };
   
-  /** condition variable exception
+  /** Condition variable exception
    */
   class condition_variable_exception: public pthread_exception {
   public:
