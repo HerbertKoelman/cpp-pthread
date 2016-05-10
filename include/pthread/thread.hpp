@@ -83,6 +83,7 @@ namespace pthread {
      * The new thread is made runnable, and will start executing the run routine, with.
      *
      * @param runner a class that implements the runnable interface.
+     * @param stack_size thread stack size in bytes (default is 0 and means use default stack size)
      */
     thread( const runnable &runner, const std::size_t stack_size = 0 );
     
