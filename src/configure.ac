@@ -17,7 +17,7 @@ AC_CHECK_PROG([MV],[mv],[mv],[echo "no mv command found"])
 AC_CHECK_PROG([BEAUTIFIER],[uncrustify],[uncrustify -l CPP --replace -c ../crust.cfg *.bsr *.bcl *.cpp *.hpp],[echo \"install crustify to run beautifier\"])
 AC_PROG_RANLIB
 
-CXXFLAGS="$CXXFLAGS -I ../include -I ./"
+CPPFLAGS="$CPPFLAGS -I ../include -I ./"
 LDFLAGS="$LDFLAGS -L ../lib"
 
 AC_CHECK_SIZEOF([long])
@@ -28,7 +28,7 @@ then
 else
   AC_MSG_RESULT([using 32 bits (default)])
   AC_SUBST(BITS,"32")
-  bits=64
+  bits=32
 fi
 
 OBJECTS=""
@@ -42,7 +42,8 @@ AC_SUBST(OBJECTS,$OBJECTS)
 AC_MSG_CHECKING([for specific $CXX compiler options])
 case "$CXX" in
   xlC_r | xlC)
-	CXXFLAGS="-q$bits -bh:5 -qlanglvl=extended0x:decltype:static_assert::rvaluereferences:rvaluereferences -qwarn0x  -qsourcetype=c++ -O $CXXFLAGS"
+  CPPFLAGS="-bh:5 -q$bits -O $CPPFLAGS"
+	CXXFLAGS="-qlanglvl=extended0x:decltype:static_assert::rvaluereferences:rvaluereferences -qwarn0x  -qsourcetype=c++ $CXXFLAGS"
   AC_MSG_RESULT([yes])
   ;;
   g++ | gcc)
@@ -53,9 +54,6 @@ case "$CXX" in
   *)
   AC_MSG_RESULT(none found.)
 esac
-
-CFLAGS=$CXXFLAGS
-CPPFLAGS="$CPPFLAGS $CFLAGS"
 
 # Checks for libraries.
 AC_CHECK_LIB([pthread], [pthread_create],[],[AC_ERROR([missing pthread library.])])
