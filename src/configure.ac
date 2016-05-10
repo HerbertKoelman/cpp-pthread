@@ -24,9 +24,11 @@ AC_CHECK_SIZEOF([long])
 if test $ac_cv_sizeof_long == "8" 
 then
   AC_SUBST(BITS,"64")
+  bits=64
 else
   AC_MSG_RESULT([using 32 bits (default)])
   AC_SUBST(BITS,"32")
+  bits=64
 fi
 
 OBJECTS=""
@@ -40,7 +42,7 @@ AC_SUBST(OBJECTS,$OBJECTS)
 AC_MSG_CHECKING([for specific $CXX compiler options])
 case "$CXX" in
   xlC_r | xlC)
-	CXXFLAGS="-bh:5 -qlanglvl=extended0x:decltype:static_assert::rvaluereferences:rvaluereferences -qwarn0x  -qsourcetype=c++ -O $CXXFLAGS"
+	CXXFLAGS="-q$bits -bh:5 -qlanglvl=extended0x:decltype:static_assert::rvaluereferences:rvaluereferences -qwarn0x  -qsourcetype=c++ -O $CXXFLAGS"
   AC_MSG_RESULT([yes])
   ;;
   g++ | gcc)
