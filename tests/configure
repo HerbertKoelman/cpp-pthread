@@ -3470,7 +3470,7 @@ else
 fi
 
 
-CXXFLAGS="$CXXFLAGS -I ../include -I ./"
+CPPFLAGS="-I ../include -I ./"
 LDFLAGS="$LDFLAGS -L ../lib"
 
 
@@ -3904,12 +3904,14 @@ if test $ac_cv_sizeof_long == "8"
 then
   BITS="64"
 
+  BITS=64
   #CXXFLAGS="-m$ac_cv_sizeof_long $CXXFLAGS -I ../include -I ./"
 else
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: using 32 bits (default)" >&5
 $as_echo "using 32 bits (default)" >&6; }
   BITS="32"
 
+  BITS=32
   #CXXFLAGS="-m$ac_cv_sizeof_long $CXXFLAGS -I ../include -I ./"
 fi
 
@@ -3926,7 +3928,8 @@ OBJECTS=$OBJECTS
 $as_echo_n "checking for specific $CXX compiler options... " >&6; }
 case "$CXX" in
   xlC_r | xlC)
-	CXXFLAGS="-bh:5 -qlanglvl=extended0x:decltype:static_assert:rvaluereferences:rvaluereferences -qwarn0x  -qsourcetype=c++ -O $CXXFLAGS"
+	CXXFLAGS="-bh:5 -qlanglvl=extended0x:decltype:static_assert:rvaluereferences:rvaluereferences -qwarn0x  -qsourcetype=c++ -O "
+  CPPFLAGS="-q$BITS $CPPFLAGS"
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
   ;;
@@ -3940,8 +3943,8 @@ $as_echo "yes" >&6; }
 $as_echo "none found." >&6; }
 esac
 
-CFLAGS=$CXXFLAGS
-CPPFLAGS="$CPPFLAGS $CFLAGS"
+#CFLAGS=$CXXFLAGS
+#CPPFLAGS="$CPPFLAGS $CFLAGS"
 
 # Checks for libraries.
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for pthread_create in -lpthread" >&5

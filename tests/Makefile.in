@@ -24,13 +24,14 @@ BEAUTIFIER=@BEAUTIFIER@
 
 BITS=@BITS@
 OBJECT_MODE=$(BITS)
+LIBS=@LIBS@
 
 #DEBUG=-g -bnoquiet
 #PROFILER=-p
 
-CXXFLAGS=@CXXFLAGS@
-CFLAGS=$(CXXFLAGS)
-CCFLAGS=$(CXXFLAGS)
+CXXFLAGS=$(OPTIONS) @CXXFLAGS@
+CFLAGS=$(OPTIONS) @CFLAGS@
+CPPFLAGS=$(OPTIONS) @CPPFLAGS@
 
 LDFLAGS=@LDFLAGS@
 
@@ -42,7 +43,7 @@ all:${TARGETS}
 clean: globber
 
 globber:
-	${RM} *.o core *.a
+	${RM} *.o core *.a *.out
 	${RM} ${TARGETS}
 	$(RM) *unc-backup*~ *unc-backup*~
 	$(RM) ULOG*
@@ -55,7 +56,7 @@ beautifull:
 
 # cpp build rule
 .cpp.o:
-	$(CCC) $(CCFLAGS) -c $<
+	$(CCC) $(CPPFLAGS) $(CXXFLAGS) -c $<
 
 .cpp: 
-	$(CCC) $(CCFLAGS) $< -o $@ $(LDFLAGS)
+	$(CCC) $(CPPFLAGS) $(CXXFLAGS) $< -o $@ $(LDFLAGS)

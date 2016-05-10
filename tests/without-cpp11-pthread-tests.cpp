@@ -2,6 +2,13 @@
 //  main.cpp
 //  pthread_tests
 //
+//  Thread stack size can be ajusted using this environment variable: 
+//  - AIXTHREAD_STK=<n bytes>
+//
+//  Check ulimit to make sure you're allowed to allocate the required memory (ulimit -a).
+//
+//  More here https://www.ibm.com/support/knowledgecenter/ssw_aix_72/com.ibm.aix.performance/thread_supp_tun_params.htm
+//
 //  Created by herbert koelman on 18/03/2016.
 //  Copyright © 2016 urbix-software. All rights reserved.
 //
@@ -27,8 +34,8 @@ void message ( const std::string m){
 class worker: public pthread::abstract_thread {
 public:
   
-  worker(const std::string m = "anonymous worker", int sleep = 2*1000): msg(m), _sleep(sleep){
-    
+  worker(const std::string m = "anonymous worker", int sleep = 2*1000):abstract_thread(8000000),  msg(m), _sleep(sleep){
+//    msg.resize(msg.size()+1);    
   };
   
   ~worker(){
@@ -69,26 +76,40 @@ private:
 
 int main(int argc, const char * argv[]) {
   
-  std::cout << "version: " << pthread::cpp_pthread_version() << std::endl;
+  try {
+    std::cout << "lib version: " << pthread::cpp_pthread_version() << std::endl;
 
-//  std::string dummy;
+    int number_of_threads = 2;
+    if ( argc > 0 ){
+       number_of_threads = atoi(argv[1]);
+    }
+
+    pthread::thread_group threads(true);
+    for (auto x = number_of_threads ; x > 0 ; x--){
+      message("add new work to thread group");
+      threads.add( new worker("herbert"));
+    }
+    
+    threads.start();
+    
+    message("main increment counter");
+    for ( auto x = 20000 ; x > 0 ; x--){
+      pthread::lock_guard<pthread::mutex> lck(mtx);
+      counter++ ;
+    }
+    condition.notify_all();
+    
+    message("main is waiting for threads to finish");
+    threads.join();
   
-  pthread::thread_group threads(true);
-  for (auto x = 10 ; x > 0 ; x--){
-    threads.add( new worker("herbert"));
+  } catch ( pthread::pthread_exception &ex ){
+    message(ex.what());
+    message(ex.pthread_errmsg());
+  } catch ( std::exception &ex ){
+    message(ex.what());
+  } catch ( ... ){
+    message("Unhandled exception was thrown in main");
   }
-  
-  threads.start();
-  
-  message("main increment counter");
-  for ( auto x = 20000 ; x > 0 ; x--){
-    pthread::lock_guard<pthread::mutex> lck(mtx);
-    counter++ ;
-  }
-  condition.notify_all();
-  
-  message("main is waiting for threads to finish");
-  threads.join();
+  pthread::this_thread::sleep(10*1000); // sleep 10 seconds
   message( "end reached");
-  
 }
