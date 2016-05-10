@@ -34,7 +34,7 @@ void message ( const std::string m){
 class worker: public pthread::abstract_thread {
 public:
   
-  worker(const std::string m = "anonymous worker", int sleep = 2*1000): msg(m), _sleep(sleep){
+  worker(const std::string m = "anonymous worker", int sleep = 2*1000):abstract_thread(8000000),  msg(m), _sleep(sleep){
 //    msg.resize(msg.size()+1);    
   };
   
@@ -77,7 +77,7 @@ private:
 int main(int argc, const char * argv[]) {
   
   try {
-    std::cout << "version: " << pthread::cpp_pthread_version() << std::endl;
+    std::cout << "lib version: " << pthread::cpp_pthread_version() << std::endl;
 
     int number_of_threads = 2;
     if ( argc > 0 ){

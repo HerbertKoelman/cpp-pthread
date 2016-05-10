@@ -14,6 +14,7 @@
 #include <functional>
 #include <memory> // std::auto_ptr, std::unique_ptr
 #include <list>
+#include <cstddef>
 
 #include "pthread/config.h"
 
@@ -83,7 +84,7 @@ namespace pthread {
      *
      * @param runner a class that implements the runnable interface.
      */
-    thread( const runnable &runner );
+    thread( const runnable &runner, const std::size_t stack_size = 0 );
     
 //    /** Starts running given function in a new trhread.
 //     * 
@@ -225,6 +226,12 @@ namespace pthread {
    */
   class abstract_thread: public runnable {
   public:
+    /**
+     * setup thread base.
+     *
+     * @param stack_size thread's stack size (default 0 which means use PTHREAD_STACK_MIN)
+     */
+    abstract_thread(const std::size_t stack_size = 0);
     virtual ~abstract_thread();
     
     /** start running the `run()` method in a new thread.
@@ -239,6 +246,7 @@ namespace pthread {
     
   private:
     pthread::thread *_thread;
+    std::size_t      _stack_size ;
   };
   
   /** Group of abstract_threads pointers.
