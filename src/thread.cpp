@@ -72,7 +72,7 @@ namespace pthread {
       throw thread_exception("pthread_attr_setdetachstate failed.", rc );
     }
 
-    if ( stack_size > PTHREAD_STACK_MIN && (rc = pthread_attr_setstacksize(&attr, stack_size)) != 0 ){
+    if ( stack_size > 0 && (rc = pthread_attr_setstacksize(&attr, stack_size)) != 0 ){
       throw thread_exception("pthread_attr_setstacksize failed.", rc );
     }
     
