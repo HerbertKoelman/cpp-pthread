@@ -6,10 +6,14 @@
 //  Copyright Â© 2016 urbix-software. All rights reserved.
 //
 
-#ifndef pthread_thread_hpp
-#define pthread_thread_hpp
+#ifndef PTHREAD_THREAD_HPP
+#define PTHREAD_THREAD_HPP
+
+// must be include as first hearder file of each source code file (see IBM's 
+// recommandation for more info p.285 §8.3.1).
+#include <pthread.h> 
+
 #include <iostream>
-#include <pthread.h>
 #include <string>
 #include <functional>
 #include <memory> // std::auto_ptr, std::unique_ptr
@@ -17,8 +21,7 @@
 #include <cstddef>
 
 #include "pthread/config.h"
-
-#include "pthread/pthread_exception.hpp"
+#include "pthread/exceptions.hpp"
 #include "pthread/mutex.hpp"
 #include "pthread/lock_guard.hpp"
 
