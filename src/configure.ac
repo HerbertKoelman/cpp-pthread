@@ -40,9 +40,10 @@ AC_SUBST(OBJECTS,$OBJECTS)
 AC_MSG_CHECKING([for specific $CXX compiler options])
 case "$CXX" in
   xlC_r | xlC)
-  CFLAGS="-bh:5 -q$bits -O $CFLAGS"
-	CPPFLAGS="-qlanglvl=extended0x:decltype:static_assert::rvaluereferences:rvaluereferences -qwarn0x  -qsourcetype=c++ $CPPFLAGS"
-  AC_MSG_RESULT([yes])
+	CPPFLAGS="-qlanglvl=extended0x:decltype:static_assert:rvaluereferences:rvaluereferences -qsourcetype=c++ -O $CPPFLAGS"
+  CFLAGS="-bh:5 -O -qmaxmem=-1 -q$BITS $CFLAGS"
+  LDFLAGS="$LDFLAGS -brtl -bmaxdata:0x80000000"
+  AC_MSG_RESULT([using large memory model (maxdata:0x80000000), optimising level 2 (-O),using run-time link method (-brtl)])
   ;;
   g++ | gcc)
 	CPPFLAGS="-x c++ -std=c++11 -frtti $CPPFLAGS "
