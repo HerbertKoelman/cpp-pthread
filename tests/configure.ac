@@ -12,7 +12,6 @@ AC_PROG_CXX([xlC_r xlC g++ c++ gcc cl KCC CC cxx cc++ aCC ])
 AC_PROG_CC([xlc xlc_r gcc cl cc])
 AC_CHECK_PROG([AR],[ar],[ar -rv])
 AC_CHECK_PROG([MV],[mv],[mv],[echo "no mv command found"])
-AC_CHECK_PROG([BEAUTIFIER],[uncrustify],[uncrustify -l CPP --replace -c ../crust.cfg *.bsr *.bcl *.cpp *.hpp],[echo \"install crustify to run beautifier\"])
 AC_PROG_RANLIB
 
 CFLAGS="$CFLAGS -I ../include -I ./"
@@ -23,12 +22,10 @@ if test $ac_cv_sizeof_long == "8"
 then
   AC_SUBST(BITS,"64")
   BITS=64
-  #CXXFLAGS="-m$ac_cv_sizeof_long $CXXFLAGS -I ../include -I ./"
 else
   AC_MSG_RESULT([using 32 bits (default)])
   AC_SUBST(BITS,"32")
   BITS=32
-  #CXXFLAGS="-m$ac_cv_sizeof_long $CXXFLAGS -I ../include -I ./"
 fi
 
 OBJECTS=""
@@ -43,7 +40,8 @@ AC_MSG_CHECKING([for specific $CXX compiler options])
 case "$CXX" in
   xlC_r | xlC)
 	CPPFLAGS="-qlanglvl=extended0x:decltype:static_assert:rvaluereferences:rvaluereferences -qsourcetype=c++ -O $CPPFLAGS"
-  CFLAGS="-bh:5 -brtl -O -q$BITS $CFLAGS"
+  CFLAGS="-bh:5 -O -qmaxmem=-1 -q$BITS $CFLAGS"
+  LDFLAGS="$LDFLAGS -brtl -bmaxdata:0x80000000"
   AC_MSG_RESULT([yes])
   ;;
   g++ | gcc)
