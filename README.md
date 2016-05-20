@@ -43,6 +43,20 @@ cd tests
 
 ### Usefull links
 
+#### Memory management on AIX
+
+Memory management on AIX is quite sophisticated making it possible to fine tuned very precisely the way your program uses memory. Consider using these compiler/linker options when using pthreads:
+* -bmaxdata:0xN0000000 this option activates the large memory model, N is a number in the range of [1-8].
+* -bmaxmem=-1 this option tell the compiler to use as much memory it needs (usefull when -O option is used).
+
+Thread stack size:
+* 32bits programs allocate 96KB per thread on the program's heap.
+* 64bits programs allocate 192KB per thread on the program's heap.
+
+On many Linux implementations and on Mac OS X the stack size is defaulted to 8MB. You may consider setting this as a default.
+
+More detailed information can be found in this [RedBook](http://www.redbooks.ibm.com/redbooks/pdfs/sg245674.pdf) (chapter 8).
+
 #### project links
 
 * [project's home](https://github.com/HerbertKoelman/cpp-pthread)

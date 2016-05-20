@@ -47,26 +47,35 @@ public:
 #else
   void run() noexcept override {
 #endif
-    message("worker: " + msg);
-    {
-      pthread::lock_guard<pthread::mutex> lck(mtx);
+    try {
+      message("worker: " + msg);
+      {
+        pthread::lock_guard<pthread::mutex> lck(mtx);
+        
+        message("running worker class. wait max 2s for condition to be signaled");
+        bool stop_waiting = true;
+        auto delay = _sleep;
+        while ( ! (stop_waiting = (counter >= 10000)) && (condition.wait_for(mtx, delay) == pthread::cv_status::no_timeout)){
+          delay = -1 ;
+        }
+        if ( counter >= 10000 ) {
+          message("worker class, counter >= 10000");
+        } else {
+          message("worker class, counter < 10000");
+        }
+      }
       
-      message("running worker class. wait max 2s for condition to be signaled");
-      bool stop_waiting = true;
-      auto delay = _sleep;
-      while ( ! (stop_waiting = (counter >= 10000)) && (condition.wait_for(mtx, delay) == pthread::cv_status::no_timeout)){
-        delay = -1 ;
-      }
-      if ( counter >= 10000 ) {
-        message("worker class, counter >= 10000");
-      } else {
-        message("worker class, counter < 10000");
-      }
+      message("worker sleeping");
+      pthread::this_thread::sleep(200);
+      message("worker class is ending");
+
+    } catch ( pthread::pthread_exception &err ){
+      message(err.what());
+    } catch ( std::exception &err ) {
+      message(err.what());
+    } catch ( ... ) {
+      message("Unexpected exception was thrown.");
     }
-    
-    message("worker sleeping");
-    pthread::this_thread::sleep(200);
-    message("worker class is ending");
   };
   
 private:
@@ -96,6 +105,7 @@ int main(int argc, const char * argv[]) {
     for ( auto x = 20000 ; x > 0 ; x--){
       pthread::lock_guard<pthread::mutex> lck(mtx);
       counter++ ;
+      condition.notify_one();
     }
     condition.notify_all();
     
@@ -110,6 +120,6 @@ int main(int argc, const char * argv[]) {
   } catch ( ... ){
     message("Unhandled exception was thrown in main");
   }
-  pthread::this_thread::sleep(10*1000); // sleep 10 seconds
+  pthread::this_thread::sleep(5*1000); // sleep 10 seconds
   message( "end reached");
 }

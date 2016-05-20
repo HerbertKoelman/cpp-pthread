@@ -14,11 +14,9 @@ AC_PROG_CXX([xlC_r xlC g++ c++ gcc cl KCC CC cxx cc++ aCC ])
 AC_PROG_CC([xlc xlc_r gcc cl cc])
 AC_CHECK_PROG([AR],[ar],[ar -rv])
 AC_CHECK_PROG([MV],[mv],[mv],[echo "no mv command found"])
-AC_CHECK_PROG([BEAUTIFIER],[uncrustify],[uncrustify -l CPP --replace -c ../crust.cfg *.bsr *.bcl *.cpp *.hpp],[echo \"install crustify to run beautifier\"])
 AC_PROG_RANLIB
 
-CPPFLAGS="$CPPFLAGS -I ../include -I ./"
-LDFLAGS="$LDFLAGS -L ../lib"
+CFLAGS="-I ../include -I ./"
 
 AC_CHECK_SIZEOF([long])
 if test $ac_cv_sizeof_long == "8" 
@@ -42,13 +40,13 @@ AC_SUBST(OBJECTS,$OBJECTS)
 AC_MSG_CHECKING([for specific $CXX compiler options])
 case "$CXX" in
   xlC_r | xlC)
-  CPPFLAGS="-bh:5 -q$bits -O $CPPFLAGS"
-	CXXFLAGS="-qlanglvl=extended0x:decltype:static_assert::rvaluereferences:rvaluereferences -qwarn0x  -qsourcetype=c++ $CXXFLAGS"
-  AC_MSG_RESULT([yes])
+	CPPFLAGS="-qlanglvl=extended0x:decltype:static_assert:rvaluereferences:rvaluereferences -qsourcetype=c++ -O $CPPFLAGS"
+  CFLAGS="-bh:5 -O -qmaxmem=-1 -q$BITS $CFLAGS"
+  LDFLAGS="$LDFLAGS -brtl -bmaxdata:0x80000000"
+  AC_MSG_RESULT([using large memory model (maxdata:0x80000000), optimising level 2 (-O),using run-time link method (-brtl)])
   ;;
   g++ | gcc)
-	#permissive is not required anymore - CXXFLAGS="-x c++ -std=c++11 -frtti -fpermissive $CXXFLAGS "
-	CXXFLAGS="-x c++ -std=c++11 -frtti $CXXFLAGS "
+	CPPFLAGS="-x c++ -std=c++11 -frtti $CPPFLAGS "
   AC_MSG_RESULT([yes])
   ;;
   *)
@@ -81,8 +79,6 @@ AC_HEADER_STDBOOL
 #AC_FUNC_ERROR_AT_LINE
 #AC_FUNC_MALLOC
 AC_CHECK_FUNCS([gettimeofday])
-
-LDFLAGS="$LDFLAGS $LIBS"
 
 AC_CONFIG_FILES([Makefile pthread.cpp])
 AC_OUTPUT

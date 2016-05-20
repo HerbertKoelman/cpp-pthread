@@ -34,6 +34,7 @@ CFLAGS=$(OPTIONS) @CFLAGS@
 CPPFLAGS=$(OPTIONS) @CPPFLAGS@
 
 LDFLAGS=@LDFLAGS@
+LIBS=@LIBS@
 
 OBJECTS=@OBJECTS@
 
@@ -61,4 +62,7 @@ beautifull:
 
 # cpp build rule
 .cpp.o:
-	$(CCC) $(CPPFLAGS) $(CXXFLAGS) -c $<
+	$(CCC) $(CPPFLAGS) $(CFLAGS) -c $<
+
+.cpp:
+	$(CCC) $(CPPFLAGS) $(CFLAGS) $< -o $@ $(LDFLAGS) $(LIBS)
