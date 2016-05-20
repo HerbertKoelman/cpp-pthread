@@ -1,5 +1,6 @@
-\hypertarget{classpthread_1_1thread__group}{}\section{pthread\+:\+:thread\+\_\+group Class Reference}
+\hypertarget{classpthread_1_1thread__group}{\section{pthread\+:\+:thread\+\_\+group Class Reference}
 \label{classpthread_1_1thread__group}\index{pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}}
+}
 
 
 {\ttfamily \#include $<$thread.\+hpp$>$}
@@ -56,13 +57,13 @@ int main(int argc, const char * argv[]) \{}\end{DoxyPre}
  
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{classpthread_1_1thread__group_a9aeb2ffef16dc16d2753f2e6c63ff466}{}\index{pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}!thread\+\_\+group@{thread\+\_\+group}}
+\hypertarget{classpthread_1_1thread__group_a9aeb2ffef16dc16d2753f2e6c63ff466}{\index{pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}!thread\+\_\+group@{thread\+\_\+group}}
 \index{thread\+\_\+group@{thread\+\_\+group}!pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}}
-\subsubsection[{thread\+\_\+group(bool destructor\+\_\+joins\+\_\+first=false) noexcept}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+::thread\+\_\+group\+::thread\+\_\+group (
+\subsubsection[{thread\+\_\+group}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+::thread\+\_\+group\+::thread\+\_\+group (
 \begin{DoxyParamCaption}
 \item[{bool}]{destructor\+\_\+joins\+\_\+first = {\ttfamily false}}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [noexcept]}}\label{classpthread_1_1thread__group_a9aeb2ffef16dc16d2753f2e6c63ff466}
+)\hspace{0.3cm}{\ttfamily [noexcept]}}}\label{classpthread_1_1thread__group_a9aeb2ffef16dc16d2753f2e6c63ff466}
 Setup a thread container/list.
 
 
@@ -70,47 +71,47 @@ Setup a thread container/list.
 {\em destructor\+\_\+joins\+\_\+first} & if true then destructor tries to wait for all registered threads to join the calling one before deleting thread instances. \\
 \hline
 \end{DoxyParams}
-\hypertarget{classpthread_1_1thread__group_a2aeeb86d1523e2a7c175df3162331e4f}{}\index{pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}!````~thread\+\_\+group@{$\sim$thread\+\_\+group}}
+\hypertarget{classpthread_1_1thread__group_a2aeeb86d1523e2a7c175df3162331e4f}{\index{pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}!````~thread\+\_\+group@{$\sim$thread\+\_\+group}}
 \index{````~thread\+\_\+group@{$\sim$thread\+\_\+group}!pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}}
-\subsubsection[{$\sim$thread\+\_\+group()}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+::thread\+\_\+group\+::$\sim$thread\+\_\+group (
+\subsubsection[{$\sim$thread\+\_\+group}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+::thread\+\_\+group\+::$\sim$thread\+\_\+group (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classpthread_1_1thread__group_a2aeeb86d1523e2a7c175df3162331e4f}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classpthread_1_1thread__group_a2aeeb86d1523e2a7c175df3162331e4f}
 delete all \hyperlink{classpthread_1_1abstract__thread}{abstract\+\_\+thread} referenced by the \hyperlink{classpthread_1_1thread__group}{thread\+\_\+group}.
 
 If destructor\+\_\+joins\+\_\+first is true then the method \hyperlink{classpthread_1_1abstract__thread_aedac81bb9eb76ba92c49c48d797ea25b}{abstract\+\_\+thread\+::join()} is called before deleting the referenced \hyperlink{classpthread_1_1abstract__thread}{abstract\+\_\+thread}. 
 
 \subsection{Member Function Documentation}
-\hypertarget{classpthread_1_1thread__group_ae9fa9ce6e7b4c2222d04a446b3c23ca0}{}\index{pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}!add@{add}}
+\hypertarget{classpthread_1_1thread__group_ae9fa9ce6e7b4c2222d04a446b3c23ca0}{\index{pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}!add@{add}}
 \index{add@{add}!pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}}
-\subsubsection[{add(abstract\+\_\+thread $\ast$thread)}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::thread\+\_\+group\+::add (
+\subsubsection[{add}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::thread\+\_\+group\+::add (
 \begin{DoxyParamCaption}
 \item[{{\bf pthread\+::abstract\+\_\+thread} $\ast$}]{thread}
 \end{DoxyParamCaption}
-)}\label{classpthread_1_1thread__group_ae9fa9ce6e7b4c2222d04a446b3c23ca0}
+)}}\label{classpthread_1_1thread__group_ae9fa9ce6e7b4c2222d04a446b3c23ca0}
 
 \begin{DoxyParams}{Parameters}
 {\em thread} & add/register a thread. \\
 \hline
 \end{DoxyParams}
-\hypertarget{classpthread_1_1thread__group_a67df7bb484fb8657228a909a126489d3}{}\index{pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}!destructor\+\_\+joins\+\_\+first@{destructor\+\_\+joins\+\_\+first}}
+\hypertarget{classpthread_1_1thread__group_a67df7bb484fb8657228a909a126489d3}{\index{pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}!destructor\+\_\+joins\+\_\+first@{destructor\+\_\+joins\+\_\+first}}
 \index{destructor\+\_\+joins\+\_\+first@{destructor\+\_\+joins\+\_\+first}!pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}}
-\subsubsection[{destructor\+\_\+joins\+\_\+first()}]{\setlength{\rightskip}{0pt plus 5cm}const bool pthread\+::thread\+\_\+group\+::destructor\+\_\+joins\+\_\+first (
+\subsubsection[{destructor\+\_\+joins\+\_\+first}]{\setlength{\rightskip}{0pt plus 5cm}const bool pthread\+::thread\+\_\+group\+::destructor\+\_\+joins\+\_\+first (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}}\label{classpthread_1_1thread__group_a67df7bb484fb8657228a909a126489d3}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classpthread_1_1thread__group_a67df7bb484fb8657228a909a126489d3}
 \begin{DoxyReturn}{Returns}
 current value of destructor\+\_\+joins\+\_\+first property. If true the destructor shall try to join registered threads before destroying them. 
 \end{DoxyReturn}
-\hypertarget{classpthread_1_1thread__group_a39937a77e1059e352c9b39407a866f6e}{}\index{pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}!join@{join}}
+\hypertarget{classpthread_1_1thread__group_a39937a77e1059e352c9b39407a866f6e}{\index{pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}!join@{join}}
 \index{join@{join}!pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}}
-\subsubsection[{join()}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::thread\+\_\+group\+::join (
+\subsubsection[{join}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::thread\+\_\+group\+::join (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}\label{classpthread_1_1thread__group_a39937a77e1059e352c9b39407a866f6e}
+)}}\label{classpthread_1_1thread__group_a39937a77e1059e352c9b39407a866f6e}
 Wait for all registered threads to join the caller thread.
 
 The method iterates the list of \hyperlink{classpthread_1_1abstract__thread}{abstract\+\_\+thread} and calls the join method of each entry found.
@@ -118,23 +119,23 @@ The method iterates the list of \hyperlink{classpthread_1_1abstract__thread}{abs
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classpthread_1_1abstract__thread_aedac81bb9eb76ba92c49c48d797ea25b}{abstract\+\_\+thread\+::join()} 
 \end{DoxySeeAlso}
-\hypertarget{classpthread_1_1thread__group_a4b1a04ee731bba608193b089cc1d50a1}{}\index{pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}!size@{size}}
+\hypertarget{classpthread_1_1thread__group_a4b1a04ee731bba608193b089cc1d50a1}{\index{pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}!size@{size}}
 \index{size@{size}!pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}}
-\subsubsection[{size()}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long pthread\+::thread\+\_\+group\+::size (
+\subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long pthread\+::thread\+\_\+group\+::size (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}\label{classpthread_1_1thread__group_a4b1a04ee731bba608193b089cc1d50a1}
+)}}\label{classpthread_1_1thread__group_a4b1a04ee731bba608193b089cc1d50a1}
 \begin{DoxyReturn}{Returns}
 the number of threads in the \hyperlink{classpthread_1_1thread__group}{thread\+\_\+group} 
 \end{DoxyReturn}
-\hypertarget{classpthread_1_1thread__group_aaba00cf80d72cd986526384482457968}{}\index{pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}!start@{start}}
+\hypertarget{classpthread_1_1thread__group_aaba00cf80d72cd986526384482457968}{\index{pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}!start@{start}}
 \index{start@{start}!pthread\+::thread\+\_\+group@{pthread\+::thread\+\_\+group}}
-\subsubsection[{start()}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::thread\+\_\+group\+::start (
+\subsubsection[{start}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::thread\+\_\+group\+::start (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}\label{classpthread_1_1thread__group_aaba00cf80d72cd986526384482457968}
+)}}\label{classpthread_1_1thread__group_aaba00cf80d72cd986526384482457968}
 Start running all registered threads.
 
 \begin{DoxySeeAlso}{See also}
