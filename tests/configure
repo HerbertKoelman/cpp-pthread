@@ -585,7 +585,7 @@ PACKAGE_STRING='cpp-pthread 1.0.0'
 PACKAGE_BUGREPORT='herbert.koelman@pmu.fr'
 PACKAGE_URL=''
 
-ac_unique_file="with-cpp11-pthread-tests.cpp"
+ac_unique_file="without-cpp11-pthread-tests.cpp"
 # Factoring default headers for most tests.
 ac_includes_default="\
 #include <stdio.h>
@@ -630,7 +630,6 @@ EGREP
 GREP
 CXXCPP
 RANLIB
-BEAUTIFIER
 MV
 AR
 ac_ct_CC
@@ -1808,151 +1807,6 @@ fi
   as_fn_set_status $ac_retval
 
 } # ac_fn_cxx_try_link
-
-# ac_fn_cxx_check_header_mongrel LINENO HEADER VAR INCLUDES
-# ---------------------------------------------------------
-# Tests whether HEADER exists, giving a warning if it cannot be compiled using
-# the include files in INCLUDES and setting the cache variable VAR
-# accordingly.
-ac_fn_cxx_check_header_mongrel ()
-{
-  as_lineno=${as_lineno-"$1"} as_lineno_stack=as_lineno_stack=$as_lineno_stack
-  if eval \${$3+:} false; then :
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $2" >&5
-$as_echo_n "checking for $2... " >&6; }
-if eval \${$3+:} false; then :
-  $as_echo_n "(cached) " >&6
-fi
-eval ac_res=\$$3
-	       { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
-$as_echo "$ac_res" >&6; }
-else
-  # Is the header compilable?
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking $2 usability" >&5
-$as_echo_n "checking $2 usability... " >&6; }
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-$4
-#include <$2>
-_ACEOF
-if ac_fn_cxx_try_compile "$LINENO"; then :
-  ac_header_compiler=yes
-else
-  ac_header_compiler=no
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_header_compiler" >&5
-$as_echo "$ac_header_compiler" >&6; }
-
-# Is the header present?
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking $2 presence" >&5
-$as_echo_n "checking $2 presence... " >&6; }
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-#include <$2>
-_ACEOF
-if ac_fn_cxx_try_cpp "$LINENO"; then :
-  ac_header_preproc=yes
-else
-  ac_header_preproc=no
-fi
-rm -f conftest.err conftest.i conftest.$ac_ext
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_header_preproc" >&5
-$as_echo "$ac_header_preproc" >&6; }
-
-# So?  What about this header?
-case $ac_header_compiler:$ac_header_preproc:$ac_cxx_preproc_warn_flag in #((
-  yes:no: )
-    { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: $2: accepted by the compiler, rejected by the preprocessor!" >&5
-$as_echo "$as_me: WARNING: $2: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: $2: proceeding with the compiler's result" >&5
-$as_echo "$as_me: WARNING: $2: proceeding with the compiler's result" >&2;}
-    ;;
-  no:yes:* )
-    { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: $2: present but cannot be compiled" >&5
-$as_echo "$as_me: WARNING: $2: present but cannot be compiled" >&2;}
-    { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: $2:     check for missing prerequisite headers?" >&5
-$as_echo "$as_me: WARNING: $2:     check for missing prerequisite headers?" >&2;}
-    { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: $2: see the Autoconf documentation" >&5
-$as_echo "$as_me: WARNING: $2: see the Autoconf documentation" >&2;}
-    { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: $2:     section \"Present But Cannot Be Compiled\"" >&5
-$as_echo "$as_me: WARNING: $2:     section \"Present But Cannot Be Compiled\"" >&2;}
-    { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: $2: proceeding with the compiler's result" >&5
-$as_echo "$as_me: WARNING: $2: proceeding with the compiler's result" >&2;}
-( $as_echo "## ------------------------------------- ##
-## Report this to herbert.koelman@pmu.fr ##
-## ------------------------------------- ##"
-     ) | sed "s/^/$as_me: WARNING:     /" >&2
-    ;;
-esac
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $2" >&5
-$as_echo_n "checking for $2... " >&6; }
-if eval \${$3+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  eval "$3=\$ac_header_compiler"
-fi
-eval ac_res=\$$3
-	       { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
-$as_echo "$ac_res" >&6; }
-fi
-  eval $as_lineno_stack; ${as_lineno_stack:+:} unset as_lineno
-
-} # ac_fn_cxx_check_header_mongrel
-
-# ac_fn_cxx_check_type LINENO TYPE VAR INCLUDES
-# ---------------------------------------------
-# Tests whether TYPE exists after having included INCLUDES, setting cache
-# variable VAR accordingly.
-ac_fn_cxx_check_type ()
-{
-  as_lineno=${as_lineno-"$1"} as_lineno_stack=as_lineno_stack=$as_lineno_stack
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $2" >&5
-$as_echo_n "checking for $2... " >&6; }
-if eval \${$3+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  eval "$3=no"
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-$4
-int
-main ()
-{
-if (sizeof ($2))
-	 return 0;
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_cxx_try_compile "$LINENO"; then :
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-$4
-int
-main ()
-{
-if (sizeof (($2)))
-	    return 0;
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_cxx_try_compile "$LINENO"; then :
-
-else
-  eval "$3=yes"
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-fi
-eval ac_res=\$$3
-	       { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
-$as_echo "$ac_res" >&6; }
-  eval $as_lineno_stack; ${as_lineno_stack:+:} unset as_lineno
-
-} # ac_fn_cxx_check_type
 
 # ac_fn_cxx_check_func LINENO FUNC VAR
 # ------------------------------------
@@ -3339,44 +3193,6 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of "uncrustify", so it can be a program name with args.
-set dummy uncrustify; ac_word=$2
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
-$as_echo_n "checking for $ac_word... " >&6; }
-if ${ac_cv_prog_BEAUTIFIER+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  if test -n "$BEAUTIFIER"; then
-  ac_cv_prog_BEAUTIFIER="$BEAUTIFIER" # Let the user override the test.
-else
-as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in $PATH
-do
-  IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-    for ac_exec_ext in '' $ac_executable_extensions; do
-  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
-    ac_cv_prog_BEAUTIFIER="uncrustify -l CPP --replace -c ../crust.cfg *.bsr *.bcl *.cpp *.hpp"
-    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-  done
-IFS=$as_save_IFS
-
-  test -z "$ac_cv_prog_BEAUTIFIER" && ac_cv_prog_BEAUTIFIER="echo \"install crustify to run beautifier\""
-fi
-fi
-BEAUTIFIER=$ac_cv_prog_BEAUTIFIER
-if test -n "$BEAUTIFIER"; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $BEAUTIFIER" >&5
-$as_echo "$BEAUTIFIER" >&6; }
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-
 if test -n "$ac_tool_prefix"; then
   # Extract the first word of "${ac_tool_prefix}ranlib", so it can be a program name with args.
 set dummy ${ac_tool_prefix}ranlib; ac_word=$2
@@ -3470,7 +3286,7 @@ else
 fi
 
 
-CXXFLAGS="$CXXFLAGS -I ../include -I ./"
+CFLAGS="$CFLAGS -I ../include -I ./"
 LDFLAGS="$LDFLAGS -L ../lib"
 
 
@@ -3904,13 +3720,13 @@ if test $ac_cv_sizeof_long == "8"
 then
   BITS="64"
 
-  #CXXFLAGS="-m$ac_cv_sizeof_long $CXXFLAGS -I ../include -I ./"
+  BITS=64
 else
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: using 32 bits (default)" >&5
 $as_echo "using 32 bits (default)" >&6; }
   BITS="32"
 
-  #CXXFLAGS="-m$ac_cv_sizeof_long $CXXFLAGS -I ../include -I ./"
+  BITS=32
 fi
 
 OBJECTS=""
@@ -3926,12 +3742,14 @@ OBJECTS=$OBJECTS
 $as_echo_n "checking for specific $CXX compiler options... " >&6; }
 case "$CXX" in
   xlC_r | xlC)
-	CXXFLAGS="-bh:5 -qlanglvl=extended0x:decltype:static_assert:rvaluereferences:rvaluereferences -qwarn0x  -qsourcetype=c++ -O $CXXFLAGS"
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
+	CPPFLAGS="-qlanglvl=extended0x:decltype:static_assert:rvaluereferences:rvaluereferences -qsourcetype=c++ -O $CPPFLAGS"
+  CFLAGS="-bh:5 -O -qmaxmem=-1 -q$BITS $CFLAGS"
+  LDFLAGS="$LDFLAGS -brtl -bmaxdata:0x80000000"
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: using large memory model (maxdata:0x80000000), optimising level 2 (-O),using run-time link method (-brtl)" >&5
+$as_echo "using large memory model (maxdata:0x80000000), optimising level 2 (-O),using run-time link method (-brtl)" >&6; }
   ;;
   g++ | gcc)
-	CXXFLAGS="-x c++ -std=c++11 -frtti $CXXFLAGS "
+	CPPFLAGS="-x c++ -std=c++11 -frtti $CPPFLAGS "
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
   ;;
@@ -3939,9 +3757,6 @@ $as_echo "yes" >&6; }
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: none found." >&5
 $as_echo "none found." >&6; }
 esac
-
-CFLAGS=$CXXFLAGS
-CPPFLAGS="$CPPFLAGS $CFLAGS"
 
 # Checks for libraries.
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for pthread_create in -lpthread" >&5
@@ -4041,41 +3856,7 @@ fi
 
 # Checks for header files.
 #AC_HEADER_STDC
-for ac_header in nl_types.h stdlib.h string.h unistd.h
-do :
-  as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
-ac_fn_cxx_check_header_mongrel "$LINENO" "$ac_header" "$as_ac_Header" "$ac_includes_default"
-if eval test \"x\$"$as_ac_Header"\" = x"yes"; then :
-  cat >>confdefs.h <<_ACEOF
-#define `$as_echo "HAVE_$ac_header" | $as_tr_cpp` 1
-_ACEOF
-
-fi
-
-done
-
-
-ac_fn_cxx_check_header_mongrel "$LINENO" "mutex" "ac_cv_header_mutex" "$ac_includes_default"
-if test "x$ac_cv_header_mutex" = xyes; then :
-  $as_echo "#define HAVE_CPP11_MUTEX 1" >>confdefs.h
-
-fi
-
-
-ac_fn_cxx_check_header_mongrel "$LINENO" "chrono" "ac_cv_header_chrono" "$ac_includes_default"
-if test "x$ac_cv_header_chrono" = xyes; then :
-  $as_echo "#define HAVE_CPP11_CHRONO 1" >>confdefs.h
-
-fi
-
-
-ac_fn_cxx_check_header_mongrel "$LINENO" "thread" "ac_cv_header_thread" "$ac_includes_default"
-if test "x$ac_cv_header_thread" = xyes; then :
-  $as_echo "#define HAVE_CPP11_THREAD 1" >>confdefs.h
-
-fi
-
-
+#AC_CHECK_HEADERS([nl_types.h stdlib.h string.h unistd.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 #AC_C_CONST
@@ -4086,99 +3867,7 @@ fi
 #AC_TYPE_SIGNAL
 
 # Checks for typedefs, structures, and compiler characteristics.
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for stdbool.h that conforms to C99" >&5
-$as_echo_n "checking for stdbool.h that conforms to C99... " >&6; }
-if ${ac_cv_header_stdbool_h+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-             #include <stdbool.h>
-             #ifndef bool
-              "error: bool is not defined"
-             #endif
-             #ifndef false
-              "error: false is not defined"
-             #endif
-             #if false
-              "error: false is not 0"
-             #endif
-             #ifndef true
-              "error: true is not defined"
-             #endif
-             #if true != 1
-              "error: true is not 1"
-             #endif
-             #ifndef __bool_true_false_are_defined
-              "error: __bool_true_false_are_defined is not defined"
-             #endif
-
-             struct s { _Bool s: 1; _Bool t; } s;
-
-             char a[true == 1 ? 1 : -1];
-             char b[false == 0 ? 1 : -1];
-             char c[__bool_true_false_are_defined == 1 ? 1 : -1];
-             char d[(bool) 0.5 == true ? 1 : -1];
-             /* See body of main program for 'e'.  */
-             char f[(_Bool) 0.0 == false ? 1 : -1];
-             char g[true];
-             char h[sizeof (_Bool)];
-             char i[sizeof s.t];
-             enum { j = false, k = true, l = false * true, m = true * 256 };
-             /* The following fails for
-                HP aC++/ANSI C B3910B A.05.55 [Dec 04 2003]. */
-             _Bool n[m];
-             char o[sizeof n == m * sizeof n[0] ? 1 : -1];
-             char p[-1 - (_Bool) 0 < 0 && -1 - (bool) 0 < 0 ? 1 : -1];
-             /* Catch a bug in an HP-UX C compiler.  See
-                http://gcc.gnu.org/ml/gcc-patches/2003-12/msg02303.html
-                http://lists.gnu.org/archive/html/bug-coreutils/2005-11/msg00161.html
-              */
-             _Bool q = true;
-             _Bool *pq = &q;
-
-int
-main ()
-{
-
-             bool e = &s;
-             *pq |= q;
-             *pq |= ! q;
-             /* Refer to every declared value, to avoid compiler optimizations.  */
-             return (!a + !b + !c + !d + !e + !f + !g + !h + !i + !!j + !k + !!l
-                     + !m + !n + !o + !p + !q + !pq);
-
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_cxx_try_compile "$LINENO"; then :
-  ac_cv_header_stdbool_h=yes
-else
-  ac_cv_header_stdbool_h=no
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_header_stdbool_h" >&5
-$as_echo "$ac_cv_header_stdbool_h" >&6; }
-   ac_fn_cxx_check_type "$LINENO" "_Bool" "ac_cv_type__Bool" "$ac_includes_default"
-if test "x$ac_cv_type__Bool" = xyes; then :
-
-cat >>confdefs.h <<_ACEOF
-#define HAVE__BOOL 1
-_ACEOF
-
-
-fi
-
-
-if test $ac_cv_header_stdbool_h = yes; then
-
-$as_echo "#define HAVE_STDBOOL_H 1" >>confdefs.h
-
-fi
-
+#AC_HEADER_STDBOOL
 
 # Checks for library functions.
 #AC_FUNC_ERROR_AT_LINE
@@ -4194,8 +3883,6 @@ _ACEOF
 fi
 done
 
-
-LDFLAGS="$LDFLAGS $LIBS"
 
 ac_config_files="$ac_config_files Makefile"
 

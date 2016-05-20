@@ -20,17 +20,17 @@ RANLIB=@RANLIB@
 RM=rm -f
 AR=@AR@
 MV=@MV@
-BEAUTIFIER=@BEAUTIFIER@
 
 BITS=@BITS@
 OBJECT_MODE=$(BITS)
+LIBS=@LIBS@
 
 #DEBUG=-g -bnoquiet
 #PROFILER=-p
 
 CXXFLAGS=@CXXFLAGS@
-CFLAGS=$(CXXFLAGS)
-CCFLAGS=$(CXXFLAGS)
+CFLAGS=@CFLAGS@
+CPPFLAGS=@CPPFLAGS@
 
 LDFLAGS=@LDFLAGS@
 
@@ -42,7 +42,7 @@ all:${TARGETS}
 clean: globber
 
 globber:
-	${RM} *.o core *.a
+	${RM} *.o core *.a *.out
 	${RM} ${TARGETS}
 	$(RM) *unc-backup*~ *unc-backup*~
 	$(RM) ULOG*
@@ -50,12 +50,9 @@ globber:
 cxref:
 	cxref *.c -xref -index-all -latex209 -O${XREFDIR} -I${INCDIR} -I${INCTUX}
 
-beautifull:
-	${BEAUTIFIER} *.bcl *.bsr
-
 # cpp build rule
 .cpp.o:
-	$(CCC) $(CCFLAGS) -c $<
+	$(CCC) $(OPTIONS) $(CPPFLAGS) $(CFLAGS) -c $<
 
 .cpp: 
-	$(CCC) $(CCFLAGS) $< -o $@ $(LDFLAGS)
+	$(CCC) $(OPTIONS) $(CPPFLAGS) $(CFLAGS) $< -o $@ $(LDFLAGS) $(LIBS)

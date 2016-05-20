@@ -1,8 +1,10 @@
 ### What it does
 
-IBM's compiler is not implementing all the features of C++11 standard, especially it's lacking the concurrency features that the standard brings. This will at some point be fixed and was therfore looking at a way reduce the effort to switch from a specific implementation to the C++11 standard one. This projetc is the resulting code.
+Some C/C++ compilers are not implementing all of C++11 and above standard, it's often lacking the concurrency features that the standard brings. These compilers will at some point be fixed and we were therefore looking at a way to reduce the effort of switching from a specific implementation to the C++11 standard one.
 
-This wrapper intends to bring these feature by implementing C++11 interface and using the  pthread library.  Of course, as it is a replacement of C++11 features, it is best to use the standard implementation if your compiler support it. This can be done rather easely by using the standard namespace `std` instead of this library's specific one `pthread`.
+This projetc is the resulting code.
+
+Of course, this library is a replacement of C++11 features, it is best to use the standard implementation if your compiler support it.
 
 To use this library:
 ```
@@ -11,7 +13,7 @@ make
 make install
 ```
 
-Install moves files into your system's default localtion of headers and libraries (often /usr/local/include and /usr/local/lib). Use this command to change target directory:
+Install moves files into your system's default localtion for headers and libraries (often /usr/local/include and /usr/local/lib). Use this command to change install target directory:
 ```
 configure --prefix=/usr/local
 ```
@@ -28,9 +30,9 @@ The `make` target `pkg` will produce au tar.gz that can be distributed.
 ### How to use it
 
 Once compiled and installed in a location that suites you, use your compiler options to reference the headers and the library directory. In almoast all casses you can:
-* include `#include "pthread/phtread.hpp"` in your code.
-* comment the c++11 standard includes in your code
-* declare that you're now using the namespace pthread (`using namespace pthread ;`)
+* include `#include "pthread/phtread.hpp"` in your code to replace of the standard includes.
+* comment out or the c++11 standard includes in your code
+* replace `std` namespace  with `pthread` ( std::condition_variable becomes pthread::condition_variable, etc)
 
 Sample code can be found in the `tests` directory. To use it, run the following commands:
 ```
@@ -40,6 +42,20 @@ cd tests
 ```
 
 ### Usefull links
+
+#### Memory management on AIX
+
+Memory management on AIX is quite sophisticated making it possible to fine tuned very precisely the way your program uses memory. Consider using these compiler/linker options when using pthreads:
+* -bmaxdata:0xN0000000 this option activates the large memory model, N is a number in the range of [1-8].
+* -bmaxmem=-1 this option tell the compiler to use as much memory it needs (usefull when -O option is used).
+
+Thread stack size:
+* 32bits programs allocate 96KB per thread on the program's heap.
+* 64bits programs allocate 192KB per thread on the program's heap.
+
+On many Linux implementations and on Mac OS X the stack size is defaulted to 8MB. You may consider setting this as a default.
+
+More detailed information can be found in this [RedBook](http://www.redbooks.ibm.com/redbooks/pdfs/sg245674.pdf) (chapter 8).
 
 #### project links
 

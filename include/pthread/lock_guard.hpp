@@ -9,6 +9,8 @@
 #ifndef pthread_lock_guard_H
 #define pthread_lock_guard_H
 
+// must be include as first hearder file of each source code file (see IBM's
+// recommandation for more info p.285 §8.3.1).
 #include <pthread.h>
 
 #include "pthread/config.h"
@@ -37,7 +39,7 @@ namespace pthread {
     /**
      * The constructor is forced to only accept a mutex object or any object of a subclass.
      * 
-     * The mutex is locked up completion.
+     * The mutex is locked up upon completion.
      *
      * @param m reference to a valid pthread::mutex
      */
@@ -45,18 +47,21 @@ namespace pthread {
         _mutex->lock();
     }
     
-    /** release the guared mutex.
+    /** The destructor release the guarded mutex.
      */
    virtual ~lock_guard() {
       _mutex->unlock();
    }
     
-    /** @return a const reference to the guarded mutex */
+    /** @return a const reference to the guarded mutex
+     *
+     * @deprecated condition_variable is now a friend class
+     */
     MutexType *internal_mutex() {
       return _mutex ;
     }
     
-    /*
+    /**
      Desabling the = operator.
      */
     void operator=(lock_guard &) = delete;

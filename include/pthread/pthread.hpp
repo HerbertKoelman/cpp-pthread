@@ -14,16 +14,16 @@
 #ifndef pthread_pthread_hpp
 #define pthread_pthread_hpp
 
-#include <errno.h>
-#include <exception>
-#include <string>
+// must be include as first hearder file of each source code file (see IBM's
+// recommandation for more info p.285 §8.3.1).
+#include <pthread.h>
 
 #include "pthread/config.h"
-
 #include "pthread/mutex.hpp"
 #include "pthread/lock_guard.hpp"
 #include "pthread/condition_variable.hpp"
 #include "pthread/thread.hpp"
+#include "pthread/exceptions.hpp"
 
 /** \namespace pthread 
  *

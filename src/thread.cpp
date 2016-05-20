@@ -59,24 +59,26 @@ namespace pthread {
     
   }
   
-  thread::thread (const runnable &work): thread(){
+  thread::thread (const runnable &work, const std::size_t stack_size ): thread(){ // ": thread()" calls the related anonymous constructor
     int rc = 0 ;
-    pthread_attr_t attr;
     
     /* Initialize and set thread detached attribute */
-    if ( (rc = pthread_attr_init(&attr)) != 0){
+    if ( (rc = pthread_attr_init(&_attr)) != 0){
       throw thread_exception("pthread_attr_init failed.", rc );
     }
     
-    if ( (rc = pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE)) != 0 ){
+    if ( (rc = pthread_attr_setdetachstate(&_attr, PTHREAD_CREATE_JOINABLE)) != 0 ){
       throw thread_exception("pthread_attr_setdetachstate failed.", rc );
     }
+
+    if ( stack_size > 0 && (rc = pthread_attr_setstacksize(&_attr, stack_size)) != 0 ){
+      throw thread_exception("pthread_attr_setstacksize failed.", rc );
+    }
     
-    if ((rc = pthread_create(&_thread, &attr, thread_startup_runnable, (void *) &work)) != 0){
+    if ((rc = pthread_create(&_thread, &_attr, thread_startup_runnable, (void *) &work)) != 0){
       throw thread_exception("pthread_create failed.", rc );
     } else {
       _status = thread_status::a_thread;
-      pthread_attr_destroy(&attr);
     }
 
   }
@@ -85,6 +87,10 @@ namespace pthread {
   thread::thread(thread&& other){
    
     swap(other);
+  }
+  
+  thread::~thread () {
+      pthread_attr_destroy(&_attr);
   }
   
   /* move operator */
@@ -100,9 +106,9 @@ namespace pthread {
     std::swap(_status, other._status);
   }
   
-  thread::~thread () {
+  abstract_thread::abstract_thread(const std::size_t stack_size): _stack_size(stack_size){
   }
-  
+
   abstract_thread::~abstract_thread(){
   
     delete _thread;
@@ -110,13 +116,13 @@ namespace pthread {
   
   void abstract_thread::start(){
     
-    _thread = new pthread::thread(*this);
+    _thread = new pthread::thread(*this, _stack_size);
   }
   
 #if __cplusplus < 201103L
-  thread_group::thread_group(bool destructor_joins_first ) throw(): _destructor_joins_first(destructor_joins_first){
+  thread_group::thread_group(bool destructor_joins_first) throw(): _destructor_joins_first(destructor_joins_first){
 #else
-  thread_group::thread_group(bool destructor_joins_first ) noexcept: _destructor_joins_first(destructor_joins_first){
+  thread_group::thread_group(bool destructor_joins_first) noexcept: _destructor_joins_first(destructor_joins_first){
 #endif
     
   }
