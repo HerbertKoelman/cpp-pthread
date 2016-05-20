@@ -167,6 +167,7 @@ namespace pthread {
     void swap ( thread& other );
     
     pthread_t      _thread;
+    pthread_attr_t _attr;
     
     thread_status  _status;
   };
