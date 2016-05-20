@@ -61,7 +61,7 @@ namespace pthread {
       return _mutex ;
     }
     
-    /*
+    /**
      Desabling the = operator.
      */
     void operator=(lock_guard &) = delete;
