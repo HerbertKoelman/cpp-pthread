@@ -96,6 +96,7 @@ int main(int argc, const char * argv[]) {
     for ( auto x = 20000 ; x > 0 ; x--){
       pthread::lock_guard<pthread::mutex> lck(mtx);
       counter++ ;
+      condition.notify_one();
     }
     condition.notify_all();
     

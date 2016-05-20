@@ -29,9 +29,9 @@ LIBS=@LIBS@
 #DEBUG=-g -bnoquiet
 #PROFILER=-p
 
-CXXFLAGS=$(OPTIONS) @CXXFLAGS@
-CFLAGS=$(OPTIONS) @CFLAGS@
-CPPFLAGS=$(OPTIONS) @CPPFLAGS@
+CXXFLAGS=@CXXFLAGS@
+CFLAGS=@CFLAGS@
+CPPFLAGS=@CPPFLAGS@
 
 LDFLAGS=@LDFLAGS@
 
@@ -51,12 +51,9 @@ globber:
 cxref:
 	cxref *.c -xref -index-all -latex209 -O${XREFDIR} -I${INCDIR} -I${INCTUX}
 
-beautifull:
-	${BEAUTIFIER} *.bcl *.bsr
-
 # cpp build rule
 .cpp.o:
-	$(CCC) $(CPPFLAGS) $(CXXFLAGS) -c $<
+	$(CCC) $(OPTIONS) $(CPPFLAGS) $(CFLAGS) -c $<
 
 .cpp: 
-	$(CCC) $(CPPFLAGS) $(CXXFLAGS) $< -o $@ $(LDFLAGS)
+	$(CCC) $(OPTIONS) $(CPPFLAGS) $(CFLAGS) $< -o $@ $(LDFLAGS) $(LIBS)
