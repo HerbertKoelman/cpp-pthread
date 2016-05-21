@@ -31,9 +31,11 @@
           <h3>
 <a id="what-it-does" class="anchor" href="#what-it-does" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What it does</h3>
 
-<p>IBM's compiler is not implementing all the features of C++11 standard, especially it's lacking the concurrency features that the standard brings. This will at some point be fixed and was therfore looking at a way reduce the effort to switch from a specific implementation to the C++11 standard one. This projetc is the resulting code.</p>
+<p>Some C/C++ compilers are not implementing all of C++11 and above standard, it's often lacking the concurrency features that the standard brings. These compilers will at some point be fixed and we were therefore looking at a way to reduce the effort of switching from a specific implementation to the C++11 standard one.</p>
 
-<p>This wrapper intends to bring these feature by implementing C++11 interface and using the  pthread library.  Of course, as it is a replacement of C++11 features, it is best to use the standard implementation if your compiler support it. This can be done rather easely by using the standard namespace <code>std</code> instead of this library's specific one <code>pthread</code>.</p>
+<p>This projetc is the resulting code.</p>
+
+<p>Of course, this library is a replacement of C++11 features, it is best to use the standard implementation if your compiler support it.</p>
 
 <p>To use this library:</p>
 
@@ -42,7 +44,7 @@ make
 make install
 </code></pre>
 
-<p>Install moves files into your system's default localtion of headers and libraries (often /usr/local/include and /usr/local/lib). Use this command to change target directory:</p>
+<p>Install moves files into your system's default localtion for headers and libraries (often /usr/local/include and /usr/local/lib). Use this command to change install target directory:</p>
 
 <pre><code>configure --prefix=/usr/local
 </code></pre>
@@ -64,9 +66,9 @@ make install
 <p>Once compiled and installed in a location that suites you, use your compiler options to reference the headers and the library directory. In almoast all casses you can:</p>
 
 <ul>
-<li>include <code>#include "pthread/phtread.hpp"</code> in your code.</li>
-<li>comment the c++11 standard includes in your code</li>
-<li>declare that you're now using the namespace pthread (<code>using namespace pthread ;</code>)</li>
+<li>include <code>#include "pthread/phtread.hpp"</code> in your code to replace of the standard includes.</li>
+<li>comment out or the c++11 standard includes in your code</li>
+<li>replace <code>std</code> namespace  with <code>pthread</code> ( std::condition_variable becomes pthread::condition_variable, etc)</li>
 </ul>
 
 <p>Sample code can be found in the <code>tests</code> directory. To use it, run the following commands:</p>
@@ -78,6 +80,27 @@ make install
 
 <h3>
 <a id="usefull-links" class="anchor" href="#usefull-links" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usefull links</h3>
+
+<h4>
+<a id="memory-management-on-aix" class="anchor" href="#memory-management-on-aix" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Memory management on AIX</h4>
+
+<p>Memory management on AIX is quite sophisticated making it possible to fine tuned very precisely the way your program uses memory. Consider using these compiler/linker options when using pthreads:</p>
+
+<ul>
+<li>-bmaxdata:0xN0000000 this option activates the large memory model, N is a number in the range of [1-8].</li>
+<li>-bmaxmem=-1 this option tell the compiler to use as much memory it needs (usefull when -O option is used).</li>
+</ul>
+
+<p>Thread stack size:</p>
+
+<ul>
+<li>32bits programs allocate 96KB per thread on the program's heap.</li>
+<li>64bits programs allocate 192KB per thread on the program's heap.</li>
+</ul>
+
+<p>On many Linux implementations and on Mac OS X the stack size is defaulted to 8MB. You may consider setting this as a default.</p>
+
+<p>More detailed information can be found in this <a href="http://www.redbooks.ibm.com/redbooks/pdfs/sg245674.pdf">RedBook</a> (chapter 8).</p>
 
 <h4>
 <a id="project-links" class="anchor" href="#project-links" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>project links</h4>
