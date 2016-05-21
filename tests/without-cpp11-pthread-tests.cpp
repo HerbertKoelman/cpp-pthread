@@ -120,6 +120,7 @@ int main(int argc, const char * argv[]) {
   } catch ( ... ){
     message("Unhandled exception was thrown in main");
   }
+
   pthread::this_thread::sleep(5*1000); // sleep 10 seconds
   message( "end reached");
 }

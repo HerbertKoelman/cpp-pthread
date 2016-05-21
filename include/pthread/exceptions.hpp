@@ -30,7 +30,7 @@ namespace pthread {
      * @param message error message
      * @param pthread_errno a pthread function return code.
      */
-    pthread_exception( const char *message, const int pthread_errno = 0 );
+//    pthread_exception( const char *message, const int pthread_errno = 0 );
 
     /**
      * @param message error message
@@ -54,8 +54,8 @@ namespace pthread {
     virtual const char *pthread_errmsg() ;
     
   private:
-    //std::string  _message;
-    const char  *_message;
+    std::string  _message;
+    //const char  *_message;
     int          _pthread_errno;
     
   };

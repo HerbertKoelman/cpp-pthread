@@ -12,22 +12,22 @@ namespace pthread {
   
   using namespace std ;
   
-  pthread_exception::pthread_exception( const string &message, const int pthread_errno ): _message(message.c_str()), _pthread_errno(pthread_errno){
+  pthread_exception::pthread_exception( const string &message, const int pthread_errno ): _message(message), _pthread_errno(pthread_errno){
   };
 
-  pthread_exception::pthread_exception( const char *message, const int pthread_errno ): _message(message), _pthread_errno(pthread_errno){
-  };
+//  pthread_exception::pthread_exception( const char *message, const int pthread_errno ): _message(message), _pthread_errno(pthread_errno){
+//  };
 
   pthread_exception::~pthread_exception(){
   };
     
 #if __cplusplus < 201103L
   const char *pthread_exception::what() const throw() {
-    return _message;
+    return _message.c_str();
   };
 #else
   const char *pthread_exception::what() const noexcept {
-    return _message;
+    return _message.c_str();
   };
 #endif    
 
