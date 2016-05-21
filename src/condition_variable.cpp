@@ -68,7 +68,7 @@ namespace pthread {
     
     if ( gettimeofday ( &now, NULL ) == 0){
       timeout.tv_sec = now.tv_sec;
-      timeout.tv_nsec= now.tv_usec * 1000 ;
+      // iss-44 - cppcheck - timeout.tv_nsec= now.tv_usec * 1000 ;
       
       auto seconds = millis / 1000;
       auto nanos   = (now.tv_usec * 1000) + ((millis % 1000) * 1000000) ;
