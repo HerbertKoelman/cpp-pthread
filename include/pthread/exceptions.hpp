@@ -30,13 +30,7 @@ namespace pthread {
      * @param message error message
      * @param pthread_errno a pthread function return code.
      */
-//    pthread_exception( const char *message, const int pthread_errno = 0 );
-
-    /**
-     * @param message error message
-     * @param pthread_errno a pthread function return code.
-     */
-    pthread_exception( const string &message, const int pthread_errno = 0 );
+    pthread_exception( const string &message, const int pthread_errno = -1 );
 
     virtual ~pthread_exception();
     
@@ -81,7 +75,7 @@ namespace pthread {
      * @param message short description
      * @param pthread_errno error returned by the pthread function
      */
-    mutex_exception( const std::string &message, const int pthread_errno = 0) ;
+    mutex_exception( const std::string &message, const int pthread_errno = -1) ;
     
   };
 
@@ -95,7 +89,7 @@ namespace pthread {
      * @param message short description
      * @param pthread_errno error returned by the pthread function
      */
-    condition_variable_exception( const string &message, const int pthread_errno = 0);
+    condition_variable_exception( const string &message, const int pthread_errno = -1);
     virtual ~condition_variable_exception(){};
   };
   
@@ -106,7 +100,7 @@ namespace pthread {
      * @param message short error description.
      * @param pthread_error value return by a function in the pthread library.
      */
-    thread_exception(const string &message, const int pthread_error = 0);
+    thread_exception(const string &message, const int pthread_error = -1);
   };
 
 } // namespace pthread
