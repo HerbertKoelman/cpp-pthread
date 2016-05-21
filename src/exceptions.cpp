@@ -26,7 +26,7 @@ namespace pthread {
     return _message;
   };
 #else
-  const char *pthread_exception::what() const noexcept override{
+  const char *pthread_exception::what() const noexcept {
     return _message;
   };
 #endif    
