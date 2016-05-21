@@ -1,6 +1,5 @@
-\hypertarget{classpthread_1_1thread}{\section{pthread\+:\+:thread Class Reference}
+\hypertarget{classpthread_1_1thread}{}\section{pthread\+:\+:thread Class Reference}
 \label{classpthread_1_1thread}\index{pthread\+::thread@{pthread\+::thread}}
-}
 
 
 {\ttfamily \#include $<$thread.\+hpp$>$}
@@ -33,7 +32,7 @@ int \hyperlink{classpthread_1_1thread_a89b64810871feee5c2d2659f3ae2f668}{cancel}
 
 
 \subsection{Detailed Description}
-Handles P\+O\+S\+I\+X (Portable Operating System Interface) threads.
+Handles P\+O\+S\+IX (Portable Operating System Interface) threads.
 
 
 \begin{DoxyPre}{\ttfamily 
@@ -51,21 +50,21 @@ Handles P\+O\+S\+I\+X (Portable Operating System Interface) threads.
  
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{classpthread_1_1thread_a60ac91ccf3de6e36258aa741af015095}{\index{pthread\+::thread@{pthread\+::thread}!thread@{thread}}
+\index{pthread\+::thread@{pthread\+::thread}!thread@{thread}}
 \index{thread@{thread}!pthread\+::thread@{pthread\+::thread}}
-\subsubsection[{thread}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+::thread\+::thread (
+\subsubsection[{\texorpdfstring{thread()}{thread()}}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+::thread\+::thread (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}\label{classpthread_1_1thread_a60ac91ccf3de6e36258aa741af015095}
-create a new thread status is no\+\_\+a\+\_\+thread \hypertarget{classpthread_1_1thread_aaf360cff96e50499872bd147e85ba3ac}{\index{pthread\+::thread@{pthread\+::thread}!thread@{thread}}
+)}\hypertarget{classpthread_1_1thread_a60ac91ccf3de6e36258aa741af015095}{}\label{classpthread_1_1thread_a60ac91ccf3de6e36258aa741af015095}
+create a new thread status is no\+\_\+a\+\_\+thread \index{pthread\+::thread@{pthread\+::thread}!thread@{thread}}
 \index{thread@{thread}!pthread\+::thread@{pthread\+::thread}}
-\subsubsection[{thread}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+::thread\+::thread (
+\subsubsection[{\texorpdfstring{thread(const runnable \&runner, const std\+::size\+\_\+t stack\+\_\+size=0)}{thread(const runnable &runner, const std::size_t stack_size=0)}}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+::thread\+::thread (
 \begin{DoxyParamCaption}
 \item[{const {\bf runnable} \&}]{runner, }
 \item[{const std\+::size\+\_\+t}]{stack\+\_\+size = {\ttfamily 0}}
 \end{DoxyParamCaption}
-)}}\label{classpthread_1_1thread_aaf360cff96e50499872bd147e85ba3ac}
+)}\hypertarget{classpthread_1_1thread_aaf360cff96e50499872bd147e85ba3ac}{}\label{classpthread_1_1thread_aaf360cff96e50499872bd147e85ba3ac}
 create a new thread
 
 The new thread is made runnable, and will start executing the run routine, with.
@@ -77,13 +76,13 @@ The new thread is made runnable, and will start executing the run routine, with.
 {\em stack\+\_\+size} & thread stack size in bytes (default is 0 and means use default stack size) \\
 \hline
 \end{DoxyParams}
-\hypertarget{classpthread_1_1thread_a928b41a7587eba3e5e39237b4b2f655a}{\index{pthread\+::thread@{pthread\+::thread}!thread@{thread}}
+\index{pthread\+::thread@{pthread\+::thread}!thread@{thread}}
 \index{thread@{thread}!pthread\+::thread@{pthread\+::thread}}
-\subsubsection[{thread}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+::thread\+::thread (
+\subsubsection[{\texorpdfstring{thread(thread \&\&other)}{thread(thread &&other)}}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+::thread\+::thread (
 \begin{DoxyParamCaption}
 \item[{{\bf thread} \&\&}]{other}
 \end{DoxyParamCaption}
-)}}\label{classpthread_1_1thread_a928b41a7587eba3e5e39237b4b2f655a}
+)}\hypertarget{classpthread_1_1thread_a928b41a7587eba3e5e39237b4b2f655a}{}\label{classpthread_1_1thread_a928b41a7587eba3e5e39237b4b2f655a}
 Starts running given function in a new trhread.
 
 param f function to run in thread param args function paramleters/arguments. Move contructor.
@@ -95,30 +94,30 @@ once moved this not a thread anymore. Status is \hyperlink{namespacepthread_ac4b
 {\em other} & thread that will be moved, on completion other is no longer a thread. \\
 \hline
 \end{DoxyParams}
-\hypertarget{classpthread_1_1thread_ab9ddf5aa6697287269dc2804051b6378}{\index{pthread\+::thread@{pthread\+::thread}!thread@{thread}}
+\index{pthread\+::thread@{pthread\+::thread}!thread@{thread}}
 \index{thread@{thread}!pthread\+::thread@{pthread\+::thread}}
-\subsubsection[{thread}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+::thread\+::thread (
+\subsubsection[{\texorpdfstring{thread(const thread \&)=delete}{thread(const thread &)=delete}}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+::thread\+::thread (
 \begin{DoxyParamCaption}
 \item[{const {\bf thread} \&}]{}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [delete]}}}\label{classpthread_1_1thread_ab9ddf5aa6697287269dc2804051b6378}
-Copy constructor is flagged deleted because it makes no sense to copy a thread. \hypertarget{classpthread_1_1thread_aa4920e15c3a033f94c6be462c5cbcecf}{\index{pthread\+::thread@{pthread\+::thread}!````~thread@{$\sim$thread}}
+)\hspace{0.3cm}{\ttfamily [delete]}}\hypertarget{classpthread_1_1thread_ab9ddf5aa6697287269dc2804051b6378}{}\label{classpthread_1_1thread_ab9ddf5aa6697287269dc2804051b6378}
+Copy constructor is flagged deleted because it makes no sense to copy a thread. \index{pthread\+::thread@{pthread\+::thread}!````~thread@{$\sim$thread}}
 \index{````~thread@{$\sim$thread}!pthread\+::thread@{pthread\+::thread}}
-\subsubsection[{$\sim$thread}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+::thread\+::$\sim$thread (
+\subsubsection[{\texorpdfstring{$\sim$thread()}{~thread()}}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+::thread\+::$\sim$thread (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classpthread_1_1thread_aa4920e15c3a033f94c6be462c5cbcecf}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classpthread_1_1thread_aa4920e15c3a033f94c6be462c5cbcecf}{}\label{classpthread_1_1thread_aa4920e15c3a033f94c6be462c5cbcecf}
 cleanup thread ressources. 
 
 \subsection{Member Function Documentation}
-\hypertarget{classpthread_1_1thread_a89b64810871feee5c2d2659f3ae2f668}{\index{pthread\+::thread@{pthread\+::thread}!cancel@{cancel}}
+\index{pthread\+::thread@{pthread\+::thread}!cancel@{cancel}}
 \index{cancel@{cancel}!pthread\+::thread@{pthread\+::thread}}
-\subsubsection[{cancel}]{\setlength{\rightskip}{0pt plus 5cm}int pthread\+::thread\+::cancel (
+\subsubsection[{\texorpdfstring{cancel()}{cancel()}}]{\setlength{\rightskip}{0pt plus 5cm}int pthread\+::thread\+::cancel (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}\label{classpthread_1_1thread_a89b64810871feee5c2d2659f3ae2f668}
+)}\hypertarget{classpthread_1_1thread_a89b64810871feee5c2d2659f3ae2f668}{}\label{classpthread_1_1thread_a89b64810871feee5c2d2659f3ae2f668}
 The cancel method requests the cancellation of the thread. The action depends on the cancelability of the target thread\+:
 
 
@@ -128,14 +127,14 @@ The cancel method requests the cancellation of the thread. The action depends on
 \item If its cancelability is asynchronous, the cancellation request is acted upon immediately; in some cases, it may result in unexpected behaviour.
 \end{DoxyItemize}
 
-The cancellation of a thread terminates it safely, using the same termination procedure as the pthread\+\_\+exit subroutine. \hypertarget{classpthread_1_1thread_a93c4105becf4dea1b00efb30cd7228af}{\index{pthread\+::thread@{pthread\+::thread}!join@{join}}
+The cancellation of a thread terminates it safely, using the same termination procedure as the pthread\+\_\+exit subroutine. \index{pthread\+::thread@{pthread\+::thread}!join@{join}}
 \index{join@{join}!pthread\+::thread@{pthread\+::thread}}
-\subsubsection[{join}]{\setlength{\rightskip}{0pt plus 5cm}int pthread\+::thread\+::join (
+\subsubsection[{\texorpdfstring{join()}{join()}}]{\setlength{\rightskip}{0pt plus 5cm}int pthread\+::thread\+::join (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}\label{classpthread_1_1thread_a93c4105becf4dea1b00efb30cd7228af}
-The join method blocks the calling thread until the thread terminates. The target thread's termination status is returned in the status parameter.
+)}\hypertarget{classpthread_1_1thread_a93c4105becf4dea1b00efb30cd7228af}{}\label{classpthread_1_1thread_a93c4105becf4dea1b00efb30cd7228af}
+The join method blocks the calling thread until the thread terminates. The target thread\textquotesingle{}s termination status is returned in the status parameter.
 
 If the target thread is already terminated, the method returns immediately.
 
@@ -146,30 +145,30 @@ This method does not itself cause a thread to be terminated.
 {\em \hyperlink{classpthread_1_1pthread__exception}{pthread\+\_\+exception}} & if this is not a thread or if thread\+\_\+id == \hyperlink{namespacepthread_1_1this__thread_a57275c7fa3dd5591c7f19ccf451f1fb6}{this\+\_\+thread\+::get\+\_\+id()}. \\
 \hline
 \end{DoxyExceptions}
-\hypertarget{classpthread_1_1thread_a14b07d05a78157bcb5ee42fc8dd17e35}{\index{pthread\+::thread@{pthread\+::thread}!joinable@{joinable}}
+\index{pthread\+::thread@{pthread\+::thread}!joinable@{joinable}}
 \index{joinable@{joinable}!pthread\+::thread@{pthread\+::thread}}
-\subsubsection[{joinable}]{\setlength{\rightskip}{0pt plus 5cm}bool pthread\+::thread\+::joinable (
+\subsubsection[{\texorpdfstring{joinable() const }{joinable() const }}]{\setlength{\rightskip}{0pt plus 5cm}bool pthread\+::thread\+::joinable (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classpthread_1_1thread_a14b07d05a78157bcb5ee42fc8dd17e35}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classpthread_1_1thread_a14b07d05a78157bcb5ee42fc8dd17e35}{}\label{classpthread_1_1thread_a14b07d05a78157bcb5ee42fc8dd17e35}
 \begin{DoxyReturn}{Returns}
 true if this thread can be joined. 
 \end{DoxyReturn}
-\hypertarget{classpthread_1_1thread_a09903f6b3f396f2ea046c9c1606f0f61}{\index{pthread\+::thread@{pthread\+::thread}!operator=@{operator=}}
+\index{pthread\+::thread@{pthread\+::thread}!operator=@{operator=}}
 \index{operator=@{operator=}!pthread\+::thread@{pthread\+::thread}}
-\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf thread}\& pthread\+::thread\+::operator= (
+\subsubsection[{\texorpdfstring{operator=(const thread \&)=delete}{operator=(const thread &)=delete}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf thread}\& pthread\+::thread\+::operator= (
 \begin{DoxyParamCaption}
 \item[{const {\bf thread} \&}]{}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [delete]}}}\label{classpthread_1_1thread_a09903f6b3f396f2ea046c9c1606f0f61}
-copy operator is flagged deleted, copying doesn't make sense \hypertarget{classpthread_1_1thread_a8f9ab7d43ad9aee0368ccc4778cf40d0}{\index{pthread\+::thread@{pthread\+::thread}!operator=@{operator=}}
+)\hspace{0.3cm}{\ttfamily [delete]}}\hypertarget{classpthread_1_1thread_a09903f6b3f396f2ea046c9c1606f0f61}{}\label{classpthread_1_1thread_a09903f6b3f396f2ea046c9c1606f0f61}
+copy operator is flagged deleted, copying doesn\textquotesingle{}t make sense \index{pthread\+::thread@{pthread\+::thread}!operator=@{operator=}}
 \index{operator=@{operator=}!pthread\+::thread@{pthread\+::thread}}
-\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf thread} \& pthread\+::thread\+::operator= (
+\subsubsection[{\texorpdfstring{operator=(thread \&\&other)}{operator=(thread &&other)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf thread} \& pthread\+::thread\+::operator= (
 \begin{DoxyParamCaption}
 \item[{{\bf thread} \&\&}]{other}
 \end{DoxyParamCaption}
-)}}\label{classpthread_1_1thread_a8f9ab7d43ad9aee0368ccc4778cf40d0}
+)}\hypertarget{classpthread_1_1thread_a8f9ab7d43ad9aee0368ccc4778cf40d0}{}\label{classpthread_1_1thread_a8f9ab7d43ad9aee0368ccc4778cf40d0}
 move a thread to another thread.
 
 
@@ -180,13 +179,13 @@ move a thread to another thread.
 \begin{DoxyReturn}{Returns}
 a thread 
 \end{DoxyReturn}
-\hypertarget{classpthread_1_1thread_a3e49c7d73cb8411258790ed2fc0cd818}{\index{pthread\+::thread@{pthread\+::thread}!status@{status}}
+\index{pthread\+::thread@{pthread\+::thread}!status@{status}}
 \index{status@{status}!pthread\+::thread@{pthread\+::thread}}
-\subsubsection[{status}]{\setlength{\rightskip}{0pt plus 5cm}{\bf thread\+\_\+status} pthread\+::thread\+::status (
+\subsubsection[{\texorpdfstring{status()}{status()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf thread\+\_\+status} pthread\+::thread\+::status (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classpthread_1_1thread_a3e49c7d73cb8411258790ed2fc0cd818}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classpthread_1_1thread_a3e49c7d73cb8411258790ed2fc0cd818}{}\label{classpthread_1_1thread_a3e49c7d73cb8411258790ed2fc0cd818}
 \begin{DoxyReturn}{Returns}
 the status of the thread (\hyperlink{classpthread_1_1thread_a3e49c7d73cb8411258790ed2fc0cd818}{thread\+::status}). 
 \end{DoxyReturn}

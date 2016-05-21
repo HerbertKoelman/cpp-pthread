@@ -1,14 +1,28 @@
-Some C/\+C++ compilers are not implementing all of C++11 and above standard, it's often lacking the concurrency features that the standard brings. These compilers will at some point be fixed and we were therefore looking at a way to reduce the effort of switching from a specific implementation to the C++11 standard one.
+Some C/\+C++ compilers are not implementing all of C++11 and above standard, it\textquotesingle{}s often lacking the concurrency features that the standard brings. These compilers will at some point be fixed and we were therefore looking at a way to reduce the effort of switching from a specific implementation to the C++11 standard one.
 
 This projetc is the resulting code.
 
 Of course, this library is a replacement of C++11 features, it is best to use the standard implementation if your compiler support it.
 
-To use this library\+: ``` configure make make install ```
+To use this library\+: 
+\begin{DoxyCode}
+1 configure
+2 make
+3 make install
+\end{DoxyCode}
 
-Install moves files into your system's default localtion for headers and libraries (often /usr/local/include and /usr/local/lib). Use this command to change install target directory\+: ``` configure --prefix=/usr/local ```
 
-\href{http://herbertkoelman.github.io/cpp-pthread/doc/html/}{\tt Doxygen documentation} can be generated with this command. I hope this help make things easier to use and understand. ``` make doxygen ```
+Install moves files into your system\textquotesingle{}s default localtion for headers and libraries (often /usr/local/include and /usr/local/lib). Use this command to change install target directory\+: 
+\begin{DoxyCode}
+1 configure --prefix=/usr/local
+\end{DoxyCode}
+
+
+\href{http://herbertkoelman.github.io/cpp-pthread/doc/html/}{\tt Doxygen documentation} can be generated with this command. I hope this help make things easier to use and understand. 
+\begin{DoxyCode}
+1 make doxygen
+\end{DoxyCode}
+
 
 \begin{quote}
 Doxygen can be downloaded \href{http://www.stack.nl/~dimitri/doxygen/index.html}{\tt here}. \end{quote}
@@ -25,25 +39,31 @@ Once compiled and installed in a location that suites you, use your compiler opt
 \item replace {\ttfamily std} namespace with {\ttfamily pthread} ( std\+::condition\+\_\+variable becomes \hyperlink{classpthread_1_1condition__variable}{pthread\+::condition\+\_\+variable}, etc)
 \end{DoxyItemize}
 
-Sample code can be found in the {\ttfamily tests} directory. To use it, run the following commands\+: ``` cd tests ./configure ./make ```
+Sample code can be found in the {\ttfamily tests} directory. To use it, run the following commands\+: 
+\begin{DoxyCode}
+1 cd tests
+2 ./configure
+3 ./make
+\end{DoxyCode}
+
 
 \subsubsection*{Usefull links}
 
-\paragraph*{Memory management on A\+I\+X}
+\paragraph*{Memory management on A\+IX}
 
-Memory management on A\+I\+X is quite sophisticated making it possible to fine tuned very precisely the way your program uses memory. Consider using these compiler/linker options when using pthreads\+:
+Memory management on A\+IX is quite sophisticated making it possible to fine tuned very precisely the way your program uses memory. Consider using these compiler/linker options when using pthreads\+:
 \begin{DoxyItemize}
 \item -\/bmaxdata\+:0x\+N0000000 this option activates the large memory model, N is a number in the range of \mbox{[}1-\/8\mbox{]}.
-\item -\/bmaxmem=-\/1 this option tell the compiler to use as much memory it needs (usefull when -\/\+O option is used).
+\item -\/bmaxmem=-\/1 this option tell the compiler to use as much memory it needs (usefull when -\/O option is used).
 \end{DoxyItemize}
 
 Thread stack size\+:
 \begin{DoxyItemize}
-\item 32bits programs allocate 96\+K\+B per thread on the program's heap.
-\item 64bits programs allocate 192\+K\+B per thread on the program's heap.
+\item 32bits programs allocate 96\+KB per thread on the program\textquotesingle{}s heap.
+\item 64bits programs allocate 192\+KB per thread on the program\textquotesingle{}s heap.
 \end{DoxyItemize}
 
-On many Linux implementations and on Mac O\+S X the stack size is defaulted to 8\+M\+B. You may consider setting this as a default.
+On many Linux implementations and on Mac OS X the stack size is defaulted to 8\+MB. You may consider setting this as a default.
 
 More detailed information can be found in this \href{http://www.redbooks.ibm.com/redbooks/pdfs/sg245674.pdf}{\tt Red\+Book} (chapter 8).
 
@@ -51,15 +71,15 @@ More detailed information can be found in this \href{http://www.redbooks.ibm.com
 
 
 \begin{DoxyItemize}
-\item \href{https://github.com/HerbertKoelman/cpp-pthread}{\tt project's home}
-\item \href{http://herbertkoelman.github.io/cpp-pthread/doc/html/}{\tt project's doxygen}
+\item \href{https://github.com/HerbertKoelman/cpp-pthread}{\tt project\textquotesingle{}s home}
+\item \href{http://herbertkoelman.github.io/cpp-pthread/doc/html/}{\tt project\textquotesingle{}s doxygen}
 \end{DoxyItemize}
 
 \paragraph*{other}
 
 
 \begin{DoxyItemize}
-\item P\+O\+S\+I\+X Threads \href{http://pubs.opengroup.org/onlinepubs/007908799/xsh/threads.html}{\tt documentation}
+\item P\+O\+S\+IX Threads \href{http://pubs.opengroup.org/onlinepubs/007908799/xsh/threads.html}{\tt documentation}
 \item \href{http://en.cppreference.com/w/cpp/thread/thread}{\tt std\+::thread} implementation we try to mimic
 \item \href{http://en.cppreference.com/w/cpp/thread/lock_guard/lock_guard}{\tt std\+::lock\+\_\+guard} implementation we try to mimic
 \item \href{http://en.cppreference.com/w/cpp/thread/mutex}{\tt std\+::mutex} implementation we try to mimic
