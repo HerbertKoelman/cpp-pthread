@@ -180,7 +180,4 @@ namespace pthread {
   
   // exception -------
   
-  thread_exception::thread_exception(const string message, const int pthread_error): pthread_exception(message, pthread_error){
-  }
-  
 } // namespace pthread

@@ -70,20 +70,6 @@ namespace pthread {
     pthread_mutex_t _mutex; 
   };
 
-  /** throw to indicate that something went wrong with a mutex.
-   */
-  class mutex_exception: public pthread_exception {
-  public:
-
-    /** thrown when mutex actions fail
-     *
-     * @param message short description
-     * @param pthread_errno error returned by the pthread function
-     */
-    mutex_exception( const std::string message, const int pthread_errno = 0) ;
-    
-  };
-  
 } // namespace pthread
 
 #endif /* mutex_hpp */

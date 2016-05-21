@@ -194,20 +194,6 @@ namespace pthread {
     pthread_cond_t _condition;
   };
   
-  /** Condition variable exception
-   */
-  class condition_variable_exception: public pthread_exception {
-  public:
-
-    /** thrown when mutex actions fail
-     *
-     * @param message short description
-     * @param pthread_errno error returned by the pthread function
-     */
-    condition_variable_exception( const string message, const int pthread_errno = 0);
-    virtual ~condition_variable_exception(){};
-  };
-  
   // template implementation ----------------------
   
   template<class Lambda> bool condition_variable::wait( mutex &mtx, Lambda lambda){

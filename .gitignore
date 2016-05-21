@@ -28,6 +28,7 @@ core
 *.exe
 *.out
 *.app
+exceptions-tests
 without-cpp11-pthread-tests
 with-cpp11-pthread-tests
 

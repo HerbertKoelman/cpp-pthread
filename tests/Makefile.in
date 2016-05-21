@@ -35,7 +35,7 @@ CPPFLAGS=@CPPFLAGS@
 LDFLAGS=@LDFLAGS@
 
 OBJECTS=without-cpp11-pthread-tests.o
-TARGETS=without-cpp11-pthread-tests 
+TARGETS=without-cpp11-pthread-tests exceptions-tests
 
 all:${TARGETS}
     
