@@ -12,6 +12,8 @@ MKDIR=@MKDIR_P@
 PACKAGE=@PACKAGE_NAME@-@PACKAGE_VERSION@-@build_os@.tar.gz
 HEADERS=@HEADERS@
 DOXYGEN=@DOXYGEN@
+CODECHECK=@CODECHECK@
+
 PTHREADLIB=libcpp-pthread.a
 
 all: 
@@ -26,6 +28,9 @@ globber:clean
 
 clean:
 	-(cd src && $(MAKE) clean)
+
+codecheck: clean all
+		$(CODECHECK)
 
 doxygen:
 	${DOXYGEN} doxyfile
