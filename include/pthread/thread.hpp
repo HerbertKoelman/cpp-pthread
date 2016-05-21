@@ -327,16 +327,6 @@ namespace pthread {
   
   // exception & errors --------
   
-  /** thrown to indicate that something went wrong with a thread */
-  class thread_exception: public pthread_exception {
-  public:
-    /**
-     * @param message short error description.
-     * @param pthread_error value return by a function in the pthread library.
-     */
-    thread_exception(const string message, const int pthread_error = 0);
-  };
-  
   /** \namespace pthread::this_thread
    * 
    * helper functions
