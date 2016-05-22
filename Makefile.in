@@ -32,6 +32,10 @@ clean:
 codecheck: clean all
 		$(CODECHECK)
 
+version:
+	autoconf && ( cd src && autoconf )
+	-echo "don't forget to run configure."
+
 doxygen:
 	${DOXYGEN} doxyfile
 
