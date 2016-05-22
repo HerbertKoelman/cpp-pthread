@@ -8,6 +8,7 @@
 
 #include "pthread/thread.hpp"
 #include <unistd.h>
+#include <cstdio>
 
 namespace pthread {
 
@@ -22,21 +23,36 @@ namespace pthread {
     }
   }
   
-  int thread::join () {
-    int rc = 0;
+  void *thread::join () {
+    int    rc     = 0;
+    void *retval = 0;
     
-    if ( _thread == this_thread::get_id()){
-      throw pthread_exception("join failed, join yourself would endup in deadlock.");
+#if __cplusplus < 201103L
+    if ( _thread != NULL){
+#else
+    if ( _thread != nullptr){
+#endif
+      
+      if ( _thread == this_thread::get_id()){
+        throw pthread_exception("join failed, join yourself would endup in deadlock.");
+      }
+      
+      if ( _status == thread_status::not_a_thread ){
+        throw pthread_exception("join failed, this is not a thread.");
+      }
+      
+      if ( (rc = pthread_join(_thread, (void **)&retval)) != 0){
+        switch ( rc ) {
+          case EDEADLK:
+            throw thread_exception("EDEADLKpthread_join failed because of deadlock conditions.", rc );
+          case EINVAL:
+            throw thread_exception("EINVEL pthread_join failed not a joinable thread.", rc );
+          case ESRCH:
+            break; // thread has already ended.
+        }
+      }
     }
-    if ( _status == thread_status::not_a_thread ){
-      throw pthread_exception("join failed, this is not a thread.");
-    }
-    
-    if ( (rc = pthread_join(_thread, (void **)&_status)) != 0){
-      throw thread_exception("pthread_join failed.", rc );
-    }
-    
-    return rc;
+    return retval;
   }
 
   int thread::cancel () {
@@ -72,7 +88,7 @@ namespace pthread {
     }
 
     if ( stack_size > 0 && (rc = pthread_attr_setstacksize(&_attr, stack_size)) != 0 ){
-      throw thread_exception("pthread_attr_setstacksize failed.", rc );
+      throw thread_exception("bad stacksize, check size passed to thread::thread; thread not started.", rc );
     }
     
     if ((rc = pthread_create(&_thread, &_attr, thread_startup_runnable, (void *) &work)) != 0){
@@ -128,7 +144,9 @@ namespace pthread {
   }
   
   thread_group::~thread_group(){
+    
     while(! _threads.empty()){
+      
 #if __cplusplus < 201103L
       std::auto_ptr<pthread::abstract_thread> pat(_threads.front());
 #else
@@ -137,9 +155,11 @@ namespace pthread {
 
       _threads.pop_front();
       
-      if ( _destructor_joins_first ){
+      if ( _destructor_joins_first && pat->joinable() ){
         try {
           pat->join();
+        } catch ( pthread_exception &err ){
+          printf("thread_group destructor failed to join one thread. %s, (%d) %s.\n", err.what(), err.pthread_errno(), err.pthread_errmsg());
         } catch ( ... ){};
       }
     }
@@ -158,7 +178,9 @@ namespace pthread {
   
   void thread_group::join(){
     for(auto iterator = _threads.begin(); iterator != _threads.end(); iterator++){
-      (*iterator)->join();
+      if ( (*iterator)->joinable() ){
+        (*iterator)->join(); 
+      }
     }
   }
   
