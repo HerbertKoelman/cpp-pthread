@@ -23,15 +23,9 @@ namespace pthread {
     }
   }
   
-  void *thread::join () {
-    int    rc     = 0;
-    void *retval = 0;
+  void thread::join () {
     
-#if __cplusplus < 201103L
-    if ( _thread != NULL){
-#else
-    if ( _thread != nullptr){
-#endif
+    if ( _thread != 0){
       
       if ( _thread == this_thread::get_id()){
         throw pthread_exception("join failed, join yourself would endup in deadlock.");
@@ -41,7 +35,12 @@ namespace pthread {
         throw pthread_exception("join failed, this is not a thread.");
       }
       
-      if ( (rc = pthread_join(_thread, (void **)&retval)) != 0){
+      int rc = 0;
+      if ( (rc = pthread_join(_thread, NULL)) == 0){
+        // thread was successfully joined, it's safe to assume that it's not a thread anymore.
+        _status = thread_status::not_a_thread ;
+        _thread = 0;
+      } else {
         switch ( rc ) {
           case EDEADLK:
             throw thread_exception("EDEADLKpthread_join failed because of deadlock conditions.", rc );
@@ -50,9 +49,9 @@ namespace pthread {
           case ESRCH:
             break; // thread has already ended.
         }
-      }
+
+      } 
     }
-    return retval;
   }
 
   int thread::cancel () {
@@ -135,6 +134,14 @@ namespace pthread {
     _thread = new pthread::thread(*this, _stack_size);
   }
   
+  void abstract_thread::join() {
+    return _thread->join() ;
+  };
+
+  bool abstract_thread::joinable() const {
+    return _thread != 0 ;
+  };
+
 #if __cplusplus < 201103L
   thread_group::thread_group(bool destructor_joins_first) throw(): _destructor_joins_first(destructor_joins_first){
 #else
@@ -194,12 +201,13 @@ namespace pthread {
    run method on the thread object passed to it (as a void *).
    */
   void *thread_startup_runnable(void *runner) {
-    
-    static_cast<runnable *>(runner)->run();
-    
-    return (NULL);
+
+    try{
+      static_cast<runnable *>(runner)->run();
+    } catch ( ... ) {
+      printf("uncaugth excpetion in thread_startup_runnable(), check your runnable::run() implementation.");
+    }
+    return NULL ;
   }
-  
-  // exception -------
   
 } // namespace pthread

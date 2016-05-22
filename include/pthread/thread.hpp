@@ -122,10 +122,9 @@ namespace pthread {
      *
      * This method does not itself cause a thread to be terminated.
      * 
-     * @return the value returned by the joined thread (calling pthread_exit(void *retval))
      * @throws pthread_exception if this is not a thread or if thread_id == this_thread::get_id().
      */
-    void *join();
+    void join();
     
     /** @return true if this thread can be joined.
      */
@@ -246,14 +245,13 @@ namespace pthread {
     
     /** joins this thread.
      *
-     * @return value returned by the joined thread (pthread_exit(void *retval))
      * @throw pthread_exception if deadlock conditions are detected.
      */
-    void *join() { return _thread->join() ;};
+    void join() ;
     
     /** @return true if this thread can be joined.
      */
-    bool joinable() const { return _thread != 0 ;};
+    bool joinable() const ;
 
     
   private:
