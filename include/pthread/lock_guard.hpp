@@ -49,7 +49,7 @@ namespace pthread {
     
     /** The destructor release the guarded mutex.
      */
-   virtual ~lock_guard() {
+   ~lock_guard() {
       _mutex->unlock();
    }
     
