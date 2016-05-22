@@ -121,10 +121,11 @@ namespace pthread {
      * If the target thread is already terminated, the method returns immediately.
      *
      * This method does not itself cause a thread to be terminated.
-     *
+     * 
+     * @return the value returned by the joined thread (calling pthread_exit(void *retval))
      * @throws pthread_exception if this is not a thread or if thread_id == this_thread::get_id().
      */
-    int join();
+    void *join();
     
     /** @return true if this thread can be joined.
      */
@@ -166,10 +167,10 @@ namespace pthread {
      */
     void swap ( thread& other );
     
-    pthread_t      _thread;
-    pthread_attr_t _attr;
+    pthread_t      _thread; //!< thread identifier
+    pthread_attr_t _attr;   //!< thread attributes (stack size, ...)
     
-    thread_status  _status;
+    thread_status  _status; //!< thread status (@see thread_status)
   };
   
   /** base class of a thread.
@@ -245,9 +246,15 @@ namespace pthread {
     
     /** joins this thread.
      *
+     * @return value returned by the joined thread (pthread_exit(void *retval))
      * @throw pthread_exception if deadlock conditions are detected.
      */
-    int join() { return _thread->join() ;};
+    void *join() { return _thread->join() ;};
+    
+    /** @return true if this thread can be joined.
+     */
+    bool joinable() const { return _thread != 0 ;};
+
     
   private:
     pthread::thread *_thread;
