@@ -30,13 +30,7 @@ namespace pthread {
      * @param message error message
      * @param pthread_errno a pthread function return code.
      */
-    pthread_exception( const char *message, const int pthread_errno = 0 );
-
-    /**
-     * @param message error message
-     * @param pthread_errno a pthread function return code.
-     */
-    pthread_exception( const string message, const int pthread_errno = 0 );
+    pthread_exception( const string &message, const int pthread_errno = -1 );
 
     virtual ~pthread_exception();
     
@@ -54,8 +48,8 @@ namespace pthread {
     virtual const char *pthread_errmsg() ;
     
   private:
-    //std::string  _message;
-    const char  *_message;
+    std::string  _message;
+    //const char  *_message;
     int          _pthread_errno;
     
   };
@@ -68,7 +62,45 @@ namespace pthread {
      *
      * @param message timeout condition
      */
-    timeout_exception(const string message);
+    timeout_exception(const string &message);
+  };
+
+  /** throw to indicate that something went wrong with a mutex.
+   */
+  class mutex_exception: public pthread_exception {
+  public:
+
+    /** thrown when mutex actions fail
+     *
+     * @param message short description
+     * @param pthread_errno error returned by the pthread function
+     */
+    mutex_exception( const std::string &message, const int pthread_errno = -1) ;
+    
+  };
+
+  /** Condition variable exception
+   */
+  class condition_variable_exception: public pthread_exception {
+  public:
+
+    /** thrown when mutex actions fail
+     *
+     * @param message short description
+     * @param pthread_errno error returned by the pthread function
+     */
+    condition_variable_exception( const string &message, const int pthread_errno = -1);
+    virtual ~condition_variable_exception(){};
+  };
+  
+  /** thrown to indicate that something went wrong with a thread */
+  class thread_exception: public pthread_exception {
+  public:
+    /**
+     * @param message short error description.
+     * @param pthread_error value return by a function in the pthread library.
+     */
+    thread_exception(const string &message, const int pthread_error = -1);
   };
 
 } // namespace pthread

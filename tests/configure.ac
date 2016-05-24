@@ -40,7 +40,7 @@ AC_MSG_CHECKING([for specific $CXX compiler options])
 case "$CXX" in
   xlC_r | xlC)
 	CPPFLAGS="-qlanglvl=extended0x:decltype:static_assert:rvaluereferences:rvaluereferences -qsourcetype=c++ -O $CPPFLAGS"
-  CFLAGS="-bh:5 -O -qmaxmem=-1 -q$BITS $CFLAGS"
+  CFLAGS="-g -bh:5 -O -qmaxmem=-1 -q$BITS $CFLAGS"
   LDFLAGS="$LDFLAGS -brtl -bmaxdata:0x80000000"
   AC_MSG_RESULT([using large memory model (maxdata:0x80000000), optimising level 2 (-O),using run-time link method (-brtl)])
   ;;

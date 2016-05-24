@@ -3743,7 +3743,7 @@ $as_echo_n "checking for specific $CXX compiler options... " >&6; }
 case "$CXX" in
   xlC_r | xlC)
 	CPPFLAGS="-qlanglvl=extended0x:decltype:static_assert:rvaluereferences:rvaluereferences -qsourcetype=c++ -O $CPPFLAGS"
-  CFLAGS="-bh:5 -O -qmaxmem=-1 -q$BITS $CFLAGS"
+  CFLAGS="-g -bh:5 -O -qmaxmem=-1 -q$BITS $CFLAGS"
   LDFLAGS="$LDFLAGS -brtl -bmaxdata:0x80000000"
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: using large memory model (maxdata:0x80000000), optimising level 2 (-O),using run-time link method (-brtl)" >&5
 $as_echo "using large memory model (maxdata:0x80000000), optimising level 2 (-O),using run-time link method (-brtl)" >&6; }

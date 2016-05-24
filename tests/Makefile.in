@@ -23,26 +23,22 @@ MV=@MV@
 
 BITS=@BITS@
 OBJECT_MODE=$(BITS)
-LIBS=@LIBS@
-
-#DEBUG=-g -bnoquiet
-#PROFILER=-p
 
 CXXFLAGS=@CXXFLAGS@
 CFLAGS=@CFLAGS@
 CPPFLAGS=@CPPFLAGS@
-
 LDFLAGS=@LDFLAGS@
+LIBS=@LIBS@
 
 OBJECTS=without-cpp11-pthread-tests.o
-TARGETS=without-cpp11-pthread-tests 
+TARGETS=without-cpp11-pthread-tests exceptions-tests
 
 all:${TARGETS}
     
 clean: globber
 
 globber:
-	${RM} *.o core *.a *.out
+	${RM} *.o core core.* *.a *.out
 	${RM} ${TARGETS}
 	$(RM) *unc-backup*~ *unc-backup*~
 	$(RM) ULOG*

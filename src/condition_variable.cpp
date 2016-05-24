@@ -68,7 +68,7 @@ namespace pthread {
     
     if ( gettimeofday ( &now, NULL ) == 0){
       timeout.tv_sec = now.tv_sec;
-      timeout.tv_nsec= now.tv_usec * 1000 ;
+      // iss-44 - cppcheck - timeout.tv_nsec= now.tv_usec * 1000 ;
       
       auto seconds = millis / 1000;
       auto nanos   = (now.tv_usec * 1000) + ((millis % 1000) * 1000000) ;
@@ -92,15 +92,10 @@ namespace pthread {
   }
   
   condition_variable::~condition_variable () {
-    if (pthread_cond_destroy(&_condition) != 0){
-      throw pthread_exception("pthread condition variable destroy failed.", 0);
+    int rc = pthread_cond_destroy(&_condition); 
+    if (rc != 0){
+      throw pthread_exception("pthread condition variable destroy failed.", rc);
     }
   }
-  
-  // excpetions -------
-  
-  condition_variable_exception::condition_variable_exception( const string message, const int pthread_error): pthread_exception(message, pthread_error){
-  };
-  
   
 } // namespace pthread
