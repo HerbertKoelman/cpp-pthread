@@ -167,7 +167,9 @@ namespace pthread {
           pat->join();
         } catch ( pthread_exception &err ){
           printf("thread_group destructor failed to join one thread. %s, (%d) %s.\n", err.what(), err.pthread_errno(), err.pthread_errmsg());
-        } catch ( ... ){};
+        } catch ( ... ){ // NOSONAR this was done on purpose to avoid crashes due to unhandled error conditions
+          printf("thread_group destructor received an unexpected exception when joining threads.");
+        };
       }
     }
   }
@@ -204,7 +206,7 @@ namespace pthread {
 
     try{
       static_cast<runnable *>(runner)->run();
-    } catch ( ... ) {
+    } catch ( ... ) { // NOSONAR threads cannot throw exceptions when ending, this prevents this from happening.
       printf("uncaugth excpetion in thread_startup_runnable(), check your runnable::run() implementation.");
     }
     return NULL ;
