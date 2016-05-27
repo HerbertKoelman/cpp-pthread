@@ -23,7 +23,8 @@ namespace pthread {
   
   void mutex::lock () {
     int rc = -1;
-    if ((rc = pthread_mutex_lock ( &_mutex )) != 0){
+    rc = pthread_mutex_lock ( &_mutex );
+    if ( rc != 0 ){
       throw mutex_exception("pthread_mutex_lock failed.", rc);
     }
   }
