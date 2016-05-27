@@ -15,7 +15,7 @@ namespace pthread {
   namespace this_thread {
     
     void sleep(const int millis){
-      usleep(millis * 1000);
+      usleep(millis * 1000); //NOSONAR this wil be replaced by the much better C++11 implementation std::this_thread::sleep_for
     }
     
     pthread_t get_id(){
@@ -35,8 +35,8 @@ namespace pthread {
         throw pthread_exception("join failed, this is not a thread.");
       }
       
-      int rc = 0;
-      if ( (rc = pthread_join(_thread, NULL)) == 0){
+      int rc = pthread_join(_thread, NULL);
+      if ( rc == 0 ){
         // thread was successfully joined, it's safe to assume that it's not a thread anymore.
         _status = thread_status::not_a_thread ;
         _thread = 0;
@@ -48,6 +48,8 @@ namespace pthread {
             throw thread_exception("EINVEL pthread_join failed not a joinable thread.", rc );
           case ESRCH:
             break; // thread has already ended.
+          default:
+            throw thread_exception("pthread_join returned an unexpected return code.", rc);
         }
 
       } 
@@ -61,7 +63,8 @@ namespace pthread {
       throw pthread_exception("cancel failed, this is not a thread.");
     }
       
-    if((rc = pthread_cancel ( _thread )) != 0){
+    rc = pthread_cancel ( _thread );
+    if(rc != 0){
       throw thread_exception("pthread_cancel failed.", rc );
     } else {
       _status = thread_status::not_a_thread;
@@ -78,19 +81,23 @@ namespace pthread {
     int rc = 0 ;
     
     /* Initialize and set thread detached attribute */
-    if ( (rc = pthread_attr_init(&_attr)) != 0){
+    rc = pthread_attr_init(&_attr);
+    if ( rc != 0){
       throw thread_exception("pthread_attr_init failed.", rc );
     }
     
-    if ( (rc = pthread_attr_setdetachstate(&_attr, PTHREAD_CREATE_JOINABLE)) != 0 ){
+    rc = pthread_attr_setdetachstate(&_attr, PTHREAD_CREATE_JOINABLE);
+    if ( rc != 0 ){
       throw thread_exception("pthread_attr_setdetachstate failed.", rc );
     }
 
-    if ( stack_size > 0 && (rc = pthread_attr_setstacksize(&_attr, stack_size)) != 0 ){
+    rc = pthread_attr_setstacksize(&_attr, stack_size);
+    if ( (stack_size > 0) && (rc != 0) ){
       throw thread_exception("bad stacksize, check size passed to thread::thread; thread not started.", rc );
     }
     
-    if ((rc = pthread_create(&_thread, &_attr, thread_startup_runnable, (void *) &work)) != 0){
+    rc = pthread_create(&_thread, &_attr, thread_startup_runnable, (void *) &work);
+    if ( rc != 0){
       throw thread_exception("pthread_create failed.", rc );
     } else {
       _status = thread_status::a_thread;
@@ -99,7 +106,7 @@ namespace pthread {
   }
   
   /* move constructor */
-  thread::thread(thread&& other){
+  thread::thread(thread&& other){ //NOSONAR this a C++11 standard interface that we want to comply with.
    
     swap(other);
   }
@@ -109,7 +116,7 @@ namespace pthread {
   }
   
   /* move operator */
-  thread& thread::operator=(thread&& other){
+  thread& thread::operator=(thread&& other){ //NOSONAR this a C++11 standard interface that we want to comply with.
   
     swap(other);
     
@@ -135,7 +142,7 @@ namespace pthread {
   }
   
   void abstract_thread::join() {
-    return _thread->join() ;
+    _thread->join() ;
   };
 
   bool abstract_thread::joinable() const {
@@ -167,7 +174,7 @@ namespace pthread {
           pat->join();
         } catch ( pthread_exception &err ){
           printf("thread_group destructor failed to join one thread. %s, (%d) %s.\n", err.what(), err.pthread_errno(), err.pthread_errmsg());
-        } catch ( ... ){ // NOSONAR this was done on purpose to avoid crashes due to unhandled error conditions
+        } catch ( ... ){ //NOSONAR this was done on purpose to avoid crashes due to unhandled error conditions
           printf("thread_group destructor received an unexpected exception when joining threads.");
         };
       }

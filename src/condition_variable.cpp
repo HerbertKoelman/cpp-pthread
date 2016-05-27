@@ -21,7 +21,9 @@ namespace pthread {
     int rc = 0;
     cv_status status = no_timeout;
     
-    if ( millis >= 0) milliseconds(millis);
+    if ( millis >= 0) {
+      milliseconds(millis);
+    }
 
     rc  = pthread_cond_timedwait ( &_condition, &mtx._mutex, &timeout );
     
@@ -33,11 +35,10 @@ namespace pthread {
         
       case EINVAL:
         throw condition_variable_exception("The value specified by abstime is invalid.", rc);
-        break;
         
       case EPERM:
         throw condition_variable_exception("The mutex was not owned by the current thread at the time of the call.", rc);
-        break;
+
       default:
         status = no_timeout ;
         break;
