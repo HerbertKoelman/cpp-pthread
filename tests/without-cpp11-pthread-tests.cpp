@@ -26,7 +26,7 @@ pthread::mutex mtx;
 pthread::mutex cout_mtx;
 int counter = 0;
 
-void message ( const std::string m){
+void message ( const std::string &m){
   pthread::lock_guard<pthread::mutex> lck(cout_mtx);
   std::cout << m << std::endl;
 }
