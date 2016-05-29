@@ -52,6 +52,8 @@ public:
         pthread::lock_guard<pthread::mutex> lck(mtx);
         
         message("running worker class. wait max 2s for condition to be signaled");
+
+        // We use this instead of lmabda, because AIX XL C/C++ doesn't support it (yet)
         bool stop_waiting = true;
         auto delay = _sleep;
         while ( ! (stop_waiting = (counter >= 10000)) && (condition.wait_for(mtx, delay) == pthread::cv_status::no_timeout)){
@@ -120,6 +122,6 @@ int main(int argc, const char * argv[]) {
     message("Unhandled exception was thrown in main");
   }
 
-  pthread::this_thread::sleep(5*1000); // sleep 10 seconds
+  pthread::this_thread::sleep(5*1000); 
   message( "end reached");
 }
