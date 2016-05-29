@@ -14,7 +14,7 @@ AC_CHECK_PROG([AR],[ar],[ar -rv])
 AC_CHECK_PROG([MV],[mv],[mv],[echo "no mv command found"])
 AC_PROG_RANLIB
 
-CFLAGS="$CFLAGS -I ../include -I ./"
+CFLAGS="-I ../include -I ./"
 LDFLAGS="$LDFLAGS -L ../lib"
 
 AC_CHECK_SIZEOF([long])
@@ -39,14 +39,16 @@ AC_SUBST(OBJECTS,$OBJECTS)
 AC_MSG_CHECKING([for specific $CXX compiler options])
 case "$CXX" in
   xlC_r | xlC)
-	CPPFLAGS="-qlanglvl=extended0x:decltype:static_assert:rvaluereferences:rvaluereferences -qsourcetype=c++ -O $CPPFLAGS"
-  CFLAGS="-g -bh:5 -O -qmaxmem=-1 -q$BITS $CFLAGS"
-  LDFLAGS="$LDFLAGS -brtl -bmaxdata:0x80000000"
-  AC_MSG_RESULT([using large memory model (maxdata:0x80000000), optimising level 2 (-O),using run-time link method (-brtl)])
+    CPPFLAGS="-qlanglvl=extended0x:decltype:static_assert:rvaluereferences:rvaluereferences -qsourcetype=c++ -O $CPPFLAGS"
+    CFLAGS="-bh:5 -qmaxmem=-1 -q$BITS $CFLAGS"
+    CXXFLAGS="-O"
+    LDFLAGS="$LDFLAGS -brtl -bmaxdata:0x80000000"
+    AC_MSG_RESULT([using large memory model (maxdata:0x80000000), optimising level 2 (-O),using run-time link method (-brtl)])
   ;;
   g++ | gcc)
-	CPPFLAGS="-x c++ -std=c++11 -frtti $CPPFLAGS "
-  AC_MSG_RESULT([yes])
+    CPPFLAGS="-x c++ -std=c++11 -frtti $CPPFLAGS"
+    CXXFLAGS="-O2"
+    AC_MSG_RESULT([yes])
   ;;
   *)
   AC_MSG_RESULT(none found.)

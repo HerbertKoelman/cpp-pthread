@@ -48,7 +48,7 @@ cxref:
 
 # cpp build rule
 .cpp.o:
-	$(CCC) $(OPTIONS) $(CPPFLAGS) $(CFLAGS) -c $<
+	$(CCC) $(CXXFLAGS) $(CPPFLAGS) $(CFLAGS) -c $<
 
 .cpp: 
-	$(CCC) $(OPTIONS) $(CPPFLAGS) $(CFLAGS) $< -o $@ $(LDFLAGS) $(LIBS)
+	$(CCC) $(CXXFLAGS) $(CPPFLAGS) $(CFLAGS) $< -o $@ $(LDFLAGS) $(LIBS)
