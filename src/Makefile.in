@@ -20,14 +20,10 @@ RANLIB=@RANLIB@
 RM=rm -f
 AR=@AR@
 MV=@MV@
-BEAUTIFIER=@BEAUTIFIER@
 
 BITS=@BITS@
 OBJECT_MODE=$(BITS)
 LIBS=@LIBS@
-
-#DEBUG=-g -bnoquiet
-#PROFILER=-p
 
 CXXFLAGS=$(OPTIONS) @CXXFLAGS@
 CFLAGS=$(OPTIONS) @CFLAGS@
@@ -62,7 +58,7 @@ beautifull:
 
 # cpp build rule
 .cpp.o:
-	$(CCC) $(CPPFLAGS) $(CFLAGS) -c $<
+	$(CCC) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $<
 
 .cpp:
-	$(CCC) $(CPPFLAGS) $(CFLAGS) $< -o $@ $(LDFLAGS) $(LIBS)
+	$(CCC) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) $< -o $@ $(LDFLAGS) $(LIBS)
