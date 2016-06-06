@@ -7,21 +7,18 @@ This projetc is the resulting code.
 Of course, this library is a replacement of C++11 features, it is best to use the standard implementation if your compiler support it.
 
 To use this library:
-```
-configure
-make
-make install
-```
+
+    configure
+    make
+    make install
 
 Install moves files into your system's default localtion for headers and libraries (often /usr/local/include and /usr/local/lib). Use this command to change install target directory:
-```
-configure --prefix=/usr/local
-```
+
+    configure --prefix=/usr/local
 
 [Doxygen documentation](http://herbertkoelman.github.io/cpp-pthread/doc/html/) can be generated with this command. I hope this help make things easier to use and understand.
-```
-make doxygen
-```
+
+    make doxygen
 
 > Doxygen can be downloaded [here](http://www.stack.nl/~dimitri/doxygen/index.html).
 
@@ -35,11 +32,10 @@ Once compiled and installed in a location that suites you, use your compiler opt
 * replace `std` namespace  with `pthread` ( std::condition_variable becomes pthread::condition_variable, etc)
 
 Sample code can be found in the `tests` directory. To use it, run the following commands:
-```
-cd tests
-./configure
-./make
-```
+
+  cd tests
+  ./configure
+  ./make
 
 ### Usefull links
 
