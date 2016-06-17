@@ -1,27 +1,24 @@
 ### What it does
 
-Some C/C++ compilers are not implementing all of C++11 and above standard, it's often lacking the concurrency features that the standard brings. These compilers will at some point be fixed and we were therefore looking at a way to reduce the effort of switching from a specific implementation to the C++11 standard one.
+Some C/C++ compilers are not implementing all of C++11 and above standard, it's often lacking the concurrency features that the standard brings. These compilers will at some point be updated. I was therefore looking for a way to reduce the effort of switching from a specific implementation to the C++11 standard one.
 
 This projetc is the resulting code.
 
 Of course, this library is a replacement of C++11 features, it is best to use the standard implementation if your compiler support it.
 
 To use this library:
-```
-configure
-make
-make install
-```
+
+    configure
+    make
+    make install
 
 Install moves files into your system's default localtion for headers and libraries (often /usr/local/include and /usr/local/lib). Use this command to change install target directory:
-```
-configure --prefix=/usr/local
-```
 
-[Doxygen documentation](http://herbertkoelman.github.io/cpp-pthread/doc/html/) can be generated with this command. I hope this help make things easier to use and understand.
-```
-make doxygen
-```
+    configure --prefix=/usr/local
+
+Doxygen [documentation](http://herbertkoelman.github.io/cpp-pthread/doc/html/) can be generated with this command. I hope this help make things easier to use and understand.
+
+    make doxygen
 
 > Doxygen can be downloaded [here](http://www.stack.nl/~dimitri/doxygen/index.html).
 
@@ -31,23 +28,23 @@ The `make` target `pkg` will produce au tar.gz that can be distributed.
 
 Once compiled and installed in a location that suites you, use your compiler options to reference the headers and the library directory. In almoast all casses you can:
 * include `#include "pthread/phtread.hpp"` in your code to replace of the standard includes.
-* comment out or the c++11 standard includes in your code
 * replace `std` namespace  with `pthread` ( std::condition_variable becomes pthread::condition_variable, etc)
 
+Once your compiler is upgraded you simply include the standard `#include <thread>` and replace the namespace `pthread` for `std`. 
+
 Sample code can be found in the `tests` directory. To use it, run the following commands:
-```
-cd tests
-./configure
-./make
-```
+
+  cd tests
+  ./configure
+  ./make
 
 ### Usefull links
 
 #### Memory management on AIX
 
-Memory management on AIX is quite sophisticated making it possible to fine tuned very precisely the way your program uses memory. Consider using these compiler/linker options when using pthreads:
+Memory management on AIX is quite sophisticated, memory managementcan be fine tuned very precisely. Consider using these compiler/linker options when using pthreads:
 * -bmaxdata:0xN0000000 this option activates the large memory model, N is a number in the range of [1-8].
-* -bmaxmem=-1 this option tell the compiler to use as much memory it needs (usefull when -O option is used).
+* -bmaxmem=-1 this option tells the compiler to use as much memory it needs to optimize your code.
 
 Thread stack size:
 * 32bits programs allocate 96KB per thread on the program's heap.
