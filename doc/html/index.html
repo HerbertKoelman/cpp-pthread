@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">C++ pThread wrapper
-   &#160;<span id="projectnumber">(v1.3.2)</span>
+   &#160;<span id="projectnumber">(v1.3.3)</span>
    </div>
    <div id="projectbrief">Simple C++ wrapper to pthread functions.</div>
   </td>
@@ -81,28 +81,31 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">C++ pThread wrapper Documentation</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Some C/C++ compilers are not implementing all of C++11 and above standard, it's often lacking the concurrency features that the standard brings. These compilers will at some point be fixed and we were therefore looking at a way to reduce the effort of switching from a specific implementation to the C++11 standard one.</p>
+<div class="textblock"><p>Some C/C++ compilers are not implementing all of C++11 and above standard, it's often lacking the concurrency features that the standard brings. These compilers will at some point be updated. I was therefore looking for a way to reduce the effort of switching from a specific implementation to the C++11 standard one.</p>
 <p>This projetc is the resulting code.</p>
 <p>Of course, this library is a replacement of C++11 features, it is best to use the standard implementation if your compiler support it.</p>
-<p>To use this library: ``` configure make make install ```</p>
-<p>Install moves files into your system's default localtion for headers and libraries (often /usr/local/include and /usr/local/lib). Use this command to change install target directory: ``` configure &ndash;prefix=/usr/local ```</p>
-<p><a href="http://herbertkoelman.github.io/cpp-pthread/doc/html/">Doxygen documentation</a> can be generated with this command. I hope this help make things easier to use and understand. ``` make doxygen ```</p>
-<blockquote class="doxtable">
+<p>To use this library: </p><pre class="fragment">configure
+make
+make install
+</pre><p>Install moves files into your system's default localtion for headers and libraries (often /usr/local/include and /usr/local/lib). Use this command to change install target directory: </p><pre class="fragment">configure --prefix=/usr/local
+</pre><p>Doxygen <a href="http://herbertkoelman.github.io/cpp-pthread/doc/html/">documentation</a> can be generated with this command. I hope this help make things easier to use and understand. </p><pre class="fragment">make doxygen
+</pre><blockquote class="doxtable">
 <p>Doxygen can be downloaded <a href="http://www.stack.nl/~dimitri/doxygen/index.html">here</a>. </p>
 </blockquote>
 <p>The <code>make</code> target <code>pkg</code> will produce au tar.gz that can be distributed.</p>
 <h3>How to use it</h3>
 <p>Once compiled and installed in a location that suites you, use your compiler options to reference the headers and the library directory. In almoast all casses you can:</p><ul>
 <li>include <code>#include "pthread/phtread.hpp"</code> in your code to replace of the standard includes.</li>
-<li>comment out or the c++11 standard includes in your code</li>
 <li>replace <code>std</code> namespace with <code>pthread</code> ( std::condition_variable becomes <a class="el" href="classpthread_1_1condition__variable.html">pthread::condition_variable</a>, etc)</li>
 </ul>
-<p>Sample code can be found in the <code>tests</code> directory. To use it, run the following commands: ``` cd tests ./configure ./make ```</p>
+<p>Once your compiler is upgraded you simply include the standard <code>#include &lt;thread&gt;</code> and replace the namespace <code>pthread</code> for <code>std</code>.</p>
+<p>Sample code can be found in the <code>tests</code> directory. To use it, run the following commands:</p>
+<p>cd tests ./configure ./make</p>
 <h3>Usefull links</h3>
 <h4>Memory management on AIX</h4>
-<p>Memory management on AIX is quite sophisticated making it possible to fine tuned very precisely the way your program uses memory. Consider using these compiler/linker options when using pthreads:</p><ul>
+<p>Memory management on AIX is quite sophisticated, memory managementcan be fine tuned very precisely. Consider using these compiler/linker options when using pthreads:</p><ul>
 <li>-bmaxdata:0xN0000000 this option activates the large memory model, N is a number in the range of [1-8].</li>
-<li>-bmaxmem=-1 this option tell the compiler to use as much memory it needs (usefull when -O option is used).</li>
+<li>-bmaxmem=-1 this option tells the compiler to use as much memory it needs to optimize your code.</li>
 </ul>
 <p>Thread stack size:</p><ul>
 <li>32bits programs allocate 96KB per thread on the program's heap.</li>
