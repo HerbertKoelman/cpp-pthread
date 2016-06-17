@@ -17,6 +17,7 @@ AC_ARG_ENABLE([codecheck], \
 AC_PROG_INSTALL
 AC_CHECK_PROG([RM],[rm],[rm -f])
 AC_CHECK_PROG([DOXYGEN],[doxygen],[doxygen],[echo \"please install doxygen and re-run ./configure, or run it manualy doxygen \"])
+AC_PROG_MKDIR_P
 
 # Okay, no cppcheck found, maybe we have sonar
 if test -z "$CODECHECK" 

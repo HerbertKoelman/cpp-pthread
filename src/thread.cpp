@@ -128,12 +128,14 @@ namespace pthread {
     std::swap(_status, other._status);
   }
   
-  abstract_thread::abstract_thread(const std::size_t stack_size): _stack_size(stack_size){
+  abstract_thread::abstract_thread(const std::size_t stack_size): _stack_size(stack_size), _thread(NULL){
   }
 
   abstract_thread::~abstract_thread(){
   
-    delete _thread;
+    if ( _thread != NULL ){
+      delete _thread;
+    }
   }
   
   void abstract_thread::start(){
@@ -174,7 +176,7 @@ namespace pthread {
           pat->join();
         } catch ( pthread_exception &err ){
           printf("thread_group destructor failed to join one thread. %s, (%d) %s.\n", err.what(), err.pthread_errno(), err.pthread_errmsg());
-        } catch ( ... ){ //NOSONAR this was done on purpose to avoid crashes due to unhandled error conditions
+        } catch ( ... ){ //NOSONAR this was done on purpose to avoid crashes due to unhandled error conditions. This should never happen.
           printf("thread_group destructor received an unexpected exception when joining threads.");
         };
       }

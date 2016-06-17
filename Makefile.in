@@ -4,9 +4,12 @@
 #
 
 prefix=@prefix@
+exec_prefix=@exec_prefix@
+INCLUDEDIR=@includedir@/pthread
+LIBDIR=@libdir@
+LOCALEDIR=@localedir@
 
 INSTALL=@INSTALL@ 
-LOCALEDIR=@localedir@
 RM=@RM@
 MKDIR=@MKDIR_P@
 PACKAGE=@PACKAGE_NAME@-@PACKAGE_VERSION@-@build_os@.tar.gz
@@ -17,7 +20,7 @@ CODECHECK=@CODECHECK@
 PTHREADLIB=libcpp-pthread.a
 
 all: 
-	cd src && $(MAKE) clean all
+	cd src && $(MAKE)
 
 pkg: 
 	$(MKDIR) distrib
@@ -40,11 +43,10 @@ doxygen:
 	${DOXYGEN} doxyfile
 
 install:
-	$(MKDIR) ${prefix}/include/pthread
-	$(MKDIR) ${prefix}/lib/pthread
-	$(INSTALL) ${HEADERS} ${prefix}/include/pthread
-	$(INSTALL) lib/libcpp-pthread.a ${prefix}/lib/
+	$(MKDIR) $(INCLUDEDIR)
+	cd include/pthread && $(INSTALL) *.hpp *.h $(INCLUDEDIR)
+	$(INSTALL) lib/$(PTHREADLIB) @libdir@
 
 uninstall:
-	$(RM) -R  ${prefix}/include/pthread
-	$(RM) ${prefix}/lib/libcpp-pthread.a
+	$(RM) -R  $(INCLUDEDIR)
+	$(RM) @libdir@/$(PTHREADLIB)
