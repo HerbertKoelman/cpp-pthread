@@ -202,7 +202,7 @@ namespace pthread {
    *       }
    *     } // end of critical section
    * 
-   *     pthread::this_thread::sleep(200);
+   *     pthread::this_thread::sleep_for(200);
    *   };
    * 
    * private:
@@ -342,7 +342,7 @@ namespace pthread {
      *
      * @param millis time to wait.
      */
-    void sleep(const int millis);
+    void sleep_for(const int millis);
     
     /** @return current thread id/reference */
     pthread_t get_id() ;

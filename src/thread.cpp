@@ -14,7 +14,7 @@ namespace pthread {
 
   namespace this_thread {
     
-    void sleep(const int millis){
+    void sleep_for(const int millis){
       usleep(millis * 1000); //NOSONAR this wil be replaced by the much better C++11 implementation std::this_thread::sleep_for
     }
     
