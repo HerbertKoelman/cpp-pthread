@@ -67,7 +67,7 @@ public:
       }
       
       message("worker sleeping");
-      pthread::this_thread::sleep(200);
+      pthread::this_thread::sleep_for(200);
       message("worker class is ending");
 
     } catch ( pthread::pthread_exception &err ){
@@ -122,6 +122,6 @@ int main(int argc, const char * argv[]) {
     message("Unhandled exception was thrown in main");
   }
 
-  pthread::this_thread::sleep(5*1000); 
+  pthread::this_thread::sleep_for(5*1000); 
   message( "end reached");
 }
