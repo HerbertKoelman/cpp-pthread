@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">C++ pThread wrapper
-   &#160;<span id="projectnumber">(v1.3.3)</span>
+   &#160;<span id="projectnumber">(v1.4.0)</span>
    </div>
    <div id="projectbrief">Simple C++ wrapper to pthread functions.</div>
   </td>
@@ -139,7 +139,7 @@ public:</code></pre><pre><code>  worker(const std::string m = "anonymous worker"
       } else {
         message("worker class, counter &lt; 10000");
       }
-    } // end of critical section</code></pre><pre><code>    pthread::this_thread::sleep(200);
+    } // end of critical section</code></pre><pre><code>    pthread::this_thread::sleep_for(200);
   };</code></pre><pre><code>private:
   std::string    msg ;
   int            _sleep;
