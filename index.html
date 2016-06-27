@@ -31,7 +31,7 @@
           <h3>
 <a id="what-it-does" class="anchor" href="#what-it-does" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What it does</h3>
 
-<p>Some C/C++ compilers are not implementing all of C++11 and above standard, it's often lacking the concurrency features that the standard brings. These compilers will at some point be fixed and we were therefore looking at a way to reduce the effort of switching from a specific implementation to the C++11 standard one.</p>
+<p>Some C/C++ compilers are not implementing all of C++11 and above standard, it's often lacking the concurrency features that the standard brings. These compilers will at some point be updated. I was therefore looking for a way to reduce the effort of switching from a specific implementation to the C++11 standard one.</p>
 
 <p>This projetc is the resulting code.</p>
 
@@ -49,7 +49,7 @@ make install
 <pre><code>configure --prefix=/usr/local
 </code></pre>
 
-<p><a href="http://herbertkoelman.github.io/cpp-pthread/doc/html/">Doxygen documentation</a> can be generated with this command. I hope this help make things easier to use and understand.</p>
+<p>Doxygen <a href="http://herbertkoelman.github.io/cpp-pthread/doc/html/">documentation</a> can be generated with this command. I hope this help make things easier to use and understand.</p>
 
 <pre><code>make doxygen
 </code></pre>
@@ -67,16 +67,16 @@ make install
 
 <ul>
 <li>include <code>#include "pthread/phtread.hpp"</code> in your code to replace of the standard includes.</li>
-<li>comment out or the c++11 standard includes in your code</li>
 <li>replace <code>std</code> namespace  with <code>pthread</code> ( std::condition_variable becomes pthread::condition_variable, etc)</li>
 </ul>
 
+<p>Once your compiler is upgraded you simply include the standard <code>#include &lt;thread&gt;</code> and replace the namespace <code>pthread</code> for <code>std</code>. </p>
+
 <p>Sample code can be found in the <code>tests</code> directory. To use it, run the following commands:</p>
 
-<pre><code>cd tests
-./configure
-./make
-</code></pre>
+<p>cd tests
+  ./configure
+  ./make</p>
 
 <h3>
 <a id="usefull-links" class="anchor" href="#usefull-links" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usefull links</h3>
@@ -84,11 +84,11 @@ make install
 <h4>
 <a id="memory-management-on-aix" class="anchor" href="#memory-management-on-aix" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Memory management on AIX</h4>
 
-<p>Memory management on AIX is quite sophisticated making it possible to fine tuned very precisely the way your program uses memory. Consider using these compiler/linker options when using pthreads:</p>
+<p>Memory management on AIX is quite sophisticated, memory managementcan be fine tuned very precisely. Consider using these compiler/linker options when using pthreads:</p>
 
 <ul>
 <li>-bmaxdata:0xN0000000 this option activates the large memory model, N is a number in the range of [1-8].</li>
-<li>-bmaxmem=-1 this option tell the compiler to use as much memory it needs (usefull when -O option is used).</li>
+<li>-bmaxmem=-1 this option tells the compiler to use as much memory it needs to optimize your code.</li>
 </ul>
 
 <p>Thread stack size:</p>
