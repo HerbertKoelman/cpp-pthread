@@ -30,8 +30,8 @@ CPPFLAGS=@CPPFLAGS@
 LDFLAGS=@LDFLAGS@
 LIBS=@LIBS@
 
-OBJECTS=without-cpp11-pthread-tests.o
-TARGETS=without-cpp11-pthread-tests exceptions-tests
+OBJECTS=@OBJECTS@
+TARGETS=synchronized_queue_test without-cpp11-pthread-tests exceptions-tests
 
 all:${TARGETS}
     

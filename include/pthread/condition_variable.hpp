@@ -19,6 +19,12 @@
 #include "pthread/mutex.hpp"
 #include "pthread/lock_guard.hpp"
 
+/** \addtogroup concurrency Concurrency
+ *
+ * Set of classes to handle concurrent access to shared ressources.
+ *
+ * @{
+ */
 namespace pthread {
   
   /** condition variable current wait status. */
@@ -257,4 +263,7 @@ namespace pthread {
   };
   
 } // namespace pthread
+
+/** @} */
+
 #endif

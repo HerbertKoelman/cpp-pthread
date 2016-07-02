@@ -23,6 +23,7 @@
 #include "pthread/lock_guard.hpp"
 #include "pthread/condition_variable.hpp"
 #include "pthread/thread.hpp"
+#include "pthread/synchronized_queue.hpp"
 #include "pthread/exceptions.hpp"
 
 /** \namespace pthread 

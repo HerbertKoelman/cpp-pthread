@@ -16,6 +16,10 @@
 #include "pthread/config.h"
 #include "pthread/mutex.hpp"
 
+/** \addtogroup concurrency
+ *
+ * @{
+ */
 namespace pthread {
   
   using namespace std ;
@@ -72,4 +76,5 @@ namespace pthread {
   
 } // namespace pthread
 
+/** @} */
 #endif /* pthread_lock_guard_H */

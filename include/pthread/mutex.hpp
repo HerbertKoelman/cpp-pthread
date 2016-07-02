@@ -20,6 +20,10 @@
 
 #include "pthread/exceptions.hpp"
 
+/** \addtogroup concurrency
+ *
+ * @{
+ */
 namespace pthread {
 
   
@@ -71,5 +75,7 @@ namespace pthread {
   };
 
 } // namespace pthread
+
+/** @} */
 
 #endif /* mutex_hpp */
