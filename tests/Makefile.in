@@ -31,7 +31,7 @@ LDFLAGS=@LDFLAGS@
 LIBS=@LIBS@
 
 OBJECTS=@OBJECTS@
-TARGETS=synchronized_queue_test without-cpp11-pthread-tests exceptions-tests
+TARGETS=synchronized_queue_tests without-cpp11-pthread-tests exceptions-tests
 
 all:${TARGETS}
     

@@ -1,21 +1,23 @@
 #include <pthread.h>
-#include <pthread/pthread.hpp>
+#include "pthread/pthread.hpp"
 
 #include <cstdio>
 #include <iostream>
 #include <string>
 #include <atomic>
 #include <memory>
+#include <ctime>
 
 
 class message {
   public:
-    message (const std::string &buffer):_message(buffer){
-      printf ("message allocated: %s\n", _message.c_str());
+    message (const std::string &buffer, unsigned long number):_message(buffer), _number(number){
+      time(&_timestamp);
+      //printf ("message allocated: %s (timestamp: %ld, number: %ld)\n", _message.c_str(), _timestamp, _number);
     };
 
     virtual ~message(){
-      printf ("message de-allocated\n");
+      //printf ("message de-allocated: %s (creation timestamp: %ld, number: %ld)\n", _message.c_str(), _timestamp, _number);
     };
 
     const std::string content() const {
@@ -25,9 +27,15 @@ class message {
     void set_content(const std::string &message){
       _message = message ;
     };
+  
+    const time_t timestamp() const {
+      return _timestamp;
+    };
 
   private:
     std::string _message;
+    time_t      _timestamp;
+  unsigned long _number;
 };
 
 typedef std::shared_ptr<message> message_ptr;
@@ -68,10 +76,16 @@ class producer : public status, public pthread::abstract_thread {
 
     void run() noexcept {
       printf ("starting producer\n");
-      while( running() ){
-        message_ptr pmessage(new message("producer creation..."));
+      for( auto x = 500000; (x > 0) && running() ; x-- ){
+        message_ptr pmessage(new message("producer creation...", x));
+        
+        _queue.put (pmessage);
+        
+        //pthread::this_thread::sleep_for(1*1000);
       }
-      printf("stopping producer\n");
+      printf("send stop producing message\n");
+      message_ptr pmessage(new message("stop", -1));
+      _queue.put (pmessage);
     };
 };
 
@@ -86,11 +100,21 @@ class consumer : public status, public pthread::abstract_thread {
       message_ptr pmessage ; // (new message("hello"));
       while( running() ){
 
-        _queue.get(pmessage);
-        printf("consumer received message: %s\n", pmessage->content().c_str()); 
-
-        pmessage->set_content("consumer changed message content");
-        printf("consumer modification: %s\n", pmessage->content().c_str()); 
+        try{
+          _queue.get(pmessage, 1200);
+          
+          if ( pmessage->content().find("stop") != std::string::npos ){
+            stop();
+          }
+          
+          //printf("consumer received message: %s (creation timestamp: %ld)\n", pmessage->content().c_str(), pmessage->timestamp());
+          
+          pmessage->set_content("this message content should be displayed when de-allocating message.");
+          //printf("consumer modification: %s (creation timestamp: %ld)\n", pmessage->content().c_str(), pmessage->timestamp());
+          
+        }catch (pthread::util::queue_timeout &err){
+          printf("queue get timed out (%s, at %d)\n", __FILE__, __LINE__);
+        }
       }
       printf("stopping consumer\n");
     };
@@ -110,22 +134,17 @@ int main(int argc, const char * argv[]) {
 
     pthread::thread_group group;
 
-    group.add(new consumer(queue));
-    // group.add(new producer(queue));
+    for ( auto x = 1 ; x > 0 ; x--){
+      group.add(new consumer(queue));
+    }
+    
+    for ( auto x = 1 ; x > 0 ; x-- ){
+      group.add(new producer(queue));
+    }
+
     group.start();
 
-    // std::string buffer;
-    // printf("type <enter> to end program:");
-    // std::getline (std::cin,buffer);
-
-    // it's going too fast, so sleep a bit
-    pthread::this_thread::sleep_for(1 * 1000);
-
-    message_ptr main_message(new message("Salut les amis du threading..."));
-    queue.put(main_message);
-
-    status.stop();
-
+    
     group.join();
     printf("threads joined main programm (%s, %d)\n", __FILE__, __LINE__);
 
