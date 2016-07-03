@@ -25,13 +25,16 @@
 #include "pthread/mutex.hpp"
 #include "pthread/lock_guard.hpp"
 
-/** \addtogroup threads Threads
- *
- * Set of classes that handle threads
- *
- * @{
- */
+
 namespace pthread {
+
+  /** \addtogroup threads Threads
+   *
+   * Set of classes that handle threads
+   *
+   * @author herbert koelman (herbert.koelman@me.com)
+   * @{
+   */
   
   /** Function used to startup a thread.
    * 
@@ -50,6 +53,7 @@ namespace pthread {
    * Interface of a runnable class.
    *
    * You can write code to be run through a Thread by implementing this interface.
+   * @author herbert koelman (herbert.koelman@me.com)
    */
   class runnable {
   private:
@@ -78,6 +82,7 @@ namespace pthread {
    *     thread t{rt};
    *     t.join();
    * </code></pre>
+   * @author herbert koelman (herbert.koelman@me.com)
    */
   class thread {
   public:
@@ -227,6 +232,7 @@ namespace pthread {
    * }
    *
    * </code></pre>
+   * @author herbert koelman (herbert.koelman@me.com)
    */
   class abstract_thread: public runnable {
   public:
@@ -278,6 +284,8 @@ namespace pthread {
    * } // scope end
    * 
    * </code></pre>
+   * @author herbert koelman (herbert.koelman@me.com)
+   * @since 1.3
    */
   class thread_group{
   public:
@@ -329,14 +337,15 @@ namespace pthread {
     bool                                 _destructor_joins_first;
   };
   
-  // exception & errors --------
-  
   /** \namespace pthread::this_thread
    * 
    * helper functions
+   * @author herbert koelman (herbert.koelman@me.com)
    */
   namespace this_thread{
-
+    /** \addtogroup threads Threads
+     * @{
+     */
     /** let the current thread sleep for the given milliseconds.
      *
      * @param millis time to wait.
@@ -345,9 +354,11 @@ namespace pthread {
     
     /** @return current thread id/reference */
     pthread_t get_id() ;
+    /** @} */
   }
-
+  
+  /** @} */
+  
 } // namespace pthread
 
-/** @} */
 #endif /* thread_hpp */

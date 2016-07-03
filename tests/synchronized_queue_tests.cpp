@@ -1,3 +1,5 @@
+//! \file
+
 #include <pthread.h>
 #include "pthread/pthread.hpp"
 
@@ -8,6 +10,8 @@
 #include <memory>
 #include <ctime>
 
+#define MESSAGES_TO_PRODUCE 500000 // messages produced
+#define CONSUMER_PROCESSING_DURATION 20 // millis
 
 class message {
   public:
@@ -39,13 +43,12 @@ class message {
 };
 
 typedef std::shared_ptr<message> message_ptr;
-typedef pthread::util::synchronized_queue<message_ptr> synchronized_message_queue;
-
+typedef pthread::util::sync_queue<message_ptr> sync_message_queue;
 
 class status {
   public:
 
-    status(synchronized_message_queue &queue): _queue(queue){ // : _running(true){
+    status(sync_message_queue &queue): _queue(queue){
       printf ("status allocated\n");
     };
 
@@ -54,6 +57,7 @@ class status {
     };
 
     bool running() const { return _running; };
+  
     void stop() {
       pthread::lock_guard<pthread::mutex> lock(_mutex);
       _running = false ;
@@ -61,7 +65,7 @@ class status {
     };
 
   protected:
-    synchronized_message_queue &_queue;
+    sync_message_queue &_queue;
 
   private:
     static bool           _running;
@@ -71,12 +75,12 @@ class status {
 class producer : public status, public pthread::abstract_thread {
   public:
 
-    producer(synchronized_message_queue &queue): status(queue){
+    producer(sync_message_queue &queue): status(queue){
     };
 
     void run() noexcept {
-      printf ("starting producer\n");
-      for( auto x = 500000; (x > 0) && running() ; x-- ){
+      printf ("start producing %d messages\n", MESSAGES_TO_PRODUCE);
+      for( auto x = MESSAGES_TO_PRODUCE; (x > 0) && running() ; x-- ){
         message_ptr pmessage(new message("producer creation...", x));
         
         _queue.put (pmessage);
@@ -92,7 +96,7 @@ class producer : public status, public pthread::abstract_thread {
 class consumer : public status, public pthread::abstract_thread {
   public:
 
-    consumer(synchronized_message_queue &queue): status(queue){
+    consumer(sync_message_queue &queue): status(queue){
     };
 
     void run() noexcept {
@@ -106,6 +110,9 @@ class consumer : public status, public pthread::abstract_thread {
           if ( pmessage->content().find("stop") != std::string::npos ){
             stop();
           }
+         
+          printf("queue's current content is %zu (thrd: %d );\n", _queue.size(), pthread::this_thread::get_id());
+          pthread::this_thread::sleep_for(CONSUMER_PROCESSING_DURATION);
           
           //printf("consumer received message: %s (creation timestamp: %ld)\n", pmessage->content().c_str(), pmessage->timestamp());
           
@@ -120,7 +127,7 @@ class consumer : public status, public pthread::abstract_thread {
     };
 };
 
-bool status::_running = true;
+bool           status::_running = true;
 pthread::mutex status::_mutex ;
 
 int main(int argc, const char * argv[]) {
@@ -129,12 +136,12 @@ int main(int argc, const char * argv[]) {
 
   try {
 
-    synchronized_message_queue queue;
+    sync_message_queue queue;
     status status(queue);
 
     pthread::thread_group group;
 
-    for ( auto x = 1 ; x > 0 ; x--){
+    for ( auto x = 4 ; x > 0 ; x--){
       group.add(new consumer(queue));
     }
     
@@ -144,7 +151,6 @@ int main(int argc, const char * argv[]) {
 
     group.start();
 
-    
     group.join();
     printf("threads joined main programm (%s, %d)\n", __FILE__, __LINE__);
 

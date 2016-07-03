@@ -1,5 +1,5 @@
-//
-//  synchronized_queue.hpp
+//! \file
+//  sync_queue.hpp
 //  substation
 //
 //  Created by herbert koelman on 25/02/2016.
@@ -13,34 +13,44 @@
 
 #include "pthread/pthread.hpp"
 #include <atomic>
-
 #include <string>
 
-/** \addtogroup util Utility classes
- *
- * @{
- */
+
 namespace pthread {
-  /** \namespace util utility classes
+  
+  /** \namespace pthread::util utility classes
+   *
+   * Set of utility classes.
    */
   namespace util {
   
+    /** \addtogroup util Utility classes
+     *
+     * @{
+     */
+    
     /** Synchronized fixed sized queue
      *
-     * @author herbert koelmab (herbert.koelman@me.com)
-     * @since 4.2.0
+     * sample usage here `tests/synchronized_queue_tests.cpp`
+     *
+     * @author herbert koelman (herbert.koelman@me.com)
+     * @since 1.4
      */
-    template<typename T> class synchronized_queue {
+    template<typename T> class sync_queue {
     public:
       
       /** Put an item in the queue.
        *
        * If the queue max size is reached, then the operation waits until a size is smaller then max size again.
+       * 
+       * @param item item to store in the queue
        */
       void put (const T& item);
       
       /** Put an item in the queue (wait if size >= max_size).
        *
+       * @param item item to store in the queue
+       * @param wait_time millis to wait for the queue to free a slot
        */
       void put (const T& item, int wait_time);
       
@@ -57,7 +67,7 @@ namespace pthread {
        * @param item item that will receive an item found onto the queue.
        * @param duration duration we are willing to wait for a new item.
        *
-       * @throw synchronized_queue_error when an error occurs.
+       * @throw queue_exception when an error occurs.
        */
       void get ( T& item, int wait_time );
       
@@ -92,10 +102,10 @@ namespace pthread {
        *
        * @param ms max queue size (default is 10).
        */
-      synchronized_queue( int ms = 10 );
+      sync_queue( int ms = 10 );
       
       /** destructor */
-      virtual ~synchronized_queue();
+      virtual ~sync_queue();
       
     private:
       
@@ -107,9 +117,12 @@ namespace pthread {
       
     };
     
+    
+    /** @} */
+    
     // template implementation ------------------------------------------------
     
-    template<typename T> void synchronized_queue<T>::get( T& item ){
+    template<typename T> void sync_queue<T>::get( T& item ){
       pthread::lock_guard<pthread::mutex> lck(_mutex);
       
 #if __cplusplus < 201103L
@@ -124,7 +137,7 @@ namespace pthread {
       _not_full_cv.notify_one();
     }
     
-    template<typename T> void synchronized_queue<T>::get( T& item, int wait_time ){
+    template<typename T> void sync_queue<T>::get( T& item, int wait_time ){
       
       pthread::lock_guard<pthread::mutex> lck(_mutex);
       
@@ -148,7 +161,7 @@ namespace pthread {
       }
     }
     
-    template<typename T> void synchronized_queue<T>::put( const T& item ) {
+    template<typename T> void sync_queue<T>::put( const T& item ) {
       pthread::lock_guard<pthread::mutex> lck(_mutex);
       
 #if __cplusplus < 201103L
@@ -163,7 +176,7 @@ namespace pthread {
       _not_empty_cv.notify_one(); // signal that there is at least a new message
     }
     
-    template<typename T> void synchronized_queue<T>::put( const T& item, int wait_time ){
+    template<typename T> void sync_queue<T>::put( const T& item, int wait_time ){
       
       pthread::lock_guard<pthread::mutex> lck(_mutex);
       
@@ -188,15 +201,14 @@ namespace pthread {
     }
     
     
-    template<typename T> synchronized_queue<T>::synchronized_queue( int ms ): _max_size(ms) {
+    template<typename T> sync_queue<T>::sync_queue( int ms ): _max_size(ms) {
     }
     
-    template<typename T> synchronized_queue<T>::~synchronized_queue(){
+    template<typename T> sync_queue<T>::~sync_queue(){
     }
-
+    
   }; // namespace util
 };   // namespace pthread
 
-/** @} */
 
-#endif /* synchronized_queue_hpp */
+#endif /* sync_queue_hpp */

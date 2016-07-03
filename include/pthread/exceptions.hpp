@@ -16,15 +16,18 @@
 #include <cstring>
 #include <exception> // std::exception
 
-/** \addtogroup exception Errors and exceptions
- *
- * Threading related errors and exceptions
- *
- * @{
- */
+
 namespace pthread {
   
   using namespace std ;
+
+  /** \addtogroup exception Errors and exceptions
+   *
+   * Threading related errors and exceptions
+   * @author herbert koelman (herbert.koelman@me.com)
+   *
+   * @{
+   */
   
   /** general purpose pthread exception.
    */
@@ -111,6 +114,11 @@ namespace pthread {
 
   namespace util {
 
+    /** \addtogroup exception
+     *
+     * @{
+     */
+    
     /** thrown when something goes wrong in a synchonized queue.
      */
     class queue_exception : public std::exception {
@@ -142,7 +150,11 @@ namespace pthread {
       explicit queue_timeout(const std::string &msg = "synchronized_queue get/put timed out.");
       
     };
+    /** @} */
   }; // namespace util
+  
+  /** @} */
+  
 } // namespace pthread
-/** @} */
+
 #endif
