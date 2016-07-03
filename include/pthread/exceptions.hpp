@@ -16,9 +16,18 @@
 #include <cstring>
 #include <exception> // std::exception
 
+
 namespace pthread {
   
   using namespace std ;
+
+  /** \addtogroup exception Errors and exceptions
+   *
+   * Threading related errors and exceptions
+   * @author herbert koelman (herbert.koelman@me.com)
+   *
+   * @{
+   */
   
   /** general purpose pthread exception.
    */
@@ -103,5 +112,49 @@ namespace pthread {
     thread_exception(const string &message, const int pthread_error = -1);
   };
 
+  namespace util {
+
+    /** \addtogroup exception
+     *
+     * @{
+     */
+    
+    /** thrown when something goes wrong in a synchonized queue.
+     */
+    class queue_exception : public std::exception {
+    public:
+      explicit queue_exception(const std::string &msg = "queue_error occured.");
+      
+#if __cplusplus < 201103L
+      virtual const char *what() const throw();
+#else
+      virtual const char *what() const noexcept override;
+#endif
+      
+    protected:
+      std::string _message;
+    };
+    
+    /** thrown when the queue's max_size is reached
+     */
+    class queue_full: public queue_exception{
+    public:
+      explicit queue_full(const std::string &msg = "synchronized_queue full.");
+      
+    };
+    
+    /** thrown when a get operation times out
+     */
+    class queue_timeout: public queue_exception{
+    public:
+      explicit queue_timeout(const std::string &msg = "synchronized_queue get/put timed out.");
+      
+    };
+    /** @} */
+  }; // namespace util
+  
+  /** @} */
+  
 } // namespace pthread
+
 #endif

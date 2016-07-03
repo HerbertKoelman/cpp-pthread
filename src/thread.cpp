@@ -152,7 +152,7 @@ namespace pthread {
   };
 
 #if __cplusplus < 201103L
-  thread_group::thread_group(bool destructor_joins_first) throw(): _destructor_joins_first(destructor_joins_first){
+  thread_group::thread_group(bool destructor_joins_first) throw():  _destructor_joins_first(destructor_joins_first){
 #else
   thread_group::thread_group(bool destructor_joins_first) noexcept: _destructor_joins_first(destructor_joins_first){
 #endif

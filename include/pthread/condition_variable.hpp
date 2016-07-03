@@ -20,7 +20,15 @@
 #include "pthread/lock_guard.hpp"
 
 namespace pthread {
-  
+
+  /** \addtogroup concurrency Concurrency
+   *
+   * Set of classes to handle concurrent access to shared ressources.
+   *
+   * @author herbert koelman (herbert.koelman@me.com)
+   * @{
+   */
+
   /** condition variable current wait status. */
   enum cv_status {
     no_timeout, /*!< unblocked before a timeout occured */
@@ -43,7 +51,7 @@ namespace pthread {
    *
    * Upon successful return, the mutex shall have been locked and shall be owned by the calling thread.
    *
-   * @author herbert koelman
+   * @author herbert koelman (herbert.koelman@me.com)
    */
   class condition_variable {
   public:
@@ -194,6 +202,8 @@ namespace pthread {
     pthread_cond_t _condition;
   };
   
+  /** @} */
+  
   // template implementation ----------------------
   
   template<class Lambda> bool condition_variable::wait( mutex &mtx, Lambda lambda){
@@ -255,6 +265,9 @@ namespace pthread {
     // return wait_for(*(lck.mutex()),millis, lambda);
     return wait_for(*(lck._mutex),millis, lambda);
   };
+
   
 } // namespace pthread
+
+
 #endif

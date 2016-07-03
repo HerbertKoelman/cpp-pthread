@@ -22,13 +22,13 @@ AC_PROG_MKDIR_P
 # Okay, no cppcheck found, maybe we have sonar
 if test -z "$CODECHECK" 
 then
-  AC_CHECK_PROG([CODECHECK],[cppcheck],[cppcheck --template='{file}:{line},{severity},{id}:\n    {message}\n' --enable=all -I ../include ./],[])
+  AC_CHECK_PROG([CODECHECK],[sonar-runner],[sonar-runner -Dsonar.cfamily.library.directories=./include,/usr/include,$IMSDIR/include,$TUXDIR/include],[])
 fi
 
 # Okay, no cppcheck found, maybe we have sonar
 if test -z "$CODECHECK" 
 then
-  AC_CHECK_PROG([CODECHECK],[sonar-runner],[sonar-runner -Dsonar.cfamily.library.directories=../include,/usr/include,$IMSDIR/include,$TUXDIR/include],[])
+  AC_CHECK_PROG([CODECHECK],[cppcheck],[cppcheck --template='{file}:{line},{severity},{id}:\n    {message}\n' --enable=all -I ./include ./src ./include],[])
 fi
 
 AC_MSG_CHECKING([whether target directory ./lib exists])

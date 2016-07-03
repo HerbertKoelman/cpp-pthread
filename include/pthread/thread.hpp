@@ -25,7 +25,16 @@
 #include "pthread/mutex.hpp"
 #include "pthread/lock_guard.hpp"
 
+
 namespace pthread {
+
+  /** \addtogroup threads Threads
+   *
+   * Set of classes that handle threads
+   *
+   * @author herbert koelman (herbert.koelman@me.com)
+   * @{
+   */
   
   /** Function used to startup a thread.
    * 
@@ -44,13 +53,14 @@ namespace pthread {
    * Interface of a runnable class.
    *
    * You can write code to be run through a Thread by implementing this interface.
+   * @author herbert koelman (herbert.koelman@me.com)
    */
   class runnable {
   private:
     
   public:
     /**
-     * This method must be overriden
+     * This method must be overritten
      */
 #if __cplusplus < 201103L
     virtual void run () throw() = 0 ;
@@ -72,6 +82,7 @@ namespace pthread {
    *     thread t{rt};
    *     t.join();
    * </code></pre>
+   * @author herbert koelman (herbert.koelman@me.com)
    */
   class thread {
   public:
@@ -89,13 +100,6 @@ namespace pthread {
      * @param stack_size thread stack size in bytes (default is 0 and means use default stack size)
      */
     thread( const runnable &runner, const std::size_t stack_size = 0 );
-    
-//    /** Starts running given function in a new trhread.
-//     * 
-//     * param f function to run in thread
-//     * param args function paramleters/arguments.
-//     */
-//    template<class Function, class... Args> explicit thread(Function&& f, Args&&... args);
     
     /** Move contructor.
      *
@@ -228,6 +232,7 @@ namespace pthread {
    * }
    *
    * </code></pre>
+   * @author herbert koelman (herbert.koelman@me.com)
    */
   class abstract_thread: public runnable {
   public:
@@ -279,6 +284,8 @@ namespace pthread {
    * } // scope end
    * 
    * </code></pre>
+   * @author herbert koelman (herbert.koelman@me.com)
+   * @since 1.3
    */
   class thread_group{
   public:
@@ -330,14 +337,15 @@ namespace pthread {
     bool                                 _destructor_joins_first;
   };
   
-  // exception & errors --------
-  
   /** \namespace pthread::this_thread
    * 
    * helper functions
+   * @author herbert koelman (herbert.koelman@me.com)
    */
   namespace this_thread{
-
+    /** \addtogroup threads Threads
+     * @{
+     */
     /** let the current thread sleep for the given milliseconds.
      *
      * @param millis time to wait.
@@ -346,103 +354,11 @@ namespace pthread {
     
     /** @return current thread id/reference */
     pthread_t get_id() ;
+    /** @} */
   }
-
-  // template implementations ------
-
-//  // GCC magic
-//  template <size_t...> struct __tuple_indices {};
-//  
-//  template <size_t _Sp, class _IntTuple, size_t _Ep>
-//  struct __make_indices_imp;
-//  
-//  template <size_t _Sp, size_t ..._Indices, size_t _Ep>
-//  struct __make_indices_imp<_Sp, __tuple_indices<_Indices...>, _Ep>
-//  {
-//    typedef typename __make_indices_imp<_Sp+1, __tuple_indices<_Indices..., _Sp>, _Ep>::type type;
-//  };
-//  
-//  template <size_t _Ep, size_t ..._Indices>
-//  struct __make_indices_imp<_Ep, __tuple_indices<_Indices...>, _Ep>
-//  {
-//    typedef __tuple_indices<_Indices...> type;
-//  };
-//  
-//  template <size_t _Ep, size_t _Sp = 0>
-//  struct __make_tuple_indices
-//  {
-//    static_assert(_Sp <= _Ep, "__make_tuple_indices input error");
-//    typedef typename __make_indices_imp<_Sp, __tuple_indices<>, _Ep>::type type;
-//  };
-//
-//  template <class _Fp, class ..._Args>
-//  inline   auto __invoke(_Fp&& __f, _Args&& ...__args) -> decltype(std::forward<_Fp>(__f)(std::forward<_Args>(__args)...)){
-//    return std::forward<_Fp>(__f)(std::forward<_Args>(__args)...);
-//  }
-//  
-//  template <class _Tp, class ..._Args> struct __invoke_return {
-//    typedef decltype(__invoke(std::declval<_Tp>(), std::declval<_Args>()...)) type;
-//  };
-//  
-//  template <class _Tp> inline typename decay<_Tp>::type __decay_copy(_Tp&& __t) {
-//    return std::forward<_Tp>(__t);
-//  }
-//  
-//  template <class _Fp, class ..._Args, size_t ..._Indices> inline void __thread_execute(tuple<_Fp, _Args...>& __t, pthread::__tuple_indices<_Indices...>){
-//    pthread::__invoke(std::move(std::get<0>(__t)), std::move(std::get<_Indices>(__t))...);
-//  }
-//  
-//  template <class _Fp>
-//  void* __thread_proxy(void* __vp) {
-//    
-////    didn't find out what this is for !!
-////    __thread_local_data().reset(new __thread_struct);
-//    
-//    // get information from the given unique_ptr to my tuple
-//    std::unique_ptr<_Fp> __p(static_cast<_Fp*>(__vp));
-//    
-//    // create a list indices of elements in the tuple starting at 1 (0 is the function pointer).
-//    // The list of indices is create when object of this type is created
-//    typedef typename pthread::__make_tuple_indices<tuple_size<_Fp>::value, 1>::type _Index;
-//    
-//    // Cut/pasted from GCC imlementation, quite mysterious but it seem to work !!!
-//    pthread::__thread_execute(*__p, _Index{});
-//    return nullptr;
-//  }
-//
-//  template<class Function, class... Args>
-//  thread::thread(Function&& func, Args&&... args){
-//    int rc = 0 ;
-//    pthread_attr_t attr{0};
-//    
-//    // global pointer to a tuple made of function and it's arguments
-//    typedef std::tuple<typename std::decay<Function>::type, typename std::decay<Args>::type...> _Gp;
-//    
-////    This was the original GCC implementation, but I don't really understand this construction, so I simplfied it !!!!
-//    std::unique_ptr<_Gp> __p(new _Gp(pthread::__decay_copy(std::forward<Function>(func)), pthread::__decay_copy(std::forward<Args>(args))...));
-////    std::unique_ptr<_Gp> __p(new _Gp(std::forward<Function>(func), std::forward<Args>(args))...);
-//    
-//    //auto work = std::bind(func, std::forward<Args>(args)...); // moved in thread_proxy
-//    
-//    /* Initialize and set thread detached attribute */
-//    if ( (rc = pthread_attr_init(&attr)) != 0){
-//      throw thread_exception{"pthread_attr_init failed.", rc };
-//    }
-//    
-//    if ( (rc = pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE)) != 0 ){
-//      throw thread_exception{"pthread_attr_setdetachstate failed.", rc };
-//    }
-//    
-//    if ((rc = pthread_create(&_thread, &attr, &__thread_proxy<_Gp>, __p.get())) != 0) {
-//      throw thread_exception{"pthread_create failed.", rc };
-//    } else {
-//      __p.release();
-//      _status = thread_status::a_thread;
-//      pthread_attr_destroy(&attr);
-//    }
-//    
-//  }
   
+  /** @} */
   
 } // namespace pthread
+
 #endif /* thread_hpp */

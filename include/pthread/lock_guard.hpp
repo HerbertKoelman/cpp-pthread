@@ -16,9 +16,15 @@
 #include "pthread/config.h"
 #include "pthread/mutex.hpp"
 
+
 namespace pthread {
   
   using namespace std ;
+  
+  /** \addtogroup concurrency
+   *
+   * @{
+   */
   
   class condition_variable ;
 
@@ -70,6 +76,7 @@ namespace pthread {
     MutexType *_mutex;
   };
   
+  /** @} */
 } // namespace pthread
 
 #endif /* pthread_lock_guard_H */
