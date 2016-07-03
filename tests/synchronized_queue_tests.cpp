@@ -13,6 +13,10 @@
 #define MESSAGES_TO_PRODUCE 500000 // messages produced
 #define CONSUMER_PROCESSING_DURATION 20 // millis
 
+#define CONSUMERS 10 // number of consumer threads
+#define PRODUCERS 1  // number of producer threads
+#define QUEUE_MAX_SIZE 40 // max size of the queue.
+
 class message {
   public:
     message (const std::string &buffer, unsigned long number):_message(buffer), _number(number){
@@ -136,16 +140,16 @@ int main(int argc, const char * argv[]) {
 
   try {
 
-    sync_message_queue queue;
+    sync_message_queue queue(QUEUE_MAX_SIZE);
     status status(queue);
 
     pthread::thread_group group;
 
-    for ( auto x = 4 ; x > 0 ; x--){
+    for ( auto x = CONSUMERS ; x > 0 ; x--){
       group.add(new consumer(queue));
     }
     
-    for ( auto x = 1 ; x > 0 ; x-- ){
+    for ( auto x = PRODUCERS ; x > 0 ; x-- ){
       group.add(new producer(queue));
     }
 
