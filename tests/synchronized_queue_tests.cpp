@@ -6,7 +6,6 @@
 #include <cstdio>
 #include <iostream>
 #include <string>
-#include <atomic>
 #include <memory>
 #include <ctime>
 
@@ -46,7 +45,12 @@ class message {
   unsigned long _number;
 };
 
+#if __IBMCPP_TR1__
+typedef std::tr1::shared_ptr<message> message_ptr;
+#else
 typedef std::shared_ptr<message> message_ptr;
+#endif
+
 typedef pthread::util::sync_queue<message_ptr> sync_message_queue;
 
 class status {
@@ -82,7 +86,11 @@ class producer : public status, public pthread::abstract_thread {
     producer(sync_message_queue &queue): status(queue){
     };
 
+#if __cplusplus < 201103L
+    void run() throw() {
+#else
     void run() noexcept {
+#endif
       printf ("start producing %d messages\n", MESSAGES_TO_PRODUCE);
       for( auto x = MESSAGES_TO_PRODUCE; (x > 0) && running() ; x-- ){
         message_ptr pmessage(new message("producer creation...", x));
@@ -103,7 +111,11 @@ class consumer : public status, public pthread::abstract_thread {
     consumer(sync_message_queue &queue): status(queue){
     };
 
+#if __cplusplus < 201103L
+    void run() throw() {
+#else
     void run() noexcept {
+#endif
       printf ("starting consumer\n");
       message_ptr pmessage ; // (new message("hello"));
       while( running() ){
