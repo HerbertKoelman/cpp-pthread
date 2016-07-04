@@ -1,10 +1,11 @@
-\hypertarget{namespacepthread}{\section{pthread Namespace Reference}
+\hypertarget{namespacepthread}{}\section{pthread Namespace Reference}
 \label{namespacepthread}\index{pthread@{pthread}}
-}
 \subsection*{Namespaces}
 \begin{DoxyCompactItemize}
 \item 
  \hyperlink{namespacepthread_1_1this__thread}{this\+\_\+thread}
+\item 
+ \hyperlink{namespacepthread_1_1util}{util}
 \end{DoxyCompactItemize}
 \subsection*{Classes}
 \begin{DoxyCompactItemize}
@@ -36,12 +37,12 @@ class \hyperlink{classpthread_1_1timeout__exception}{timeout\+\_\+exception}
 \subsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 
-enum \hyperlink{namespacepthread_a823f88a2bf448bd5bd5273b826830bdd}{cv\+\_\+status} \{ \hyperlink{namespacepthread_a823f88a2bf448bd5bd5273b826830bdda633b1bc5140f77a22f2c26bea4fa3398}{no\+\_\+timeout}, 
-\hyperlink{namespacepthread_a823f88a2bf448bd5bd5273b826830bdda1c2d3e88a4ad820053c817753867b31a}{timedout}
+enum \hyperlink{group__concurrency_ga823f88a2bf448bd5bd5273b826830bdd}{cv\+\_\+status} \{ \hyperlink{group__concurrency_gga823f88a2bf448bd5bd5273b826830bdda633b1bc5140f77a22f2c26bea4fa3398}{no\+\_\+timeout}, 
+\hyperlink{group__concurrency_gga823f88a2bf448bd5bd5273b826830bdda1c2d3e88a4ad820053c817753867b31a}{timedout}
  \}
 \item 
-enum \hyperlink{namespacepthread_ac4b6e78f3d72c946ace7a92f3bec4101}{thread\+\_\+status} \{ \hyperlink{namespacepthread_ac4b6e78f3d72c946ace7a92f3bec4101a8414cd8c988083af4eabb1311df873cf}{thread\+\_\+status\+::not\+\_\+a\+\_\+thread}, 
-\hyperlink{namespacepthread_ac4b6e78f3d72c946ace7a92f3bec4101a13b3689524b86ca2caaee82399099df1}{thread\+\_\+status\+::a\+\_\+thread}
+enum \hyperlink{group__threads_gac4b6e78f3d72c946ace7a92f3bec4101}{thread\+\_\+status} \{ \hyperlink{group__threads_ggac4b6e78f3d72c946ace7a92f3bec4101a8414cd8c988083af4eabb1311df873cf}{thread\+\_\+status\+::not\+\_\+a\+\_\+thread}, 
+\hyperlink{group__threads_ggac4b6e78f3d72c946ace7a92f3bec4101a13b3689524b86ca2caaee82399099df1}{thread\+\_\+status\+::a\+\_\+thread}
  \}
 \end{DoxyCompactItemize}
 \subsection*{Functions}
@@ -49,7 +50,7 @@ enum \hyperlink{namespacepthread_ac4b6e78f3d72c946ace7a92f3bec4101}{thread\+\_\+
 \item 
 const char $\ast$ \hyperlink{namespacepthread_ad04d8bbcf57d64ba29047b53432a9ceb}{cpp\+\_\+pthread\+\_\+version} ()
 \item 
-void $\ast$ \hyperlink{namespacepthread_a4ca2138b7b0d82d63a05c708edd45a6f}{thread\+\_\+startup\+\_\+runnable} (void $\ast$)
+void $\ast$ \hyperlink{group__threads_ga4ca2138b7b0d82d63a05c708edd45a6f}{thread\+\_\+startup\+\_\+runnable} (void $\ast$)
 \end{DoxyCompactItemize}
 
 
@@ -62,53 +63,18 @@ herbert koelman
 \end{DoxyDate}
 C++11 pthread mock implementations 
 
-\subsection{Enumeration Type Documentation}
-\hypertarget{namespacepthread_a823f88a2bf448bd5bd5273b826830bdd}{\index{pthread@{pthread}!cv\+\_\+status@{cv\+\_\+status}}
-\index{cv\+\_\+status@{cv\+\_\+status}!pthread@{pthread}}
-\subsubsection[{cv\+\_\+status}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf pthread\+::cv\+\_\+status}}}\label{namespacepthread_a823f88a2bf448bd5bd5273b826830bdd}
-condition variable current wait status. \begin{Desc}
-\item[Enumerator]\par
-\begin{description}
-\index{no\+\_\+timeout@{no\+\_\+timeout}!pthread@{pthread}}\index{pthread@{pthread}!no\+\_\+timeout@{no\+\_\+timeout}}\item[{\em 
-\hypertarget{namespacepthread_a823f88a2bf448bd5bd5273b826830bdda633b1bc5140f77a22f2c26bea4fa3398}{no\+\_\+timeout}\label{namespacepthread_a823f88a2bf448bd5bd5273b826830bdda633b1bc5140f77a22f2c26bea4fa3398}
-}]unblocked before a timeout occured \index{timedout@{timedout}!pthread@{pthread}}\index{pthread@{pthread}!timedout@{timedout}}\item[{\em 
-\hypertarget{namespacepthread_a823f88a2bf448bd5bd5273b826830bdda1c2d3e88a4ad820053c817753867b31a}{timedout}\label{namespacepthread_a823f88a2bf448bd5bd5273b826830bdda1c2d3e88a4ad820053c817753867b31a}
-}]condition timedout \end{description}
-\end{Desc}
-\hypertarget{namespacepthread_ac4b6e78f3d72c946ace7a92f3bec4101}{\index{pthread@{pthread}!thread\+\_\+status@{thread\+\_\+status}}
-\index{thread\+\_\+status@{thread\+\_\+status}!pthread@{pthread}}
-\subsubsection[{thread\+\_\+status}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf pthread\+::thread\+\_\+status}\hspace{0.3cm}{\ttfamily [strong]}}}\label{namespacepthread_ac4b6e78f3d72c946ace7a92f3bec4101}
-current status of a thread instance \begin{Desc}
-\item[Enumerator]\par
-\begin{description}
-\index{not\+\_\+a\+\_\+thread@{not\+\_\+a\+\_\+thread}!pthread@{pthread}}\index{pthread@{pthread}!not\+\_\+a\+\_\+thread@{not\+\_\+a\+\_\+thread}}\item[{\em 
-\hypertarget{namespacepthread_ac4b6e78f3d72c946ace7a92f3bec4101a8414cd8c988083af4eabb1311df873cf}{not\+\_\+a\+\_\+thread}\label{namespacepthread_ac4b6e78f3d72c946ace7a92f3bec4101a8414cd8c988083af4eabb1311df873cf}
-}]this not a thread (i.\+e. after a move operation) \index{a\+\_\+thread@{a\+\_\+thread}!pthread@{pthread}}\index{pthread@{pthread}!a\+\_\+thread@{a\+\_\+thread}}\item[{\em 
-\hypertarget{namespacepthread_ac4b6e78f3d72c946ace7a92f3bec4101a13b3689524b86ca2caaee82399099df1}{a\+\_\+thread}\label{namespacepthread_ac4b6e78f3d72c946ace7a92f3bec4101a13b3689524b86ca2caaee82399099df1}
-}]a valid thread \end{description}
-\end{Desc}
-
-
 \subsection{Function Documentation}
-\hypertarget{namespacepthread_ad04d8bbcf57d64ba29047b53432a9ceb}{\index{pthread@{pthread}!cpp\+\_\+pthread\+\_\+version@{cpp\+\_\+pthread\+\_\+version}}
+\index{pthread@{pthread}!cpp\+\_\+pthread\+\_\+version@{cpp\+\_\+pthread\+\_\+version}}
 \index{cpp\+\_\+pthread\+\_\+version@{cpp\+\_\+pthread\+\_\+version}!pthread@{pthread}}
-\subsubsection[{cpp\+\_\+pthread\+\_\+version}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ pthread\+::cpp\+\_\+pthread\+\_\+version (
+\subsubsection[{\texorpdfstring{cpp\+\_\+pthread\+\_\+version()}{cpp\_pthread\_version()}}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ pthread\+::cpp\+\_\+pthread\+\_\+version (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}\label{namespacepthread_ad04d8bbcf57d64ba29047b53432a9ceb}
+)}\hypertarget{namespacepthread_ad04d8bbcf57d64ba29047b53432a9ceb}{}\label{namespacepthread_ad04d8bbcf57d64ba29047b53432a9ceb}
 \begin{DoxyReturn}{Returns}
 library version 
 \end{DoxyReturn}
-\hypertarget{namespacepthread_a4ca2138b7b0d82d63a05c708edd45a6f}{\index{pthread@{pthread}!thread\+\_\+startup\+\_\+runnable@{thread\+\_\+startup\+\_\+runnable}}
-\index{thread\+\_\+startup\+\_\+runnable@{thread\+\_\+startup\+\_\+runnable}!pthread@{pthread}}
-\subsubsection[{thread\+\_\+startup\+\_\+runnable}]{\setlength{\rightskip}{0pt plus 5cm}void $\ast$ pthread\+::thread\+\_\+startup\+\_\+runnable (
-\begin{DoxyParamCaption}
-\item[{void $\ast$}]{runner}
-\end{DoxyParamCaption}
-)}}\label{namespacepthread_a4ca2138b7b0d82d63a05c708edd45a6f}
-Function used to startup a thread.
 
-it expects a reference to a runnable instance
 
-This function is a helper function. It has normal C linkage, and is the base for newly created Thread objects. It runs the run method on the thread object passed to it (as a void $\ast$). 
+Definition at line 17 of file pthread.\+cpp.
+

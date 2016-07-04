@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['notify_5fall',['notify_all',['../classpthread_1_1condition__variable.html#ae40f0c9043ed693317bb9a07861efc65',1,'pthread::condition_variable']]],
-  ['notify_5fone',['notify_one',['../classpthread_1_1condition__variable.html#ae374b1e852f36fc5eac93ad90d9fc85a',1,'pthread::condition_variable']]]
+  ['max_5fsize',['max_size',['../classpthread_1_1util_1_1sync__queue.html#ae805476dd5db21e3b48b2d7ae7394305',1,'pthread::util::sync_queue']]],
+  ['mutex_5fexception',['mutex_exception',['../classpthread_1_1mutex__exception.html#a257c627226859a3f8937a29974b2c915',1,'pthread::mutex_exception']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['get_5fid',['get_id',['../namespacepthread_1_1this__thread.html#a57275c7fa3dd5591c7f19ccf451f1fb6',1,'pthread::this_thread']]]
+  ['empty',['empty',['../classpthread_1_1util_1_1sync__queue.html#ad915d5b45a49f6f6bd09b5bdf170dd10',1,'pthread::util::sync_queue']]]
 ];

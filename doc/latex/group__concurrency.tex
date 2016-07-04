@@ -1,0 +1,45 @@
+\hypertarget{group__concurrency}{}\section{Concurrency}
+\label{group__concurrency}\index{Concurrency@{Concurrency}}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classpthread_1_1condition__variable}{pthread\+::condition\+\_\+variable}
+\item 
+class \hyperlink{classpthread_1_1lock__guard}{pthread\+::lock\+\_\+guard$<$ Mutex\+Type $>$}
+\item 
+class \hyperlink{classpthread_1_1mutex}{pthread\+::mutex}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{group__concurrency_ga823f88a2bf448bd5bd5273b826830bdd}{pthread\+::cv\+\_\+status} \{ \hyperlink{group__concurrency_gga823f88a2bf448bd5bd5273b826830bdda633b1bc5140f77a22f2c26bea4fa3398}{pthread\+::no\+\_\+timeout}, 
+\hyperlink{group__concurrency_gga823f88a2bf448bd5bd5273b826830bdda1c2d3e88a4ad820053c817753867b31a}{pthread\+::timedout}
+ \}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Set of classes to handle concurrent access to shared ressources.
+
+\begin{DoxyAuthor}{Author}
+herbert koelman (\href{mailto:herbert.koelman@me.com}{\tt herbert.\+koelman@me.\+com}) 
+\end{DoxyAuthor}
+
+
+\subsection{Enumeration Type Documentation}
+\index{Concurrency@{Concurrency}!cv\+\_\+status@{cv\+\_\+status}}
+\index{cv\+\_\+status@{cv\+\_\+status}!Concurrency@{Concurrency}}
+\subsubsection[{\texorpdfstring{cv\+\_\+status}{cv\_status}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf pthread\+::cv\+\_\+status}}\hypertarget{group__concurrency_ga823f88a2bf448bd5bd5273b826830bdd}{}\label{group__concurrency_ga823f88a2bf448bd5bd5273b826830bdd}
+condition variable current wait status. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{no\+\_\+timeout@{no\+\_\+timeout}!Concurrency@{Concurrency}}\index{Concurrency@{Concurrency}!no\+\_\+timeout@{no\+\_\+timeout}}\item[{\em 
+no\+\_\+timeout\hypertarget{group__concurrency_gga823f88a2bf448bd5bd5273b826830bdda633b1bc5140f77a22f2c26bea4fa3398}{}\label{group__concurrency_gga823f88a2bf448bd5bd5273b826830bdda633b1bc5140f77a22f2c26bea4fa3398}
+}]unblocked before a timeout occured \index{timedout@{timedout}!Concurrency@{Concurrency}}\index{Concurrency@{Concurrency}!timedout@{timedout}}\item[{\em 
+timedout\hypertarget{group__concurrency_gga823f88a2bf448bd5bd5273b826830bdda1c2d3e88a4ad820053c817753867b31a}{}\label{group__concurrency_gga823f88a2bf448bd5bd5273b826830bdda1c2d3e88a4ad820053c817753867b31a}
+}]condition timedout \end{description}
+\end{Desc}
+
+
+Definition at line 33 of file condition\+\_\+variable.\+hpp.
+

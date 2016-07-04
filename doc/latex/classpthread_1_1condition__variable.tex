@@ -1,6 +1,5 @@
-\hypertarget{classpthread_1_1condition__variable}{\section{pthread\+:\+:condition\+\_\+variable Class Reference}
+\hypertarget{classpthread_1_1condition__variable}{}\section{pthread\+:\+:condition\+\_\+variable Class Reference}
 \label{classpthread_1_1condition__variable}\index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}}
-}
 
 
 {\ttfamily \#include $<$condition\+\_\+variable.\+hpp$>$}
@@ -16,9 +15,9 @@ void \hyperlink{classpthread_1_1condition__variable_a9bb3e49f17ec1470c305d8b21da
 \item 
 {\footnotesize template$<$class Lambda $>$ }\\bool \hyperlink{classpthread_1_1condition__variable_a7b6c075d1588178301547bc60c59ceba}{wait} (\hyperlink{classpthread_1_1lock__guard}{lock\+\_\+guard}$<$ \hyperlink{classpthread_1_1mutex}{pthread\+::mutex} $>$ \&lck, Lambda lambda)
 \item 
-\hyperlink{namespacepthread_a823f88a2bf448bd5bd5273b826830bdd}{cv\+\_\+status} \hyperlink{classpthread_1_1condition__variable_a804a305eefb4da8abecd1e6326b82785}{wait\+\_\+for} (\hyperlink{classpthread_1_1mutex}{mutex} \&mtx, int millis)
+\hyperlink{group__concurrency_ga823f88a2bf448bd5bd5273b826830bdd}{cv\+\_\+status} \hyperlink{classpthread_1_1condition__variable_a804a305eefb4da8abecd1e6326b82785}{wait\+\_\+for} (\hyperlink{classpthread_1_1mutex}{mutex} \&mtx, int millis)
 \item 
-\hyperlink{namespacepthread_a823f88a2bf448bd5bd5273b826830bdd}{cv\+\_\+status} \hyperlink{classpthread_1_1condition__variable_a1dfcedf00e9822587c7b20da9c060fd9}{wait\+\_\+for} (\hyperlink{classpthread_1_1lock__guard}{lock\+\_\+guard}$<$ \hyperlink{classpthread_1_1mutex}{pthread\+::mutex} $>$ \&lck, int millis)
+\hyperlink{group__concurrency_ga823f88a2bf448bd5bd5273b826830bdd}{cv\+\_\+status} \hyperlink{classpthread_1_1condition__variable_a1dfcedf00e9822587c7b20da9c060fd9}{wait\+\_\+for} (\hyperlink{classpthread_1_1lock__guard}{lock\+\_\+guard}$<$ \hyperlink{classpthread_1_1mutex}{pthread\+::mutex} $>$ \&lck, int millis)
 \item 
 {\footnotesize template$<$class Lambda $>$ }\\bool \hyperlink{classpthread_1_1condition__variable_a82fb3ff516ffef37c68f58e277fad855}{wait\+\_\+for} (\hyperlink{classpthread_1_1mutex}{mutex} \&mtx, int millis, Lambda lambda)
 \item 
@@ -47,36 +46,48 @@ Even if the shared variable is atomic, it must be modified under the mutex in or
 Upon successful return, the mutex shall have been locked and shall be owned by the calling thread.
 
 \begin{DoxyAuthor}{Author}
-herbert koelman 
+herbert koelman (\href{mailto:herbert.koelman@me.com}{\tt herbert.\+koelman@me.\+com}) 
 \end{DoxyAuthor}
 
 
+Definition at line 56 of file condition\+\_\+variable.\+hpp.
+
+
+
 \subsection{Member Function Documentation}
-\hypertarget{classpthread_1_1condition__variable_ae40f0c9043ed693317bb9a07861efc65}{\index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!notify\+\_\+all@{notify\+\_\+all}}
+\index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!notify\+\_\+all@{notify\+\_\+all}}
 \index{notify\+\_\+all@{notify\+\_\+all}!pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}}
-\subsubsection[{notify\+\_\+all}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::condition\+\_\+variable\+::notify\+\_\+all (
+\subsubsection[{\texorpdfstring{notify\+\_\+all() noexcept}{notify\_all() noexcept}}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::condition\+\_\+variable\+::notify\+\_\+all (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [noexcept]}}}\label{classpthread_1_1condition__variable_ae40f0c9043ed693317bb9a07861efc65}
+)\hspace{0.3cm}{\ttfamily [noexcept]}}\hypertarget{classpthread_1_1condition__variable_ae40f0c9043ed693317bb9a07861efc65}{}\label{classpthread_1_1condition__variable_ae40f0c9043ed693317bb9a07861efc65}
 Signal all waiting threads.
 
-The call unblocks all threads currently blocked on the specified condition variable cond. \hypertarget{classpthread_1_1condition__variable_ae374b1e852f36fc5eac93ad90d9fc85a}{\index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!notify\+\_\+one@{notify\+\_\+one}}
+The call unblocks all threads currently blocked on the specified condition variable cond. 
+
+Definition at line 61 of file condition\+\_\+variable.\+cpp.
+
+\index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!notify\+\_\+one@{notify\+\_\+one}}
 \index{notify\+\_\+one@{notify\+\_\+one}!pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}}
-\subsubsection[{notify\+\_\+one}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::condition\+\_\+variable\+::notify\+\_\+one (
+\subsubsection[{\texorpdfstring{notify\+\_\+one() noexcept}{notify\_one() noexcept}}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::condition\+\_\+variable\+::notify\+\_\+one (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [noexcept]}}}\label{classpthread_1_1condition__variable_ae374b1e852f36fc5eac93ad90d9fc85a}
+)\hspace{0.3cm}{\ttfamily [noexcept]}}\hypertarget{classpthread_1_1condition__variable_ae374b1e852f36fc5eac93ad90d9fc85a}{}\label{classpthread_1_1condition__variable_ae374b1e852f36fc5eac93ad90d9fc85a}
 Signal one waiting thread.
 
-The call unblocks at least one of the threads that are blocked on the specified condition variable cond (if any threads are blocked on cond). \hypertarget{classpthread_1_1condition__variable_a34247dacb9da1856f3a65bc868b6abb8}{\index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!wait@{wait}}
+The call unblocks at least one of the threads that are blocked on the specified condition variable cond (if any threads are blocked on cond). 
+
+Definition at line 53 of file condition\+\_\+variable.\+cpp.
+
+\index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!wait@{wait}}
 \index{wait@{wait}!pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}}
-\subsubsection[{wait}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::condition\+\_\+variable\+::wait (
+\subsubsection[{\texorpdfstring{wait(mutex \&mtx)}{wait(mutex \&mtx)}}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::condition\+\_\+variable\+::wait (
 \begin{DoxyParamCaption}
 \item[{{\bf mutex} \&}]{mtx}
 \end{DoxyParamCaption}
-)}}\label{classpthread_1_1condition__variable_a34247dacb9da1856f3a65bc868b6abb8}
+)}\hypertarget{classpthread_1_1condition__variable_a34247dacb9da1856f3a65bc868b6abb8}{}\label{classpthread_1_1condition__variable_a34247dacb9da1856f3a65bc868b6abb8}
 Wait for condition to be signaled.
 
 This method atomically release mutex and cause the calling thread to block; atomically here means \char`\"{}atomically with respect to
@@ -94,24 +105,32 @@ Upon successful return, the mutex has been locked and is owned by the calling th
 
 \hyperlink{classpthread_1_1condition__variable_ae40f0c9043ed693317bb9a07861efc65}{notify\+\_\+all} 
 \end{DoxySeeAlso}
-\hypertarget{classpthread_1_1condition__variable_a9bb3e49f17ec1470c305d8b21daadf2a}{\index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!wait@{wait}}
+
+
+Definition at line 5 of file condition\+\_\+variable.\+cpp.
+
+\index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!wait@{wait}}
 \index{wait@{wait}!pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}}
-\subsubsection[{wait}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::condition\+\_\+variable\+::wait (
+\subsubsection[{\texorpdfstring{wait(lock\+\_\+guard$<$ pthread\+::mutex $>$ lck)}{wait(lock\_guard< pthread::mutex > lck)}}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::condition\+\_\+variable\+::wait (
 \begin{DoxyParamCaption}
 \item[{{\bf lock\+\_\+guard}$<$ {\bf pthread\+::mutex} $>$}]{lck}
 \end{DoxyParamCaption}
-)}}\label{classpthread_1_1condition__variable_a9bb3e49f17ec1470c305d8b21daadf2a}
+)}\hypertarget{classpthread_1_1condition__variable_a9bb3e49f17ec1470c305d8b21daadf2a}{}\label{classpthread_1_1condition__variable_a9bb3e49f17ec1470c305d8b21daadf2a}
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classpthread_1_1condition__variable_a34247dacb9da1856f3a65bc868b6abb8}{wait} 
 \end{DoxySeeAlso}
-\hypertarget{classpthread_1_1condition__variable_a251a506415355171be3052b68bc8d2ec}{\index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!wait@{wait}}
+
+
+Definition at line 9 of file condition\+\_\+variable.\+cpp.
+
+\index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!wait@{wait}}
 \index{wait@{wait}!pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}}
-\subsubsection[{wait}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Lambda $>$ bool pthread\+::condition\+\_\+variable\+::wait (
+\subsubsection[{\texorpdfstring{wait(mutex \&mtx, Lambda lambda)}{wait(mutex \&mtx, Lambda lambda)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Lambda $>$ bool pthread\+::condition\+\_\+variable\+::wait (
 \begin{DoxyParamCaption}
 \item[{{\bf mutex} \&}]{mtx, }
 \item[{Lambda}]{lambda}
 \end{DoxyParamCaption}
-)}}\label{classpthread_1_1condition__variable_a251a506415355171be3052b68bc8d2ec}
+)}\hypertarget{classpthread_1_1condition__variable_a251a506415355171be3052b68bc8d2ec}{}\label{classpthread_1_1condition__variable_a251a506415355171be3052b68bc8d2ec}
 Wait for condition to be signaled.
 
 This method atomically release mutex and cause the calling thread to block; atomically here means \char`\"{}atomically with respect to
@@ -136,14 +155,18 @@ true if lmabda returned true.
 
 \hyperlink{classpthread_1_1condition__variable_ae40f0c9043ed693317bb9a07861efc65}{notify\+\_\+all} 
 \end{DoxySeeAlso}
-\hypertarget{classpthread_1_1condition__variable_a7b6c075d1588178301547bc60c59ceba}{\index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!wait@{wait}}
+
+
+Definition at line 209 of file condition\+\_\+variable.\+hpp.
+
+\index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!wait@{wait}}
 \index{wait@{wait}!pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}}
-\subsubsection[{wait}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Lambda $>$ bool pthread\+::condition\+\_\+variable\+::wait (
+\subsubsection[{\texorpdfstring{wait(lock\+\_\+guard$<$ pthread\+::mutex $>$ \&lck, Lambda lambda)}{wait(lock\_guard< pthread::mutex > \&lck, Lambda lambda)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Lambda $>$ bool pthread\+::condition\+\_\+variable\+::wait (
 \begin{DoxyParamCaption}
 \item[{{\bf lock\+\_\+guard}$<$ {\bf pthread\+::mutex} $>$ \&}]{lck, }
 \item[{Lambda}]{lambda}
 \end{DoxyParamCaption}
-)}}\label{classpthread_1_1condition__variable_a7b6c075d1588178301547bc60c59ceba}
+)}\hypertarget{classpthread_1_1condition__variable_a7b6c075d1588178301547bc60c59ceba}{}\label{classpthread_1_1condition__variable_a7b6c075d1588178301547bc60c59ceba}
 Wait for condition to be signaled.
 
 This method atomically release mutex and cause the calling thread to block; atomically here means \char`\"{}atomically with respect to
@@ -168,14 +191,18 @@ true if lmabda returned true.
 
 \hyperlink{classpthread_1_1condition__variable_ae40f0c9043ed693317bb9a07861efc65}{notify\+\_\+all} 
 \end{DoxySeeAlso}
-\hypertarget{classpthread_1_1condition__variable_a804a305eefb4da8abecd1e6326b82785}{\index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!wait\+\_\+for@{wait\+\_\+for}}
+
+
+Definition at line 221 of file condition\+\_\+variable.\+hpp.
+
+\index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!wait\+\_\+for@{wait\+\_\+for}}
 \index{wait\+\_\+for@{wait\+\_\+for}!pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}}
-\subsubsection[{wait\+\_\+for}]{\setlength{\rightskip}{0pt plus 5cm}{\bf cv\+\_\+status} pthread\+::condition\+\_\+variable\+::wait\+\_\+for (
+\subsubsection[{\texorpdfstring{wait\+\_\+for(mutex \&mtx, int millis)}{wait\_for(mutex \&mtx, int millis)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf cv\+\_\+status} pthread\+::condition\+\_\+variable\+::wait\+\_\+for (
 \begin{DoxyParamCaption}
 \item[{{\bf mutex} \&}]{mtx, }
 \item[{int}]{millis}
 \end{DoxyParamCaption}
-)}}\label{classpthread_1_1condition__variable_a804a305eefb4da8abecd1e6326b82785}
+)}\hypertarget{classpthread_1_1condition__variable_a804a305eefb4da8abecd1e6326b82785}{}\label{classpthread_1_1condition__variable_a804a305eefb4da8abecd1e6326b82785}
 Wait for condition to be signaled within given time frame.
 
 This method atomically release mutex and cause the calling thread to block; atomically here means \char`\"{}atomically with respect to
@@ -205,26 +232,34 @@ cv\+\_\+status (either timeout or no\+\_\+timeout)
 
 \hyperlink{classpthread_1_1condition__variable_ae40f0c9043ed693317bb9a07861efc65}{notify\+\_\+all} 
 \end{DoxySeeAlso}
-\hypertarget{classpthread_1_1condition__variable_a1dfcedf00e9822587c7b20da9c060fd9}{\index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!wait\+\_\+for@{wait\+\_\+for}}
+
+
+Definition at line 20 of file condition\+\_\+variable.\+cpp.
+
+\index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!wait\+\_\+for@{wait\+\_\+for}}
 \index{wait\+\_\+for@{wait\+\_\+for}!pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}}
-\subsubsection[{wait\+\_\+for}]{\setlength{\rightskip}{0pt plus 5cm}{\bf cv\+\_\+status} pthread\+::condition\+\_\+variable\+::wait\+\_\+for (
+\subsubsection[{\texorpdfstring{wait\+\_\+for(lock\+\_\+guard$<$ pthread\+::mutex $>$ \&lck, int millis)}{wait\_for(lock\_guard< pthread::mutex > \&lck, int millis)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf cv\+\_\+status} pthread\+::condition\+\_\+variable\+::wait\+\_\+for (
 \begin{DoxyParamCaption}
 \item[{{\bf lock\+\_\+guard}$<$ {\bf pthread\+::mutex} $>$ \&}]{lck, }
 \item[{int}]{millis}
 \end{DoxyParamCaption}
-)}}\label{classpthread_1_1condition__variable_a1dfcedf00e9822587c7b20da9c060fd9}
+)}\hypertarget{classpthread_1_1condition__variable_a1dfcedf00e9822587c7b20da9c060fd9}{}\label{classpthread_1_1condition__variable_a1dfcedf00e9822587c7b20da9c060fd9}
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classpthread_1_1condition__variable_a804a305eefb4da8abecd1e6326b82785}{wait\+\_\+for} (\hyperlink{classpthread_1_1mutex}{mutex} \&, int) 
 \end{DoxySeeAlso}
-\hypertarget{classpthread_1_1condition__variable_a82fb3ff516ffef37c68f58e277fad855}{\index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!wait\+\_\+for@{wait\+\_\+for}}
+
+
+Definition at line 14 of file condition\+\_\+variable.\+cpp.
+
+\index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!wait\+\_\+for@{wait\+\_\+for}}
 \index{wait\+\_\+for@{wait\+\_\+for}!pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}}
-\subsubsection[{wait\+\_\+for}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Lambda $>$ bool pthread\+::condition\+\_\+variable\+::wait\+\_\+for (
+\subsubsection[{\texorpdfstring{wait\+\_\+for(mutex \&mtx, int millis, Lambda lambda)}{wait\_for(mutex \&mtx, int millis, Lambda lambda)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Lambda $>$ bool pthread\+::condition\+\_\+variable\+::wait\+\_\+for (
 \begin{DoxyParamCaption}
 \item[{{\bf mutex} \&}]{mtx, }
 \item[{int}]{millis, }
 \item[{Lambda}]{lambda}
 \end{DoxyParamCaption}
-)}}\label{classpthread_1_1condition__variable_a82fb3ff516ffef37c68f58e277fad855}
+)}\hypertarget{classpthread_1_1condition__variable_a82fb3ff516ffef37c68f58e277fad855}{}\label{classpthread_1_1condition__variable_a82fb3ff516ffef37c68f58e277fad855}
 Wait for condition to be signaled within a given time frame.
 
 This method atomically release mutex and cause the calling thread to block; atomically here means \char`\"{}atomically with respect to
@@ -251,15 +286,19 @@ true if lmabda returned true.
 
 \hyperlink{classpthread_1_1condition__variable_ae40f0c9043ed693317bb9a07861efc65}{notify\+\_\+all} 
 \end{DoxySeeAlso}
-\hypertarget{classpthread_1_1condition__variable_a5ee32edbf76592ec443e2544ecba811a}{\index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!wait\+\_\+for@{wait\+\_\+for}}
+
+
+Definition at line 227 of file condition\+\_\+variable.\+hpp.
+
+\index{pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}!wait\+\_\+for@{wait\+\_\+for}}
 \index{wait\+\_\+for@{wait\+\_\+for}!pthread\+::condition\+\_\+variable@{pthread\+::condition\+\_\+variable}}
-\subsubsection[{wait\+\_\+for}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Lambda $>$ bool pthread\+::condition\+\_\+variable\+::wait\+\_\+for (
+\subsubsection[{\texorpdfstring{wait\+\_\+for(lock\+\_\+guard$<$ pthread\+::mutex $>$ \&lck, int millis, Lambda lambda)}{wait\_for(lock\_guard< pthread::mutex > \&lck, int millis, Lambda lambda)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Lambda $>$ bool pthread\+::condition\+\_\+variable\+::wait\+\_\+for (
 \begin{DoxyParamCaption}
 \item[{{\bf lock\+\_\+guard}$<$ {\bf pthread\+::mutex} $>$ \&}]{lck, }
 \item[{int}]{millis, }
 \item[{Lambda}]{lambda}
 \end{DoxyParamCaption}
-)}}\label{classpthread_1_1condition__variable_a5ee32edbf76592ec443e2544ecba811a}
+)}\hypertarget{classpthread_1_1condition__variable_a5ee32edbf76592ec443e2544ecba811a}{}\label{classpthread_1_1condition__variable_a5ee32edbf76592ec443e2544ecba811a}
 Wait for condition to be signaled within a given time frame.
 
 This method atomically release mutex and cause the calling thread to block; atomically here means \char`\"{}atomically with respect to
@@ -286,6 +325,10 @@ true if lmabda returned true.
 
 \hyperlink{classpthread_1_1condition__variable_ae40f0c9043ed693317bb9a07861efc65}{notify\+\_\+all} 
 \end{DoxySeeAlso}
+
+
+Definition at line 263 of file condition\+\_\+variable.\+hpp.
+
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
