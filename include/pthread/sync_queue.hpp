@@ -220,6 +220,7 @@ namespace pthread {
     }
     
     template<typename T> sync_queue<T>::~sync_queue(){
+      // Intentionally unimplemented...
     }
     
   }; // namespace util

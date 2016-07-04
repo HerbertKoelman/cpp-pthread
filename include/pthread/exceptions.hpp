@@ -99,7 +99,9 @@ namespace pthread {
      * @param pthread_errno error returned by the pthread function
      */
     condition_variable_exception( const std::string &message, const int pthread_errno = -1);
-    virtual ~condition_variable_exception(){};
+    virtual ~condition_variable_exception(){
+      // Intentionally unimplemented...
+    };
   };
   
   /** thrown to indicate that something went wrong with a thread */

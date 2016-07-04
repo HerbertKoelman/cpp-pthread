@@ -16,6 +16,7 @@ namespace pthread {
   };
 
   pthread_exception::~pthread_exception(){
+    // Intentionally unimplemented...
   };
     
 #if __cplusplus < 201103L

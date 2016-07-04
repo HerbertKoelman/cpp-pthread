@@ -68,7 +68,9 @@ namespace pthread {
     virtual void run () noexcept = 0 ;
 #endif
 
-    virtual ~runnable() {};
+    virtual ~runnable() {
+      // Intentionally unimplemented...
+    };
   };
   
   /**
