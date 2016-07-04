@@ -211,7 +211,7 @@ namespace pthread {
         _not_empty_cv.notify_one();
       } else {
         _not_empty_cv.notify_all();
-        throw queue_full{"synchronized_queue::put() timeout, queue is full."};
+        throw queue_full("synchronized_queue::put() timeout, queue is full.");
       }
     }
     
