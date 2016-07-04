@@ -12,7 +12,10 @@
 #include <list>           // std::list
 
 #include "pthread/pthread.hpp"
+#if __cplusplus < 201103L
+#else
 #include <atomic>
+#endif
 #include <string>
 
 
@@ -92,9 +95,16 @@ namespace pthread {
        */
       void set_max_size( size_t ms ){
         if (ms > 0){
+#if __cplusplus < 201103L
+          pthread::lock_guard<pthread::mutex> lck(_mutex);
+#endif
           _max_size = ms;
         }else{
+#if __cplusplus < 201103L
+          throw queue_exception("synchronized_queue's max size must be greater then 0.");
+#else
           throw queue_exception("synchronized_queue's max size must be greater then 0, max_size " + std::to_string(ms) + " is not.");
+#endif
         }
       }
       
@@ -113,7 +123,11 @@ namespace pthread {
       pthread::condition_variable _not_empty_cv;
       pthread::condition_variable _not_full_cv;
       std::list<T>                _items ;
+#if __cplusplus < 201103L
+      int                         _max_size ;
+#else
       std::atomic<int>            _max_size ;
+#endif
       
     };
     
@@ -166,7 +180,8 @@ namespace pthread {
       
 #if __cplusplus < 201103L
       bool not_full = true;
-      while ( ! (not_full = (_items.size() < _max_size)) && not_full_cv.wait(_mutex)){
+      while ( ! (not_full = (_items.size() < _max_size))){
+        _not_full_cv.wait(_mutex);
       }
 #else      
       _not_full_cv.wait(_mutex,[this]{ return _items.size() < _max_size; });
