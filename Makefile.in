@@ -32,7 +32,7 @@ globber:clean
 clean:
 	-(cd src && $(MAKE) clean)
 
-codecheck: clean all
+codecheck: all
 		$(CODECHECK)
 
 version:

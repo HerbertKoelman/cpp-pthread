@@ -67,6 +67,8 @@ namespace pthread {
 #else
     virtual void run () noexcept = 0 ;
 #endif
+
+    virtual ~runnable() {};
   };
   
   /**
@@ -107,7 +109,7 @@ namespace pthread {
      *
      * @param other thread that will be moved, on completion other is no longer a thread.
      */
-    thread( thread&& other);
+    thread( thread&& other); // NOSONAR this is std interface and cannot be changed
     
     /** Copy constructor is flagged deleted because it makes no sense to copy a thread.
      */
@@ -160,7 +162,7 @@ namespace pthread {
      * @param other thread to move, on completion it is not a thread anymore (thread_status::not_a_thread).
      * @return a thread 
      */
-    thread& operator=(thread&& other);
+    thread& operator=(thread&& other); // NOSONAR this is a std method signature
     
   private:
 
@@ -241,7 +243,7 @@ namespace pthread {
      *
      * @param stack_size thread's stack size (default 0 which means use PTHREAD_STACK_MIN)
      */
-    abstract_thread(const std::size_t stack_size = 0);
+    explicit abstract_thread(const std::size_t stack_size = 0);
     virtual ~abstract_thread();
     
     /** start running the `run()` method in a new thread.
@@ -294,9 +296,9 @@ namespace pthread {
      * @param destructor_joins_first if true then destructor tries to wait for all registered threads to join the calling one before deleting thread instances.
      */
 #if __cplusplus < 201103L
-    thread_group( bool destructor_joins_first = false ) throw();
+    explicit thread_group( bool destructor_joins_first = false ) throw();
 #else
-    thread_group( bool destructor_joins_first = false ) noexcept;
+    explicit thread_group( bool destructor_joins_first = false ) noexcept;
 #endif
     
     /** delete all abstract_thread referenced by the thread_group.
