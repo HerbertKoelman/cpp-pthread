@@ -125,8 +125,15 @@ namespace pthread {
      */
     class queue_exception : public std::exception {
     public:
+      /**
+       * new instance.
+       *
+       * @param msg explanatory message.
+       */
       explicit queue_exception(const std::string &msg = "queue_error occured.");
       
+      /** @return an explanatory message
+       */
 #if __cplusplus < 201103L
       virtual const char *what() const throw();
 #else
@@ -134,13 +141,18 @@ namespace pthread {
 #endif
       
     protected:
-      std::string _message;
+      std::string _message; //!< message buffer
     };
     
     /** thrown when the queue's max_size is reached
      */
     class queue_full: public queue_exception{
     public:
+      /**
+       * new instance.
+       *
+       * @param msg explanatory message.
+       */
       explicit queue_full(const std::string &msg = "synchronized_queue full.");
       
     };
@@ -149,6 +161,11 @@ namespace pthread {
      */
     class queue_timeout: public queue_exception{
     public:
+      /**
+       * new instance.
+       *
+       * @param msg explanatory message.
+       */
       explicit queue_timeout(const std::string &msg = "synchronized_queue get/put timed out.");
       
     };

@@ -68,13 +68,13 @@ namespace pthread {
       /** Get an item from the queue, if empty wait for one during duration milliseconds.
        *
        * @param item item that will receive an item found onto the queue.
-       * @param duration duration we are willing to wait for a new item.
+       * @param wait_time duration we are willing to wait for a new item.
        *
        * @throw queue_exception when an error occurs.
        */
       void get ( T& item, int wait_time );
       
-      /** @rerturn true if queue is empty */
+      /** @return true if queue is empty */
       bool empty() const {
         return _items.empty();
       }
