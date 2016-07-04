@@ -19,8 +19,6 @@
 
 namespace pthread {
   
-  using namespace std ;
-  
   /** \addtogroup concurrency
    *
    * @{

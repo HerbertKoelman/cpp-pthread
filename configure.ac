@@ -22,7 +22,7 @@ AC_PROG_MKDIR_P
 # Okay, no cppcheck found, maybe we have sonar
 if test -z "$CODECHECK" 
 then
-  AC_CHECK_PROG([CODECHECK],[sonar-runner],[sonar-runner -Dsonar.cfamily.library.directories=./include,/usr/include,$IMSDIR/include,$TUXDIR/include],[])
+  AC_CHECK_PROG([CODECHECK],[sonar-runner],[sonar-runner -Dsonar.cfamily.library.directories=./include,/usr/include],[])
 fi
 
 # Okay, no cppcheck found, maybe we have sonar
@@ -47,6 +47,6 @@ done
 AC_SUBST(HEADERS,$HEADERS)
 
 AC_CONFIG_SUBDIRS(src)
-AC_CONFIG_FILES([Makefile doxyfile])
+AC_CONFIG_FILES([Makefile doxyfile sonar-project.properties])
 AC_OUTPUT
 

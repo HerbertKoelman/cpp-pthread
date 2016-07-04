@@ -10,7 +10,7 @@
 // recommandation for more info p.285 §8.3.1).
 #include <pthread.h>
 #include <string>
-#include <time.h>
+#include <ctime>
 #include <sys/time.h>
 
 #include "pthread/config.h"
@@ -231,7 +231,7 @@ namespace pthread {
     milliseconds(millis); // update timeout
     bool stop_waiting = lambda(); // returns â€‹false if the waiting should be continued.
     
-    while(! stop_waiting && status == no_timeout){
+    while((! stop_waiting) && (status == no_timeout)){
       
       rc  = pthread_cond_timedwait ( &_condition, &mtx._mutex, &timeout );
       
@@ -242,11 +242,11 @@ namespace pthread {
           break;
           
         case EINVAL:
-          throw condition_variable_exception("The value specified by abstime is invalid.", rc);
+          throw condition_variable_exception("The value specified by abstime is invalid.", rc); // NOSONAR we use throw instead of return.
           break;
           
         case EPERM:
-          throw condition_variable_exception("The mutex was not owned by the current thread at the time of the call.", rc);
+          throw condition_variable_exception("The mutex was not owned by the current thread at the time of the call.", rc); // NOSONAR we use throw instead of return.
           break;
         default:
           status = no_timeout ;

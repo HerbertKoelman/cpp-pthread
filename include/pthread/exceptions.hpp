@@ -11,7 +11,7 @@
 
 #include <pthread.h>
 
-#include <errno.h>
+#include <cerrno>
 #include <string>    // std::string
 #include <cstring>
 #include <exception> // std::exception
@@ -19,7 +19,7 @@
 
 namespace pthread {
   
-  using namespace std ;
+//  using namespace std ;
 
   /** \addtogroup exception Errors and exceptions
    *
@@ -31,7 +31,7 @@ namespace pthread {
   
   /** general purpose pthread exception.
    */
-  class pthread_exception: public exception {
+  class pthread_exception: public std::exception {
     
   public:
     
@@ -39,7 +39,7 @@ namespace pthread {
      * @param message error message
      * @param pthread_errno a pthread function return code.
      */
-    pthread_exception( const string &message, const int pthread_errno = -1 );
+    pthread_exception( const std::string &message, const int pthread_errno = -1 );
 
     virtual ~pthread_exception();
     
@@ -71,7 +71,7 @@ namespace pthread {
      *
      * @param message timeout condition
      */
-    timeout_exception(const string &message);
+    explicit timeout_exception(const std::string &message);
   };
 
   /** throw to indicate that something went wrong with a mutex.
@@ -84,7 +84,7 @@ namespace pthread {
      * @param message short description
      * @param pthread_errno error returned by the pthread function
      */
-    mutex_exception( const std::string &message, const int pthread_errno = -1) ;
+    explicit mutex_exception( const std::string &message, const int pthread_errno = -1) ;
     
   };
 
@@ -98,7 +98,7 @@ namespace pthread {
      * @param message short description
      * @param pthread_errno error returned by the pthread function
      */
-    condition_variable_exception( const string &message, const int pthread_errno = -1);
+    condition_variable_exception( const std::string &message, const int pthread_errno = -1);
     virtual ~condition_variable_exception(){};
   };
   
@@ -109,7 +109,7 @@ namespace pthread {
      * @param message short error description.
      * @param pthread_error value return by a function in the pthread library.
      */
-    thread_exception(const string &message, const int pthread_error = -1);
+    thread_exception(const std::string &message, const int pthread_error = -1);
   };
 
   namespace util {

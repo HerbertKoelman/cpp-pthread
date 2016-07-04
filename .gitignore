@@ -53,6 +53,8 @@ Makefile
 
 # layout
 doxyfile
+*.tar
+sonar-project.properties
 distrib/
 lib/
 doc/
