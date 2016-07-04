@@ -20,9 +20,13 @@
 
 #include "pthread/exceptions.hpp"
 
+
 namespace pthread {
 
-  
+  /** \addtogroup concurrency
+   *
+   * @{
+   */
   class condition_variable;
   
   /** The mutex class is a synchronization primitive that can be used to protect shared data from being simultaneously accessed by multiple threads.
@@ -69,7 +73,10 @@ namespace pthread {
     /** pthread mutex structure */
     pthread_mutex_t _mutex; 
   };
-
+  
+  /** @} */
+  
 } // namespace pthread
+
 
 #endif /* mutex_hpp */

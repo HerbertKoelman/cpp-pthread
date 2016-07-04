@@ -28,9 +28,7 @@ core
 *.exe
 *.out
 *.app
-exceptions-tests
-without-cpp11-pthread-tests
-with-cpp11-pthread-tests
+tests/*tests
 
 # emacs
 *~
@@ -51,11 +49,12 @@ config.h
 autom4te.cache
 config.status
 config.log
-#configure
 Makefile
 
 # layout
 doxyfile
+*.tar
+sonar-project.properties
 distrib/
 lib/
 doc/
