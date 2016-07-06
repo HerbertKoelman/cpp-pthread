@@ -624,6 +624,7 @@ ac_includes_default="\
 
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
+ARFLAGS
 OBJECTS
 BITS
 EGREP
@@ -3843,6 +3844,8 @@ case "$CXX" in
     CPPFLAGS="-qlanglvl=extended0x:decltype:static_assert:rvaluereferences -qsourcetype=c++ $CPPFLAGS"
     CFLAGS="-bh:5 -qmaxmem=-1 -q$BITS $CFLAGS"
     CXXFLAGS="-O"
+    ARFLAGS="-X$bits"
+
     LDFLAGS="$LDFLAGS -brtl -bmaxdata:0x80000000"
     { $as_echo "$as_me:${as_lineno-$LINENO}: result: using large memory model (maxdata:0x80000000), optimising level 2 (-O),using run-time link method (-brtl)" >&5
 $as_echo "using large memory model (maxdata:0x80000000), optimising level 2 (-O),using run-time link method (-brtl)" >&6; }
@@ -3850,6 +3853,8 @@ $as_echo "using large memory model (maxdata:0x80000000), optimising level 2 (-O)
   g++ | gcc)
     CPPFLAGS="-x c++ -std=c++11 -frtti $CPPFLAGS"
     CXXFLAGS="-O2"
+    ARFLAGS=""
+
     { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
   ;;

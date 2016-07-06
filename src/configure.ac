@@ -43,12 +43,14 @@ case "$CXX" in
     CPPFLAGS="-qlanglvl=extended0x:decltype:static_assert:rvaluereferences -qsourcetype=c++ $CPPFLAGS"
     CFLAGS="-bh:5 -qmaxmem=-1 -q$BITS $CFLAGS"
     CXXFLAGS="-O"
+    AC_SUBST(ARFLAGS,"-X$bits")
     LDFLAGS="$LDFLAGS -brtl -bmaxdata:0x80000000"
     AC_MSG_RESULT([using large memory model (maxdata:0x80000000), optimising level 2 (-O),using run-time link method (-brtl)])
     ;;
   g++ | gcc)
     CPPFLAGS="-x c++ -std=c++11 -frtti $CPPFLAGS"
     CXXFLAGS="-O2"
+    AC_SUBST(ARFLAGS,"")
     AC_MSG_RESULT([yes])
   ;;
   *)
