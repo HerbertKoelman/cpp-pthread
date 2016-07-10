@@ -20,6 +20,7 @@
 
 #include "pthread/config.h"
 #include "pthread/mutex.hpp"
+#include "pthread/read_write_lock.hpp"
 #include "pthread/lock_guard.hpp"
 #include "pthread/condition_variable.hpp"
 #include "pthread/thread.hpp"

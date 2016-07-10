@@ -88,6 +88,20 @@ namespace pthread {
     
   };
 
+  /** throw to indicate that something went wrong with a read/write lock
+   */
+  class read_write_lock_exception: public pthread_exception {
+  public:
+
+    /** thrown when read_write_lock actions fail
+     *
+     * @param message short description
+     * @param pthread_errno error returned by the pthread function
+     */
+    explicit read_write_lock_exception( const std::string &message, const int pthread_errno = -1) ;
+    
+  };
+
   /** Condition variable exception
    */
   class condition_variable_exception: public pthread_exception {

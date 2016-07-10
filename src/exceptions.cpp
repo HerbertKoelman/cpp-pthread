@@ -47,6 +47,11 @@ namespace pthread {
   mutex_exception::mutex_exception( const std::string &message, const int pthread_error): pthread_exception(message, pthread_error) {
   };
     
+  // read_write_lock exception -----------------------------
+  //
+  read_write_lock_exception::read_write_lock_exception( const std::string &message, const int pthread_error): pthread_exception(message, pthread_error) {
+  };
+    
   // condition_variable_exception -----------------------------
   //
   condition_variable_exception::condition_variable_exception( const std::string &message, const int pthread_error): pthread_exception(message, pthread_error){
