@@ -118,7 +118,7 @@ class consumer : public status, public pthread::abstract_thread {
 #endif
       printf ("starting consumer\n");
       message_ptr pmessage ; // (new message("hello"));
-      printf("queue max size is %d\n", _queue.max_size());
+      printf("queue max size is %zu\n", _queue.max_size());
       while( running() ){
 
         try{

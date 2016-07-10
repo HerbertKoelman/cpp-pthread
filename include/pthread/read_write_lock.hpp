@@ -24,10 +24,14 @@ namespace pthread {
    * @{
    */
 
-  /** This class acquires the read lock
+  /** This class acquires the read lock.
+   *
+   * This class cannot be instaiated as it's main putpose is to implement read locks. To use a read lock create 
+   * either a read_write_lock or a write_lock.
    *
    * @author herbert koelman (herbert.koelman@me.com)
    * @since v1.6.0
+   * @see pthread::read_write_lock
    */
   class read_lock {
     public:
@@ -50,16 +54,7 @@ namespace pthread {
        @throw read_write_lock_exception if error conditions preventing this method to succeed.
        */
       void unlock ();
-      
-      /**
-       Constructor/Desctructor
-
-       this constructor shall allocate any resources required to use the read-write lock referenced by rwlock and initializes the lock to an unlocked state. The read/write lock
-       passes NULL attributes. This means default behavior.
-
-       @throw read_write_lock_exception if error conditions preventing this method to succeed.
-       */
-       read_lock ();
+    
 
       /**
        * the descructor, shall destroy the read-write lock object referenced by rwlock and release any resources used by the lock.
@@ -67,7 +62,17 @@ namespace pthread {
        virtual ~read_lock ();
 
     protected:
-
+    
+      /**
+       Constructor/Desctructor
+     
+       this constructor shall allocate any resources required to use the read-write lock referenced by rwlock and initializes the lock to an unlocked state. The read/write lock
+       passes NULL attributes. This means default behavior.
+     
+       @throw read_write_lock_exception if error conditions preventing this method to succeed.
+       */
+      read_lock ();
+    
       /** read/write lock reference */
       pthread_rwlock_t _rwlock;
   };
