@@ -36,6 +36,7 @@ codecheck: all
 		$(CODECHECK)
 
 version:
+	touch configure.ac && ( cd src && touch configure.ac )
 	autoconf && ( cd src && autoconf )
 	-echo "don't forget to run configure."
 
