@@ -1,0 +1,55 @@
+\hypertarget{classpthread_1_1read__write__lock__exception}{\section{pthread\+:\+:read\+\_\+write\+\_\+lock\+\_\+exception Class Reference}
+\label{classpthread_1_1read__write__lock__exception}\index{pthread\+::read\+\_\+write\+\_\+lock\+\_\+exception@{pthread\+::read\+\_\+write\+\_\+lock\+\_\+exception}}
+}
+
+
+{\ttfamily \#include $<$exceptions.\+hpp$>$}
+
+Inheritance diagram for pthread\+:\+:read\+\_\+write\+\_\+lock\+\_\+exception\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classpthread_1_1read__write__lock__exception}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classpthread_1_1read__write__lock__exception_a62da10d4753dffbec177b68cdbf6df65}{read\+\_\+write\+\_\+lock\+\_\+exception} (const std\+::string \&message, const int \hyperlink{classpthread_1_1pthread__exception_a4a869173054faca1945ac1a7729082d6}{pthread\+\_\+errno}=-\/1)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+throw to indicate that something went wrong with a read/write lock 
+
+Definition at line 94 of file exceptions.\+hpp.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classpthread_1_1read__write__lock__exception_a62da10d4753dffbec177b68cdbf6df65}{\index{pthread\+::read\+\_\+write\+\_\+lock\+\_\+exception@{pthread\+::read\+\_\+write\+\_\+lock\+\_\+exception}!read\+\_\+write\+\_\+lock\+\_\+exception@{read\+\_\+write\+\_\+lock\+\_\+exception}}
+\index{read\+\_\+write\+\_\+lock\+\_\+exception@{read\+\_\+write\+\_\+lock\+\_\+exception}!pthread\+::read\+\_\+write\+\_\+lock\+\_\+exception@{pthread\+::read\+\_\+write\+\_\+lock\+\_\+exception}}
+\subsubsection[{read\+\_\+write\+\_\+lock\+\_\+exception}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+::read\+\_\+write\+\_\+lock\+\_\+exception\+::read\+\_\+write\+\_\+lock\+\_\+exception (
+\begin{DoxyParamCaption}
+\item[{const std\+::string \&}]{message, }
+\item[{const int}]{pthread\+\_\+errno = {\ttfamily -\/1}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [explicit]}}}\label{classpthread_1_1read__write__lock__exception_a62da10d4753dffbec177b68cdbf6df65}
+thrown when read\+\_\+write\+\_\+lock actions fail
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & short description \\
+\hline
+{\em pthread\+\_\+errno} & error returned by the pthread function \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 52 of file exceptions.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/pthread/exceptions.\+hpp\item 
+src/exceptions.\+cpp\end{DoxyCompactItemize}

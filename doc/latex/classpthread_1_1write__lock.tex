@@ -1,0 +1,112 @@
+\hypertarget{classpthread_1_1write__lock}{\section{pthread\+:\+:write\+\_\+lock Class Reference}
+\label{classpthread_1_1write__lock}\index{pthread\+::write\+\_\+lock@{pthread\+::write\+\_\+lock}}
+}
+
+
+{\ttfamily \#include $<$read\+\_\+write\+\_\+lock.\+hpp$>$}
+
+Inheritance diagram for pthread\+:\+:write\+\_\+lock\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classpthread_1_1write__lock}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classpthread_1_1write__lock_a04c5408a921144795bdf17062f72162e}{lock} ()
+\item 
+void \hyperlink{classpthread_1_1write__lock_a9a5a8dbafdd8b3ec3cad7c90df3ebd7b}{try\+\_\+lock} ()
+\item 
+\hyperlink{classpthread_1_1write__lock_a459624fbeb4a84a6a81d21753981e0ea}{write\+\_\+lock} ()
+\item 
+virtual \hyperlink{classpthread_1_1write__lock_a51627cb10bdb8fe024abf5b04a77fe1f}{$\sim$write\+\_\+lock} ()
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+This class acquires the read/write write lock
+
+\begin{DoxyAuthor}{Author}
+herbert koelman (\href{mailto:herbert.koelman@me.com}{\tt herbert.\+koelman@me.\+com}) 
+\end{DoxyAuthor}
+\begin{DoxySince}{Since}
+v1.\+6.\+0 
+\end{DoxySince}
+
+
+Definition at line 85 of file read\+\_\+write\+\_\+lock.\+hpp.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classpthread_1_1write__lock_a459624fbeb4a84a6a81d21753981e0ea}{\index{pthread\+::write\+\_\+lock@{pthread\+::write\+\_\+lock}!write\+\_\+lock@{write\+\_\+lock}}
+\index{write\+\_\+lock@{write\+\_\+lock}!pthread\+::write\+\_\+lock@{pthread\+::write\+\_\+lock}}
+\subsubsection[{write\+\_\+lock}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+::write\+\_\+lock\+::write\+\_\+lock (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classpthread_1_1write__lock_a459624fbeb4a84a6a81d21753981e0ea}
+Constructor/\+Desctructor
+
+this constructor shall allocate any resources required to use the read-\/write lock referenced by rwlock and initializes the lock to an unlocked state. The read/write lock passes N\+U\+L\+L attributes. This means default behavior.
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{classpthread_1_1read__write__lock__exception}{read\+\_\+write\+\_\+lock\+\_\+exception}} & if error conditions preventing this method to succeed. \\
+\hline
+\end{DoxyExceptions}
+
+
+Definition at line 21 of file read\+\_\+write\+\_\+lock.\+cpp.
+
+\hypertarget{classpthread_1_1write__lock_a51627cb10bdb8fe024abf5b04a77fe1f}{\index{pthread\+::write\+\_\+lock@{pthread\+::write\+\_\+lock}!````~write\+\_\+lock@{$\sim$write\+\_\+lock}}
+\index{````~write\+\_\+lock@{$\sim$write\+\_\+lock}!pthread\+::write\+\_\+lock@{pthread\+::write\+\_\+lock}}
+\subsubsection[{$\sim$write\+\_\+lock}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+::write\+\_\+lock\+::$\sim$write\+\_\+lock (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classpthread_1_1write__lock_a51627cb10bdb8fe024abf5b04a77fe1f}
+the descructor, shall destroy the read-\/write lock object referenced by rwlock and release any resources used by the lock. 
+
+Definition at line 26 of file read\+\_\+write\+\_\+lock.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classpthread_1_1write__lock_a04c5408a921144795bdf17062f72162e}{\index{pthread\+::write\+\_\+lock@{pthread\+::write\+\_\+lock}!lock@{lock}}
+\index{lock@{lock}!pthread\+::write\+\_\+lock@{pthread\+::write\+\_\+lock}}
+\subsubsection[{lock}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::write\+\_\+lock\+::lock (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classpthread_1_1write__lock_a04c5408a921144795bdf17062f72162e}
+The method apply a write lock.
+
+The calling thread acquires the write lock if no other thread (reader or writer) holds the read-\/write lock. Otherwise, the thread shall block until it can acquire the lock. The calling thread may deadlock if at the time the call is made it holds the read-\/write lock (whether a read or write lock). 
+
+Definition at line 7 of file read\+\_\+write\+\_\+lock.\+cpp.
+
+\hypertarget{classpthread_1_1write__lock_a9a5a8dbafdd8b3ec3cad7c90df3ebd7b}{\index{pthread\+::write\+\_\+lock@{pthread\+::write\+\_\+lock}!try\+\_\+lock@{try\+\_\+lock}}
+\index{try\+\_\+lock@{try\+\_\+lock}!pthread\+::write\+\_\+lock@{pthread\+::write\+\_\+lock}}
+\subsubsection[{try\+\_\+lock}]{\setlength{\rightskip}{0pt plus 5cm}void pthread\+::write\+\_\+lock\+::try\+\_\+lock (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classpthread_1_1write__lock_a9a5a8dbafdd8b3ec3cad7c90df3ebd7b}
+The method shall apply a write lock, if any thread currently holds the lock (for reading or writing) the method throws an exception.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classpthread_1_1write__lock_a04c5408a921144795bdf17062f72162e}{lock} 
+\end{DoxySeeAlso}
+
+
+Definition at line 14 of file read\+\_\+write\+\_\+lock.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/pthread/read\+\_\+write\+\_\+lock.\+hpp\item 
+src/read\+\_\+write\+\_\+lock.\+cpp\end{DoxyCompactItemize}

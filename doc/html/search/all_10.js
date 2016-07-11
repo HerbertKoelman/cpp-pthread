@@ -12,5 +12,5 @@ var searchData=
   ['timedout',['timedout',['../group__concurrency.html#gga823f88a2bf448bd5bd5273b826830bdda1c2d3e88a4ad820053c817753867b31a',1,'pthread']]],
   ['timeout_5fexception',['timeout_exception',['../classpthread_1_1timeout__exception.html',1,'pthread']]],
   ['timeout_5fexception',['timeout_exception',['../classpthread_1_1timeout__exception.html#aad3e5ac05faa1f0d8a7779678e70ad22',1,'pthread::timeout_exception']]],
-  ['try_5flock',['try_lock',['../classpthread_1_1mutex.html#af718b37e950e7928617b264915af0a73',1,'pthread::mutex']]]
+  ['try_5flock',['try_lock',['../classpthread_1_1mutex.html#af718b37e950e7928617b264915af0a73',1,'pthread::mutex::try_lock()'],['../classpthread_1_1read__lock.html#a978298bd5a0812f6440dae48e41a7f6a',1,'pthread::read_lock::try_lock()'],['../classpthread_1_1write__lock.html#a9a5a8dbafdd8b3ec3cad7c90df3ebd7b',1,'pthread::write_lock::try_lock()']]]
 ];

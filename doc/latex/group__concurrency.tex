@@ -1,5 +1,6 @@
-\hypertarget{group__concurrency}{}\section{Concurrency}
+\hypertarget{group__concurrency}{\section{Concurrency}
 \label{group__concurrency}\index{Concurrency@{Concurrency}}
+}
 \subsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
@@ -8,6 +9,15 @@ class \hyperlink{classpthread_1_1condition__variable}{pthread\+::condition\+\_\+
 class \hyperlink{classpthread_1_1lock__guard}{pthread\+::lock\+\_\+guard$<$ Mutex\+Type $>$}
 \item 
 class \hyperlink{classpthread_1_1mutex}{pthread\+::mutex}
+\item 
+class \hyperlink{classpthread_1_1read__lock}{pthread\+::read\+\_\+lock}
+\item 
+class \hyperlink{classpthread_1_1write__lock}{pthread\+::write\+\_\+lock}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef write\+\_\+lock \hyperlink{group__concurrency_ga067fcec8c2b20e2e487c123c2f82d2df}{pthread\+::read\+\_\+write\+\_\+lock}
 \end{DoxyCompactItemize}
 \subsection*{Enumerations}
 \begin{DoxyCompactItemize}
@@ -26,17 +36,53 @@ herbert koelman (\href{mailto:herbert.koelman@me.com}{\tt herbert.\+koelman@me.\
 \end{DoxyAuthor}
 
 
+\subsection{Typedef Documentation}
+\hypertarget{group__concurrency_ga067fcec8c2b20e2e487c123c2f82d2df}{\index{Concurrency@{Concurrency}!read\+\_\+write\+\_\+lock@{read\+\_\+write\+\_\+lock}}
+\index{read\+\_\+write\+\_\+lock@{read\+\_\+write\+\_\+lock}!Concurrency@{Concurrency}}
+\subsubsection[{read\+\_\+write\+\_\+lock}]{\setlength{\rightskip}{0pt plus 5cm}typedef write\+\_\+lock {\bf pthread\+::read\+\_\+write\+\_\+lock}}}\label{group__concurrency_ga067fcec8c2b20e2e487c123c2f82d2df}
+A read/write lock.
+
+
+\begin{DoxyPre}{\ttfamily 
+...
+\hyperlink{group__concurrency_ga067fcec8c2b20e2e487c123c2f82d2df}{pthread::read\_write\_lock} \_rwlock;}\end{DoxyPre}
+
+
+
+\begin{DoxyPre}{\ttfamily \{
+  // get a read lock
+  pthread::lock\_guard<pthread::read\_lock> lock(\_rwlck);
+  ...
+\} // \hyperlink{classpthread_1_1lock__guard}{lock\_guard} unlock lock here}\end{DoxyPre}
+
+
+
+\begin{DoxyPre}{\ttfamily \{
+  // get write lock
+  pthread::lock\_guard<pthread::write\_lock> lock(\_rwlck);
+  ...
+\} // \hyperlink{classpthread_1_1lock__guard}{lock\_guard} unlock lock here}\end{DoxyPre}
+
+
+
+\begin{DoxyPre}{\ttfamily }\end{DoxyPre}
+ 
+
+Definition at line 139 of file read\+\_\+write\+\_\+lock.\+hpp.
+
+
+
 \subsection{Enumeration Type Documentation}
-\index{Concurrency@{Concurrency}!cv\+\_\+status@{cv\+\_\+status}}
+\hypertarget{group__concurrency_ga823f88a2bf448bd5bd5273b826830bdd}{\index{Concurrency@{Concurrency}!cv\+\_\+status@{cv\+\_\+status}}
 \index{cv\+\_\+status@{cv\+\_\+status}!Concurrency@{Concurrency}}
-\subsubsection[{\texorpdfstring{cv\+\_\+status}{cv\_status}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf pthread\+::cv\+\_\+status}}\hypertarget{group__concurrency_ga823f88a2bf448bd5bd5273b826830bdd}{}\label{group__concurrency_ga823f88a2bf448bd5bd5273b826830bdd}
+\subsubsection[{cv\+\_\+status}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf pthread\+::cv\+\_\+status}}}\label{group__concurrency_ga823f88a2bf448bd5bd5273b826830bdd}
 condition variable current wait status. \begin{Desc}
 \item[Enumerator]\par
 \begin{description}
 \index{no\+\_\+timeout@{no\+\_\+timeout}!Concurrency@{Concurrency}}\index{Concurrency@{Concurrency}!no\+\_\+timeout@{no\+\_\+timeout}}\item[{\em 
-no\+\_\+timeout\hypertarget{group__concurrency_gga823f88a2bf448bd5bd5273b826830bdda633b1bc5140f77a22f2c26bea4fa3398}{}\label{group__concurrency_gga823f88a2bf448bd5bd5273b826830bdda633b1bc5140f77a22f2c26bea4fa3398}
+\hypertarget{group__concurrency_gga823f88a2bf448bd5bd5273b826830bdda633b1bc5140f77a22f2c26bea4fa3398}{no\+\_\+timeout}\label{group__concurrency_gga823f88a2bf448bd5bd5273b826830bdda633b1bc5140f77a22f2c26bea4fa3398}
 }]unblocked before a timeout occured \index{timedout@{timedout}!Concurrency@{Concurrency}}\index{Concurrency@{Concurrency}!timedout@{timedout}}\item[{\em 
-timedout\hypertarget{group__concurrency_gga823f88a2bf448bd5bd5273b826830bdda1c2d3e88a4ad820053c817753867b31a}{}\label{group__concurrency_gga823f88a2bf448bd5bd5273b826830bdda1c2d3e88a4ad820053c817753867b31a}
+\hypertarget{group__concurrency_gga823f88a2bf448bd5bd5273b826830bdda1c2d3e88a4ad820053c817753867b31a}{timedout}\label{group__concurrency_gga823f88a2bf448bd5bd5273b826830bdda1c2d3e88a4ad820053c817753867b31a}
 }]condition timedout \end{description}
 \end{Desc}
 
