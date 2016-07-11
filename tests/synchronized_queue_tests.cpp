@@ -9,7 +9,7 @@
 #include <memory>
 #include <ctime>
 
-#define MESSAGES_TO_PRODUCE 10 //500000 // messages produced
+#define MESSAGES_TO_PRODUCE 5000 // messages produced
 #define CONSUMER_PROCESSING_DURATION 20 // millis
 
 #define CONSUMERS 10 // number of consumer threads

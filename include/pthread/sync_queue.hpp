@@ -80,19 +80,23 @@ namespace pthread {
       }
       
       /** @return current number of elements in the queue */
-      size_t size() const {
 #if __cplusplus < 201103L
+      size_t size() const {
         // we use read/write locks when std::atomic is not available
         pthread::lock_guard<pthread::read_lock> lck(_rwlock);
+#else
+      size_t size() const {
 #endif
         return _items.size();
       }
 
       /** @return maximun number of items that can be put in the queue */
-      size_t max_size() const {
 #if __cplusplus < 201103L
+      size_t max_size() {
         // we use read/write locks when std::atomic is not available
         pthread::lock_guard<pthread::read_lock> lck(_rwlock);
+#else
+      size_t max_size() const {
 #endif
         return _max_size ;
       }
