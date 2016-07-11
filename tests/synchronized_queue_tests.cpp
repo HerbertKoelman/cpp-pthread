@@ -9,7 +9,7 @@
 #include <memory>
 #include <ctime>
 
-#define MESSAGES_TO_PRODUCE 500000 // messages produced
+#define MESSAGES_TO_PRODUCE 5000 // messages produced
 #define CONSUMER_PROCESSING_DURATION 20 // millis
 
 #define CONSUMERS 10 // number of consumer threads
@@ -118,6 +118,7 @@ class consumer : public status, public pthread::abstract_thread {
 #endif
       printf ("starting consumer\n");
       message_ptr pmessage ; // (new message("hello"));
+      printf("queue max size is %zu\n", _queue.max_size());
       while( running() ){
 
         try{

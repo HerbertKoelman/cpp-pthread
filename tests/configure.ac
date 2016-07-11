@@ -36,6 +36,14 @@ do
 done
 AC_SUBST(OBJECTS,$OBJECTS)
 
+TESTS=""
+for src in *tests.cpp
+do
+  obj=`basename $src .cpp`
+  TESTS="$TESTS $obj"
+done
+AC_SUBST(TESTS,$TESTS)
+
 AC_MSG_CHECKING([for specific $CXX compiler options])
 case "$CXX" in
   xlC_r | xlC)

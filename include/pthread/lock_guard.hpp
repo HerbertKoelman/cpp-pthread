@@ -47,8 +47,9 @@ namespace pthread {
      *
      * @param m reference to a valid pthread::mutex
      */
-    explicit lock_guard(MutexType &m): _mutex(&m) {
-        _mutex->lock();
+    explicit lock_guard(MutexType &m){ //: _mutex(&m) {
+      _mutex = &m ;
+      _mutex->lock();
     }
     
     /** The destructor release the guarded mutex.
