@@ -72,6 +72,7 @@ namespace pthread {
      * @param message timeout condition
      */
     explicit timeout_exception(const std::string &message);
+
   };
 
   /** throw to indicate that something went wrong with a mutex.
@@ -113,6 +114,7 @@ namespace pthread {
      * @param pthread_errno error returned by the pthread function
      */
     condition_variable_exception( const std::string &message, const int pthread_errno = -1);
+
     virtual ~condition_variable_exception(){
       // Intentionally unimplemented...
     };
@@ -145,7 +147,11 @@ namespace pthread {
        * @param msg explanatory message.
        */
       explicit queue_exception(const std::string &msg = "queue_error occured.");
-      
+
+      virtual ~queue_exception(){
+        // intintional...
+      };
+
       /** @return an explanatory message
        */
 #if __cplusplus < 201103L

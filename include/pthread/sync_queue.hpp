@@ -125,7 +125,7 @@ namespace pthread {
        *
        * @param ms max queue size (default is 10).
        */
-      sync_queue( int ms = 10 );
+      explicit sync_queue( int ms = 10 );
       
       /** destructor */
       virtual ~sync_queue();
