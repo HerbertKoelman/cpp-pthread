@@ -624,6 +624,7 @@ ac_includes_default="\
 
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
+TESTS
 OBJECTS
 BITS
 EGREP
@@ -3669,6 +3670,15 @@ do
   OBJECTS="$OBJECTS $obj"
 done
 OBJECTS=$OBJECTS
+
+
+TESTS=""
+for src in *tests.cpp
+do
+  obj=`basename $src .cpp`
+  TESTS="$TESTS $obj"
+done
+TESTS=$TESTS
 
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for specific $CXX compiler options" >&5
