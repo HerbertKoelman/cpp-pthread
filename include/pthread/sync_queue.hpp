@@ -81,7 +81,7 @@ namespace pthread {
       
       /** @return current number of elements in the queue */
 #if __cplusplus < 201103L
-      size_t size() const {
+      size_t size() {
         // we use read/write locks when std::atomic is not available
         pthread::lock_guard<pthread::read_lock> lck(_rwlock);
 #else
