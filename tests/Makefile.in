@@ -30,16 +30,17 @@ CPPFLAGS=@CPPFLAGS@
 LDFLAGS=@LDFLAGS@
 LIBS=@LIBS@
 
-OBJECTS=without-cpp11-pthread-tests.o
-TARGETS=without-cpp11-pthread-tests exceptions-tests
+OBJECTS=@OBJECTS@
+TARGETS=@TESTS@
 
 all:${TARGETS}
     
-clean: globber
-
-globber:
-	${RM} *.o core core.* *.a *.out
+clean: 
+	${RM} *.o
 	${RM} ${TARGETS}
+
+globber: clean
+	${RM} core core.* *.a *.out
 	$(RM) *unc-backup*~ *unc-backup*~
 	$(RM) ULOG*
 

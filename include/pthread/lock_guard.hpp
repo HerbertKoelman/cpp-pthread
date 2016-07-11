@@ -16,9 +16,13 @@
 #include "pthread/config.h"
 #include "pthread/mutex.hpp"
 
+
 namespace pthread {
   
-  using namespace std ;
+  /** \addtogroup concurrency
+   *
+   * @{
+   */
   
   class condition_variable ;
 
@@ -43,8 +47,9 @@ namespace pthread {
      *
      * @param m reference to a valid pthread::mutex
      */
-    explicit lock_guard(MutexType &m): _mutex(&m) {
-        _mutex->lock();
+    explicit lock_guard(MutexType &m){ //: _mutex(&m) {
+      _mutex = &m ;
+      _mutex->lock();
     }
     
     /** The destructor release the guarded mutex.
@@ -70,6 +75,7 @@ namespace pthread {
     MutexType *_mutex;
   };
   
+  /** @} */
 } // namespace pthread
 
 #endif /* pthread_lock_guard_H */

@@ -10,7 +10,7 @@
 // recommandation for more info p.285 §8.3.1).
 #include <pthread.h>
 #include <string>
-#include <time.h>
+#include <ctime>
 #include <sys/time.h>
 
 #include "pthread/config.h"
@@ -20,7 +20,15 @@
 #include "pthread/lock_guard.hpp"
 
 namespace pthread {
-  
+
+  /** \addtogroup concurrency Concurrency
+   *
+   * Set of classes to handle concurrent access to shared ressources.
+   *
+   * @author herbert koelman (herbert.koelman@me.com)
+   * @{
+   */
+
   /** condition variable current wait status. */
   enum cv_status {
     no_timeout, /*!< unblocked before a timeout occured */
@@ -43,7 +51,7 @@ namespace pthread {
    *
    * Upon successful return, the mutex shall have been locked and shall be owned by the calling thread.
    *
-   * @author herbert koelman
+   * @author herbert koelman (herbert.koelman@me.com)
    */
   class condition_variable {
   public:
@@ -194,6 +202,8 @@ namespace pthread {
     pthread_cond_t _condition;
   };
   
+  /** @} */
+  
   // template implementation ----------------------
   
   template<class Lambda> bool condition_variable::wait( mutex &mtx, Lambda lambda){
@@ -221,7 +231,7 @@ namespace pthread {
     milliseconds(millis); // update timeout
     bool stop_waiting = lambda(); // returns â€‹false if the waiting should be continued.
     
-    while(! stop_waiting && status == no_timeout){
+    while((! stop_waiting) && (status == no_timeout)){
       
       rc  = pthread_cond_timedwait ( &_condition, &mtx._mutex, &timeout );
       
@@ -232,11 +242,11 @@ namespace pthread {
           break;
           
         case EINVAL:
-          throw condition_variable_exception("The value specified by abstime is invalid.", rc);
+          throw condition_variable_exception("The value specified by abstime is invalid.", rc); // NOSONAR we use throw instead of return.
           break;
           
         case EPERM:
-          throw condition_variable_exception("The mutex was not owned by the current thread at the time of the call.", rc);
+          throw condition_variable_exception("The mutex was not owned by the current thread at the time of the call.", rc); // NOSONAR we use throw instead of return.
           break;
         default:
           status = no_timeout ;
@@ -255,6 +265,9 @@ namespace pthread {
     // return wait_for(*(lck.mutex()),millis, lambda);
     return wait_for(*(lck._mutex),millis, lambda);
   };
+
   
 } // namespace pthread
+
+
 #endif

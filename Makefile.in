@@ -27,12 +27,12 @@ pkg:
 	tar cf - `git ls-files`  | gzip -c > distrib/$(PACKAGE)
 
 globber:clean
-	-$(RM) -R Makefile autom4te.cache config.log config.status 
+	-$(RM) -R Makefile autom4te.cache config.log config.status doxyfile sonar-project.properties
 
 clean:
 	-(cd src && $(MAKE) clean)
 
-codecheck: clean all
+codecheck: all
 		$(CODECHECK)
 
 version:

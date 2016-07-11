@@ -43,12 +43,14 @@ case "$CXX" in
     CPPFLAGS="-qlanglvl=extended0x:decltype:static_assert:rvaluereferences -qsourcetype=c++ $CPPFLAGS"
     CFLAGS="-bh:5 -qmaxmem=-1 -q$BITS $CFLAGS"
     CXXFLAGS="-O"
+    AC_SUBST(ARFLAGS,"-X$bits")
     LDFLAGS="$LDFLAGS -brtl -bmaxdata:0x80000000"
     AC_MSG_RESULT([using large memory model (maxdata:0x80000000), optimising level 2 (-O),using run-time link method (-brtl)])
     ;;
   g++ | gcc)
     CPPFLAGS="-x c++ -std=c++11 -frtti $CPPFLAGS"
     CXXFLAGS="-O2"
+    AC_SUBST(ARFLAGS,"")
     AC_MSG_RESULT([yes])
   ;;
   *)
@@ -60,7 +62,7 @@ AC_CHECK_LIB([pthread], [pthread_create],[],[AC_ERROR([missing pthread library.]
 
 # Checks for header files.
 #AC_HEADER_STDC
-AC_CHECK_HEADERS([nl_types.h stdlib.h string.h unistd.h])
+#AC_CHECK_HEADERS([nl_types.h stdlib.h string.h unistd.h])
 
 AC_CHECK_HEADER([mutex],  [AC_DEFINE([HAVE_CPP11_MUTEX])])
 AC_CHECK_HEADER([chrono], [AC_DEFINE([HAVE_CPP11_CHRONO])])
@@ -70,18 +72,14 @@ AC_CHECK_HEADER([thread], [AC_DEFINE([HAVE_CPP11_THREAD])])
 #AC_C_CONST
 #AC_C_INLINE
 #AC_HEADER_TIME
+#AC_HEADER_STDBOOL
 
 # Checks for library functions.
 #AC_TYPE_SIGNAL
-
-# Checks for typedefs, structures, and compiler characteristics.
-AC_HEADER_STDBOOL
-
-# Checks for library functions.
 #AC_FUNC_ERROR_AT_LINE
 #AC_FUNC_MALLOC
 AC_CHECK_FUNCS([gettimeofday])
 
-AC_CONFIG_FILES([Makefile pthread.cpp])
+AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
 

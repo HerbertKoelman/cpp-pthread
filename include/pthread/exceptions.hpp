@@ -11,18 +11,27 @@
 
 #include <pthread.h>
 
-#include <errno.h>
+#include <cerrno>
 #include <string>    // std::string
 #include <cstring>
 #include <exception> // std::exception
 
+
 namespace pthread {
   
-  using namespace std ;
+//  using namespace std ;
+
+  /** \addtogroup exception Errors and exceptions
+   *
+   * Threading related errors and exceptions
+   * @author herbert koelman (herbert.koelman@me.com)
+   *
+   * @{
+   */
   
   /** general purpose pthread exception.
    */
-  class pthread_exception: public exception {
+  class pthread_exception: public std::exception {
     
   public:
     
@@ -30,7 +39,7 @@ namespace pthread {
      * @param message error message
      * @param pthread_errno a pthread function return code.
      */
-    pthread_exception( const string &message, const int pthread_errno = -1 );
+    pthread_exception( const std::string &message, const int pthread_errno = -1 );
 
     virtual ~pthread_exception();
     
@@ -62,7 +71,8 @@ namespace pthread {
      *
      * @param message timeout condition
      */
-    timeout_exception(const string &message);
+    explicit timeout_exception(const std::string &message);
+
   };
 
   /** throw to indicate that something went wrong with a mutex.
@@ -75,7 +85,21 @@ namespace pthread {
      * @param message short description
      * @param pthread_errno error returned by the pthread function
      */
-    mutex_exception( const std::string &message, const int pthread_errno = -1) ;
+    explicit mutex_exception( const std::string &message, const int pthread_errno = -1) ;
+    
+  };
+
+  /** throw to indicate that something went wrong with a read/write lock
+   */
+  class read_write_lock_exception: public pthread_exception {
+  public:
+
+    /** thrown when read_write_lock actions fail
+     *
+     * @param message short description
+     * @param pthread_errno error returned by the pthread function
+     */
+    explicit read_write_lock_exception( const std::string &message, const int pthread_errno = -1) ;
     
   };
 
@@ -89,8 +113,11 @@ namespace pthread {
      * @param message short description
      * @param pthread_errno error returned by the pthread function
      */
-    condition_variable_exception( const string &message, const int pthread_errno = -1);
-    virtual ~condition_variable_exception(){};
+    condition_variable_exception( const std::string &message, const int pthread_errno = -1);
+
+    virtual ~condition_variable_exception(){
+      // Intentionally unimplemented...
+    };
   };
   
   /** thrown to indicate that something went wrong with a thread */
@@ -100,8 +127,73 @@ namespace pthread {
      * @param message short error description.
      * @param pthread_error value return by a function in the pthread library.
      */
-    thread_exception(const string &message, const int pthread_error = -1);
+    thread_exception(const std::string &message, const int pthread_error = -1);
   };
 
+  namespace util {
+
+    /** \addtogroup exception
+     *
+     * @{
+     */
+    
+    /** thrown when something goes wrong in a synchonized queue.
+     */
+    class queue_exception : public std::exception {
+    public:
+      /**
+       * new instance.
+       *
+       * @param msg explanatory message.
+       */
+      explicit queue_exception(const std::string &msg = "queue_error occured.");
+
+      virtual ~queue_exception(){
+        // intintional...
+      };
+
+      /** @return an explanatory message
+       */
+#if __cplusplus < 201103L
+      virtual const char *what() const throw();
+#else
+      virtual const char *what() const noexcept override;
+#endif
+      
+    protected:
+      std::string _message; //!< message buffer
+    };
+    
+    /** thrown when the queue's max_size is reached
+     */
+    class queue_full: public queue_exception{
+    public:
+      /**
+       * new instance.
+       *
+       * @param msg explanatory message.
+       */
+      explicit queue_full(const std::string &msg = "synchronized_queue full.");
+      
+    };
+    
+    /** thrown when a get operation times out
+     */
+    class queue_timeout: public queue_exception{
+    public:
+      /**
+       * new instance.
+       *
+       * @param msg explanatory message.
+       */
+      explicit queue_timeout(const std::string &msg = "synchronized_queue get/put timed out.");
+      
+    };
+    /** @} */
+  }; // namespace util
+  
+  /** @} */
+  
 } // namespace pthread
+
 #endif

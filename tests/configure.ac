@@ -36,18 +36,26 @@ do
 done
 AC_SUBST(OBJECTS,$OBJECTS)
 
+TESTS=""
+for src in *tests.cpp
+do
+  obj=`basename $src .cpp`
+  TESTS="$TESTS $obj"
+done
+AC_SUBST(TESTS,$TESTS)
+
 AC_MSG_CHECKING([for specific $CXX compiler options])
 case "$CXX" in
   xlC_r | xlC)
-    CPPFLAGS="-qlanglvl=extended0x:decltype:static_assert:rvaluereferences -qsourcetype=c++ -O $CPPFLAGS"
+    CPPFLAGS="-D__IBMCPP_TR1__ -qlanglvl=extended0x:decltype:static_assert:rvaluereferences -qsourcetype=c++ -O $CPPFLAGS"
     CFLAGS="-bh:5 -qmaxmem=-1 -q$BITS $CFLAGS"
-    CXXFLAGS="-O"
+    CXXFLAGS="-g"
     LDFLAGS="$LDFLAGS -brtl -bmaxdata:0x80000000"
     AC_MSG_RESULT([using large memory model (maxdata:0x80000000), optimising level 2 (-O),using run-time link method (-brtl)])
   ;;
   g++ | gcc)
     CPPFLAGS="-x c++ -std=c++11 -frtti $CPPFLAGS"
-    CXXFLAGS="-O2"
+    CXXFLAGS="-g"
     AC_MSG_RESULT([yes])
   ;;
   *)
@@ -76,7 +84,7 @@ AC_CHECK_LIB([cpp-pthread], [cpp_pthread_version],[],[AC_ERROR([missing cpp-thre
 # Checks for library functions.
 #AC_FUNC_ERROR_AT_LINE
 #AC_FUNC_MALLOC
-AC_CHECK_FUNCS([gettimeofday])
+#AC_CHECK_FUNCS([gettimeofday])
 
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
