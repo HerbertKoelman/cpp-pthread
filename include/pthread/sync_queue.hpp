@@ -38,7 +38,7 @@ namespace pthread {
      *
      * @author herbert koelman (herbert.koelman@me.com)
      * @since 1.5
-     * @example tests/synchronized_queue_tests.cpp
+     * @example synchronized_queue_tests.cpp
      */
     template<typename T> class sync_queue {
     public:

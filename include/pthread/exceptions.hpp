@@ -30,7 +30,7 @@ namespace pthread {
    */
   
   /** general purpose pthread exception.
-   * @example tests/exceptions-tests.cpp
+   * @example exceptions-tests.cpp
    */
   class pthread_exception: public std::exception {
     
