@@ -39,6 +39,8 @@ else
   mkdir -p ./lib && AC_MSG_RESULT([./lib created.])
 fi
 
+AC_CONFIG_SUBDIRS(src)
+
 HEADERS=""
 for header in include/pthread/*.hpp include/pthread/*.h
 do
@@ -46,7 +48,6 @@ do
 done
 AC_SUBST(HEADERS,$HEADERS)
 
-AC_CONFIG_SUBDIRS(src)
 AC_CONFIG_FILES([Makefile doxyfile sonar-project.properties])
 AC_OUTPUT
 
