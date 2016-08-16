@@ -59,7 +59,7 @@ More detailed information can be found in this [RedBook](http://www.redbooks.ibm
 * [project's home](https://github.com/HerbertKoelman/cpp-pthread)
 * [project's doxygen](http://herbertkoelman.github.io/cpp-pthread/doc/html/)
 
-#### other
+#### other things
 
 * POSIX Threads [documentation](http://pubs.opengroup.org/onlinepubs/007908799/xsh/threads.html)
 * [std::thread](http://en.cppreference.com/w/cpp/thread/thread) implementation we try to mimic
