@@ -69,5 +69,5 @@ More detailed information can be found in this [RedBook](http://www.redbooks.ibm
 
 ### misc
 
-* author herbert koelman(herbert.koelman@me.com)
+* author herbert koelman (herbert.koelman@me.com)
 * github [cpp-pthread](https://github.com/HerbertKoelman/cpp-pthread)
