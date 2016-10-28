@@ -18,7 +18,7 @@
 
 
 namespace pthread {
-  
+
   /** \addtogroup concurrency
    *
    * @{
@@ -26,7 +26,7 @@ namespace pthread {
 
   /** This class acquires the read lock.
    *
-   * This class cannot be instaiated as it's main putpose is to implement read locks. To use a read lock create 
+   * This class cannot be instaiated as it's main putpose is to implement read locks. To use a read lock create
    * either a read_write_lock or a write_lock.
    *
    * @author herbert koelman (herbert.koelman@me.com)
@@ -42,19 +42,19 @@ namespace pthread {
        * it can acquire the lock. The calling thread may deadlock if at the time the call is made it holds the read-write lock (whether a read or write lock).
        */
       void lock ();
-      
-      /** The method shall apply a read lock, if any thread currently holds the lock (for reading or writing) 
+
+      /** The method shall apply a read lock, if any thread currently holds the lock (for reading or writing)
        * the method throws an exception.
        *
        @see lock
        */
       void try_lock ();
-      
+
       /** release the read lock.
        @throw read_write_lock_exception if error conditions preventing this method to succeed.
        */
       void unlock ();
-    
+
 
       /**
        * the descructor, shall destroy the read-write lock object referenced by rwlock and release any resources used by the lock.
@@ -62,17 +62,17 @@ namespace pthread {
        virtual ~read_lock ();
 
     protected:
-    
+
       /**
        Constructor/Desctructor
-     
+
        this constructor shall allocate any resources required to use the read-write lock referenced by rwlock and initializes the lock to an unlocked state. The read/write lock
        passes NULL attributes. This means default behavior.
-     
+
        @throw read_write_lock_exception if error conditions preventing this method to succeed.
        */
       read_lock ();
-    
+
       /** read/write lock reference */
       pthread_rwlock_t _rwlock;
   };
@@ -90,14 +90,14 @@ namespace pthread {
        * it can acquire the lock. The calling thread may deadlock if at the time the call is made it holds the read-write lock (whether a read or write lock).
        */
       void lock ();
-      
-      /** The method shall apply a write lock, if any thread currently holds the lock (for reading or writing) 
+
+      /** The method shall apply a write lock, if any thread currently holds the lock (for reading or writing)
        * the method throws an exception.
        *
        @see lock
        */
       void try_lock ();
-      
+
       /**
        Constructor/Desctructor
 
@@ -137,7 +137,7 @@ namespace pthread {
    *
    */
   typedef write_lock read_write_lock;
-  
+
   /** @} */
 } // namespace pthread
 

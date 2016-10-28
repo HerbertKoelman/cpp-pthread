@@ -10,11 +10,11 @@ sonar.verbose=false
 #sonar.working.directory=/path/to/working/folder/.sonar
 
 # The project key that is unique for each project.
-sonar.projectKey=pmu:cpp_pthread
+sonar.projectKey=ITC-cpp-pthread
 
 # Name of the project that will be displayed on the web interface.
 sonar.projectName=pmu:cpp-pthread
-sonar.projectVersion=@PACKAGE_VERSION@
+sonar.projectVersion=@BUILD@
 
 # Comma-separated paths to directories containing source files
 sonar.sources=src,include/pthread

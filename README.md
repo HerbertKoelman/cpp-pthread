@@ -8,10 +8,11 @@ Of course, this library is a replacement of C++11 features, it is best to use th
 
 To use this library:
 
-    configure
+    configure --enable-release
     make
     make install
 
+> The configure argument --enable-release tells configure to figure out what version your build (this is done through `git` commands)
 Install moves files into your system's default localtion for headers and libraries (often /usr/local/include and /usr/local/lib). Use this command to change install target directory:
 
     configure --prefix=/usr/local
@@ -59,7 +60,7 @@ More detailed information can be found in this [RedBook](http://www.redbooks.ibm
 * [project's home](https://github.com/HerbertKoelman/cpp-pthread)
 * [project's doxygen](http://herbertkoelman.github.io/cpp-pthread/doc/html/)
 
-#### other
+#### other things
 
 * POSIX Threads [documentation](http://pubs.opengroup.org/onlinepubs/007908799/xsh/threads.html)
 * [std::thread](http://en.cppreference.com/w/cpp/thread/thread) implementation we try to mimic
@@ -69,5 +70,5 @@ More detailed information can be found in this [RedBook](http://www.redbooks.ibm
 
 ### misc
 
-* author herbert koelman
+* author herbert koelman (herbert.koelman@me.com)
 * github [cpp-pthread](https://github.com/HerbertKoelman/cpp-pthread)

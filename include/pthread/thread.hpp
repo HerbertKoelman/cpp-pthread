@@ -198,7 +198,7 @@ namespace pthread {
    *       pthread::lock_guard<pthread::mutex> lck(mtx);
    *
    *       bool stop_waiting = true; // if lambda syntax is not availbale then use this kind of implementation
-   *       auto delay = _sleep; // use sleep seconds to calculate point in time timeout
+   *       auto delay = _sleep; // use sleep seconds to calculate point in time timeou
    *       while ( ! (stop_waiting = (counter >= 10000)) && (condition.wait_for(mtx, delay) == pthread::cv_status::no_timeout)){
    *         delay = -1 ; // if timeout millis is negatif, then we keep last timeout calculation.
    *       }
