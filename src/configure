@@ -630,6 +630,8 @@ BITS
 EGREP
 GREP
 CXXCPP
+BUILD
+LN_S
 RANLIB
 MV
 AR
@@ -684,6 +686,8 @@ SHELL'
 ac_subst_files=''
 ac_user_opts='
 enable_option_checking
+enable_build
+enable_release
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1301,6 +1305,13 @@ if test -n "$ac_init_help"; then
      short | recursive ) echo "Configuration of cpp-pthread v1.6.1:";;
    esac
   cat <<\_ACEOF
+
+Optional Features:
+  --disable-option-checking  ignore unrecognized --enable/--with options
+  --disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
+  --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
+  --enable-build          build name.
+  --enable-release        build as release.
 
 Some influential environment variables:
   CXX         C++ compiler command
@@ -2358,11 +2369,6 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 ac_config_headers="$ac_config_headers ../include/pthread/config.h"
 
 
-cat >>confdefs.h <<_ACEOF
-#define CPP_PTHREAD_VERSION "$PACKAGE_NAME $PACKAGE_VERSION - $(git log --pretty='%H' | head -1) - compiled on `uname -sv`."
-_ACEOF
-
-
 # Checks for programs.
 ac_ext=cpp
 ac_cpp='$CXXCPP $CPPFLAGS'
@@ -3385,6 +3391,42 @@ else
   RANLIB="$ac_cv_prog_RANLIB"
 fi
 
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ln -s works" >&5
+$as_echo_n "checking whether ln -s works... " >&6; }
+LN_S=$as_ln_s
+if test "$LN_S" = "ln -s"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no, using $LN_S" >&5
+$as_echo "no, using $LN_S" >&6; }
+fi
+
+
+# Check whether --enable-build was given.
+if test "${enable_build+set}" = set; then :
+  enableval=$enable_build; BUILD=$enable_build
+fi
+
+# Check whether --enable-release was given.
+if test "${enable_release+set}" = set; then :
+  enableval=$enable_release; BUILD=$PACKAGE_VERSION
+fi
+
+
+if test -z "$BUILD"
+then
+  BUILD="SNAPSHOT"
+  { $as_echo "$as_me:${as_lineno-$LINENO}: using default BUILD name $BUILD" >&5
+$as_echo "$as_me: using default BUILD name $BUILD" >&6;}
+fi
+BUILD=$BUILD
+
+
+cat >>confdefs.h <<_ACEOF
+#define CPP_PTHREAD_VERSION "$PACKAGE_NAME $BUILD - $(git log --pretty='commit: %h, %cn (%cI)' | head -1) - compiled on `uname -sv`."
+_ACEOF
+
 
 CFLAGS="-I ../include -I ./"
 
@@ -3817,12 +3859,12 @@ _ACEOF
 
 if test $ac_cv_sizeof_long == "8"
 then
+#  AC_MSG_RESULT([using 64 bits (long is $ac_cv_sizeof_long bytes)])
   BITS="64"
 
   bits=64
 else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: using 32 bits (default)" >&5
-$as_echo "using 32 bits (default)" >&6; }
+#  AC_MSG_RESULT([using 32 bits (long is $ac_cv_sizeof_long bytes)])
   BITS="32"
 
   bits=32

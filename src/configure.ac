@@ -7,7 +7,6 @@ AC_LANG(C++)
 AC_CONFIG_SRCDIR([thread.cpp])
 AC_CONFIG_AUX_DIR([/usr/bin ../ ../bin])
 AC_CONFIG_HEADERS([../include/pthread/config.h])
-AC_DEFINE_UNQUOTED(CPP_PTHREAD_VERSION, ["$PACKAGE_NAME $PACKAGE_VERSION - $(git log --pretty='%H' | head -1) - compiled on `uname -sv`."], [pthread C++ wrapper.])
 
 # Checks for programs.
 AC_PROG_CXX([xlC_r xlC g++ c++ gcc cl KCC CC cxx cc++ aCC ])
@@ -15,16 +14,29 @@ AC_PROG_CC([xlc xlc_r gcc cl cc])
 AC_CHECK_PROG([AR],[ar],[ar -rv])
 AC_CHECK_PROG([MV],[mv],[mv],[echo "no mv command found"])
 AC_PROG_RANLIB
+AC_PROG_LN_S
+
+AC_ARG_ENABLE([build], AS_HELP_STRING([--enable-build],[build name.]), BUILD=$enable_build)
+AC_ARG_ENABLE([release], AS_HELP_STRING([--enable-release],[build as release.]), BUILD=$PACKAGE_VERSION)
+
+if test -z "$BUILD" 
+then
+  BUILD="SNAPSHOT"
+  AC_MSG_NOTICE([using default BUILD name $BUILD])
+fi
+AC_SUBST(BUILD,$BUILD)
+AC_DEFINE_UNQUOTED(CPP_PTHREAD_VERSION, ["$PACKAGE_NAME $BUILD - $(git log --pretty='commit: %h, %cn (%cI)' | head -1) - compiled on `uname -sv`."], [pthread C++ wrapper.])
 
 CFLAGS="-I ../include -I ./"
 
 AC_CHECK_SIZEOF([long])
 if test $ac_cv_sizeof_long == "8" 
 then
+#  AC_MSG_RESULT([using 64 bits (long is $ac_cv_sizeof_long bytes)])
   AC_SUBST(BITS,"64")
   bits=64
 else
-  AC_MSG_RESULT([using 32 bits (default)])
+#  AC_MSG_RESULT([using 32 bits (long is $ac_cv_sizeof_long bytes)])
   AC_SUBST(BITS,"32")
   bits=32
 fi
