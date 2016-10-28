@@ -27,7 +27,7 @@
 #include "pthread/sync_queue.hpp"
 #include "pthread/exceptions.hpp"
 
-/** \namespace pthread 
+/** \namespace pthread
  *
  * C++11 pthread mock implementations
 */
@@ -35,6 +35,6 @@ namespace pthread {
 
   /** @return library version */
   extern "C" const char *cpp_pthread_version();
-  
+
 }
 #endif /* pthread_pthread_hpp */

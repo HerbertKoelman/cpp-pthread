@@ -34,11 +34,11 @@ namespace pthread {
     no_timeout, /*!< unblocked before a timeout occured */
     timedout    /*!< condition timedout */
   };
-  
+
   /** Condition variable.
    *
    * The condition_variable class is a synchronization primitive that can be used to block a thread, or multiple threads
-   * at the same time, until another thread both modifies a shared variable (the condition), and notifies the 
+   * at the same time, until another thread both modifies a shared variable (the condition), and notifies the
    * condition_variable.
    *
    * The thread that intends to modify the variable has to
@@ -55,7 +55,7 @@ namespace pthread {
    */
   class condition_variable {
   public:
-    
+
     /** Wait for condition to be signaled.
      *
      * This method atomically release mutex and cause the calling thread to block; atomically here means "atomically with respect to
@@ -68,11 +68,11 @@ namespace pthread {
      * @see notify_all
      */
     void wait ( mutex &mtx );
-    
-    /** @see wait
+
+    /** @see wai
      */
     void wait ( lock_guard<pthread::mutex> lck);
-    
+
     /** Wait for condition to be signaled.
      *
      * This method atomically release mutex and cause the calling thread to block; atomically here means "atomically with respect to
@@ -90,7 +90,7 @@ namespace pthread {
      * @see notify_all
      */
     template<class Lambda> bool wait( mutex &mtx, Lambda lambda);
-    
+
     /** Wait for condition to be signaled.
      *
      * This method atomically release mutex and cause the calling thread to block; atomically here means "atomically with respect to
@@ -108,7 +108,7 @@ namespace pthread {
      * @see notify_all
      */
     template<class Lambda> bool wait( lock_guard<pthread::mutex> &lck, Lambda lambda);
-    
+
     /** Wait for condition to be signaled within given time frame.
      *
      * This method atomically release mutex and cause the calling thread to block; atomically here means "atomically with respect to
@@ -116,7 +116,7 @@ namespace pthread {
      *
      * Upon successful return, the mutex has been locked and is owned by the calling thread.
      *
-     * If this method is called with millis < 0 then the timeout time is not recalculated. This make it possible to handle spurious 
+     * If this method is called with millis < 0 then the timeout time is not recalculated. This make it possible to handle spurious
      * unblocking of condition variable without the need of a lambda expression. The call sequence is then: while(! check_condition() && wait_for(lck, 200) == no_tiemout );
      *
      * @param mtx ralated mutex, which must be locked by the current thread.
@@ -131,7 +131,7 @@ namespace pthread {
     /** @see #wait_for (mutex &, int)
      */
     cv_status wait_for (lock_guard<pthread::mutex> &lck, int millis );
-    
+
     /** Wait for condition to be signaled within a given time frame.
      *
      * This method atomically release mutex and cause the calling thread to block; atomically here means "atomically with respect to
@@ -150,7 +150,7 @@ namespace pthread {
      * @see notify_all
      */
     template<class Lambda> bool wait_for( mutex &mtx, int millis, Lambda lambda);
-    
+
     /** Wait for condition to be signaled within a given time frame.
      *
      * This method atomically release mutex and cause the calling thread to block; atomically here means "atomically with respect to
@@ -169,7 +169,7 @@ namespace pthread {
      * @see notify_all
      */
     template<class Lambda> bool wait_for( lock_guard<pthread::mutex> &lck, int millis, Lambda lambda);
-    
+
     /** Signal one waiting thread.
      *
      * The call unblocks at least one of the threads that are blocked on the specified condition variable cond (if any threads are blocked on cond).
@@ -179,7 +179,7 @@ namespace pthread {
 #else
     void notify_one () noexcept;
 #endif
-    
+
     /** Signal all waiting threads.
      *
      * The call unblocks all threads currently blocked on the specified condition variable cond.
@@ -189,32 +189,32 @@ namespace pthread {
 #else
     void notify_all () noexcept ;
 #endif
-    
+
     // constructor/destructor ------------------------------------------------
-    
+
     condition_variable ();
     virtual ~condition_variable();
-    
+
   private:
     void milliseconds( int milliseconds);
-    
+
     timespec timeout;
     pthread_cond_t _condition;
   };
-  
+
   /** @} */
-  
+
   // template implementation ----------------------
-  
+
   template<class Lambda> bool condition_variable::wait( mutex &mtx, Lambda lambda){
-    
+
     bool stop_waiting = lambda();
-    
+
     while(!stop_waiting){
       wait(mtx);
       stop_waiting = lambda(); // handling spurious wakeups
     }
-    
+
     return stop_waiting;
   };
 
@@ -223,28 +223,28 @@ namespace pthread {
     //return wait( *(lck.mutex()), lambda);
     return wait( *(lck._mutex), lambda);
   };
-  
+
   template<class Lambda> bool condition_variable::wait_for( mutex &mtx, int millis, Lambda lambda){
     int rc = 0;
     cv_status status = no_timeout;
-    
-    milliseconds(millis); // update timeout
+
+    milliseconds(millis); // update timeou
     bool stop_waiting = lambda(); // returns ​false if the waiting should be continued.
-    
+
     while((! stop_waiting) && (status == no_timeout)){
-      
+
       rc  = pthread_cond_timedwait ( &_condition, &mtx._mutex, &timeout );
-      
+
       switch (rc){
-          
+
         case ETIMEDOUT:
           status = timedout;
           break;
-          
+
         case EINVAL:
           throw condition_variable_exception("The value specified by abstime is invalid.", rc); // NOSONAR we use throw instead of return.
           break;
-          
+
         case EPERM:
           throw condition_variable_exception("The mutex was not owned by the current thread at the time of the call.", rc); // NOSONAR we use throw instead of return.
           break;
@@ -252,21 +252,21 @@ namespace pthread {
           status = no_timeout ;
           break;
       }
-      
+
       stop_waiting = lambda();
     }
-    
-    
+
+
     return stop_waiting ; //status == cv_status::no_timeout;
   };
-  
+
   template<class Lambda> bool condition_variable::wait_for( lock_guard<pthread::mutex> &lck, int millis, Lambda lambda){
-    
+
     // return wait_for(*(lck.mutex()),millis, lambda);
     return wait_for(*(lck._mutex),millis, lambda);
   };
 
-  
+
 } // namespace pthread
 
 

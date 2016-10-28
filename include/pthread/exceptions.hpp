@@ -18,7 +18,7 @@
 
 
 namespace pthread {
-  
+
 //  using namespace std ;
 
   /** \addtogroup exception Errors and exceptions
@@ -28,14 +28,14 @@ namespace pthread {
    *
    * @{
    */
-  
+
   /** general purpose pthread exception.
    * @example exceptions-tests.cpp
    */
   class pthread_exception: public std::exception {
-    
+
   public:
-    
+
     /**
      * @param message error message
      * @param pthread_errno a pthread function return code.
@@ -43,27 +43,27 @@ namespace pthread {
     pthread_exception( const std::string &message, const int pthread_errno = -1 );
 
     virtual ~pthread_exception();
-    
+
     /** @return exception's error message. */
 #if __cplusplus < 201103L
     virtual const char *what() const throw() ;
 #else
     virtual const char *what() const noexcept override ;
-#endif    
+#endif
 
     /** @return pthread error code that was at the orgin of the error */
     virtual int pthread_errno() ;
-    
+
     /** @return related pthread_errno error message using strerror */
     virtual const char *pthread_errmsg() ;
-    
+
   private:
     std::string  _message;
     //const char  *_message;
     int          _pthread_errno;
-    
+
   };
-  
+
   /** pthread operation timed out.
    */
   class timeout_exception: public pthread_exception{
@@ -87,7 +87,7 @@ namespace pthread {
      * @param pthread_errno error returned by the pthread function
      */
     explicit mutex_exception( const std::string &message, const int pthread_errno = -1) ;
-    
+
   };
 
   /** throw to indicate that something went wrong with a read/write lock
@@ -101,7 +101,7 @@ namespace pthread {
      * @param pthread_errno error returned by the pthread function
      */
     explicit read_write_lock_exception( const std::string &message, const int pthread_errno = -1) ;
-    
+
   };
 
   /** Condition variable exception
@@ -120,7 +120,7 @@ namespace pthread {
       // Intentionally unimplemented...
     };
   };
-  
+
   /** thrown to indicate that something went wrong with a thread */
   class thread_exception: public pthread_exception {
   public:
@@ -137,7 +137,7 @@ namespace pthread {
      *
      * @{
      */
-    
+
     /** thrown when something goes wrong in a synchonized queue.
      */
     class queue_exception : public std::exception {
@@ -160,11 +160,11 @@ namespace pthread {
 #else
       virtual const char *what() const noexcept override;
 #endif
-      
+
     protected:
       std::string _message; //!< message buffer
     };
-    
+
     /** thrown when the queue's max_size is reached
      */
     class queue_full: public queue_exception{
@@ -175,10 +175,10 @@ namespace pthread {
        * @param msg explanatory message.
        */
       explicit queue_full(const std::string &msg = "synchronized_queue full.");
-      
+
     };
-    
-    /** thrown when a get operation times out
+
+    /** thrown when a get operation times ou
      */
     class queue_timeout: public queue_exception{
     public:
@@ -188,13 +188,13 @@ namespace pthread {
        * @param msg explanatory message.
        */
       explicit queue_timeout(const std::string &msg = "synchronized_queue get/put timed out.");
-      
+
     };
     /** @} */
   }; // namespace util
-  
+
   /** @} */
-  
+
 } // namespace pthread
 
 #endif

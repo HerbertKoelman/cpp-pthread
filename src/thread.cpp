@@ -13,11 +13,11 @@
 namespace pthread {
 
   namespace this_thread {
- 
+
     void sleep_for(const int millis){
       usleep(millis * 1000); //NOSONAR this wil be replaced by the much better C++11 implementation std::this_thread::sleep_for
     }
- 
+
     pthread_t get_id(){
       return pthread_self();
     }
@@ -80,13 +80,13 @@ namespace pthread {
 
   thread::thread (const runnable &work, const std::size_t stack_size ): thread(){ // ": thread()" calls the related anonymous constructor
     int rc = 0 ;
- 
+
     /* Initialize and set thread detached attribute */
     rc = pthread_attr_init(&_attr);
     if ( rc != 0){
       throw thread_exception("pthread_attr_init failed.", rc );
     }
- 
+
     rc = pthread_attr_setdetachstate(&_attr, PTHREAD_CREATE_JOINABLE);
     if ( rc != 0 ){
       throw thread_exception("pthread_attr_setdetachstate failed.", rc );
@@ -96,7 +96,7 @@ namespace pthread {
     if ( (stack_size > 0) && (rc != 0) ){
       throw thread_exception("bad stacksize, check size passed to thread::thread; thread not started.", rc );
     }
- 
+
     rc = pthread_create(&_thread, &_attr, thread_startup_runnable, (void *) &work);
     if ( rc != 0){
       throw thread_exception("pthread_create failed.", rc );
@@ -120,7 +120,7 @@ namespace pthread {
   thread& thread::operator=(thread&& other){ //NOSONAR this a C++11 standard interface that we want to comply with.
 
     swap(other);
- 
+
     return *this;
   }
 
@@ -140,7 +140,7 @@ namespace pthread {
   }
 
   void abstract_thread::start(){
- 
+
     _thread = new pthread::thread(*this, _stack_size);
   }
 
@@ -157,13 +157,13 @@ namespace pthread {
 #else
   thread_group::thread_group(bool destructor_joins_first) noexcept: _destructor_joins_first(destructor_joins_first){
 #endif
- 
+
   }
 
   thread_group::~thread_group(){
- 
+
     while(! _threads.empty()){
-   
+
 #if __cplusplus < 201103L
       std::auto_ptr<pthread::abstract_thread> pat(_threads.front());
 #else
@@ -171,7 +171,7 @@ namespace pthread {
 #endif
 
       _threads.pop_front();
-   
+
       if ( _destructor_joins_first && pat->joinable() ){
         try {
           pat->join();
@@ -185,7 +185,7 @@ namespace pthread {
   }
 
   void thread_group::add(pthread::abstract_thread *thread){
- 
+
     _threads.push_back(thread);
   }
 
