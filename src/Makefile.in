@@ -20,6 +20,7 @@ RANLIB=@RANLIB@
 RM=rm -f
 AR=@AR@ @ARFLAGS@
 MV=@MV@
+LN_S=@LN_S@
 
 BITS=@BITS@
 OBJECT_MODE=$(BITS)
@@ -34,20 +35,21 @@ LIBS=@LIBS@
 
 OBJECTS=@OBJECTS@
 
-TARGETS=libcpp-pthread.a
+TARGETS=lib@PACKAGE_NAME@-@BUILD@.a
 
 all:${TARGETS}
 
-libcpp-pthread.a: $(OBJECTS)
+lib@PACKAGE_NAME@-@BUILD@.a: $(OBJECTS)
 	${AR} ${LIBDIR}/$@ $(OBJECTS)
 	$(RANLIB) ${LIBDIR}/$@
+	cd ${LIBDIR} && $(LN_S) -f lib@PACKAGE_NAME@-@BUILD@.a lib@PACKAGE_NAME@.a
 
 globber: clean
 	-$(RM) -R Makefile autom4te.cache config.log config.status 
 
 clean:
 	${RM} *.o core *.a
-	${RM} $(LIBDIR)/libcpp-pthread.a ${TARGETS}
+	cd $(LIBDIR) && ${RM} lib@PACKAGE_NAME@* 
 
 cxref:
 	cxref *.c -xref -index-all -latex209 -O${XREFDIR} -I${INCDIR} -I${INCTUX}

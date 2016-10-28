@@ -16,6 +16,7 @@ PACKAGE=@PACKAGE_NAME@-@PACKAGE_VERSION@-@build_os@.tar.gz
 HEADERS=@HEADERS@
 DOXYGEN=@DOXYGEN@
 CODECHECK=@CODECHECK@
+LN_S=@LN_S@
 
 PTHREADLIB=libcpp-pthread.a
 
@@ -46,8 +47,10 @@ doxygen:
 install:
 	$(MKDIR) $(INCLUDEDIR)
 	cd include/pthread && $(INSTALL) *.hpp *.h $(INCLUDEDIR)
-	$(INSTALL) lib/$(PTHREADLIB) @libdir@
+	$(INSTALL) lib/lib@PACKAGE_NAME@-@BUILD@.a @libdir@
+	cd ${LIBDIR} && $(LN_S) -f lib@PACKAGE_NAME@-@BUILD@.a lib@PACKAGE_NAME@.a
 
 uninstall:
 	$(RM) -R  $(INCLUDEDIR)
-	$(RM) @libdir@/$(PTHREADLIB)
+# not a good idea	$(RM) @libdir@/lib@PACKAGE_NAME@-@BUILD@.a @libdir@/lib@PACKAGE_NAME@.a 
+	$(RM) @libdir@/lib@PACKAGE_NAME@*.a
