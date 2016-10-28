@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.8"/>
-<title>C++ pThread wrapper: pthread::thread_group Class Reference</title>
+<title>cpp-pthread: pthread::thread_group Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,8 +22,8 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">C++ pThread wrapper
-   &#160;<span id="projectnumber">(v1.6.0)</span>
+   <div id="projectname">cpp-pthread
+   &#160;<span id="projectnumber">(v1.7.0)</span>
    </div>
    <div id="projectbrief">Simple C++ wrapper to pthread functions.</div>
   </td>
@@ -44,6 +44,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -128,7 +129,8 @@ int main(int argc, const char * argv[]) {</code></pre><pre><code>  <a class="el"
   threads.join(); // wait for registered threads to join
 } // scope end</code></pre><pre><code></code></pre> <dl class="section author"><dt>Author</dt><dd>herbert koelman (<a href="#" onclick="location.href='mai'+'lto:'+'her'+'be'+'rt.'+'ko'+'elm'+'an'+'@me'+'.c'+'om'; return false;">herbe<span style="display: none;">.nosp@m.</span>rt.k<span style="display: none;">.nosp@m.</span>oelma<span style="display: none;">.nosp@m.</span>n@me<span style="display: none;">.nosp@m.</span>.com</a>) </dd></dl>
 <dl class="section since"><dt>Since</dt><dd>1.3 </dd></dl>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="synchronized_queue_tests_8cpp-example.html#_a9">synchronized_queue_tests.cpp</a>.</dd>
+</dl>
 <p>Definition at line <a class="el" href="thread_8hpp_source.html#l00294">294</a> of file <a class="el" href="thread_8hpp_source.html">thread.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a9aeb2ffef16dc16d2753f2e6c63ff466"></a>
@@ -211,7 +213,8 @@ int main(int argc, const char * argv[]) {</code></pre><pre><code>  <a class="el"
   </table>
   </dd>
 </dl>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="synchronized_queue_tests_8cpp-example.html#a10">synchronized_queue_tests.cpp</a>.</dd>
+</dl>
 <p>Definition at line <a class="el" href="thread_8cpp_source.html#l00187">187</a> of file <a class="el" href="thread_8cpp_source.html">thread.cpp</a>.</p>
 
 </div>
@@ -257,7 +260,8 @@ int main(int argc, const char * argv[]) {</code></pre><pre><code>  <a class="el"
 <p>Wait for all registered threads to join the caller thread.</p>
 <p>The method iterates the list of <a class="el" href="classpthread_1_1abstract__thread.html">abstract_thread</a> and calls the join method of each entry found.</p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classpthread_1_1abstract__thread.html#a2fb144a8b7d368ed7c4e193cfb89489d">abstract_thread::join()</a> </dd></dl>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="synchronized_queue_tests_8cpp-example.html#a12">synchronized_queue_tests.cpp</a>.</dd>
+</dl>
 <p>Definition at line <a class="el" href="thread_8cpp_source.html#l00198">198</a> of file <a class="el" href="thread_8cpp_source.html">thread.cpp</a>.</p>
 
 </div>
@@ -294,7 +298,8 @@ int main(int argc, const char * argv[]) {</code></pre><pre><code>  <a class="el"
 </div><div class="memdoc">
 <p>Start running all registered threads.</p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classpthread_1_1thread__group.html#ae9fa9ce6e7b4c2222d04a446b3c23ca0">add(abstract_thread *thread)</a> </dd></dl>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="synchronized_queue_tests_8cpp-example.html#a11">synchronized_queue_tests.cpp</a>.</dd>
+</dl>
 <p>Definition at line <a class="el" href="thread_8cpp_source.html#l00192">192</a> of file <a class="el" href="thread_8cpp_source.html">thread.cpp</a>.</p>
 
 </div>

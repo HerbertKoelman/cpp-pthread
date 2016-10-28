@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.8"/>
-<title>C++ pThread wrapper: include/pthread/lock_guard.hpp Source File</title>
+<title>cpp-pthread: include/pthread/lock_guard.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,8 +22,8 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">C++ pThread wrapper
-   &#160;<span id="projectnumber">(v1.6.0)</span>
+   <div id="projectname">cpp-pthread
+   &#160;<span id="projectnumber">(v1.7.0)</span>
    </div>
    <div id="projectbrief">Simple C++ wrapper to pthread functions.</div>
   </td>
@@ -44,6 +44,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -111,7 +112,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacepthread.html">pthread</a> {</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keyword">class </span>condition_variable ;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">class</span> MutexType&gt;</div>
@@ -124,21 +125,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;      _mutex = &amp;m ;</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;      _mutex-&gt;lock();</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    }</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
 <div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="classpthread_1_1lock__guard.html#a958884251adfb8d5f9bd7d643cc3949f">   57</a></span>&#160;   <a class="code" href="classpthread_1_1lock__guard.html#a958884251adfb8d5f9bd7d643cc3949f">~lock_guard</a>() {</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;      _mutex-&gt;unlock();</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;   }</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
 <div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="classpthread_1_1lock__guard.html#a0aeeee216e7b322845678cf59990351b">   65</a></span>&#160;    MutexType *<a class="code" href="classpthread_1_1lock__guard.html#a0aeeee216e7b322845678cf59990351b">internal_mutex</a>() {</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;      <span class="keywordflow">return</span> _mutex ;</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    }</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classpthread_1_1lock__guard.html#a1f9ab705f7ffe9eb8739ff3cf34cf7f2">operator=</a>(<a class="code" href="classpthread_1_1lock__guard.html">lock_guard</a> &amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    MutexType *_mutex;</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  };</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;} <span class="comment">// namespace pthread</span></div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* pthread_lock_guard_H */</span><span class="preprocessor"></span></div>

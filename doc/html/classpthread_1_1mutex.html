@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.8"/>
-<title>C++ pThread wrapper: pthread::mutex Class Reference</title>
+<title>cpp-pthread: pthread::mutex Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,8 +22,8 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">C++ pThread wrapper
-   &#160;<span id="projectnumber">(v1.6.0)</span>
+   <div id="projectname">cpp-pthread
+   &#160;<span id="projectnumber">(v1.7.0)</span>
    </div>
    <div id="projectbrief">Simple C++ wrapper to pthread functions.</div>
   </td>
@@ -44,6 +44,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -126,7 +127,8 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>condition_variable</
 <div class="textblock"><p>The mutex class is a synchronization primitive that can be used to protect shared data from being simultaneously accessed by multiple threads.</p>
 <dl class="section author"><dt>Author</dt><dd>herbert koelman </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>18/3/2016 </dd></dl>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="synchronized_queue_tests_8cpp-example.html#_a2">synchronized_queue_tests.cpp</a>.</dd>
+</dl>
 <p>Definition at line <a class="el" href="mutex_8hpp_source.html#l00037">37</a> of file <a class="el" href="mutex_8hpp_source.html">mutex.hpp</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a49f2565e6ba9f206d7f367897fca9435"></a>
@@ -164,7 +166,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>condition_variable</
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The function pthread_mutex_trylock is identical to pthread_mutex_lock except that if the mutex object referenced by mutex is currently locked (by any thread, including the current thread), the call returns immediately.</p>
+<p>The function pthread_mutex_trylock is identical to pthread_mutex_lock except tha if the mutex object referenced by mutex is currently locked (by any thread, including the current thread), the call returns immediately.</p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname"><a class="el" href="classpthread_1_1mutex__exception.html">mutex_exception</a></td><td>if error conditions preventing this method to succeed. </td></tr>

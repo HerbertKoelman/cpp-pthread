@@ -1,0 +1,197 @@
+\hypertarget{synchronized_queue_tests_8cpp-example}{\section{synchronized\+\_\+queue\+\_\+tests.\+cpp}
+}
+Synchronized fixed sized queue
+
+sample usage here {\ttfamily tests/synchronized\+\_\+queue\+\_\+tests.\+cpp}
+
+\begin{DoxyAuthor}{Author}
+herbert koelman (\href{mailto:herbert.koelman@me.com}{\tt herbert.\+koelman@me.\+com}) 
+\end{DoxyAuthor}
+\begin{DoxySince}{Since}
+1.\+5
+\end{DoxySince}
+
+\begin{DoxyCodeInclude}
+
+\textcolor{preprocessor}{#include <pthread.h>}
+\textcolor{preprocessor}{#include "pthread/pthread.hpp"}
+
+\textcolor{preprocessor}{#include <cstdio>}
+\textcolor{preprocessor}{#include <iostream>}
+\textcolor{preprocessor}{#include <string>}
+\textcolor{preprocessor}{#include <memory>}
+\textcolor{preprocessor}{#include <ctime>}
+
+\textcolor{preprocessor}{#define MESSAGES\_TO\_PRODUCE 5000 // messages produced}
+\textcolor{preprocessor}{#define CONSUMER\_PROCESSING\_DURATION 20 // millis}
+
+\textcolor{preprocessor}{#define CONSUMERS 10 // number of consumer threads}
+\textcolor{preprocessor}{#define PRODUCERS 1  // number of producer threads}
+\textcolor{preprocessor}{#define QUEUE\_MAX\_SIZE 40 // max size of the queue.}
+
+\textcolor{keyword}{class }message \{
+  \textcolor{keyword}{public}:
+    message (\textcolor{keyword}{const} std::string &buffer, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} number):\_message(buffer), \_number(number)\{
+      time(&\_timestamp);
+      \textcolor{comment}{//printf ("message allocated: %s (timestamp: %ld, number: %ld)\(\backslash\)n", \_message.c\_str(), \_timestamp,
+       \_number);}
+    \};
+
+    \textcolor{keyword}{virtual} ~message()\{
+      \textcolor{comment}{//printf ("message de-allocated: %s (creation timestamp: %ld, number: %ld)\(\backslash\)n", \_message.c\_str(),
+       \_timestamp, \_number);}
+    \};
+
+    \textcolor{keyword}{const} std::string content()\textcolor{keyword}{ const }\{
+      \textcolor{keywordflow}{return} \_message.c\_str();
+    \};
+
+    \textcolor{keywordtype}{void} set\_content(\textcolor{keyword}{const} std::string &message)\{
+      \_message = message ;
+    \};
+  
+    \textcolor{keyword}{const} time\_t timestamp()\textcolor{keyword}{ const }\{
+      \textcolor{keywordflow}{return} \_timestamp;
+    \};
+
+  \textcolor{keyword}{private}:
+    std::string \_message;
+    time\_t      \_timestamp;
+  \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \_number;
+\};
+
+\textcolor{preprocessor}{#if \_\_IBMCPP\_TR1\_\_}
+\textcolor{keyword}{typedef} std::tr1::shared\_ptr<message> message\_ptr;
+\textcolor{preprocessor}{#else}
+\textcolor{keyword}{typedef} std::shared\_ptr<message> message\_ptr;
+\textcolor{preprocessor}{#endif}
+
+\textcolor{keyword}{typedef} \hyperlink{classpthread_1_1util_1_1sync__queue}{pthread::util::sync\_queue<message\_ptr>} sync\_message\_queue;
+
+\textcolor{keyword}{class }status \{
+  \textcolor{keyword}{public}:
+
+    status(sync\_message\_queue &queue): \_queue(queue)\{
+      printf (\textcolor{stringliteral}{"status allocated\(\backslash\)n"});
+    \};
+
+    \textcolor{keyword}{virtual} ~status()\{
+      printf (\textcolor{stringliteral}{"status de-allocated\(\backslash\)n"});
+    \};
+
+    \textcolor{keywordtype}{bool} running()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \_running; \};
+  
+    \textcolor{keywordtype}{void} stop() \{
+      \hyperlink{classpthread_1_1lock__guard}{pthread::lock\_guard<pthread::mutex>} lock(\_mutex);
+      \_running = false ;
+      printf(\textcolor{stringliteral}{"class status changed running to %d (%s, %d)\(\backslash\)n"}, \_running, \_\_FILE\_\_, \_\_LINE\_\_);
+    \};
+
+  \textcolor{keyword}{protected}:
+    sync\_message\_queue &\_queue;
+
+  \textcolor{keyword}{private}:
+    \textcolor{keyword}{static} \textcolor{keywordtype}{bool}           \_running;
+    \textcolor{keyword}{static} \hyperlink{classpthread_1_1mutex}{pthread::mutex} \_mutex;
+\};
+
+\textcolor{keyword}{class }producer : \textcolor{keyword}{public} status, \textcolor{keyword}{public} \hyperlink{classpthread_1_1abstract__thread}{pthread::abstract\_thread} \{
+  \textcolor{keyword}{public}:
+
+    producer(sync\_message\_queue &queue): status(queue)\{
+    \};
+
+\textcolor{preprocessor}{#if \_\_cplusplus < 201103L}
+    \textcolor{keywordtype}{void} \hyperlink{classpthread_1_1runnable_a4e0ce933602df83c096a37974ebedf84}{run}() throw() \{
+\textcolor{preprocessor}{#else}
+    \textcolor{keywordtype}{void} \hyperlink{classpthread_1_1runnable_a4e0ce933602df83c096a37974ebedf84}{run}() noexcept \{
+\textcolor{preprocessor}{#endif}
+      printf (\textcolor{stringliteral}{"start producing %d messages\(\backslash\)n"}, MESSAGES\_TO\_PRODUCE);
+      \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} x = MESSAGES\_TO\_PRODUCE; (x > 0) && running() ; x-- )\{
+        message\_ptr pmessage(\textcolor{keyword}{new} message(\textcolor{stringliteral}{"producer creation..."}, x));
+        
+        \_queue.put (pmessage);
+        
+        \textcolor{comment}{//pthread::this\_thread::sleep\_for(1*1000);}
+      \}
+      printf(\textcolor{stringliteral}{"send stop producing message\(\backslash\)n"});
+      message\_ptr pmessage(\textcolor{keyword}{new} message(\textcolor{stringliteral}{"stop"}, -1));
+      \_queue.put (pmessage);
+    \};
+\};
+
+\textcolor{keyword}{class }consumer : \textcolor{keyword}{public} status, \textcolor{keyword}{public} \hyperlink{classpthread_1_1abstract__thread}{pthread::abstract\_thread} \{
+  \textcolor{keyword}{public}:
+
+    consumer(sync\_message\_queue &queue): status(queue)\{
+    \};
+
+\textcolor{preprocessor}{#if \_\_cplusplus < 201103L}
+    \textcolor{keywordtype}{void} run() throw() \{
+\textcolor{preprocessor}{#else}
+    \textcolor{keywordtype}{void} run() noexcept \{
+\textcolor{preprocessor}{#endif}
+      printf (\textcolor{stringliteral}{"starting consumer\(\backslash\)n"});
+      message\_ptr pmessage ; \textcolor{comment}{// (new message("hello"));}
+      printf(\textcolor{stringliteral}{"queue max size is %zu\(\backslash\)n"}, \_queue.max\_size());
+      \textcolor{keywordflow}{while}( running() )\{
+
+        \textcolor{keywordflow}{try}\{
+          \_queue.get(pmessage, 1200);
+          
+          \textcolor{keywordflow}{if} ( pmessage->content().find(\textcolor{stringliteral}{"stop"}) != std::string::npos )\{
+            stop();
+          \}
+         
+          printf(\textcolor{stringliteral}{"queue's current content is %zu (thrd: %d );\(\backslash\)n"}, \_queue.size(), 
+      \hyperlink{group__threads_ga57275c7fa3dd5591c7f19ccf451f1fb6}{pthread::this\_thread::get\_id}());
+          \hyperlink{group__threads_ga01ae1b738d3d2dbbfe966b4aad07a0a9}{pthread::this\_thread::sleep\_for}(CONSUMER\_PROCESSING\_DURATION);
+          
+          \textcolor{comment}{//printf("consumer received message: %s (creation timestamp: %ld)\(\backslash\)n",
+       pmessage->content().c\_str(), pmessage->timestamp());}
+          
+          pmessage->set\_content(\textcolor{stringliteral}{"this message content should be displayed when de-allocating message."});
+          \textcolor{comment}{//printf("consumer modification: %s (creation timestamp: %ld)\(\backslash\)n", pmessage->content().c\_str(),
+       pmessage->timestamp());}
+          
+        \}\textcolor{keywordflow}{catch} (\hyperlink{classpthread_1_1util_1_1queue__timeout}{pthread::util::queue\_timeout} &err)\{
+          printf(\textcolor{stringliteral}{"queue get timed out (%s, at %d)\(\backslash\)n"}, \_\_FILE\_\_, \_\_LINE\_\_);
+        \}
+      \}
+      printf(\textcolor{stringliteral}{"stopping consumer\(\backslash\)n"});
+    \};
+\};
+
+\textcolor{keywordtype}{bool}           status::\_running = \textcolor{keyword}{true};
+\hyperlink{classpthread_1_1mutex}{pthread::mutex} status::\_mutex ;
+
+\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keyword}{const} \textcolor{keywordtype}{char} * argv[]) \{
+  
+  std::cout << \textcolor{stringliteral}{"version: "} << \hyperlink{namespacepthread_ad04d8bbcf57d64ba29047b53432a9ceb}{pthread::cpp\_pthread\_version}() << std::endl;
+
+  \textcolor{keywordflow}{try} \{
+
+    sync\_message\_queue queue(QUEUE\_MAX\_SIZE);
+    status status(queue);
+
+    \hyperlink{classpthread_1_1thread__group}{pthread::thread\_group} group;
+
+    \textcolor{keywordflow}{for} ( \textcolor{keyword}{auto} x = CONSUMERS ; x > 0 ; x--)\{
+      group.\hyperlink{classpthread_1_1thread__group_ae9fa9ce6e7b4c2222d04a446b3c23ca0}{add}(\textcolor{keyword}{new} consumer(queue));
+    \}
+    
+    \textcolor{keywordflow}{for} ( \textcolor{keyword}{auto} x = PRODUCERS ; x > 0 ; x-- )\{
+      group.\hyperlink{classpthread_1_1thread__group_ae9fa9ce6e7b4c2222d04a446b3c23ca0}{add}(\textcolor{keyword}{new} producer(queue));
+    \}
+
+    group.\hyperlink{classpthread_1_1thread__group_aaba00cf80d72cd986526384482457968}{start}();
+
+    group.\hyperlink{classpthread_1_1thread__group_a39937a77e1059e352c9b39407a866f6e}{join}();
+    printf(\textcolor{stringliteral}{"threads joined main programm (%s, %d)\(\backslash\)n"}, \_\_FILE\_\_, \_\_LINE\_\_);
+
+  \}\textcolor{keywordflow}{catch} (std::exception &err )\{
+    std::cerr << \_\_FILE\_\_ << \textcolor{stringliteral}{"(at:"} << \_\_LINE\_\_ << \textcolor{stringliteral}{")"} << err.what() << std::endl;
+  \}
+\}
+\end{DoxyCodeInclude}
+ 

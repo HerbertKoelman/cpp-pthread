@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.8"/>
-<title>C++ pThread wrapper: include/pthread/read_write_lock.hpp Source File</title>
+<title>cpp-pthread: include/pthread/read_write_lock.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,8 +22,8 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">C++ pThread wrapper
-   &#160;<span id="projectnumber">(v1.6.0)</span>
+   <div id="projectname">cpp-pthread
+   &#160;<span id="projectnumber">(v1.7.0)</span>
    </div>
    <div id="projectbrief">Simple C++ wrapper to pthread functions.</div>
   </td>
@@ -44,6 +44,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -111,32 +112,32 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacepthread.html">pthread</a> {</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
 <div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="classpthread_1_1read__lock.html">   36</a></span>&#160;  <span class="keyword">class </span><a class="code" href="classpthread_1_1read__lock.html">read_lock</a> {</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;      <span class="keywordtype">void</span> <a class="code" href="classpthread_1_1read__lock.html#aa779f486f67e7d44638b14b15d0ababb">lock</a> ();</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;      </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;      <span class="keywordtype">void</span> <a class="code" href="classpthread_1_1read__lock.html#a978298bd5a0812f6440dae48e41a7f6a">try_lock</a> ();</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;      </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      <span class="keywordtype">void</span> <a class="code" href="classpthread_1_1read__lock.html#a429cb28d1e45efae6390824b5b2025f1">unlock</a> ();</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;       <span class="keyword">virtual</span> <a class="code" href="classpthread_1_1read__lock.html#a6da67e03d719c2f2a303e3034728c8a7">~read_lock</a> ();</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;      <a class="code" href="classpthread_1_1read__lock.html#aca7a4cc9026a6fd4b7403e0413dcff73">read_lock</a> ();</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
 <div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="classpthread_1_1read__lock.html#af63582bfd9518cf6e5a081fd39b25f68">   77</a></span>&#160;      pthread_rwlock_t <a class="code" href="classpthread_1_1read__lock.html#af63582bfd9518cf6e5a081fd39b25f68">_rwlock</a>;</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  };</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
 <div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="classpthread_1_1write__lock.html">   85</a></span>&#160;  <span class="keyword">class </span><a class="code" href="classpthread_1_1write__lock.html">write_lock</a>: <span class="keyword">public</span> <a class="code" href="classpthread_1_1read__lock.html">read_lock</a> {</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;      <span class="keywordtype">void</span> <a class="code" href="classpthread_1_1write__lock.html#a04c5408a921144795bdf17062f72162e">lock</a> ();</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;      </div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;      <span class="keywordtype">void</span> <a class="code" href="classpthread_1_1write__lock.html#a9a5a8dbafdd8b3ec3cad7c90df3ebd7b">try_lock</a> ();</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;      </div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;       <a class="code" href="classpthread_1_1write__lock.html#a459624fbeb4a84a6a81d21753981e0ea">write_lock</a> ();</div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;      <span class="keyword">virtual</span> <a class="code" href="classpthread_1_1write__lock.html#a51627cb10bdb8fe024abf5b04a77fe1f">~write_lock</a> ();</div>
@@ -144,7 +145,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  };</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
 <div class="line"><a name="l00139"></a><span class="lineno"><a class="line" href="group__concurrency.html#ga067fcec8c2b20e2e487c123c2f82d2df">  139</a></span>&#160;  <span class="keyword">typedef</span> <a class="code" href="classpthread_1_1write__lock.html">write_lock</a> <a class="code" href="group__concurrency.html#ga067fcec8c2b20e2e487c123c2f82d2df">read_write_lock</a>;</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;  </div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;</div>
 <div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;} <span class="comment">// namespace pthread</span></div>
 <div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;</div>
 <div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* pthread_read_write_lock_H */</span><span class="preprocessor"></span></div>

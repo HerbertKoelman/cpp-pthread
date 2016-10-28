@@ -1,10 +1,6 @@
 \hypertarget{classpthread_1_1util_1_1sync__queue}{\section{pthread\+:\+:util\+:\+:sync\+\_\+queue$<$ T $>$ Class Template Reference}
 \label{classpthread_1_1util_1_1sync__queue}\index{pthread\+::util\+::sync\+\_\+queue$<$ T $>$@{pthread\+::util\+::sync\+\_\+queue$<$ T $>$}}
 }
-
-
-{\ttfamily \#include $<$sync\+\_\+queue.\+hpp$>$}
-
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -33,19 +29,12 @@ virtual \hyperlink{classpthread_1_1util_1_1sync__queue_ad2f95ba727c920fe9614f543
 \subsection{Detailed Description}
 \subsubsection*{template$<$typename T$>$class pthread\+::util\+::sync\+\_\+queue$<$ T $>$}
 
-Synchronized fixed sized queue
-
-sample usage here {\ttfamily tests/synchronized\+\_\+queue\+\_\+tests.\+cpp}
-
-\begin{DoxyAuthor}{Author}
-herbert koelman (\href{mailto:herbert.koelman@me.com}{\tt herbert.\+koelman@me.\+com}) 
-\end{DoxyAuthor}
-\begin{DoxySince}{Since}
-1.\+5 
-\end{DoxySince}
+\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{synchronized_queue_tests_8cpp-example}{synchronized\+\_\+queue\+\_\+tests.\+cpp}.\end{Desc}
 
 
-Definition at line 42 of file sync\+\_\+queue.\+hpp.
+Definition at line 43 of file sync\+\_\+queue.\+hpp.
 
 
 
@@ -66,7 +55,7 @@ constructor
 \end{DoxyParams}
 
 
-Definition at line 233 of file sync\+\_\+queue.\+hpp.
+Definition at line 234 of file sync\+\_\+queue.\+hpp.
 
 \hypertarget{classpthread_1_1util_1_1sync__queue_ad2f95ba727c920fe9614f54377e32fe1}{\index{pthread\+::util\+::sync\+\_\+queue@{pthread\+::util\+::sync\+\_\+queue}!````~sync\+\_\+queue@{$\sim$sync\+\_\+queue}}
 \index{````~sync\+\_\+queue@{$\sim$sync\+\_\+queue}!pthread\+::util\+::sync\+\_\+queue@{pthread\+::util\+::sync\+\_\+queue}}
@@ -77,7 +66,7 @@ Definition at line 233 of file sync\+\_\+queue.\+hpp.
 )\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classpthread_1_1util_1_1sync__queue_ad2f95ba727c920fe9614f54377e32fe1}
 destructor 
 
-Definition at line 236 of file sync\+\_\+queue.\+hpp.
+Definition at line 237 of file sync\+\_\+queue.\+hpp.
 
 
 
@@ -94,7 +83,7 @@ true if queue is empty
 \end{DoxyReturn}
 
 
-Definition at line 78 of file sync\+\_\+queue.\+hpp.
+Definition at line 79 of file sync\+\_\+queue.\+hpp.
 
 \hypertarget{classpthread_1_1util_1_1sync__queue_ac30ef4e626177ae47f27399ff3c8f28b}{\index{pthread\+::util\+::sync\+\_\+queue@{pthread\+::util\+::sync\+\_\+queue}!get@{get}}
 \index{get@{get}!pthread\+::util\+::sync\+\_\+queue@{pthread\+::util\+::sync\+\_\+queue}}
@@ -114,7 +103,7 @@ If the queue is empty, get waits for an item to be put.
 \end{DoxyParams}
 
 
-Definition at line 153 of file sync\+\_\+queue.\+hpp.
+Definition at line 154 of file sync\+\_\+queue.\+hpp.
 
 \hypertarget{classpthread_1_1util_1_1sync__queue_ae5354915a1c76760924855318a11be04}{\index{pthread\+::util\+::sync\+\_\+queue@{pthread\+::util\+::sync\+\_\+queue}!get@{get}}
 \index{get@{get}!pthread\+::util\+::sync\+\_\+queue@{pthread\+::util\+::sync\+\_\+queue}}
@@ -140,7 +129,7 @@ Get an item from the queue, if empty wait for one during duration milliseconds.
 \end{DoxyExceptions}
 
 
-Definition at line 168 of file sync\+\_\+queue.\+hpp.
+Definition at line 169 of file sync\+\_\+queue.\+hpp.
 
 \hypertarget{classpthread_1_1util_1_1sync__queue_ae805476dd5db21e3b48b2d7ae7394305}{\index{pthread\+::util\+::sync\+\_\+queue@{pthread\+::util\+::sync\+\_\+queue}!max\+\_\+size@{max\+\_\+size}}
 \index{max\+\_\+size@{max\+\_\+size}!pthread\+::util\+::sync\+\_\+queue@{pthread\+::util\+::sync\+\_\+queue}}
@@ -154,7 +143,7 @@ maximun number of items that can be put in the queue
 \end{DoxyReturn}
 
 
-Definition at line 99 of file sync\+\_\+queue.\+hpp.
+Definition at line 100 of file sync\+\_\+queue.\+hpp.
 
 \hypertarget{classpthread_1_1util_1_1sync__queue_a235265f27a6d2500ab2b56c83d703f06}{\index{pthread\+::util\+::sync\+\_\+queue@{pthread\+::util\+::sync\+\_\+queue}!put@{put}}
 \index{put@{put}!pthread\+::util\+::sync\+\_\+queue@{pthread\+::util\+::sync\+\_\+queue}}
@@ -174,7 +163,7 @@ If the queue max size is reached, then the operation waits until a size is small
 \end{DoxyParams}
 
 
-Definition at line 192 of file sync\+\_\+queue.\+hpp.
+Definition at line 193 of file sync\+\_\+queue.\+hpp.
 
 \hypertarget{classpthread_1_1util_1_1sync__queue_aa507ddc9d8d86fa8d9510c3bc63a877b}{\index{pthread\+::util\+::sync\+\_\+queue@{pthread\+::util\+::sync\+\_\+queue}!put@{put}}
 \index{put@{put}!pthread\+::util\+::sync\+\_\+queue@{pthread\+::util\+::sync\+\_\+queue}}
@@ -190,12 +179,12 @@ Put an item in the queue (wait if size $>$= max\+\_\+size).
 \begin{DoxyParams}{Parameters}
 {\em item} & item to store in the queue \\
 \hline
-{\em wait\+\_\+time} & millis to wait for the queue to free a slot \\
+{\em wait\+\_\+time} & millis to wait for the queue to free a slo \\
 \hline
 \end{DoxyParams}
 
 
-Definition at line 208 of file sync\+\_\+queue.\+hpp.
+Definition at line 209 of file sync\+\_\+queue.\+hpp.
 
 \hypertarget{classpthread_1_1util_1_1sync__queue_a5ac6e6e5d64171d63db00c60cb98f693}{\index{pthread\+::util\+::sync\+\_\+queue@{pthread\+::util\+::sync\+\_\+queue}!set\+\_\+max\+\_\+size@{set\+\_\+max\+\_\+size}}
 \index{set\+\_\+max\+\_\+size@{set\+\_\+max\+\_\+size}!pthread\+::util\+::sync\+\_\+queue@{pthread\+::util\+::sync\+\_\+queue}}
@@ -213,7 +202,7 @@ change the maximum number of items that can be put in the queue.
 \end{DoxyParams}
 
 
-Definition at line 108 of file sync\+\_\+queue.\+hpp.
+Definition at line 109 of file sync\+\_\+queue.\+hpp.
 
 \hypertarget{classpthread_1_1util_1_1sync__queue_a99e07d02c268e4a7c6cab7ee5ee06274}{\index{pthread\+::util\+::sync\+\_\+queue@{pthread\+::util\+::sync\+\_\+queue}!size@{size}}
 \index{size@{size}!pthread\+::util\+::sync\+\_\+queue@{pthread\+::util\+::sync\+\_\+queue}}
@@ -227,7 +216,7 @@ current number of elements in the queue
 \end{DoxyReturn}
 
 
-Definition at line 88 of file sync\+\_\+queue.\+hpp.
+Definition at line 89 of file sync\+\_\+queue.\+hpp.
 
 
 

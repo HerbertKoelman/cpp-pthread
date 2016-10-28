@@ -51,7 +51,7 @@ public:}\end{DoxyPre}
 
 
 \begin{DoxyPre}{\ttfamily       bool stop\_waiting = true; // if lambda syntax is not availbale then use this kind of implementation
-      auto delay = \_sleep; // use sleep seconds to calculate point in time timeout
+      auto delay = \_sleep; // use sleep seconds to calculate point in time timeou
       while ( ! (stop\_waiting = (counter >= 10000)) \&\& (condition.wait\_for(mtx, delay) == pthread::cv\_status::no\_timeout))\{
         delay = -1 ; // if timeout millis is negatif, then we keep last timeout calculation.
       \}}\end{DoxyPre}
@@ -110,6 +110,9 @@ public:}\end{DoxyPre}
  \begin{DoxyAuthor}{Author}
 herbert koelman (\href{mailto:herbert.koelman@me.com}{\tt herbert.\+koelman@me.\+com}) 
 \end{DoxyAuthor}
+\begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{synchronized_queue_tests_8cpp-example}{synchronized\+\_\+queue\+\_\+tests.\+cpp}.\end{Desc}
 
 
 Definition at line 241 of file thread.\+hpp.

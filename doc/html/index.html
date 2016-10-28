@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.8"/>
-<title>C++ pThread wrapper: Main Page</title>
+<title>cpp-pthread: Main Page</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,8 +22,8 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">C++ pThread wrapper
-   &#160;<span id="projectnumber">(v1.6.0)</span>
+   <div id="projectname">cpp-pthread
+   &#160;<span id="projectnumber">(v1.7.0)</span>
    </div>
    <div id="projectbrief">Simple C++ wrapper to pthread functions.</div>
   </td>
@@ -44,6 +44,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -79,16 +80,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div class="header">
   <div class="headertitle">
-<div class="title">C++ pThread wrapper Documentation</div>  </div>
+<div class="title">cpp-pthread Documentation</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>Some C/C++ compilers are not implementing all of C++11 and above standard, it's often lacking the concurrency features that the standard brings. These compilers will at some point be updated. I was therefore looking for a way to reduce the effort of switching from a specific implementation to the C++11 standard one.</p>
 <p>This projetc is the resulting code.</p>
 <p>Of course, this library is a replacement of C++11 features, it is best to use the standard implementation if your compiler support it.</p>
-<p>To use this library: </p><pre class="fragment">configure
+<p>To use this library: </p><pre class="fragment">configure --enable-release
 make
 make install
-</pre><p>Install moves files into your system's default localtion for headers and libraries (often /usr/local/include and /usr/local/lib). Use this command to change install target directory: </p><pre class="fragment">configure --prefix=/usr/local
+</pre><blockquote class="doxtable">
+<p>The configure argument &ndash;enable-release tells configure to figure out what version your build (this is done through <code>git</code> commands) </p>
+</blockquote>
+<p>Install moves files into your system's default localtion for headers and libraries (often /usr/local/include and /usr/local/lib). Use this command to change install target directory: </p><pre class="fragment">configure --prefix=/usr/local
 </pre><p>Doxygen <a href="http://herbertkoelman.github.io/cpp-pthread/doc/html/">documentation</a> can be generated with this command. I hope this help make things easier to use and understand. </p><pre class="fragment">make doxygen
 </pre><blockquote class="doxtable">
 <p>Doxygen can be downloaded <a href="http://www.stack.nl/~dimitri/doxygen/index.html">here</a>. </p>
@@ -119,7 +123,7 @@ make install
 <li><a href="https://github.com/HerbertKoelman/cpp-pthread">project's home</a></li>
 <li><a href="http://herbertkoelman.github.io/cpp-pthread/doc/html/">project's doxygen</a></li>
 </ul>
-<h4>other</h4>
+<h4>other things</h4>
 <ul>
 <li>POSIX Threads <a href="http://pubs.opengroup.org/onlinepubs/007908799/xsh/threads.html">documentation</a></li>
 <li><a href="http://en.cppreference.com/w/cpp/thread/thread">std::thread</a> implementation we try to mimic</li>
@@ -129,7 +133,7 @@ make install
 </ul>
 <h3>misc</h3>
 <ul>
-<li>author herbert koelman</li>
+<li>author herbert koelman (<a href="#" onclick="location.href='mai'+'lto:'+'her'+'be'+'rt.'+'ko'+'elm'+'an'+'@me'+'.c'+'om'; return false;">herbe<span style="display: none;">.nosp@m.</span>rt.k<span style="display: none;">.nosp@m.</span>oelma<span style="display: none;">.nosp@m.</span>n@me<span style="display: none;">.nosp@m.</span>.com</a>)</li>
 <li>github <a href="https://github.com/HerbertKoelman/cpp-pthread">cpp-pthread</a> </li>
 </ul>
 </div></div><!-- contents -->

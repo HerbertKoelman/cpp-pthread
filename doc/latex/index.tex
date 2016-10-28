@@ -4,12 +4,14 @@ This projetc is the resulting code.
 
 Of course, this library is a replacement of C++11 features, it is best to use the standard implementation if your compiler support it.
 
-To use this library\+: \begin{DoxyVerb}configure
+To use this library\+: \begin{DoxyVerb}configure --enable-release
 make
 make install
 \end{DoxyVerb}
 
 
+\begin{quote}
+The configure argument --enable-\/release tells configure to figure out what version your build (this is done through {\ttfamily git} commands) \end{quote}
 Install moves files into your system's default localtion for headers and libraries (often /usr/local/include and /usr/local/lib). Use this command to change install target directory\+: \begin{DoxyVerb}configure --prefix=/usr/local
 \end{DoxyVerb}
 
@@ -66,7 +68,7 @@ More detailed information can be found in this \href{http://www.redbooks.ibm.com
 \item \href{http://herbertkoelman.github.io/cpp-pthread/doc/html/}{\tt project's doxygen}
 \end{DoxyItemize}
 
-\paragraph*{other}
+\paragraph*{other things}
 
 
 \begin{DoxyItemize}
@@ -81,6 +83,6 @@ More detailed information can be found in this \href{http://www.redbooks.ibm.com
 
 
 \begin{DoxyItemize}
-\item author herbert koelman
+\item author herbert koelman (\href{mailto:herbert.koelman@me.com}{\tt herbert.\+koelman@me.\+com})
 \item github \href{https://github.com/HerbertKoelman/cpp-pthread}{\tt cpp-\/pthread} 
 \end{DoxyItemize}
