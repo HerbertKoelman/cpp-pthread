@@ -12,20 +12,28 @@ LOCALEDIR=@localedir@
 INSTALL=@INSTALL@ 
 RM=@RM@
 MKDIR=@MKDIR_P@
+PACKAGE_NAME=@PACKAGE_NAME@
+PACKAGE_DEVELOP=@PACKAGE_NAME@-@BUILD@-@build_os@-dev.tar.gz
 PACKAGE=@PACKAGE_NAME@-@PACKAGE_VERSION@-@build_os@.tar.gz
 HEADERS=@HEADERS@
 DOXYGEN=@DOXYGEN@
 CODECHECK=@CODECHECK@
 LN_S=@LN_S@
+DEPLOY=@DEPLOY@
+REPOSITORY=@REPOSITORY@
 
 PTHREADLIB=libcpp-pthread.a
 
 all: 
 	cd src && $(MAKE)
 
-pkg: 
+pkg: clean all
 	$(MKDIR) distrib
-	tar cf - `git ls-files`  | gzip -c > distrib/$(PACKAGE)
+	tar cf - include lib  | gzip -c > distrib/$(PACKAGE_DEVELOP)
+
+# this target can only be used if REPOSITORY is set (hence the test)
+deploy: pkg
+	@test ! -z "$(REPOSITORY)" && ( cd distrib && $(DEPLOY) $(PACKAGE_DEVELOP) $(REPOSITORY) 2> /dev/null && echo "deployed $(PACKAGE_DEVELOP) here $(REPOSITORY)" ) || echo "WARNING use ./configure --enable-repository to enable deploy target"
 
 globber:clean
 	-$(RM) -R Makefile autom4te.cache config.log config.status doxyfile sonar-project.properties
