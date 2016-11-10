@@ -1,3 +1,9 @@
+v1.7.2
+- undone version infos handling
+
+v1.7.1
+- deploy target
+
 v1.6.2
 - the library name now includes verion infos
 - change sonar project key
