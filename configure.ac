@@ -9,6 +9,12 @@ AC_CONFIG_AUX_DIR([/usr/bin . bin])
 
 AC_ARG_ENABLE([build], AS_HELP_STRING([--enable-build],[build name.]), BUILD=$enable_build)
 AC_ARG_ENABLE([release], AS_HELP_STRING([--enable-release],[build as release.]), BUILD=$PACKAGE_VERSION)
+AC_ARG_ENABLE([repository], AS_HELP_STRING([--enable-repository],[use the given name to locate the remote repository]), AC_MSG_NOTICE([repository set to $enable_repository]) )
+
+if test ! -z "$enable_repository"
+then
+  AC_SUBST(REPOSITORY,"$enable_repository/$PACKAGE_NAME")
+fi
 
 if test -z "$BUILD" 
 then
@@ -29,6 +35,7 @@ AC_CHECK_PROG([RM],[rm],[rm -f])
 AC_CHECK_PROG([DOXYGEN],[doxygen],[doxygen],[echo \"please install doxygen and re-run ./configure, or run it manualy doxygen \"])
 AC_PROG_MKDIR_P
 AC_PROG_LN_S
+AC_CHECK_PROG([DEPLOY],[basic_deploy.sh],[basic_deploy.sh],[echo \"please install basic_deploy.sh, make sure it\'s in your PATH and re-run ./configure\"])
 
 # Okay, no cppcheck found, maybe we have sonar
 if test -z "$CODECHECK" 
