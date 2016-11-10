@@ -54,9 +54,8 @@ doxygen:
 
 install:
 	$(MKDIR) $(INCLUDEDIR)
-	cd include/pthread && $(INSTALL) *.hpp *.h $(INCLUDEDIR)
-	$(INSTALL) lib/lib@PACKAGE_NAME@-@BUILD@.a @libdir@
-	cd ${LIBDIR} && $(LN_S) -f lib@PACKAGE_NAME@-@BUILD@.a lib@PACKAGE_NAME@.a
+	$(INSTALL) include/pthread/*.hpp include/pthread/*.h $(INCLUDEDIR)
+	$(INSTALL) lib/lib@PACKAGE_NAME@.a @libdir@
 
 uninstall:
 	$(RM) -R  $(INCLUDEDIR)

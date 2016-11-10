@@ -35,14 +35,13 @@ LIBS=@LIBS@
 
 OBJECTS=@OBJECTS@
 
-TARGETS=lib@PACKAGE_NAME@-@BUILD@.a
+LIBPTHREAD=lib@PACKAGE_NAME@.a
 
-all:${TARGETS}
+all:${LIBPTHREAD}
 
-lib@PACKAGE_NAME@-@BUILD@.a: $(OBJECTS)
+lib@PACKAGE_NAME@.a: $(OBJECTS)
 	${AR} ${LIBDIR}/$@ $(OBJECTS)
 	$(RANLIB) ${LIBDIR}/$@
-	cd ${LIBDIR} && $(LN_S) -f lib@PACKAGE_NAME@-@BUILD@.a lib@PACKAGE_NAME@.a
 
 globber: clean
 	-$(RM) -R Makefile autom4te.cache config.log config.status 
