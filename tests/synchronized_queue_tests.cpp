@@ -8,6 +8,7 @@
 #include <string>
 #include <memory>
 #include <ctime>
+#include <csignal>
 
 #define MESSAGES_TO_PRODUCE 5000 // messages produced
 #define CONSUMER_PROCESSING_DURATION 20 // millis
@@ -15,6 +16,39 @@
 #define CONSUMERS 10 // number of consumer threads
 #define PRODUCERS 1  // number of producer threads
 #define QUEUE_MAX_SIZE 40 // max size of the queue.
+
+class message ;
+
+#if __IBMCPP_TR1__
+typedef std::tr1::shared_ptr<message> message_ptr;
+#else
+typedef std::shared_ptr<message> message_ptr;
+#endif
+
+typedef pthread::util::sync_queue<message_ptr> sync_message_queue;
+
+sync_message_queue *queue = NULL;
+
+void signal_handler( int signal ){
+  switch ( signal){
+    //case SIGINT :
+    case SIGHUP :
+      if ( queue != NULL){
+        if (queue->max_size() == 0){
+          fprintf (stderr, "%s: restarting producer/consumer (size: %ld)\n", __FUNCTION__, QUEUE_MAX_SIZE);
+          queue->set_max_size(QUEUE_MAX_SIZE);
+          fprintf (stderr, "%s: done (size: %ld)\n", __FUNCTION__, QUEUE_MAX_SIZE);
+        } else {
+          fprintf (stderr, "%s: stopping producer/consumer (size: %ld)\n", __FUNCTION__, 0);
+          queue->set_max_size(0);
+          fprintf (stderr, "%s: done (size: %ld)\n", __FUNCTION__, QUEUE_MAX_SIZE);
+        }
+      } else {
+          fprintf (stderr, "%s: queue pointer is NULL\n", __FUNCTION__);
+      }
+      break;
+  }
+};
 
 class message {
   public:
@@ -44,14 +78,6 @@ class message {
     time_t      _timestamp;
   unsigned long _number;
 };
-
-#if __IBMCPP_TR1__
-typedef std::tr1::shared_ptr<message> message_ptr;
-#else
-typedef std::shared_ptr<message> message_ptr;
-#endif
-
-typedef pthread::util::sync_queue<message_ptr> sync_message_queue;
 
 class status {
   public:
@@ -150,27 +176,46 @@ pthread::mutex status::_mutex ;
 int main(int argc, const char * argv[]) {
   
   std::cout << "version: " << pthread::cpp_pthread_version() << std::endl;
+  auto pstatus = EXIT_FAILURE;
 
   try {
 
-    sync_message_queue queue(QUEUE_MAX_SIZE);
-    status status(queue);
+    // sync_message_queue queue(QUEUE_MAX_SIZE);
+    queue = new sync_message_queue(QUEUE_MAX_SIZE);
+
+    std::signal(SIGINT, signal_handler);
+    status status(*queue);
 
     pthread::thread_group group;
 
     for ( auto x = CONSUMERS ; x > 0 ; x--){
-      group.add(new consumer(queue));
+      group.add(new consumer(*queue));
     }
     
     for ( auto x = PRODUCERS ; x > 0 ; x-- ){
-      group.add(new producer(queue));
+      group.add(new producer(*queue));
     }
 
     group.start();
 
-    group.join();
-    printf("threads joined main programm (%s, %d)\n", __FILE__, __LINE__);
+    std::string entry;
+    do{
+      std::getline(std::cin, entry);
+      if (queue->max_size() == 0){
+        fprintf (stderr, "%s: restarting producer/consumer (size: %ld)\n", __FUNCTION__, QUEUE_MAX_SIZE);
+        queue->set_max_size(QUEUE_MAX_SIZE);
+        fprintf (stderr, "%s: done (size: %ld)\n", __FUNCTION__, queue->max_size());
+      } else {
+        fprintf (stderr, "%s: stopping producer/consumer (size: %ld)\n", __FUNCTION__, 0);
+        queue->set_max_size(0);
+        fprintf (stderr, "%s: done (size: %ld)\n", __FUNCTION__, queue->max_size());
+      }
+    } while ( entry != "quit" );
 
+    group.join();
+    printf("threads joined main program (%s, %d)\n", __FILE__, __LINE__);
+
+    pstatus = EXIT_SUCCESS;
   }catch (std::exception &err ){
     std::cerr << __FILE__ << "(at:" << __LINE__ << ")" << err.what() << std::endl;
   }
