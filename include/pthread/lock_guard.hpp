@@ -24,7 +24,7 @@ namespace pthread {
    * @{
    */
 
-  class condition_variable ;
+  //class condition_variable ;
 
   /**
    This class was designed to encapsulate a mutex and automatically control the lock attribute.
