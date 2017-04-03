@@ -183,7 +183,8 @@ int main(int argc, const char * argv[]) {
     // sync_message_queue queue(QUEUE_MAX_SIZE);
     queue = new sync_message_queue(QUEUE_MAX_SIZE);
 
-    std::signal(SIGINT, signal_handler);
+    // std::signal(SIGINT, signal_handler);
+
     status status(*queue);
 
     pthread::thread_group group;
