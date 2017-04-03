@@ -21,6 +21,7 @@ herbert koelman (\href{mailto:herbert.koelman@me.com}{\tt herbert.\+koelman@me.\
 \textcolor{preprocessor}{#include <string>}
 \textcolor{preprocessor}{#include <memory>}
 \textcolor{preprocessor}{#include <ctime>}
+\textcolor{preprocessor}{#include <csignal>}
 
 \textcolor{preprocessor}{#define MESSAGES\_TO\_PRODUCE 5000 // messages produced}
 \textcolor{preprocessor}{#define CONSUMER\_PROCESSING\_DURATION 20 // millis}
@@ -28,6 +29,39 @@ herbert koelman (\href{mailto:herbert.koelman@me.com}{\tt herbert.\+koelman@me.\
 \textcolor{preprocessor}{#define CONSUMERS 10 // number of consumer threads}
 \textcolor{preprocessor}{#define PRODUCERS 1  // number of producer threads}
 \textcolor{preprocessor}{#define QUEUE\_MAX\_SIZE 40 // max size of the queue.}
+
+\textcolor{keyword}{class }message ;
+
+\textcolor{preprocessor}{#if \_\_IBMCPP\_TR1\_\_}
+\textcolor{keyword}{typedef} std::tr1::shared\_ptr<message> message\_ptr;
+\textcolor{preprocessor}{#else}
+\textcolor{keyword}{typedef} std::shared\_ptr<message> message\_ptr;
+\textcolor{preprocessor}{#endif}
+
+\textcolor{keyword}{typedef} \hyperlink{classpthread_1_1util_1_1sync__queue}{pthread::util::sync\_queue<message\_ptr>} sync\_message\_queue;
+
+sync\_message\_queue *queue = NULL;
+
+\textcolor{keywordtype}{void} signal\_handler( \textcolor{keywordtype}{int} signal )\{
+  \textcolor{keywordflow}{switch} ( signal)\{
+    \textcolor{comment}{//case SIGINT :}
+    \textcolor{keywordflow}{case} SIGHUP :
+      \textcolor{keywordflow}{if} ( queue != NULL)\{
+        \textcolor{keywordflow}{if} (queue->max\_size() == 0)\{
+          fprintf (stderr, \textcolor{stringliteral}{"%s: restarting producer/consumer (size: %ld)\(\backslash\)n"}, \_\_FUNCTION\_\_, QUEUE\_MAX\_SIZE);
+          queue->set\_max\_size(QUEUE\_MAX\_SIZE);
+          fprintf (stderr, \textcolor{stringliteral}{"%s: done (size: %ld)\(\backslash\)n"}, \_\_FUNCTION\_\_, QUEUE\_MAX\_SIZE);
+        \} \textcolor{keywordflow}{else} \{
+          fprintf (stderr, \textcolor{stringliteral}{"%s: stopping producer/consumer (size: %ld)\(\backslash\)n"}, \_\_FUNCTION\_\_, 0);
+          queue->set\_max\_size(0);
+          fprintf (stderr, \textcolor{stringliteral}{"%s: done (size: %ld)\(\backslash\)n"}, \_\_FUNCTION\_\_, QUEUE\_MAX\_SIZE);
+        \}
+      \} \textcolor{keywordflow}{else} \{
+          fprintf (stderr, \textcolor{stringliteral}{"%s: queue pointer is NULL\(\backslash\)n"}, \_\_FUNCTION\_\_);
+      \}
+      \textcolor{keywordflow}{break};
+  \}
+\};
 
 \textcolor{keyword}{class }message \{
   \textcolor{keyword}{public}:
@@ -59,14 +93,6 @@ herbert koelman (\href{mailto:herbert.koelman@me.com}{\tt herbert.\+koelman@me.\
     time\_t      \_timestamp;
   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \_number;
 \};
-
-\textcolor{preprocessor}{#if \_\_IBMCPP\_TR1\_\_}
-\textcolor{keyword}{typedef} std::tr1::shared\_ptr<message> message\_ptr;
-\textcolor{preprocessor}{#else}
-\textcolor{keyword}{typedef} std::shared\_ptr<message> message\_ptr;
-\textcolor{preprocessor}{#endif}
-
-\textcolor{keyword}{typedef} \hyperlink{classpthread_1_1util_1_1sync__queue}{pthread::util::sync\_queue<message\_ptr>} sync\_message\_queue;
 
 \textcolor{keyword}{class }status \{
   \textcolor{keyword}{public}:
@@ -168,27 +194,47 @@ herbert koelman (\href{mailto:herbert.koelman@me.com}{\tt herbert.\+koelman@me.\
 \textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keyword}{const} \textcolor{keywordtype}{char} * argv[]) \{
   
   std::cout << \textcolor{stringliteral}{"version: "} << \hyperlink{namespacepthread_ad04d8bbcf57d64ba29047b53432a9ceb}{pthread::cpp\_pthread\_version}() << std::endl;
+  \textcolor{keyword}{auto} pstatus = EXIT\_FAILURE;
 
   \textcolor{keywordflow}{try} \{
 
-    sync\_message\_queue queue(QUEUE\_MAX\_SIZE);
-    status status(queue);
+    \textcolor{comment}{// sync\_message\_queue queue(QUEUE\_MAX\_SIZE);}
+    queue = \textcolor{keyword}{new} sync\_message\_queue(QUEUE\_MAX\_SIZE);
+
+    \textcolor{comment}{// std::signal(SIGINT, signal\_handler);}
+
+    status status(*queue);
 
     \hyperlink{classpthread_1_1thread__group}{pthread::thread\_group} group;
 
     \textcolor{keywordflow}{for} ( \textcolor{keyword}{auto} x = CONSUMERS ; x > 0 ; x--)\{
-      group.\hyperlink{classpthread_1_1thread__group_ae9fa9ce6e7b4c2222d04a446b3c23ca0}{add}(\textcolor{keyword}{new} consumer(queue));
+      group.\hyperlink{classpthread_1_1thread__group_ae9fa9ce6e7b4c2222d04a446b3c23ca0}{add}(\textcolor{keyword}{new} consumer(*queue));
     \}
     
     \textcolor{keywordflow}{for} ( \textcolor{keyword}{auto} x = PRODUCERS ; x > 0 ; x-- )\{
-      group.\hyperlink{classpthread_1_1thread__group_ae9fa9ce6e7b4c2222d04a446b3c23ca0}{add}(\textcolor{keyword}{new} producer(queue));
+      group.\hyperlink{classpthread_1_1thread__group_ae9fa9ce6e7b4c2222d04a446b3c23ca0}{add}(\textcolor{keyword}{new} producer(*queue));
     \}
 
     group.\hyperlink{classpthread_1_1thread__group_aaba00cf80d72cd986526384482457968}{start}();
 
-    group.\hyperlink{classpthread_1_1thread__group_a39937a77e1059e352c9b39407a866f6e}{join}();
-    printf(\textcolor{stringliteral}{"threads joined main programm (%s, %d)\(\backslash\)n"}, \_\_FILE\_\_, \_\_LINE\_\_);
+    std::string entry;
+    \textcolor{keywordflow}{do}\{
+      std::getline(std::cin, entry);
+      \textcolor{keywordflow}{if} (queue->max\_size() == 0)\{
+        fprintf (stderr, \textcolor{stringliteral}{"%s: restarting producer/consumer (size: %ld)\(\backslash\)n"}, \_\_FUNCTION\_\_, QUEUE\_MAX\_SIZE);
+        queue->set\_max\_size(QUEUE\_MAX\_SIZE);
+        fprintf (stderr, \textcolor{stringliteral}{"%s: done (size: %ld)\(\backslash\)n"}, \_\_FUNCTION\_\_, queue->max\_size());
+      \} \textcolor{keywordflow}{else} \{
+        fprintf (stderr, \textcolor{stringliteral}{"%s: stopping producer/consumer (size: %ld)\(\backslash\)n"}, \_\_FUNCTION\_\_, 0);
+        queue->set\_max\_size(0);
+        fprintf (stderr, \textcolor{stringliteral}{"%s: done (size: %ld)\(\backslash\)n"}, \_\_FUNCTION\_\_, queue->max\_size());
+      \}
+    \} \textcolor{keywordflow}{while} ( entry != \textcolor{stringliteral}{"quit"} );
 
+    group.\hyperlink{classpthread_1_1thread__group_a39937a77e1059e352c9b39407a866f6e}{join}();
+    printf(\textcolor{stringliteral}{"threads joined main program (%s, %d)\(\backslash\)n"}, \_\_FILE\_\_, \_\_LINE\_\_);
+
+    pstatus = EXIT\_SUCCESS;
   \}\textcolor{keywordflow}{catch} (std::exception &err )\{
     std::cerr << \_\_FILE\_\_ << \textcolor{stringliteral}{"(at:"} << \_\_LINE\_\_ << \textcolor{stringliteral}{")"} << err.what() << std::endl;
   \}

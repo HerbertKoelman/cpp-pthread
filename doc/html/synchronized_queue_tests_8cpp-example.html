@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">cpp-pthread
-   &#160;<span id="projectnumber">(v1.7.2)</span>
+   &#160;<span id="projectnumber">(v1.7.3)</span>
    </div>
    <div id="projectbrief">Simple C++ wrapper to pthread functions.</div>
   </td>
@@ -96,6 +96,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;memory&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;ctime&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;csignal&gt;</span></div>
 <div class="line"></div>
 <div class="line"><span class="preprocessor">#define MESSAGES_TO_PRODUCE 5000 // messages produced</span></div>
 <div class="line"><span class="preprocessor">#define CONSUMER_PROCESSING_DURATION 20 // millis</span></div>
@@ -103,6 +104,39 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><span class="preprocessor">#define CONSUMERS 10 // number of consumer threads</span></div>
 <div class="line"><span class="preprocessor">#define PRODUCERS 1  // number of producer threads</span></div>
 <div class="line"><span class="preprocessor">#define QUEUE_MAX_SIZE 40 // max size of the queue.</span></div>
+<div class="line"></div>
+<div class="line"><span class="keyword">class </span>message ;</div>
+<div class="line"></div>
+<div class="line"><span class="preprocessor">#if __IBMCPP_TR1__</span></div>
+<div class="line"><span class="keyword">typedef</span> std::tr1::shared_ptr&lt;message&gt; message_ptr;</div>
+<div class="line"><span class="preprocessor">#else</span></div>
+<div class="line"><span class="keyword">typedef</span> std::shared_ptr&lt;message&gt; message_ptr;</div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"></div>
+<div class="line"><span class="keyword">typedef</span> <a name="_a0"></a><a class="code" href="classpthread_1_1util_1_1sync__queue.html">pthread::util::sync_queue&lt;message_ptr&gt;</a> sync_message_queue;</div>
+<div class="line"></div>
+<div class="line">sync_message_queue *queue = NULL;</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> signal_handler( <span class="keywordtype">int</span> signal ){</div>
+<div class="line">  <span class="keywordflow">switch</span> ( signal){</div>
+<div class="line">    <span class="comment">//case SIGINT :</span></div>
+<div class="line">    <span class="keywordflow">case</span> SIGHUP :</div>
+<div class="line">      <span class="keywordflow">if</span> ( queue != NULL){</div>
+<div class="line">        <span class="keywordflow">if</span> (queue-&gt;max_size() == 0){</div>
+<div class="line">          fprintf (stderr, <span class="stringliteral">&quot;%s: restarting producer/consumer (size: %ld)\n&quot;</span>, __FUNCTION__, QUEUE_MAX_SIZE);</div>
+<div class="line">          queue-&gt;set_max_size(QUEUE_MAX_SIZE);</div>
+<div class="line">          fprintf (stderr, <span class="stringliteral">&quot;%s: done (size: %ld)\n&quot;</span>, __FUNCTION__, QUEUE_MAX_SIZE);</div>
+<div class="line">        } <span class="keywordflow">else</span> {</div>
+<div class="line">          fprintf (stderr, <span class="stringliteral">&quot;%s: stopping producer/consumer (size: %ld)\n&quot;</span>, __FUNCTION__, 0);</div>
+<div class="line">          queue-&gt;set_max_size(0);</div>
+<div class="line">          fprintf (stderr, <span class="stringliteral">&quot;%s: done (size: %ld)\n&quot;</span>, __FUNCTION__, QUEUE_MAX_SIZE);</div>
+<div class="line">        }</div>
+<div class="line">      } <span class="keywordflow">else</span> {</div>
+<div class="line">          fprintf (stderr, <span class="stringliteral">&quot;%s: queue pointer is NULL\n&quot;</span>, __FUNCTION__);</div>
+<div class="line">      }</div>
+<div class="line">      <span class="keywordflow">break</span>;</div>
+<div class="line">  }</div>
+<div class="line">};</div>
 <div class="line"></div>
 <div class="line"><span class="keyword">class </span>message {</div>
 <div class="line">  <span class="keyword">public</span>:</div>
@@ -132,14 +166,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">    time_t      _timestamp;</div>
 <div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> _number;</div>
 <div class="line">};</div>
-<div class="line"></div>
-<div class="line"><span class="preprocessor">#if __IBMCPP_TR1__</span></div>
-<div class="line"><span class="keyword">typedef</span> std::tr1::shared_ptr&lt;message&gt; message_ptr;</div>
-<div class="line"><span class="preprocessor">#else</span></div>
-<div class="line"><span class="keyword">typedef</span> std::shared_ptr&lt;message&gt; message_ptr;</div>
-<div class="line"><span class="preprocessor">#endif</span></div>
-<div class="line"></div>
-<div class="line"><span class="keyword">typedef</span> <a name="_a0"></a><a class="code" href="classpthread_1_1util_1_1sync__queue.html">pthread::util::sync_queue&lt;message_ptr&gt;</a> sync_message_queue;</div>
 <div class="line"></div>
 <div class="line"><span class="keyword">class </span>status {</div>
 <div class="line">  <span class="keyword">public</span>:</div>
@@ -238,27 +264,47 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keyword">const</span> <span class="keywordtype">char</span> * argv[]) {</div>
 <div class="line">  </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;version: &quot;</span> &lt;&lt; <a name="a8"></a><a class="code" href="namespacepthread.html#ad04d8bbcf57d64ba29047b53432a9ceb">pthread::cpp_pthread_version</a>() &lt;&lt; std::endl;</div>
+<div class="line">  <span class="keyword">auto</span> pstatus = EXIT_FAILURE;</div>
 <div class="line"></div>
 <div class="line">  <span class="keywordflow">try</span> {</div>
 <div class="line"></div>
-<div class="line">    sync_message_queue queue(QUEUE_MAX_SIZE);</div>
-<div class="line">    status status(queue);</div>
+<div class="line">    <span class="comment">// sync_message_queue queue(QUEUE_MAX_SIZE);</span></div>
+<div class="line">    queue = <span class="keyword">new</span> sync_message_queue(QUEUE_MAX_SIZE);</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// std::signal(SIGINT, signal_handler);</span></div>
+<div class="line"></div>
+<div class="line">    status status(*queue);</div>
 <div class="line"></div>
 <div class="line">    <a name="_a9"></a><a class="code" href="classpthread_1_1thread__group.html">pthread::thread_group</a> group;</div>
 <div class="line"></div>
 <div class="line">    <span class="keywordflow">for</span> ( <span class="keyword">auto</span> x = CONSUMERS ; x &gt; 0 ; x--){</div>
-<div class="line">      group.<a name="a10"></a><a class="code" href="classpthread_1_1thread__group.html#ae9fa9ce6e7b4c2222d04a446b3c23ca0">add</a>(<span class="keyword">new</span> consumer(queue));</div>
+<div class="line">      group.<a name="a10"></a><a class="code" href="classpthread_1_1thread__group.html#ae9fa9ce6e7b4c2222d04a446b3c23ca0">add</a>(<span class="keyword">new</span> consumer(*queue));</div>
 <div class="line">    }</div>
 <div class="line">    </div>
 <div class="line">    <span class="keywordflow">for</span> ( <span class="keyword">auto</span> x = PRODUCERS ; x &gt; 0 ; x-- ){</div>
-<div class="line">      group.<a class="code" href="classpthread_1_1thread__group.html#ae9fa9ce6e7b4c2222d04a446b3c23ca0">add</a>(<span class="keyword">new</span> producer(queue));</div>
+<div class="line">      group.<a class="code" href="classpthread_1_1thread__group.html#ae9fa9ce6e7b4c2222d04a446b3c23ca0">add</a>(<span class="keyword">new</span> producer(*queue));</div>
 <div class="line">    }</div>
 <div class="line"></div>
 <div class="line">    group.<a name="a11"></a><a class="code" href="classpthread_1_1thread__group.html#aaba00cf80d72cd986526384482457968">start</a>();</div>
 <div class="line"></div>
-<div class="line">    group.<a name="a12"></a><a class="code" href="classpthread_1_1thread__group.html#a39937a77e1059e352c9b39407a866f6e">join</a>();</div>
-<div class="line">    printf(<span class="stringliteral">&quot;threads joined main programm (%s, %d)\n&quot;</span>, __FILE__, __LINE__);</div>
+<div class="line">    std::string entry;</div>
+<div class="line">    <span class="keywordflow">do</span>{</div>
+<div class="line">      std::getline(std::cin, entry);</div>
+<div class="line">      <span class="keywordflow">if</span> (queue-&gt;max_size() == 0){</div>
+<div class="line">        fprintf (stderr, <span class="stringliteral">&quot;%s: restarting producer/consumer (size: %ld)\n&quot;</span>, __FUNCTION__, QUEUE_MAX_SIZE);</div>
+<div class="line">        queue-&gt;set_max_size(QUEUE_MAX_SIZE);</div>
+<div class="line">        fprintf (stderr, <span class="stringliteral">&quot;%s: done (size: %ld)\n&quot;</span>, __FUNCTION__, queue-&gt;max_size());</div>
+<div class="line">      } <span class="keywordflow">else</span> {</div>
+<div class="line">        fprintf (stderr, <span class="stringliteral">&quot;%s: stopping producer/consumer (size: %ld)\n&quot;</span>, __FUNCTION__, 0);</div>
+<div class="line">        queue-&gt;set_max_size(0);</div>
+<div class="line">        fprintf (stderr, <span class="stringliteral">&quot;%s: done (size: %ld)\n&quot;</span>, __FUNCTION__, queue-&gt;max_size());</div>
+<div class="line">      }</div>
+<div class="line">    } <span class="keywordflow">while</span> ( entry != <span class="stringliteral">&quot;quit&quot;</span> );</div>
 <div class="line"></div>
+<div class="line">    group.<a name="a12"></a><a class="code" href="classpthread_1_1thread__group.html#a39937a77e1059e352c9b39407a866f6e">join</a>();</div>
+<div class="line">    printf(<span class="stringliteral">&quot;threads joined main program (%s, %d)\n&quot;</span>, __FILE__, __LINE__);</div>
+<div class="line"></div>
+<div class="line">    pstatus = EXIT_SUCCESS;</div>
 <div class="line">  }<span class="keywordflow">catch</span> (std::exception &amp;err ){</div>
 <div class="line">    std::cerr &lt;&lt; __FILE__ &lt;&lt; <span class="stringliteral">&quot;(at:&quot;</span> &lt;&lt; __LINE__ &lt;&lt; <span class="stringliteral">&quot;)&quot;</span> &lt;&lt; err.what() &lt;&lt; std::endl;</div>
 <div class="line">  }</div>

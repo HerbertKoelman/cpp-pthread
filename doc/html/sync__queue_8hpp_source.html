@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">cpp-pthread
-   &#160;<span id="projectnumber">(v1.7.2)</span>
+   &#160;<span id="projectnumber">(v1.7.3)</span>
    </div>
    <div id="projectbrief">Simple C++ wrapper to pthread functions.</div>
   </td>
@@ -152,7 +152,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;      }</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
 <div class="line"><a name="l00109"></a><span class="lineno"><a class="line" href="classpthread_1_1util_1_1sync__queue.html#a5ac6e6e5d64171d63db00c60cb98f693">  109</a></span>&#160;      <span class="keywordtype">void</span> <a class="code" href="classpthread_1_1util_1_1sync__queue.html#a5ac6e6e5d64171d63db00c60cb98f693">set_max_size</a>( <span class="keywordtype">size_t</span> ms ){</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <span class="keywordflow">if</span> (ms &gt; 0){</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <span class="keywordflow">if</span> (ms &gt;= 0){</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor">#if __cplusplus &lt; 201103L</span></div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;          <span class="comment">// we use read/write locks when std::atomic is not available</span></div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;          <a class="code" href="classpthread_1_1lock__guard.html">pthread::lock_guard&lt;pthread::write_lock&gt;</a> lck(_rwlock);</div>
@@ -255,7 +255,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;        delay = -1 ;</div>
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;      }</div>
 <div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;      <span class="comment">// The following method sugnature uses lambda which is not supported by AIX XL C/C++ 13.1.2</span></div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;      <span class="comment">// The following method signature uses lambda which is not supported by AIX XL C/C++ 13.1.2</span></div>
 <div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;      <span class="keywordtype">bool</span> not_full = _not_full_cv.<a class="code" href="classpthread_1_1condition__variable.html#a804a305eefb4da8abecd1e6326b82785">wait_for</a>(lck, wait_time, [<span class="keyword">this</span>]{ <span class="keywordflow">return</span> _items.size() &lt; _max_size; });</div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;</div>
