@@ -4,28 +4,30 @@
 AC_PREREQ(2.69)
 AC_INIT([cpp-pthread],[m4_esyscmd_s(echo $(git describe --always --abbrev=0))],[herbert.koelman@me.com],[],[http://herbertkoelman.github.io/cpp-pthread/])
 AC_LANG(C++)
+
+AC_ARG_ENABLE([build], AS_HELP_STRING([--enable-build],[build name.]), BUILD=$enable_build)
+AC_ARG_ENABLE([snapshot], AS_HELP_STRING([--enable-release],[build as release.]), [BUILD="SNAPSHOT"], [BUILD=$PACKAGE_VERSION])
+
+AC_MSG_NOTICE([
+
+    Build source code version $BUILD
+])
+AC_SUBST(BUILD,$BUILD)
+AC_DEFINE_UNQUOTED(CPP_PTHREAD_VERSION, ["$PACKAGE_NAME $BUILD - $(git log --pretty='commit: %h, %cn (%cI)' | head -1) - compiled on `uname -sv`."], [pthread C++ wrapper.])
+
 AC_CONFIG_SRCDIR([thread.cpp])
 AC_CONFIG_AUX_DIR([/usr/bin ../ ../bin])
-AC_CONFIG_HEADERS([../include/pthread/config.h])
 
 # Checks for programs.
 AC_PROG_CXX([xlC_r xlC g++ c++ gcc cl KCC CC cxx cc++ aCC ])
 AC_PROG_CC([xlc xlc_r gcc cl cc])
 AC_CHECK_PROG([AR],[ar],[ar -rv])
 AC_CHECK_PROG([MV],[mv],[mv],[echo "no mv command found"])
+AC_CHECK_PROG([RM],[rm],[rm -f])
+AC_PROG_INSTALL
 AC_PROG_RANLIB
 AC_PROG_LN_S
-
-AC_ARG_ENABLE([build], AS_HELP_STRING([--enable-build],[build name.]), BUILD=$enable_build)
-AC_ARG_ENABLE([release], AS_HELP_STRING([--enable-release],[build as release.]), BUILD=$PACKAGE_VERSION)
-
-if test -z "$BUILD" 
-then
-  BUILD="SNAPSHOT"
-  AC_MSG_NOTICE([using default BUILD name $BUILD])
-fi
-AC_SUBST(BUILD,$BUILD)
-AC_DEFINE_UNQUOTED(CPP_PTHREAD_VERSION, ["$PACKAGE_NAME $BUILD - $(git log --pretty='commit: %h, %cn (%cI)' | head -1) - compiled on `uname -sv`."], [pthread C++ wrapper.])
+AC_PROG_MKDIR_P
 
 CFLAGS="-I ../include -I ./"
 
@@ -92,6 +94,7 @@ AC_CHECK_HEADER([thread], [AC_DEFINE([HAVE_CPP11_THREAD])])
 #AC_FUNC_MALLOC
 AC_CHECK_FUNCS([gettimeofday])
 
+AC_CONFIG_HEADERS([../include/pthread/config.h])
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
 

@@ -4,6 +4,9 @@
 # Compile c++ source code
 .SUFFIXES:.cpp
 
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+
 BASEDIR=../
 XREFDIR=${BASEDIR}/xref/
 UDATAOBJ=$(BASEDIR)/udataobj/
@@ -17,10 +20,13 @@ CC=@CC@
 CCC=@CXX@
 CXX=$CCC
 RANLIB=@RANLIB@
-RM=rm -f
 AR=@AR@ @ARFLAGS@
+
+INSTALL=@INSTALL@
+RM=@RM@
 MV=@MV@
 LN_S=@LN_S@
+MKDIR=@MKDIR_P@
 
 BITS=@BITS@
 OBJECT_MODE=$(BITS)
@@ -52,6 +58,15 @@ clean:
 
 cxref:
 	cxref *.c -xref -index-all -latex209 -O${XREFDIR} -I${INCDIR} -I${INCTUX}
+
+install:
+	$(MKDIR) @includedir@/pthread
+	$(INSTALL) ${INCDIR}/pthread/*.hpp ${INCDIR}/pthread/*.h @includedir@/pthread
+	$(INSTALL) ${LIBDIR}/lib@PACKAGE_NAME@.a @libdir@
+
+uninstall:
+	$(RM) -R  @includedir@/pthread
+	$(RM) @libdir@/lib@PACKAGE_NAME@*.a
 
 # cpp build rule
 .cpp.o:
