@@ -9,12 +9,13 @@ INCLUDEDIR=@includedir@/pthread
 LIBDIR=@libdir@
 LOCALEDIR=@localedir@
 
+PACKAGE_NAME=@PACKAGE_NAME@
+PACKAGE_DEV=@PACKAGE_NAME@-@BUILD@-@build_os@-dev.tar.gz
+PACKAGE_SRC=@PACKAGE_NAME@-@BUILD@.tar.gz
+
 INSTALL=@INSTALL@ 
 RM=@RM@
 MKDIR=@MKDIR_P@
-PACKAGE_NAME=@PACKAGE_NAME@
-PACKAGE_DEVELOP=@PACKAGE_NAME@-@BUILD@-@build_os@-dev.tar.gz
-PACKAGE=@PACKAGE_NAME@-@PACKAGE_VERSION@-@build_os@.tar.gz
 HEADERS=@HEADERS@
 DOXYGEN=@DOXYGEN@
 CODECHECK=@CODECHECK@
@@ -29,11 +30,13 @@ all:
 
 pkg: clean all
 	$(MKDIR) distrib
-	tar cf - include lib  | gzip -c > distrib/$(PACKAGE_DEVELOP)
+	tar cf - include lib    | gzip -c > distrib/$(PACKAGE_DEV)
+	tar cf - `git ls-files` | gzip -c > distrib/$(PACKAGE_SRC)
 
 # this target can only be used if REPOSITORY is set (hence the test)
 deploy: pkg
-	@test ! -z "$(REPOSITORY)" && ( cd distrib && $(DEPLOY) $(PACKAGE_DEVELOP) $(REPOSITORY) 2> /dev/null && echo "deployed $(PACKAGE_DEVELOP) here $(REPOSITORY)" ) || echo "WARNING use ./configure --enable-repository to enable deploy target"
+	@test ! -z "$(REPOSITORY)" && ( cd distrib && $(DEPLOY) $(PACKAGE_DEV) $(REPOSITORY) 2> /dev/null && echo "deployed $(PACKAGE_DEV) here $(REPOSITORY)" ) || echo "WARNING use ./configure --enable-repository to enable deploy target"
+	@test ! -z "$(REPOSITORY)" && ( cd distrib && $(DEPLOY) $(PACKAGE_SRC) $(REPOSITORY) 2> /dev/null && echo "deployed $(PACKAGE_SRC) here $(REPOSITORY)" ) || echo "WARNING use ./configure --enable-repository to enable deploy target"
 
 globber:clean
 	-$(RM) -R Makefile autom4te.cache config.log config.status doxyfile sonar-project.properties
@@ -53,11 +56,7 @@ doxygen:
 	${DOXYGEN} doxyfile
 
 install:
-	$(MKDIR) $(INCLUDEDIR)
-	$(INSTALL) include/pthread/*.hpp include/pthread/*.h $(INCLUDEDIR)
-	$(INSTALL) lib/lib@PACKAGE_NAME@.a @libdir@
+	-(cd src && $(MAKE) install)
 
 uninstall:
-	$(RM) -R  $(INCLUDEDIR)
-# not a good idea	$(RM) @libdir@/lib@PACKAGE_NAME@-@BUILD@.a @libdir@/lib@PACKAGE_NAME@.a 
-	$(RM) @libdir@/lib@PACKAGE_NAME@*.a
+	-(cd src && $(MAKE) uninstall)

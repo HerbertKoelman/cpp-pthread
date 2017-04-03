@@ -107,7 +107,7 @@ namespace pthread {
        * @param ms maximum size
        */
       void set_max_size( size_t ms ){
-        if (ms > 0){
+        if (ms >= 0){
 #if __cplusplus < 201103L
           // we use read/write locks when std::atomic is not available
           pthread::lock_guard<pthread::write_lock> lck(_rwlock);
@@ -217,7 +217,7 @@ namespace pthread {
         delay = -1 ;
       }
 #else
-      // The following method sugnature uses lambda which is not supported by AIX XL C/C++ 13.1.2
+      // The following method signature uses lambda which is not supported by AIX XL C/C++ 13.1.2
       bool not_full = _not_full_cv.wait_for(lck, wait_time, [this]{ return _items.size() < _max_size; });
 #endif
 

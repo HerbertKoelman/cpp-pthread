@@ -44,6 +44,9 @@ DerivedData/
 .DS_Store
 ._*
 
+# Code check
+.sonar
+
 # autoconf
 config.h
 autom4te.cache
