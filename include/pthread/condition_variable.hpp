@@ -52,6 +52,7 @@ namespace pthread {
    * Upon successful return, the mutex shall have been locked and shall be owned by the calling thread.
    *
    * @author herbert koelman (herbert.koelman@me.com)
+   * @example condition_variable_tests.cpp
    */
   class condition_variable {
   public:
