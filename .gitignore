@@ -77,7 +77,7 @@ sonar-project.properties
 distrib/
 lib/
 doc/
-*tests
+*-tests
 
 # Images
 *.png
