@@ -8,12 +8,17 @@ Of course, this library is a replacement of C++11 features, it is best to use th
 
 To use this library:
 
-    configure --enable-release
+    configure
     make
     make install
 
-> The configure argument --enable-release tells configure to figure out what version your build (this is done through `git` commands)
-Install moves files into your system's default localtion for headers and libraries (often /usr/local/include and /usr/local/lib). Use this command to change install target directory:
+or
+
+    mkdir build && cd build
+    cmake ..
+    make install
+
+Install moves files into your system's default location for headers and libraries (often /usr/local/include and /usr/local/lib). Use this command line argument to change install target directory:
 
     configure --prefix=/usr/local
 
@@ -39,6 +44,13 @@ Sample code can be found in the `tests` directory. To use it, run the following 
   ./configure
   ./make
 
+> **WARNING** tests rely on GoogleTest and which MUST be installed before building.
+
+If you use CMake, the test are built and run like this (in your `build` directory):
+
+   make all test
+   
+ 
 ### Usefull links
 
 #### Memory management on AIX
@@ -68,7 +80,20 @@ More detailed information can be found in this [RedBook](http://www.redbooks.ibm
 * [std::mutex](http://en.cppreference.com/w/cpp/thread/mutex) implementation we try to mimic
 * [std::condition_variable](http://en.cppreference.com/w/cpp/thread/condition_variable) implementation we try to mimic
 
+### Conan
+
+This project can produce Conan Artefacts using these commands:
+
+    $ conan create .. rcs/testing
+    ...
+    $ conan upload cpp-pthread
+    ...
+
 ### misc
 
 * author herbert koelman (herbert.koelman@me.com)
 * github [cpp-pthread](https://github.com/HerbertKoelman/cpp-pthread)
+
+### Diagrams
+
+![overview](diagrams/threads-classes.png)

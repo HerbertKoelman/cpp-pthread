@@ -1,0 +1,67 @@
+@startuml
+
+namespace pthread {
+
+    enum thread_status{
+      not_a_thread
+      a_thread
+    }
+
+    interface runnable {
+      +void run ()
+    }
+
+    abstract abstract_thread {
+      +void start()
+      +void join()
+      +bool joinable() const
+      +{abstract} void run()
+    }
+
+    abstract_thread ..|> runnable : implements
+    note top of abstract_thread : this is the base class \nof all your threads.
+
+    class thread{
+      +thread(runnable)
+      +void start()
+      +void join()
+      +bool joinable() const
+      +thread_status status()
+      ...
+      -- operators --
+      +thread& operator=(thread&& other)
+    }
+
+    thread ... thread_status : uses
+    thread .. runnable : uses
+
+    class thread_group {
+      +void add(abstract_thread *thread);
+      +void start();
+      +void join();
+      +const bool destructor_joins_first()
+    }
+
+    thread_group "1"--o "*" abstract_thread : _threads
+
+    class consumer <<sample>>{
+      +void run()
+    }
+
+    consumer --|> abstract_thread : extends
+
+    class producer <<sample>> {
+      +void run()
+    }
+
+    producer --|> abstract_thread : extends
+
+    note as SAMPLES
+    These are sample classes.
+    end note
+
+    SAMPLES .. consumer
+    SAMPLES .. producer
+}
+
+@enduml

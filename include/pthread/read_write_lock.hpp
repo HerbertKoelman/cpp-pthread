@@ -9,11 +9,10 @@
 #ifndef pthread_read_write_lock_hpp
 #define pthread_read_write_lock_hpp
 
-// must be include as first hearder file of each source code file (see IBM's
+// must be include as first header file of each source code file (see IBM's
 // recommandation for more info p.285 §8.3.1).
 #include <pthread.h>
 
-#include "pthread/config.h"
 #include "pthread/exceptions.hpp"
 
 

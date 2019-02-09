@@ -1,0 +1,40 @@
+@startuml
+
+title
+Basic steps to setup and run a thread...
+end title
+
+hide footbox
+skinparam roundcorner 20
+
+actor main
+
+autonumber
+create consumer
+main -> consumer : init
+note right
+  create a new consumer thread instance.
+  At this point **your thread is not yet running**.
+end note
+
+== Run thread ==
+main -\ consumer : start()
+note right
+  this will really fire-up your thread. It starts
+  running whatever you wrote in the run method of
+  your consumer class
+end note
+
+== Wait for it to end ==
+main -> consumer : join
+note right
+  the main program can wait for a thread to end by calling
+  the join method of your thread.
+end note
+
+...5 minutes latter...
+
+main -> consumer: delete
+destroy consumer
+
+@enduml
