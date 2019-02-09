@@ -10,7 +10,7 @@
 #define PTHREAD_THREAD_HPP
 
 // must be include as first hearder file of each source code file (see IBM's
-// recommandation for more info p.285 §8.3.1).
+// recommandation for more info p.285 ï¿½8.3.1).
 #include <pthread.h>
 
 #include <iostream>
@@ -20,7 +20,6 @@
 #include <list>
 #include <cstddef>
 
-#include "pthread/config.h"
 #include "pthread/exceptions.hpp"
 #include "pthread/mutex.hpp"
 #include "pthread/lock_guard.hpp"

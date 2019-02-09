@@ -54,6 +54,22 @@ config.status
 config.log
 Makefile
 
+# IDEA
+.idea
+
+# CMake
+*build*
+
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+
 # layout
 doxyfile
 *.tar
@@ -61,4 +77,7 @@ sonar-project.properties
 distrib/
 lib/
 doc/
-pthread-tests
+*tests
+
+# Images
+*.png

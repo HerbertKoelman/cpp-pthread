@@ -1,11 +1,11 @@
+v1.8.0
+- use CMake
 c1.7.3
 - sync_queue::set_max_size accepts 0.
 v1.7.2
 - undone version infos handling
-
 v1.7.1
 - deploy target
-
 v1.6.2
 - the library name now includes verion infos
 - change sonar project key

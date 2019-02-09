@@ -10,10 +10,9 @@
 #define pthread_lock_guard_H
 
 // must be include as first hearder file of each source code file (see IBM's
-// recommandation for more info p.285 §8.3.1).
+// recommandation for more info p.285 ï¿½8.3.1).
 #include <pthread.h>
 
-#include "pthread/config.h"
 #include "pthread/mutex.hpp"
 
 

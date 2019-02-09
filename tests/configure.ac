@@ -4,6 +4,14 @@
 AC_PREREQ(2.69)
 AC_INIT([cpp-pthread],[1.0.0],[herbert.koelman@pmu.fr])
 AC_LANG(C++)
+
+AC_MSG_NOTICE([
+
+    Build $PACKAGE_NAME tests.
+
+    WARNING GoogleTest MUST installed on your system.
+])
+
 AC_CONFIG_SRCDIR([without-cpp11-pthread-tests.cpp])
 AC_CONFIG_AUX_DIR([/usr/bin ../ ../bin])
 
@@ -63,6 +71,7 @@ case "$CXX" in
 esac
 
 # Checks for libraries.
+# this is not support - AC_CHECK_LIB([gtest], [gtest_version_cstr],[], [AC_ERROR([missing google test library.])] )
 AC_CHECK_LIB([pthread], [pthread_create],[],[AC_ERROR([missing pthread library.])])
 AC_CHECK_LIB([cpp-pthread], [cpp_pthread_version],[],[AC_ERROR([missing cpp-thread library.])])
 

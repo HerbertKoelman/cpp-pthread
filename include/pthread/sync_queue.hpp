@@ -9,13 +9,15 @@
 #ifndef pthread_synchronized_queue_hpp
 #define pthread_synchronized_queue_hpp
 
-#include <list>           // std::lis
+#include <list>           // std::list
 
 #include "pthread/pthread.hpp"
+
 #if __cplusplus < 201103L
 #else
-#include <atomic>
+#  include <atomic>
 #endif
+
 #include <string>
 
 
