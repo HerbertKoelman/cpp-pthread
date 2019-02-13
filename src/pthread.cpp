@@ -10,7 +10,7 @@
 #define pthread_pthread_hpp
 
 #include "pthread/pthread.hpp"
-#include "pthread/config.h"
+#include "config.h"
 
 namespace pthread {
 

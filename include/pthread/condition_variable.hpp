@@ -6,14 +6,12 @@
 #ifndef pthread_condition_variable_hpp
 #define pthread_condition_variable_hpp
 
-// must be include as first hearder file of each source code file (see IBM's
-// recommandation for more info p.285 §8.3.1).
+// must be include as first header file of each source code file (see IBM's
+// recommandation for more info p.285 ï¿½8.3.1).
 #include <pthread.h>
 #include <string>
 #include <ctime>
 #include <sys/time.h>
-
-#include "pthread/config.h"
 
 #include "pthread/exceptions.hpp"
 #include "pthread/mutex.hpp"
