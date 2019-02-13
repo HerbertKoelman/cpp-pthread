@@ -204,7 +204,7 @@ TEST(synchronized_queue, producer_consumer) {
   auto pstatus = EXIT_FAILURE;
 
   try {
-
+std::cout << "Version: " << pthread::cpp_pthread_version() << std::endl;
     // sync_message_queue queue(QUEUE_MAX_SIZE);
     queue = new sync_message_queue(QUEUE_MAX_SIZE);
 
@@ -223,22 +223,6 @@ TEST(synchronized_queue, producer_consumer) {
     }
 
     group.start();
-
-//    std::string entry;
-//    do{
-//      std::getline(std::cin, entry);
-//
-//      if (queue->max_size() == 0){
-//        fprintf (stderr, "%s: restarting producer/consumer (size: %ld)\n", __FUNCTION__, QUEUE_MAX_SIZE);
-//        queue->set_max_size(QUEUE_MAX_SIZE);
-//        fprintf (stderr, "%s: done (size: %ld)\n", __FUNCTION__, queue->max_size());
-//      } else {
-//        fprintf (stderr, "%s: stopping producer/consumer (size: %ld)\n", __FUNCTION__, 0);
-//        queue->set_max_size(0);
-//        fprintf (stderr, "%s: done (size: %ld)\n", __FUNCTION__, queue->max_size());
-//      }
-//    } while ( entry != "quit" );
-
     group.join();
 
     auto consumed_messages = consumer::counter();

@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 3.11)
 
 project(
   cpp-pthread
-  VERSION 1.8.2
+  VERSION 1.8.0
   DESCRIPTION "Simple C++ wrapper to pthread functions (${GIT_LOG})")
 
 option(BUILD_TESTS "enable/disable tests (default is enabled)" ON)
