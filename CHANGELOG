@@ -1,6 +1,6 @@
 v1.8.0
 - use CMake
-c1.7.3
+v1.7.3
 - sync_queue::set_max_size accepts 0.
 v1.7.2
 - undone version infos handling
