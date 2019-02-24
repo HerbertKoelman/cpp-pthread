@@ -40,7 +40,6 @@ TEST(exceptions, timeout_exception) {
 //    std::cerr << ex.pthread_errmsg() << std::endl;
 
     EXPECT_STREQ("Timeout exception test.", ex.what());
-    EXPECT_EQ(110, ex.pthread_errno());
   }
 }
 
