@@ -8,19 +8,13 @@ Of course, this library is a replacement of C++11 features, it is best to use th
 
 To use this library:
 
-    configure
-    make
-    make install
-
-or
-
     mkdir build && cd build
     cmake ..
     make install
 
 Install moves files into your system's default location for headers and libraries (often /usr/local/include and /usr/local/lib). Use this command line argument to change install target directory:
 
-    configure --prefix=/usr/local
+    cmake -DCMAKE_INSTALL_PREFIX=/your/destination/
 
 Doxygen [documentation](http://herbertkoelman.github.io/cpp-pthread/doc/html/) can be generated with this command. I hope this help make things easier to use and understand.
 
@@ -28,7 +22,7 @@ Doxygen [documentation](http://herbertkoelman.github.io/cpp-pthread/doc/html/) c
 
 > Doxygen can be downloaded [here](http://www.stack.nl/~dimitri/doxygen/index.html).
 
-The `make` target `pkg` will produce au tar.gz that can be distributed.
+The `make` target `package` will produce au tar.gz that can be distributed.
 
 ### How to use it
 
@@ -38,13 +32,7 @@ Once compiled and installed in a location that suites you, use your compiler opt
 
 Once your compiler is upgraded you simply include the standard `#include <thread>` and replace the namespace `pthread` for `std`. 
 
-Sample code can be found in the `tests` directory. To use it, run the following commands:
-
-  cd tests
-  ./configure
-  ./make
-
-> **WARNING** tests rely on GoogleTest and which MUST be installed before building.
+Sample code can be found in the `tests` directory.
 
 If you use CMake, the test are built and run like this (in your `build` directory):
 
