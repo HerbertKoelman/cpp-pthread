@@ -1,4 +1,5 @@
 v1.8.0
+- integrate GTest as an external module (#79)
 - use CMake
 v1.7.3
 - sync_queue::set_max_size accepts 0.

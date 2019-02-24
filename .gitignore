@@ -39,6 +39,7 @@ DerivedData/
 
 # MAc OS X
 .DS_Store
+*.icloud
 
 # MAc OS X
 .DS_Store
