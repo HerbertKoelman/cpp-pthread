@@ -23,6 +23,12 @@ endif()
 
 find_package(GTestExt   PATHS cmake)
 
+# This part MUST be executed before the loading of the CMake package
+set(SONAR_PROPERTIES_FILE ${CMAKE_CURRENT_BINARY_DIR}/sonar-project.properties)
+message(STATUS "Generating SONAR properties file ${SONAR_PROPERTIES_FILE}")
+configure_file(${CMAKE_CURRENT_LIST_DIR}/sonar-project.properties.in ${SONAR_PROPERTIES_FILE})
+find_package(SonarCloud PATHS cmake)
+
 # main targets --------------------------------------------------
 #
 if( CMAKE_BUILD_TYPE MATCHES Release )
