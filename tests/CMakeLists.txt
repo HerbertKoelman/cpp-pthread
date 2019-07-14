@@ -1,4 +1,5 @@
 
+# Aliases: GTest::GTest, GTest::gtest_main, GMock::GMock
 #enable_testing()
 
 message(STATUS "Add GoogleTest cpp_thread_tests")

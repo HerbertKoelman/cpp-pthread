@@ -1,0 +1,12 @@
+# Project Configuration @PROJECT_NAME@ version @PROJECT_VERSION@
+sonar.verbose=false
+sonar.projectBaseDir=@CMAKE_SOURCE_DIR@
+sonar.projectKey=@SONAR_PROJECT_KEY@
+sonar.organization=@SONAR_ORGANIZATION@
+sonar.links.homepage=@SONAR_PROJECT_HOME@
+sonar.host.url=@SONAR_CLOUD_HOME@
+sonar.login=@SONAR_ACCESS_TOKEN@
+sonar.cfamily.build-wrapper-output=@SONAR_WRAPPER_OUTPUT_DIR@
+sonar.projectName=@PROJECT_NAME@
+sonar.projectVersion=@PROJECT_VERSION@
+sonar.sources=src,include
