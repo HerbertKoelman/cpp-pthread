@@ -39,6 +39,8 @@ else()
   endif()
 endif()
 
+configure_file(src/config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/src/config.h)
+
 # project's public headers
 include_directories(include src)
 
