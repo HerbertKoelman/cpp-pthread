@@ -43,6 +43,17 @@ if ( SONAR )
       add_dependencies(code-quality build-wrapper)
     endif()
 
+    find_program(SONAR_GCOV gcov)
+    if(SONAR_GCOV)
+      add_custom_target( sonar-gcov-report
+        COMMAND find ./CMakeFiles/ -type f -name "*.gcno" -exec ${SONAR_GCOV} {} -m \; > /dev/null 2>&1
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Built sonar GCOV report (${SONAR_GCOV})"
+        VERBATIM
+        )
+      message(STATUS "Added custom target [sonar-gcov-report]...")
+      add_dependencies(code-quality sonar-gcov-report)
+    endif()
 
   else()
     message(SEND_ERROR "Failed to find the program [sonar_scanner], make sure sonar tools are installed.")

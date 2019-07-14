@@ -37,7 +37,7 @@ matrix:
       env:
         BUILD_DIRECTORY=cmake-sonar-build
         CMAKE_COMMAND_LINE_ARGS="-DSONAR=yes"
-        MAKE_TARGETS="code-quality"
+        MAKE_TARGETS="all test code-quality"
     - name: default
       env:
         BUILD_DIRECTORY=cmake-default-build
