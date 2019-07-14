@@ -1,0 +1,54 @@
+# autho: Herbert Koelman
+# created on: 1/6/2019
+os: linux
+
+# use Ubuntu Xenial (version 16)
+# This comes with cmake 3.11 which is required to build GoogleTest
+dist: xenial
+language: cpp
+compiler: gcc
+
+env:
+  CODECOV_TOKEN="73b7985a-7b2d-40fa-a025-65906959f9c2"
+
+# Run travis on these branches only...
+branches:
+  only:
+    - master
+    - develop
+
+addons:
+  sonarcloud:
+    organization: "herbertkoelman-github"
+
+  apt:
+    packages:
+      - doxygen
+      - graphviz
+
+matrix:
+  include:
+    - name: coverage jobs
+      env:
+        BUILD_DIRECTORY=cmake-gcov-build
+        CMAKE_COMMAND_LINE_ARGS="-DGCOV=yes"
+        MAKE_TARGETS="all test"
+    - name: sonar code quality checks
+      env:
+        BUILD_DIRECTORY=cmake-sonar-build
+        CMAKE_COMMAND_LINE_ARGS="-DSONAR=yes"
+        MAKE_TARGETS="all test code-quality"
+    - name: default
+      env:
+        BUILD_DIRECTORY=cmake-default-build
+        CMAKE_COMMAND_LINE_ARGS="-DCMAKE_BUILD_TYPE=Release"
+        MAKE_TARGETS="all doxygen package"
+
+script:
+  - mkdir $BUILD_DIRECTORY && cd $BUILD_DIRECTORY && cmake $CMAKE_COMMAND_LINE_ARGS .. && make $MAKE_TARGETS
+
+after_success:
+  # create gcov files
+  - find ./CMakeFiles/ -type f -name "*.gcno" -exec gcov {} -m \;
+  # upload data to codecav
+  - bash <(curl -s https://codecov.io/bash)
