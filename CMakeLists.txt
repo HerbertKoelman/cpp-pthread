@@ -18,6 +18,7 @@ configure_file(src/config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/src/config.h)
 # uncomment if you have a conanfile.txt and run 'conan install ...' include(conan_paths)
 #find_package(Git CONFIG)
 #find_package(Conan)
+find_package(GTestExt   PATHS cmake)
 
 # main targets --------------------------------------------------
 #
@@ -60,11 +61,9 @@ set_target_properties(cpp-pthread-shared PROPERTIES OUTPUT_NAME cpp-pthread)
 # Testing -------------------------------------------------------
 #
 
-# Load and compile GTest
-# Aliases: GTest::GTest, GTest::gtest_main, GMock::GMock
-find_package(GTest PATHS cmake)
-if (GTest_FOUND)
+if (GTestExt_FOUND AND BUILD_TESTS)
   enable_testing()
+  message(STATUS "Adding project's unit tests (in ./tests)...")
   add_subdirectory(tests)
 endif()
 
