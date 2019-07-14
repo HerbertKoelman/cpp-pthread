@@ -9,7 +9,7 @@ language: cpp
 compiler: gcc
 
 env:
-  CODECOV_TOKEN="6fa05a9c-1a01-4123-b726-d493275017cd"
+  CODECOV_TOKEN="73b7985a-7b2d-40fa-a025-65906959f9c2"
 
 # Run travis on these branches only...
 branches:
