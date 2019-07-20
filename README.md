@@ -1,6 +1,6 @@
 ### What it does
 
-[![Build Status](https://travis-ci.com/HerbertKoelman/cpp-pthread.svg?branch=master)](https://travis-ci.com/HerbertKoelman/cpp-pthread)
+[![Build Status](https://travis-ci.com/HerbertKoelman/cpp-pthread.svg?branch=master)](https://travis-ci.com/HerbertKoelman/cpp-pthread) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=HerbertKoelman_cpp-pthread&metric=alert_status)](https://sonarcloud.io/dashboard?id=HerbertKoelman_cpp-pthread) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=HerbertKoelman_cpp-pthread&metric=coverage)](https://sonarcloud.io/dashboard?id=HerbertKoelman_cpp-pthread)
 
 Some C/C++ compilers are not implementing all of C++11 and above standard, it's often lacking the concurrency features that the standard brings. These compilers will at some point be updated. I was therefore looking for a way to reduce the effort of switching from a specific implementation to the C++11 standard one.
 
