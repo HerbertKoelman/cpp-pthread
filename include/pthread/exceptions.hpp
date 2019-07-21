@@ -59,7 +59,6 @@ namespace pthread {
 
   private:
     std::string  _message;
-    //const char  *_message;
     int          _pthread_errno;
 
   };
@@ -109,16 +108,12 @@ namespace pthread {
   class condition_variable_exception: public pthread_exception {
   public:
 
-    /** thrown when mutex actions fail
+    /** thrown when condition variable actions fail
      *
      * @param message short description
      * @param pthread_errno error returned by the pthread function
      */
-    condition_variable_exception( const std::string &message, const int pthread_errno = -1);
-
-    virtual ~condition_variable_exception(){
-      // Intentionally unimplemented...
-    };
+    explicit condition_variable_exception( const std::string &message = "conditional_variable_exception", const int pthread_errno = -1);
   };
 
   /** thrown to indicate that something went wrong with a thread */
