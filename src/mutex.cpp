@@ -38,6 +38,8 @@ namespace pthread {
         } else {
             throw mutex_exception("pthread_mutex_trylock failed, already locked.", rc);
         }
+
+        return status ;
     }
 
     void mutex::unlock() {

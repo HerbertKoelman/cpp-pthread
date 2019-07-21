@@ -59,7 +59,7 @@ TEST(exceptions, timeout_exception) {
     try {
         throw pthread::timeout_exception("Timeout exception test.");
     } catch (pthread::pthread_exception &ex) {
-        EXPECT_EQ(60, ex.pthread_errno());
+        EXPECT_EQ(ETIMEDOUT, ex.pthread_errno());
         EXPECT_STREQ("Timeout exception test.", ex.what());
     }
 }
