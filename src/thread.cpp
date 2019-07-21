@@ -73,7 +73,7 @@ namespace pthread {
     return rc;
   }
 
-  thread::thread(): _status(thread_status::not_a_thread), _thread(0){
+  thread::thread():  _thread(0), _status(thread_status::not_a_thread) {
 
     // intentional..
   }
@@ -129,7 +129,7 @@ namespace pthread {
     std::swap(_status, other._status);
   }
 
-  abstract_thread::abstract_thread(const std::size_t stack_size): _stack_size(stack_size), _thread(NULL){
+  abstract_thread::abstract_thread(const std::size_t stack_size): _thread(NULL), _stack_size(stack_size){
   }
 
   abstract_thread::~abstract_thread(){
@@ -179,7 +179,7 @@ namespace pthread {
           printf("thread_group destructor failed to join one thread. %s, (%d) %s.\n", err.what(), err.pthread_errno(), err.pthread_errmsg());
         } catch ( ... ){ //NOSONAR this was done on purpose to avoid crashes due to unhandled error conditions. This should never happen.
           printf("thread_group destructor received an unexpected exception when joining threads.");
-        };
+        }
       }
     }
   }
@@ -208,11 +208,16 @@ namespace pthread {
   }
 
   /**
-   This function is a helper function. It has normal C linkage, and is
-   the base for newly created Thread objects. It runs the
-   run method on the thread object passed to it (as a void *).
+   * This function is a helper function. It has normal C linkage, and is
+   * the base for newly created Thread objects. It runs the
+   * run method on the thread object passed to it (as a void *).
+   *
+   * This is the signature that the POSIX threading library imposes.
+   *
+   * @param runner runnable interface.
+   * @return unknown
    */
-  void *thread_startup_runnable(void *runner) {
+  void *thread_startup_runnable(void *runner) { // NOSONAR
 
     try{
       static_cast<runnable *>(runner)->run();

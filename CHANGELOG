@@ -1,3 +1,5 @@
+1.9.0
+- fix SONAR detected issues (#149)
 v1.8.0
 - integrate GTest as an external module (#79)
 - use CMake

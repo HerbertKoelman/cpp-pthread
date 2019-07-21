@@ -53,9 +53,14 @@ namespace pthread {
 
     /** The destructor release the guarded mutex.
      */
-   ~lock_guard() {
+    ~lock_guard() {
       _mutex->unlock();
-   }
+    }
+
+    /**
+     * Cannot be copied.
+     */
+    lock_guard( const lock_guard &) = delete;
 
     /** @return a const reference to the guarded mutex
      *
