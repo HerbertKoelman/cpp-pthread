@@ -21,58 +21,73 @@
 
 namespace pthread {
 
-  /** \addtogroup concurrency
-   *
-   * @{
-   */
-  class condition_variable;
-
-  /** The mutex class is a synchronization primitive that can be used to protect shared data from being simultaneously accessed by multiple threads.
-   *
-   * @author herbert koelman
-   * @date 18/3/2016
-   */
-  class mutex {
-
-    friend class condition_variable;
-
-  public:
-    /**
-     The mutex object is locked (by calling pthread_mutex_lock). If the mutex is already locked, the calling thread blocks until the mutex becomes
-     available. This operation returns with the mutex object referenced by mutex in the locked state with the calling thread as its owner.
-     @throw mutex_exception if error conditions preventing this method to succeed.
+    /** \addtogroup concurrency
+     *
+     * @{
      */
-    void lock ();
 
-    /**
-     The function pthread_mutex_trylock is identical to pthread_mutex_lock except tha
-     if the mutex object referenced by mutex is currently locked (by any thread,
-     including the current thread), the call returns immediately.
+    class condition_variable;
 
-     @throw mutex_exception if error conditions preventing this method to succeed.
-     @see lock
+    /** The mutex class is a synchronization primitive that can be used to protect shared data from being simultaneously accessed by multiple threads.
+     *
+     * @author herbert koelman
+     * @date 18/3/2016
      */
-    void try_lock ();
+    class mutex {
 
-    /**
-     The pthread_mutex_unlock function releases the mutex object referenced by mutex.  The manner in which a mutex is released is dependent upon the mutex's type attribute. If there are threads blocked on the mutex object referenced by mutex when unlock is called, resulting in the mutex becoming available, the scheduling policy is used to determine which thread shall acquire the mutex.
-     @throw mutex_exception if error conditions preventing this method to succeed.
-     */
-    void unlock ();
+        friend class condition_variable;
 
-    /*
-     Constructor/Desctructor
-     @throw mutex_exception if error conditions preventing this method to succeed.
-     */
-    mutex ();
-    virtual ~mutex ();
+    public:
+        /**
+         The mutex object is locked (by calling pthread_mutex_lock). If the mutex is already locked, the calling thread blocks until the mutex becomes
+         available. This operation returns with the mutex object referenced by mutex in the locked state with the calling thread as its owner.
+         @throw mutex_exception if error conditions preventing this method to succeed.
+         */
+        void lock();
 
-  protected:
-    /** pthread mutex structure */
-    pthread_mutex_t _mutex;
-  };
+        /**
+         * The function pthread_mutex_trylock is identical to pthread_mutex_lock except that
+         * if the mutex object referenced by mutex is currently locked (by any thread,
+         * including the current thread), the call returns immediately.
+         *
+         * @return
+         * @throw mutex_exception if error conditions preventing this method to succeed.
+         * @see lock
+         */
+        bool try_lock();
 
-  /** @} */
+        /**
+         The pthread_mutex_unlock function releases the mutex object referenced by mutex.  The manner in which a mutex is released is dependent upon the mutex's type attribute. If there are threads blocked on the mutex object referenced by mutex when unlock is called, resulting in the mutex becoming available, the scheduling policy is used to determine which thread shall acquire the mutex.
+         @throw mutex_exception if error conditions preventing this method to succeed.
+         */
+        void unlock();
+
+        /**
+         Constructor/Desctructor
+         @throw mutex_exception if error conditions preventing this method to succeed.
+         */
+        mutex();
+
+        /** not copy-assignable, so no copy contructor is needed.
+         *
+         */
+        mutex(const mutex &) = delete;
+        /**
+         * destroys the mutes (pthread_mutex_destroy)
+         */
+        virtual ~mutex();
+
+        /** not copy-assignable
+         *
+         */
+        void operator=(const mutex &) = delete;
+
+    protected:
+        /** pthread mutex structure */
+        pthread_mutex_t _mutex;
+    };
+
+    /** @} */
 
 } // namespace pthread
 

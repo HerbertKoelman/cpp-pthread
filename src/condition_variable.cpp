@@ -7,12 +7,10 @@ namespace pthread {
   }
 
   void condition_variable::wait(lock_guard<pthread::mutex> lck){
-    // wait(*(lck.mutex()));
     wait(*(lck._mutex));
   }
 
   cv_status condition_variable::wait_for (lock_guard<pthread::mutex> &lck, int millis ){
-    // return wait_for(*(lck.mutex()), millis);
     return wait_for(*(lck._mutex), millis);
   }
 
@@ -93,10 +91,13 @@ namespace pthread {
   }
 
   condition_variable::~condition_variable () {
+      pthread_cond_destroy(&_condition);
+/* NOSONAR
     int rc = pthread_cond_destroy(&_condition);
     if (rc != 0){
-      throw pthread_exception("pthread condition variable destroy failed.", rc);
+      throw condition_variable_exception("pthread condition variable destroy failed.", rc);
     }
+*/
   }
 
 } // namespace pthread

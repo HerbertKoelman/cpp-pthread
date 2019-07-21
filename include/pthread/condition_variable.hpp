@@ -188,16 +188,28 @@ namespace pthread {
     void notify_all () noexcept ;
 #endif
 
+    /**
+     * not copy-assignable
+     */
+     void operator=( const condition_variable &) = delete;
+
     // constructor/destructor ------------------------------------------------
 
+    /** construct a new condition_variable (pthread_cond_init).
+     */
     condition_variable ();
+
+    /** destroy a condition_variable (pthread_cond_destroy)
+     *
+     */
     virtual ~condition_variable();
 
   private:
+
     void milliseconds( int milliseconds);
 
     timespec timeout;
-    pthread_cond_t _condition;
+    pthread_cond_t _condition; //!< NOSONAR this union is declared in the POSIX Threading library. It cannot be changed (ignoring rule MISRA C++:2008, 9-5-1 - Unions shall not be used.)
   };
 
   /** @} */
@@ -226,7 +238,7 @@ namespace pthread {
     int rc = 0;
     cv_status status = no_timeout;
 
-    milliseconds(millis); // update timeou
+    milliseconds(millis); // update timeout
     bool stop_waiting = lambda(); // returns ​false if the waiting should be continued.
 
     while((! stop_waiting) && (status == no_timeout)){

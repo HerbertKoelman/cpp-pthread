@@ -33,7 +33,7 @@
 namespace pthread {
 
   /** @return library version */
-  extern "C" const char *cpp_pthread_version();
+  const char *cpp_pthread_version();
 
 }
 #endif /* pthread_pthread_hpp */

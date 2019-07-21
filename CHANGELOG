@@ -1,4 +1,11 @@
+1.9.0
+- better comments in sync_queue (#157)
+- conditional_variable tests (#154)
+- new exception tests (#153)#
+- fix SONAR detected issues (#149)
+- bug fixing: #155, #156
 v1.8.0
+- integrate GTest as an external module (#79)
 - use CMake
 v1.7.3
 - sync_queue::set_max_size accepts 0.
