@@ -188,6 +188,11 @@ namespace pthread {
     void notify_all () noexcept ;
 #endif
 
+    /**
+     * not copy-assignable
+     */
+     void operator=( const condition_variable &) = delete;
+
     // constructor/destructor ------------------------------------------------
 
     condition_variable ();
@@ -197,7 +202,7 @@ namespace pthread {
     void milliseconds( int milliseconds);
 
     timespec timeout;
-    pthread_cond_t _condition;
+    pthread_cond_t _condition; //!< NOSONAR this union is declared in the POSIX Threading library. It cannot be changed (ignoring rule MISRA C++:2008, 9-5-1 - Unions shall not be used.)
   };
 
   /** @} */

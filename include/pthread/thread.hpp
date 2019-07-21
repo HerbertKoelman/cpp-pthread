@@ -245,6 +245,12 @@ namespace pthread {
      * @param stack_size thread's stack size (default 0 which means use PTHREAD_STACK_MIN)
      */
     explicit abstract_thread(const std::size_t stack_size = 0);
+
+    /** not copy-assignable */
+    abstract_thread( const abstract_thread &) = delete;
+
+    /** deallocate thread.
+     */
     virtual ~abstract_thread();
 
     /** start running the `run()` method in a new thread.
@@ -262,6 +268,8 @@ namespace pthread {
     bool joinable() const ;
 
 
+    /** not copy-assignable */
+    void operator=( const abstract_thread &) = delete ;
   private:
     pthread::thread *_thread;
     std::size_t      _stack_size ;
@@ -302,6 +310,9 @@ namespace pthread {
     explicit thread_group( bool destructor_joins_first = false ) noexcept;
 #endif
 
+    /** not copy-assignable */
+    thread_group(const thread_group &) = delete;
+
     /** delete all abstract_thread referenced by the thread_group.
      *
      * If destructor_joins_first is true then the method abstract_thread::join() is called before deleting the referenced abstract_thread.
@@ -334,6 +345,9 @@ namespace pthread {
     /** @return current value of destructor_joins_first property. If true the destructor shall try to join registered threads before destroying them.
      */
     const bool destructor_joins_first(){ return _destructor_joins_first;};
+
+    /** not copy-assignable */
+    void operator=( const thread_group & ) = delete;
 
   private:
     std::list<pthread::abstract_thread*> _threads;

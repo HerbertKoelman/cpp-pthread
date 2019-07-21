@@ -1,85 +1,49 @@
-# Compiled Object files
-*.slo
-*.lo
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
+# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
+
+# build directories
+target/**
+build/**
+cmake-build*/
+delivery/**
+
+# SONAR Qube related working directories
+.scannerwork
+
+# extension
+*.swp
 *.o
-*.obj
-core
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
+*.a
 *.so
-*.dylib
+*.class
 *.dll
 
-# Fortran module files
-*.mod
+# IDE related stiff
+.idea/**
 
-# Compiled Static libraries
-*.dSYM
-*.lai
-*.la
-*.a
-*.lib
+# File-based project format
+*.iws
 
-# Executables
-*.exe
-*.out
-*.app
-tests/*tests
+# IntelliJ
+out/
 
-# emacs
-*~
+# JIRA plugin
+atlassian-ide-plugin.xml
 
-# Xcode
-*.xcodeproj/
-DerivedData/
+# Crashlytics plugin (for Android Studio and IntelliJ)
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
 
-# MAc OS X
-.DS_Store
-*.icloud
-
-# MAc OS X
-.DS_Store
-._*
-
-# Code check
-.sonar
-
-# autoconf
+# special files
 config.h
-autom4te.cache
-config.status
-config.log
-Makefile
 
-# IDEA
-.idea
+.DS_Store
+doc
 
-# CMake
-*build*
+*.xcode*
 
-CMakeCache.txt
-CMakeFiles
-CMakeScripts
-Testing
-Makefile
-cmake_install.cmake
-install_manifest.txt
-compile_commands.json
-CTestTestfile.cmake
-
-# layout
-.scannerwork
-doxyfile
-*.tar
-sonar-project.properties
-distrib/
-lib/
-doc/
 *-tests
+*_tests
 
-# Images
-*.png
