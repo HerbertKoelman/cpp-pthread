@@ -54,7 +54,6 @@ set(PTHREAD_SOURCE_CODE
         src/config.h
         src/condition_variable.cpp
         src/exceptions.cpp
-        src/lock_guard.cpp
         src/pthread.cpp
         src/read_write_lock.cpp
         src/thread.cpp
