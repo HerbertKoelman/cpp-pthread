@@ -8,14 +8,14 @@ namespace pthread {
     int ret = pthread_rwlock_wrlock(&_rwlock);
     if ( ret != 0 ){
       throw read_write_lock_exception("Try get write lock failed.", ret);
-    };
+    }
   }
 
   void write_lock::try_lock (){
     int ret = pthread_rwlock_trywrlock(&_rwlock);
     if ( ret != 0 ){
       throw read_write_lock_exception("Try get write lock failed.", ret);
-    };
+    }
   }
 
   write_lock::write_lock (){//:read_lock(){
