@@ -127,7 +127,7 @@ public:
 
             //pthread::this_thread::sleep_for(1*1000);
         }
-        printf("send stop producing message\n");
+        std::cout << "send stop message" << std::endl;
         message_ptr pmessage(new message("stop", -1));
         _queue.put(pmessage);
     };
@@ -160,8 +160,7 @@ public:
                 }
 
                 if ((100 % counter()) == 0) {
-                    printf("queue's current content is %zu (thrd: %o );\n", _queue.size(),
-                           pthread::this_thread::get_id());
+                    printf("queue's current content is %zu (thrd: %o );\n", _queue.size(), pthread::this_thread::get_id());
                 }
 
                 pthread::this_thread::sleep_for(CONSUMER_PROCESSING_DURATION);
@@ -175,6 +174,7 @@ public:
                 printf("queue get timed out (%s, at %d)\n", __FILE__, __LINE__);
             }
         }
+
         printf("stopping consumer\n");
     };
 
@@ -232,7 +232,7 @@ TEST(synchronized_queue, producer_consumer) {
         // The + 1 is because we send one more message: a stop message
         EXPECT_EQ(MESSAGES_TO_PRODUCE + 1, consumed_messages);
 
-        printf("threads joined main program, consumed %d messages (%s, %d)\n", consumed_messages, __FILE__, __LINE__);
+        std::cout << "threads joined main program, consumed " << consumed_messages << " messages" << std::endl;
 
         pstatus = EXIT_SUCCESS;
     } catch (std::exception &err) {
