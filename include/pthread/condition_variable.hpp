@@ -195,10 +195,17 @@ namespace pthread {
 
     // constructor/destructor ------------------------------------------------
 
+    /** construct a new condition_variable (pthread_cond_init).
+     */
     condition_variable ();
+
+    /** destroy a condition_variable (pthread_cond_destroy)
+     *
+     */
     virtual ~condition_variable();
 
   private:
+
     void milliseconds( int milliseconds);
 
     timespec timeout;
