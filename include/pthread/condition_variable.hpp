@@ -238,7 +238,7 @@ namespace pthread {
     int rc = 0;
     cv_status status = no_timeout;
 
-    milliseconds(millis); // update timeou
+    milliseconds(millis); // update timeout
     bool stop_waiting = lambda(); // returns ​false if the waiting should be continued.
 
     while((! stop_waiting) && (status == no_timeout)){

@@ -57,16 +57,41 @@ TEST(concurrency, read_write_lock) {
 TEST(concurrency, condition_variable_wait_for){
     pthread::condition_variable condition;
     pthread::mutex              mutex;
+    bool                        stop_waiting = true;
 
+    /* wait 1s for condition to be signaled. When returning from the wait_for method call, the mutex is locked.
+     *
+     * Therefore we expect, try_lock to throw an exception to signal that the mutex is already locked.
+     */
     EXPECT_EQ(pthread::cv_status::timedout, condition.wait_for(mutex, 1*1000));
     EXPECT_THROW(mutex.try_lock(), pthread::pthread_exception);
-    mutex.unlock();
+    mutex.unlock(); // free to lock
 
     {
         pthread::lock_guard<pthread::mutex> lock{mutex};
         EXPECT_EQ(pthread::cv_status::timedout, condition.wait_for(lock, 1 * 1000));
     }
-    EXPECT_NO_THROW(mutex.try_lock());
+
+    {
+        pthread::lock_guard<pthread::mutex> lock{mutex};
+        EXPECT_EQ(true, condition.wait_for(lock, 1 * 1000, [stop_waiting]{
+                    std::cout << "running lambda, stop_waiting : " << stop_waiting << std::endl ;
+                    return stop_waiting;
+                }
+            )
+        );
+    }
+
+
+    {
+        pthread::lock_guard<pthread::mutex> lock{mutex};
+        EXPECT_EQ(false, condition.wait_for(lock, 1 * 1000, [stop_waiting]{
+                std::cout << "running lambda, stop_waiting : " << stop_waiting << std::endl ;
+                return ! stop_waiting;
+                }
+            )
+        );
+    }
 }
 
 /* NOSONAR for later use
