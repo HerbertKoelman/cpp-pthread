@@ -92,9 +92,9 @@ namespace pthread {
 
   condition_variable::~condition_variable () {
     int rc = pthread_cond_destroy(&_condition);
-    if (rc != 0){
-      throw condition_variable_exception("pthread condition variable destroy failed.", rc);
-    }
+//    if (rc != 0){
+//      throw condition_variable_exception("pthread condition variable destroy failed.", rc);
+//    }
   }
 
 } // namespace pthread
