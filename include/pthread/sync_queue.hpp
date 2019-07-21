@@ -53,7 +53,9 @@ namespace pthread {
        */
       void put (const T& item);
 
-      /** Put an item in the queue (wait if size >= max_size).
+      /** Put an item in the queue.
+       *
+       * If the queue size is greater or equal to max_size, then wait for the wiat-time millis for the queue to empty a bit.
        *
        * @param item item to store in the queue
        * @param wait_time millis to wait for the queue to free a slo
@@ -62,13 +64,13 @@ namespace pthread {
 
       /** Get an item from the queue.
        *
-       * If the queue is empty, get waits for an item to be put.
+       * If the queue is empty,  the method blocks until an item is entered in the queue.
        *
        * @param item item that will receive an item found onto the queue.
        */
       void get ( T& item);
 
-      /** Get an item from the queue, if empty wait for one during duration milliseconds.
+      /** Get an item from the queue, if the queue is empty, then wait for an element wait_time milliseconds.
        *
        * @param item item that will receive an item found onto the queue.
        * @param wait_time duration we are willing to wait for a new item.

@@ -195,10 +195,17 @@ namespace pthread {
 
     // constructor/destructor ------------------------------------------------
 
+    /** construct a new condition_variable (pthread_cond_init).
+     */
     condition_variable ();
+
+    /** destroy a condition_variable (pthread_cond_destroy)
+     *
+     */
     virtual ~condition_variable();
 
   private:
+
     void milliseconds( int milliseconds);
 
     timespec timeout;
@@ -231,7 +238,7 @@ namespace pthread {
     int rc = 0;
     cv_status status = no_timeout;
 
-    milliseconds(millis); // update timeou
+    milliseconds(millis); // update timeout
     bool stop_waiting = lambda(); // returns ​false if the waiting should be continued.
 
     while((! stop_waiting) && (status == no_timeout)){
