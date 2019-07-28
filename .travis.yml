@@ -28,15 +28,15 @@ addons:
 
 matrix:
   include:
-    - name: coverage jobs
-      env:
-        BUILD_DIRECTORY=cmake-gcov-build
-        CMAKE_COMMAND_LINE_ARGS="-DGCOV=yes"
-        MAKE_TARGETS="all test"
+#    - name: coverage jobs
+#      env:
+#        BUILD_DIRECTORY=cmake-gcov-build
+#        CMAKE_COMMAND_LINE_ARGS="-DGCOV=yes"
+#        MAKE_TARGETS="all test"
     - name: sonar code quality checks
       env:
         BUILD_DIRECTORY=cmake-sonar-build
-        CMAKE_COMMAND_LINE_ARGS="-DSONAR=yes"
+        CMAKE_COMMAND_LINE_ARGS="-DSONAR=yes -DGCOV=yes"
         MAKE_TARGETS="all test code-quality"
     - name: default
       env:
