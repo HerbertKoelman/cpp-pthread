@@ -55,7 +55,7 @@ namespace pthread {
     virtual int pthread_errno() ;
 
     /** @return related pthread_errno error message using strerror */
-    virtual const char *pthread_errmsg() ;
+    virtual const char *pthread_errmsg() const;
 
   private:
     std::string  _message;
@@ -127,7 +127,7 @@ namespace pthread {
      * @param message short error description.
      * @param pthread_error value return by a function in the pthread library.
      */
-    thread_exception(const std::string &message, const int pthread_error = -1);
+    explicit thread_exception(const std::string &message, const int pthread_error = -1);
   };
 
   namespace util {

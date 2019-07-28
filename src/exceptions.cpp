@@ -13,6 +13,9 @@ namespace pthread {
   using namespace std ;
 
   pthread_exception::pthread_exception( const string &message, const int pthread_errno ): _message(message), _pthread_errno(pthread_errno){
+      if ( _pthread_errno != 0 ){
+          _message = _message + " " + pthread_errmsg() ;
+      }
   };
 
   pthread_exception::~pthread_exception(){
@@ -21,19 +24,18 @@ namespace pthread {
 
 #if __cplusplus < 201103L
   const char *pthread_exception::what() const throw() {
-    return _message.c_str();
-  };
 #else
   const char *pthread_exception::what() const noexcept {
+#endif
+
     return _message.c_str();
   };
-#endif
 
   int pthread_exception::pthread_errno(){
     return _pthread_errno ;
   };
 
-  const char *pthread_exception::pthread_errmsg(){
+  const char *pthread_exception::pthread_errmsg() const {
     return strerror(_pthread_errno );
   };
 
