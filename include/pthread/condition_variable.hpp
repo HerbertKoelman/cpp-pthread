@@ -216,7 +216,7 @@ namespace pthread {
          *
          * @throw condition_variable_exception if conditional variable failed to be destroyed (pthread_cond_destroy != 0)
          */
-        ~condition_variable() ; //throw(condition_variable_exception);
+        ~condition_variable() ;
 
     private:
 
