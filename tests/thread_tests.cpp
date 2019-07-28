@@ -63,7 +63,7 @@ TEST(abstract_thread, join) {
     test_thread t;
 
     t.start();
-
+    //pthread::this_thread::sleep_for(700);
     //EXPECT_TRUE(t.joinable());
     t.join();
 }
