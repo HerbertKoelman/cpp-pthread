@@ -91,13 +91,12 @@ namespace pthread {
   }
 
   condition_variable::~condition_variable () {
-      pthread_cond_destroy(&_condition);
-/* NOSONAR
     int rc = pthread_cond_destroy(&_condition);
     if (rc != 0){
-      throw condition_variable_exception("pthread condition variable destroy failed.", rc);
+      // This is the only way to signal that the destruction of the ressource failed, so the rule "Destructors should not throw exceptions" is therfore ignored.
+      //
+      throw condition_variable_exception("pthread condition variable destroy failed.", rc); // NOSONAR we decided to make an exception for this one
     }
-*/
   }
 
 } // namespace pthread

@@ -30,7 +30,7 @@ namespace pthread {
    */
 
   /** general purpose pthread exception.
-   * @example exceptions-tests.cpp
+   * @example exceptions_tests.cpp
    */
   class pthread_exception: public std::exception {
 
@@ -64,6 +64,7 @@ namespace pthread {
   };
 
   /** pthread operation timed out.
+   * @example exceptions_tests.cpp
    */
   class timeout_exception: public pthread_exception{
   public:
@@ -76,6 +77,7 @@ namespace pthread {
   };
 
   /** throw to indicate that something went wrong with a mutex.
+   * @example exceptions_tests.cpp
    */
   class mutex_exception: public pthread_exception {
   public:
@@ -90,6 +92,7 @@ namespace pthread {
   };
 
   /** throw to indicate that something went wrong with a read/write lock
+   * @example exceptions_tests.cpp
    */
   class read_write_lock_exception: public pthread_exception {
   public:
@@ -104,6 +107,7 @@ namespace pthread {
   };
 
   /** Condition variable exception
+   * @example exceptions_tests.cpp
    */
   class condition_variable_exception: public pthread_exception {
   public:
