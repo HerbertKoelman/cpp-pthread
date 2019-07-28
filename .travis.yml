@@ -28,16 +28,16 @@ addons:
 
 matrix:
   include:
-#    - name: coverage jobs
-#      env:
-#        BUILD_DIRECTORY=cmake-gcov-build
-#        CMAKE_COMMAND_LINE_ARGS="-DGCOV=yes"
-#        MAKE_TARGETS="all test"
+    - name: coverage jobs
+      env:
+        BUILD_DIRECTORY=cmake-gcov-build
+        CMAKE_COMMAND_LINE_ARGS="-DGCOV=yes"
+        MAKE_TARGETS="all test"
     - name: sonar code quality checks
       env:
         BUILD_DIRECTORY=cmake-sonar-build
         CMAKE_COMMAND_LINE_ARGS="-DSONAR=yes -DGCOV=yes"
-        MAKE_TARGETS="all test code-quality test"
+        MAKE_TARGETS="all test code-quality"
     - name: default
       env:
         BUILD_DIRECTORY=cmake-default-build
@@ -50,5 +50,5 @@ script:
 after_success:
   # create gcov files
   - find ./CMakeFiles/ -type f -name "*.gcno" -exec gcov {} -m \;
-  # upload data to codecav
+  # upload data to codecov
   - bash <(curl -s https://codecov.io/bash)
