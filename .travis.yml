@@ -37,7 +37,7 @@ matrix:
       env:
         BUILD_DIRECTORY=cmake-sonar-build
         CMAKE_COMMAND_LINE_ARGS="-DSONAR=yes -DGCOV=yes"
-        MAKE_TARGETS="all test code-quality"
+        MAKE_TARGETS="clean all test sonar-gcov-report build-wrapper code-quality"
     - name: default
       env:
         BUILD_DIRECTORY=cmake-default-build
