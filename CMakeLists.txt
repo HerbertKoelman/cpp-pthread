@@ -6,8 +6,22 @@ cmake_minimum_required(VERSION 3.11)
 
 project(
   cpp-pthread
-  VERSION 1.9.0
+  VERSION 1.9.1
   DESCRIPTION "Simple C++ wrapper to pthread functions (${GIT_LOG})")
+
+if( CMAKE_BUILD_TYPE MATCHES Release )
+  if( GIT_LOG )
+    set(CPP_PTHREAD_VERSION "${PROJECT_VERSION} - ${GIT_LOG}")
+  else()
+    set(CPP_PTHREAD_VERSION "${PROJECT_VERSION}")
+  endif()
+else()
+  if( GIT_LOG )
+    set(CPP_PTHREAD_VERSION "${PROJECT_VERSION}-${GIT_LOG}-SNAPSHOT")
+  else()
+    set(CPP_PTHREAD_VERSION "${PROJECT_VERSION}-SNAPSHOT")
+  endif()
+endif()
 
 option(BUILD_TESTS "enable/disable tests (default is enabled)" ON)
 option(GCOV "Activate GCOV options")
@@ -23,27 +37,17 @@ endif()
 
 find_package(GTestExt   PATHS cmake)
 
-# This part MUST be executed before the loading of the CMake package
+# main targets --------------------------------------------------
+#
+
+add_definitions( -DCPP_PTHREAD_VERSION="${CPP_PTHREAD_VERSION}")
+
+# This part MUST be executed before the loading of the CMake package. As we are using the CPP-PTHREAD_VERSION variable in the sonar properties file, 
+# we need to reun this after the setting of the version variable.
 set(SONAR_PROPERTIES_FILE ${CMAKE_CURRENT_BINARY_DIR}/sonar-project.properties)
 message(STATUS "Generating SONAR properties file ${SONAR_PROPERTIES_FILE}")
 configure_file(${CMAKE_CURRENT_LIST_DIR}/sonar-project.properties.in ${SONAR_PROPERTIES_FILE})
 find_package(SonarCloud PATHS cmake)
-
-# main targets --------------------------------------------------
-#
-if( CMAKE_BUILD_TYPE MATCHES Release )
-  if( GIT_LOG )
-    add_definitions( -DCPP_PTHREAD_VERSION="${PROJECT_VERSION} - ${GIT_LOG}")
-  else()
-    add_definitions( -DCPP_PTHREAD_VERSION="${PROJECT_VERSION}")
-  endif()
-else()
-  if( GIT_LOG )
-    add_definitions( -DCPP_PTHREAD_VERSION="${PROJECT_VERSION}-${GIT_LOG}-SNAPSHOT")
-  else()
-    add_definitions( -DCPP_PTHREAD_VERSION="${PROJECT_VERSION}-SNAPSHOT")
-  endif()
-endif()
 
 configure_file(src/config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/src/config.h)
 
