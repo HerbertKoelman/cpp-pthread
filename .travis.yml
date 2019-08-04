@@ -36,8 +36,8 @@ matrix:
     - name: sonar code quality checks
       env:
         BUILD_DIRECTORY=cmake-sonar-build
-        CMAKE_COMMAND_LINE_ARGS="-DSONAR=yes"
-        MAKE_TARGETS="all test code-quality"
+        CMAKE_COMMAND_LINE_ARGS="-DSONAR=yes -DGCOV=yes"
+        MAKE_TARGETS="clean all test sonar-gcov-report build-wrapper code-quality"
     - name: default
       env:
         BUILD_DIRECTORY=cmake-default-build
@@ -50,5 +50,5 @@ script:
 after_success:
   # create gcov files
   - find ./CMakeFiles/ -type f -name "*.gcno" -exec gcov {} -m \;
-  # upload data to codecav
+  # upload data to codecov
   - bash <(curl -s https://codecov.io/bash)

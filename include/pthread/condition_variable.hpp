@@ -152,7 +152,7 @@ namespace pthread {
         template<class Lambda>
         bool wait_for(mutex &mtx, int millis, Lambda lambda);
 
-        /** Wait for condition to be signaled within a given time frame.
+        /** NOSONAR Wait for condition to be signaled within a given time frame.
          *
          * This method atomically release mutex and cause the calling thread to block; atomically here means "atomically with respect to
          * access by another thread to the mutex and then the condition variable". Call notify_one or notify_all to signal the condition.
