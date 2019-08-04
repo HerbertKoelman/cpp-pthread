@@ -33,14 +33,18 @@ namespace pthread {
    * @example exceptions_tests.cpp
    */
   class pthread_exception: public std::exception {
-
   public:
 
-    /**
+    /** Base class of exception thrown by this module.
+     *
+     * If an error_number is passed, then the corresponding system error message is catenated to the message string. If the message
+     * string ends witht a period, then a space (`" "`) is inserted between the message and the system error message. Else
+     * a period + space is inserted (`". "`).
+     *
      * @param message error message
-     * @param pthread_errno a pthread function return code.
+     * @param error_number associated error number (default is 0).
      */
-    pthread_exception( const std::string &message, const int pthread_errno = -1 );
+    explicit pthread_exception( const std::string &message, const int error_number = 0 );
 
     virtual ~pthread_exception();
 
@@ -51,43 +55,56 @@ namespace pthread {
     virtual const char *what() const noexcept override ;
 #endif
 
-    /** @return pthread error code that was at the orgin of the error */
-    virtual int pthread_errno() ;
+    /** @return system error number that was at the origin of the error */
+    int error_number() const;
 
-    /** @return related pthread_errno error message using strerror */
-    virtual const char *pthread_errmsg() const;
+    /** @return corresponding system error message (`strerror`) */
+    const char *error_message() const;
 
   private:
     std::string  _message;
-    int          _pthread_errno;
+    int          _error_number;
 
   };
 
   /** pthread operation timed out.
+   *
    * @example exceptions_tests.cpp
    */
   class timeout_exception: public pthread_exception{
   public:
-    /** thrown when a time out occurs.
-     *
-     * @param message timeout condition
+    /**
+     * associated error number (default is 0).
+     * @param message what was timed out.
      */
     explicit timeout_exception(const std::string &message);
 
   };
 
-  /** throw to indicate that something went wrong with a mutex.
+  /** Something went wrong with a mutex.
+   *
    * @example exceptions_tests.cpp
    */
   class mutex_exception: public pthread_exception {
   public:
 
-    /** thrown when mutex actions fail
+    /** Mutex actions fail
+     *
+     * mutex related may return:
+     * - EBUSY The implementation has detected an attempt to destroy the object referenced by mutex while it is locked
+     *         or referenced (for example, while being used in a pthread_cond_timedwait() or pthread_cond_wait()) by another thread.
+     * - EINVAL The value specified by mutex is invalid.
+     * - EAGAIN The system lacked the necessary resources (other than memory) to initialize another mutex.
+     * - ENOMEM Insufficient memory exists to initialize the mutex.
+     * - EPERM The caller does not have the privilege to perform the operation.
+     * - EBUSY The implementation has detected an attempt to reinitialize the object referenced by mutex, a previously
+     *         initialized, but not yet destroyed, mutex.
+     * - EINVAL The value specified by attr is invalid.
      *
      * @param message short description
-     * @param pthread_errno error returned by the pthread function
+     * @param error_number an error code returned by a call to a pthread function.
      */
-    explicit mutex_exception( const std::string &message, const int pthread_errno = -1) ;
+    explicit mutex_exception( const std::string &message, const int error_number = 0) ;
 
   };
 

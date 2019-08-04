@@ -191,11 +191,10 @@ namespace pthread {
                 try {
                     pat->join();
                 } catch (pthread_exception &err) {
-                    printf("thread_group destructor failed to join one thread. %s, (%d) %s.\n", err.what(),
-                           err.pthread_errno(), err.pthread_errmsg());
-                } catch (
-                        ...) { //NOSONAR this was done on purpose to avoid crashes due to unhandled error conditions. This should never happen.
-                    printf("thread_group destructor received an unexpected exception when joining threads.");
+                    std::cerr << "thread_group destructor failed to join one thread. " << err.what() << std::endl << std::flush;
+                } catch (...) { //NOSONAR this was done on purpose to avoid crashes due to unhandled error conditions.
+                                // This should never happen.
+                    std::cerr << "thread_group destructor catched an unexpected exception when joining threads." << std::endl << std::flush;
                 }
             }
         }
