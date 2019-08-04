@@ -77,7 +77,8 @@ namespace pthread {
   class timeout_exception: public pthread_exception{
   public:
     /**
-     * associated error number (default is 0).
+     * This is an ETIMEDOUT error condition.
+     *
      * @param message what was timed out.
      */
     explicit timeout_exception(const std::string &message);
