@@ -13,36 +13,36 @@ TEST(exceptions, pthread_exception) {
         throw pthread::pthread_exception("POSIX Thread exception test.", -1);
     } catch (pthread::pthread_exception &ex) {
 
-        EXPECT_STREQ("POSIX Thread exception test.", ex.what());
-        EXPECT_EQ(-1, ex.pthread_errno());
+        EXPECT_STREQ("POSIX Thread exception test. Unknown error: -1", ex.what());
+        EXPECT_EQ(-1, ex.error_number());
     }
 }
 
 TEST(exceptions, thread_exception) {
     try {
-        throw pthread::thread_exception("Thread exception test.", 1);
+        throw pthread::thread_exception("Thread exception test.", -1);
     } catch (pthread::pthread_exception &ex) {
 
-        EXPECT_STREQ("Thread exception test.", ex.what());
-        EXPECT_EQ(1, ex.pthread_errno());
+        EXPECT_STREQ("Thread exception test. Unknown error: -1", ex.what());
+        EXPECT_EQ(-1, ex.error_number());
     }
 }
 
 TEST(exceptions, condition_variable_exception) {
     try {
-        throw pthread::condition_variable_exception("Condition variable exception test");
+        throw pthread::condition_variable_exception("Condition variable exception test.", -1);
     } catch (pthread::pthread_exception &ex) {
-        EXPECT_STREQ("Condition variable exception test", ex.what());
-        EXPECT_EQ(-1, ex.pthread_errno());
+        EXPECT_STREQ("Condition variable exception test. Unknown error: -1", ex.what());
+        EXPECT_EQ(-1, ex.error_number());
     }
 }
 
 TEST(exceptions, read_write_lock_exception) {
     try {
-        throw pthread::read_write_lock_exception("read_write_lock exception");
+        throw pthread::read_write_lock_exception("read_write_lock exception.", -1);
     } catch (pthread::pthread_exception &ex) {
-        EXPECT_STREQ("read_write_lock exception", ex.what());
-        EXPECT_EQ(-1, ex.pthread_errno());
+        EXPECT_STREQ("read_write_lock exception. Unknown error: -1", ex.what());
+        EXPECT_EQ(-1, ex.error_number());
     }
 }
 
@@ -51,7 +51,7 @@ TEST(exceptions, mutex_exception) {
         throw pthread::mutex_exception("mutex exception test");
     } catch (pthread::pthread_exception &ex) {
         EXPECT_STREQ("mutex exception test", ex.what());
-        EXPECT_EQ(-1, ex.pthread_errno());
+        EXPECT_EQ(0, ex.error_number());
     }
 }
 
@@ -59,8 +59,8 @@ TEST(exceptions, timeout_exception) {
     try {
         throw pthread::timeout_exception("Timeout exception test.");
     } catch (pthread::pthread_exception &ex) {
-        EXPECT_EQ(ETIMEDOUT, ex.pthread_errno());
-        EXPECT_STREQ("Timeout exception test.", ex.what());
+        EXPECT_EQ(ETIMEDOUT, ex.error_number());
+        EXPECT_STREQ("Timeout exception test. Operation timed out", ex.what());
     }
 }
 

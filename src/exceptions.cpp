@@ -12,9 +12,11 @@ namespace pthread {
 
   using namespace std ;
 
-  pthread_exception::pthread_exception( const string &message, const int pthread_errno ): _message(message), _pthread_errno(pthread_errno){
-      if ( _pthread_errno != 0 ){
-          _message = _message + " " + pthread_errmsg() ;
+  pthread_exception::pthread_exception( const string &message, const int error_number ): _message(message), _error_number(error_number){
+      if (_error_number != 0 ){
+          auto const pos = _message.find_last_of('.');
+          std::string separator = ( pos == (_message.size() - 1) ? " " : ". ");
+          _message = _message + separator + error_message() ;
       }
   };
 
@@ -31,12 +33,12 @@ namespace pthread {
     return _message.c_str();
   };
 
-  int pthread_exception::pthread_errno(){
-    return _pthread_errno ;
+  int pthread_exception::error_number() const {
+    return _error_number ;
   };
 
-  const char *pthread_exception::pthread_errmsg() const {
-    return strerror(_pthread_errno );
+  const char *pthread_exception::error_message() const {
+    return strerror(_error_number );
   };
 
   // timeout_exception -----------------------------
@@ -46,7 +48,7 @@ namespace pthread {
 
   // mutex exception -----------------------------
   //
-  mutex_exception::mutex_exception( const std::string &message, const int pthread_error): pthread_exception(message, pthread_error) {
+  mutex_exception::mutex_exception( const std::string &message, const int error_number): pthread_exception(message, error_number) {
   };
 
   // read_write_lock exception -----------------------------
