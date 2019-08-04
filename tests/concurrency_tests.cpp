@@ -54,6 +54,25 @@ TEST(concurrency, read_write_lock) {
   EXPECT_TRUE(success);
 }
 
+TEST(concurrency, try_read_write_lock) {
+    bool success = false ;
+
+    try {
+
+        pthread::read_write_lock rwlock;
+
+        rwlock.try_lock();
+        rwlock.unlock();
+
+        success = true;
+
+    }catch ( const std::exception &err ){
+        std::cerr << err.what() << std::endl << std::flush;
+    }
+
+    EXPECT_TRUE(success);
+}
+
 TEST(concurrency, condition_variable_wait_for){
     pthread::condition_variable condition;
     pthread::mutex              mutex;
