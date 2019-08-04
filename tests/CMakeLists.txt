@@ -8,9 +8,9 @@ add_executable(exception_tests exceptions_tests.cpp )
 target_link_libraries(exception_tests GTest::GTest GTest::gtest_main cpp-pthread-static ${GCOV_LIB})
 add_test(NAME exception_tests COMMAND exception_tests)
 
-#add_executable(cpp_concurrency_tests concurrency_tests.cpp )
-#target_link_libraries(cpp_concurrency_tests GTest::GTest GTest::gtest_main cpp-pthread-static ${GCOV_LIB})
-#add_test(NAME cpp_concurrency_tests COMMAND cpp_concurrency_tests)
+add_executable(concurrency_tests concurrency_tests.cpp )
+target_link_libraries(concurrency_tests GTest::GTest GTest::gtest_main cpp-pthread-static ${GCOV_LIB})
+add_test(NAME concurrency_tests COMMAND concurrency_tests)
 
 #add_executable(thread_tests thread_tests.cpp)
 #target_link_libraries(thread_tests GTest::GTest GTest::gtest_main cpp-pthread-static ${GCOV_LIB})
