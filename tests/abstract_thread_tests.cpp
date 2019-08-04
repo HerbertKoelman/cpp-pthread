@@ -37,7 +37,6 @@ TEST(abstract_thread, constructor) {
     test_thread t;
     t.start();
     t.join();
-    GTEST_SUCCEED();
 }
 
 TEST(abstract_thread, joinable) {
@@ -45,7 +44,6 @@ TEST(abstract_thread, joinable) {
     test_thread t;
     t.start();
     if ( t.joinable() ) t.join();
-    //GTEST_SUCCEED();
 }
 
 TEST(abstract_thread, not_joinable) {
