@@ -133,7 +133,9 @@ namespace pthread {
          */
         void join();
 
-        /** @return true if this thread can be joined.
+        /** A thread is considered joinable, if it has been allocated (`pthread_create`)
+         *
+         * @return true if this thread can be joined.
          */
         bool joinable() const { return _thread != 0; };
 
@@ -152,7 +154,9 @@ namespace pthread {
 
         /** @return the status of the thread (thread::status).
          */
-        inline thread_status status() { return _status; };
+        inline thread_status status() const {
+            return _status;
+        };
 
         /** copy operator is flagged deleted,  copying doesn't make sense
          */

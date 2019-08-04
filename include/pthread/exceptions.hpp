@@ -24,12 +24,13 @@ namespace pthread {
   /** \addtogroup exception Errors and exceptions
    *
    * Threading related errors and exceptions
-   * @author herbert koelman (herbert.koelman@me.com)
    *
    * @{
    */
 
-  /** general purpose pthread exception.
+  /** General purpose pthread exception.
+   *
+   * @author herbert koelman
    * @example exceptions_tests.cpp
    */
   class pthread_exception: public std::exception {
@@ -40,6 +41,8 @@ namespace pthread {
      * If an error_number is passed, then the corresponding system error message is catenated to the message string. If the message
      * string ends witht a period, then a space (`" "`) is inserted between the message and the system error message. Else
      * a period + space is inserted (`". "`).
+     *
+     * An `error_number` of 0, means that we don't consider this to be a system related exception.
      *
      * @param message error message
      * @param error_number associated error number (default is 0).
@@ -90,7 +93,7 @@ namespace pthread {
 
     /** Mutex actions fail
      *
-     * mutex related may return:
+     * Mutex related methods may return one of these:
      * - EBUSY The implementation has detected an attempt to destroy the object referenced by mutex while it is locked
      *         or referenced (for example, while being used in a pthread_cond_timedwait() or pthread_cond_wait()) by another thread.
      * - EINVAL The value specified by mutex is invalid.
@@ -102,7 +105,7 @@ namespace pthread {
      * - EINVAL The value specified by attr is invalid.
      *
      * @param message short description
-     * @param error_number an error code returned by a call to a pthread function.
+     * @param error_number an error returned by a call to a pthread function (default is 0).
      */
     explicit mutex_exception( const std::string &message, const int error_number = 0) ;
 

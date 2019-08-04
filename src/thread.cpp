@@ -10,6 +10,7 @@
 #include <unistd.h>
 #include <cstdio>
 #include <cstring>
+#include <chrono>
 
 namespace pthread {
 
@@ -40,7 +41,7 @@ namespace pthread {
         if (_thread != 0) {
 
             if (_thread == this_thread::get_id()) {
-                throw pthread_exception("join failed, join yourself would endup in deadlock.");
+                throw pthread_exception("join failed, joining yourself would endup in deadlock.");
             }
 
             if (_status == thread_status::not_a_thread) {
@@ -55,13 +56,13 @@ namespace pthread {
             } else {
                 switch (rc) {
                     case EDEADLK:
-                        throw thread_exception("EDEADLKpthread_join failed because of deadlock conditions.", rc);
+                        throw thread_exception("pthread::thread::join failed because of deadlock conditions.", rc);
                     case EINVAL:
-                        throw thread_exception("EINVEL pthread_join failed not a joinable thread.", rc);
+                        throw thread_exception("pthread::thread::join failed not a joinable thread.", rc);
                     case ESRCH:
                         break; // thread has already ended.
                     default:
-                        throw thread_exception("pthread_join returned an unexpected return code.", rc);
+                        throw thread_exception("pthread::thread::join detected an unexpected return code.", rc);
                 }
             }
         }
@@ -85,13 +86,13 @@ namespace pthread {
     }
 
     thread::thread() : _thread(0), _status(thread_status::not_a_thread) {
-
         // intentional..
     }
 
     thread::thread(const runnable &work, const std::size_t stack_size)
-            : thread() { // ": thread()" calls the related anonymous constructor
-        int rc = 0;
+            : thread() {
+
+        int rc = -1; // initial return code value is failed
 
         /* Initialize and set thread detached attribute */
         rc = pthread_attr_init(&_attr);
@@ -104,9 +105,11 @@ namespace pthread {
             throw thread_exception("pthread_attr_setdetachstate failed.", rc);
         }
 
-        rc = pthread_attr_setstacksize(&_attr, stack_size);
-        if ((stack_size > 0) && (rc != 0)) {
-            throw thread_exception("bad stacksize, check size passed to thread::thread; thread not started.", rc);
+        if (stack_size > 0) {
+            rc = pthread_attr_setstacksize(&_attr, stack_size);
+            if ((stack_size > 0) && (rc != 0)) {
+                throw thread_exception("bad stacksize, check size passed to thread::thread; thread not started.", rc);
+            }
         }
 
         rc = pthread_create(&_thread, &_attr, thread_startup_runnable, (void *) &work);
@@ -129,7 +132,7 @@ namespace pthread {
         _status = pthread::thread_status::not_a_thread;
     }
 
-/* move operator */
+    /* move operator */
     thread &thread::operator=(thread &&other) { //NOSONAR this a C++11 standard interface that we want to comply with.
 
         swap(other);
@@ -163,7 +166,7 @@ namespace pthread {
     };
 
     bool abstract_thread::joinable() const {
-        return _thread != 0;
+        return _thread != 0 && _thread->joinable();
     };
 
 #if __cplusplus < 201103L

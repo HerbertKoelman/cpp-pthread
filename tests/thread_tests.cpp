@@ -18,35 +18,19 @@ public:
     void run() noexcept {
         try {
             long counter = 0;
-            //std::cout << "runnable is running..." << std::endl;
-            //pthread::this_thread::sleep_for(1 * 1000);
+            std::cout << "test_runnable is running in a thread..." << std::flush;
+            pthread::this_thread::sleep_for(1 * 1000);
             for (auto count = 1000; count > 0; count--) {
                 counter += count;
             }
-            //std::cout << "Done" << std::endl;
-        } catch (std::exception &err) {
-            std::cerr << "something went wrong while running test_runnable. " << err.what() << std::endl;
+            std::cout << "Done" << std::endl << std::flush ;
+        } catch (const std::exception &err) {
+            std::cerr << "something went wrong while running test_runnable. " << err.what() << std::endl << std::flush;
+        } catch ( ... ){
+            std::cerr << "unexpected exception catched. " << std::endl << std::flush;
         }
     }
 
-};
-
-class test_thread : public pthread::abstract_thread {
-public:
-
-    void run() noexcept {
-        try {
-            long counter = 0;
-            // std::cout << "abstract test thread is running..." << std::endl;
-            //pthread::this_thread::sleep_for(1 * 1000);
-            for (auto count = 1000; count > 0; count--) {
-                counter += count;
-            }
-            //std::cout << "Done" << std::endl;
-        } catch (std::exception &err) {
-            std::cerr << "something went wrong while running test_thread. " << err.what() << std::endl;
-        }
-    }
 };
 
 TEST(thread, join) {
@@ -96,39 +80,20 @@ TEST(thread, cancel) {
     SUCCEED();
 }
 
-TEST(thread, DISABLED_move_operator) {
+TEST(thread, thread_constructor){
+
+    pthread::thread t1 ;
+    EXPECT_EQ(t1.status(), pthread::thread_status::not_a_thread);
+
+    test_runnable runnable ;
+    pthread::thread t2{runnable};
+    EXPECT_EQ(t2.status(), pthread::thread_status::a_thread);
+}
+
+TEST(thread, move_operator) {
 
     test_runnable tr;
     pthread::thread t1{tr}; // this starts running the thread
-    pthread::thread t2;
-    t2 = dynamic_cast<pthread::thread &&>(t1);
+    //pthread::thread t2 = t1;
     EXPECT_EQ(t1.status(), pthread::thread_status::not_a_thread);
-}
-
-TEST(abstract_thread, DISABLED_join) {
-
-    test_thread t;
-
-    t.start();
-    t.join();
-}
-
-TEST(thread_group, DISABLED_start_join) {
-    try {
-        pthread::thread_group threads(true);
-
-        for (auto x = 10; x > 0; x--) {
-            threads.add(new test_thread{});
-        }
-
-        threads.start();
-        threads.join();
-
-    } catch (pthread::pthread_exception &err) {
-        std::cerr << "thread_group test case failed. " << err.what() << std::endl;
-        GTEST_FAIL();
-    } catch (...) {
-        std::cerr << "thread_group test case failed. Unexpected eexception catched." << std::endl;
-        GTEST_FAIL();
-    }
 }

@@ -4,18 +4,22 @@ if (GCOV AND ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU"))
   set(GCOV_LIB gcov)
 endif()
 
-add_executable(cpp_exception_tests exceptions_tests.cpp )
-target_link_libraries(cpp_exception_tests GTest::GTest GTest::gtest_main cpp-pthread-static ${GCOV_LIB})
-add_test(NAME cpp_exception_tests COMMAND cpp_exception_tests)
+add_executable(exception_tests exceptions_tests.cpp )
+target_link_libraries(exception_tests GTest::GTest GTest::gtest_main cpp-pthread-static ${GCOV_LIB})
+add_test(NAME exception_tests COMMAND exception_tests)
 
 #add_executable(cpp_concurrency_tests concurrency_tests.cpp )
 #target_link_libraries(cpp_concurrency_tests GTest::GTest GTest::gtest_main cpp-pthread-static ${GCOV_LIB})
 #add_test(NAME cpp_concurrency_tests COMMAND cpp_concurrency_tests)
-#
-#add_executable(cpp_thread_tests thread_tests.cpp)
-#target_link_libraries(cpp_thread_tests GTest::GTest GTest::gtest_main cpp-pthread-static ${GCOV_LIB})
-#add_test(NAME cpp_thread_tests COMMAND cpp_thread_tests)
-#
+
+add_executable(thread_tests thread_tests.cpp)
+target_link_libraries(thread_tests GTest::GTest GTest::gtest_main cpp-pthread-static ${GCOV_LIB})
+add_test(NAME thread_tests COMMAND thread_tests)
+
+add_executable(abstract_thread_tests abstract_thread_tests.cpp)
+target_link_libraries(abstract_thread_tests GTest::GTest GTest::gtest_main cpp-pthread-static ${GCOV_LIB})
+add_test(NAME abstract_thread_tests COMMAND thread_tests)
+
 #add_executable(synchronized_queue_tests synchronized_queue_tests.cpp)
 #target_link_libraries(synchronized_queue_tests GTest::GTest GTest::gtest_main cpp-pthread-static ${GCOV_LIB})
 #add_test(NAME synchronized_queue_tests COMMAND synchronized_queue_tests)
