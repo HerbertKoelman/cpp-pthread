@@ -65,6 +65,8 @@ TEST(abstract_thread_group, start_auto_join) {
             threads.add(new test_thread{});
         }
 
+        EXPECT_EQ(threads.size(), 10);
+
         threads.start();
 
     } catch (pthread::pthread_exception &err) {
@@ -83,6 +85,8 @@ TEST(abstract_thread_group, start_join) {
         for (auto x = 10; x > 0; x--) {
             threads.add(new test_thread{});
         }
+
+        EXPECT_EQ(threads.size(), 10);
 
         threads.start();
         threads.join();
