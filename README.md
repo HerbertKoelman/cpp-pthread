@@ -1,12 +1,12 @@
 ### What it does
 
-[![Build Status](https://travis-ci.com/HerbertKoelman/cpp-pthread.svg?branch=master)](https://travis-ci.com/HerbertKoelman/cpp-pthread) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=HerbertKoelman_cpp-pthread&metric=alert_status)](https://sonarcloud.io/dashboard?id=HerbertKoelman_cpp-pthread) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=HerbertKoelman_cpp-pthread&metric=coverage)](https://sonarcloud.io/dashboard?id=HerbertKoelman_cpp-pthread)
+[![Build Status](https://travis-ci.com/HerbertKoelman/cpp-pthread.svg?branch=master)](https://travis-ci.com/HerbertKoelman/cpp-pthread) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=HerbertKoelman_cpp-pthread&metric=alert_status)](https://sonarcloud.io/dashboard?id=HerbertKoelman_cpp-pthread)  [![codecov](https://codecov.io/gh/HerbertKoelman/cpp-pthread/branch/master/graph/badge.svg)](https://codecov.io/gh/HerbertKoelman/cpp-pthread)
 
 Some C/C++ compilers are not implementing all of C++11 and above standard, it's often lacking the concurrency features that the standard brings. These compilers will at some point be updated. I was therefore looking for a way to reduce the effort of switching from a specific implementation to the C++11 standard one.
 
 This projetc is the resulting code.
 
-> WARN Of course, this library is a replacement of C++11 features, it is best to use the standard implementation if your compiler support it.
+> _WARN_ of course, this library is a replacement of C++11 features, it is best to use the standard implementation if your compiler support it.
 
 To use this library:
 
