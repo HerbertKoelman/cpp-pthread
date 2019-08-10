@@ -28,6 +28,10 @@ namespace pthread {
                 if (rc != 0) {
                     throw pthread_exception("in sleep_for, call to sleep failed. ", errno);
                 }
+            } else {
+              std::string message {"sleep_for received an unexpected duration value "};
+              message = message + "(" + std::to_string(millis) +")";
+              throw pthread_exception(message);
             }
         }
 
@@ -41,11 +45,11 @@ namespace pthread {
         if (_thread != 0) {
 
             if (_thread == this_thread::get_id()) {
-                throw pthread_exception("join failed, joining yourself would endup in deadlock.");
+                throw thread_exception("join failed, joining yourself would endup in deadlock.");
             }
 
             if (_status == thread_status::not_a_thread) {
-                throw pthread_exception("join failed, this is not a thread.");
+                throw thread_exception("join failed, this is not a thread.");
             }
 
             int rc = pthread_join(_thread, NULL);
@@ -89,8 +93,7 @@ namespace pthread {
         // intentional..
     }
 
-    thread::thread(const runnable &work, const std::size_t stack_size)
-            : thread() {
+    thread::thread(const runnable &work, const std::size_t stack_size) : thread() {
 
         int rc = -1; // initial return code value is failed
 
@@ -128,8 +131,11 @@ namespace pthread {
     }
 
     thread::~thread() {
-        pthread_attr_destroy(&_attr);
-        _status = pthread::thread_status::not_a_thread;
+
+        int rc = pthread_attr_destroy(&_attr);
+        if ( rc != 0 ){
+            std::cerr << __FUNCTION__ << " failed. " << strerror(rc) << std::endl << std::flush;
+        }
     }
 
     /* move operator */
@@ -241,7 +247,7 @@ namespace pthread {
         try {
             static_cast<runnable *>(runner)->run();
         } catch (...) { // NOSONAR threads cannot throw exceptions when ending, this prevents this from happening.
-            printf("uncaugth excpetion in thread_startup_runnable(), check your runnable::run() implementation.");
+            printf("uncaugth exception in thread_startup_runnable(), check your runnable::run() implementation.");
         }
         return NULL;
     }
