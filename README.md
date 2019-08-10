@@ -6,7 +6,7 @@ Some C/C++ compilers are not implementing all of C++11 and above standard, it's 
 
 This projetc is the resulting code.
 
-> WARN Of course, this library is a replacement of C++11 features, it is best to use the standard implementation if your compiler support it.
+> _WARN_ of course, this library is a replacement of C++11 features, it is best to use the standard implementation if your compiler support it.
 
 To use this library:
 
