@@ -1,5 +1,8 @@
 1.9.1
-- bug fixing: #162, #158, #159, #160, #161
+- check that joining yourself throws an exception (#169)
+- removed code smells (#168)
+- test move operator in pthtread::thread (#167)
+- bug fixing: #162, #158, #159, #160, #161, #166, #171, #172
 1.9.0
 - better comments in sync_queue (#157)
 - conditional_variable tests (#154)

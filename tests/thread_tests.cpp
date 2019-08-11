@@ -15,81 +15,140 @@
 class test_runnable : public pthread::runnable {
 public:
 
-    void run() noexcept {
+    void run() noexcept override {
         try {
             long counter = 0;
-            std::cout << "test_runnable is running in a thread..." << std::flush;
-            pthread::this_thread::sleep_for(1 * 1000);
+            display_message("test_runnable is running ");
+            pthread::this_thread::sleep_for(2 * 1000);
             for (auto count = 1000; count > 0; count--) {
                 counter += count;
             }
-            std::cout << "Done" << std::endl << std::flush ;
+
+//            std::string input ;
+//            std::cout << "Type enter to continue." << std::endl;
+//            std::getline(std::cin, input);
+
+            display_message("done ");
         } catch (const std::exception &err) {
-            std::cerr << "something went wrong while running test_runnable. " << err.what() << std::endl << std::flush;
-        } catch ( ... ){
-            std::cerr << "unexpected exception catched. " << std::endl << std::flush;
+            display_error(std::string{"something went wrong while running test_runnable. "} + err.what());
+        } catch (...) {
+            display_error(std::string{"unexpected exception catched in test_runnable."} + __FUNCTION__ + " method.");
         }
     }
 
+    test_runnable(const std::string &message) : _message{message} {
+        // intentional
+    }
+
+private:
+
+    void display_message(const std::string &message) {
+        auto thid = pthread::this_thread::get_id();
+        std::cout << _message << ": " << message << " (" << thid << ")" << std::endl << std::flush;
+    }
+
+    void display_error(const std::string &message) {
+        auto thid = pthread::this_thread::get_id();
+        std::cerr << _message << ": " << message << " (" << thid << ")" << std::endl << std::flush;
+    }
+
+    std::string _message;
 };
 
-TEST(thread, join) {
+void display_context_infos() {
+    auto thid = pthread::this_thread::get_id();
+    std::string test_case_name = ::testing::UnitTest::GetInstance()->current_test_case()->name();
+    std::string test_name = ::testing::UnitTest::GetInstance()->current_test_info()->name();
 
+    std::cout << "----------------------------------------------------" << std::endl;
+    std::cout << "| running test case: " << test_case_name << "." << test_name << " (test running thread ID: [" << thid
+              << "])." << std::endl;
+    std::cout << std::endl << std::flush;
+}
+
+TEST(thread, join) {
+    display_context_infos();
+
+    std::string test_case_name = ::testing::UnitTest::GetInstance()->current_test_case()->name();
+    std::string test_name = ::testing::UnitTest::GetInstance()->current_test_info()->name();
     try {
-        test_runnable tr;
-        pthread::thread t{tr}; // this starts running the thread
+        std::unique_ptr<test_runnable> tr{new test_runnable{"join test"}};
+        pthread::thread t{*tr}; // this starts running the thread
 
         EXPECT_TRUE(t.joinable());
         t.join();
     } catch (std::exception &err) {
-        std::cerr << "something went wrong when canceling a thread. " << err.what() << std::endl;
+        std::cerr << "something went wrong in test " << test_case_name << "." << test_name << ". " << err.what()
+                  << std::endl;
+        std::cerr << std::flush;
         FAIL();
     }
+}
 
-    SUCCEED();
+TEST(thread, stack_size) {
+    display_context_infos();
+    size_t initialized_stack_size = 524288 * 2;
+
+    // This should work
+    std::unique_ptr<test_runnable> tr{new test_runnable{"status test"}};
+    pthread::thread t{*tr, initialized_stack_size};
+    EXPECT_EQ(t.stact_size(), initialized_stack_size);
+    t.join();
+
+    // This should NOT work
+    initialized_stack_size = 100; // This is too smal
+    tr.reset(new test_runnable{"status test"});
+    try {
+        pthread::thread t{*tr, initialized_stack_size};
+        FAIL();
+    } catch (const pthread::thread_exception &err) {
+        SUCCEED();
+    }
 }
 
 TEST(thread, status) {
+    display_context_infos();
 
-    test_runnable tr;
-    pthread::thread t{tr}; // this starts running the thread
+    std::unique_ptr<test_runnable> tr{new test_runnable{"status test"}};
+
+    pthread::thread t{*tr}; // this starts running the thread
 
     EXPECT_EQ(t.status(), pthread::thread_status::a_thread);
+
+    t.join();
 }
 
-TEST(thread, DISABLED_cancel) {
+TEST(thread, thread_constructor) {
+    display_context_infos();
 
     try {
-        test_runnable tr;
-        pthread::thread t{tr}; // this starts running the thread
+        pthread::thread t1;
+        EXPECT_EQ(t1.status(), pthread::thread_status::not_a_thread);
 
-        t.cancel();
-    } catch (pthread::thread_exception &err) {
-        std::cerr << "something went wrong when canceling a thread. " << std::flush ;
-        std::cerr << err.what() << std::endl << std::flush;
-        FAIL();
-    } catch ( ... ){
-        std::cerr << "unexpected exception...." << std::endl << std::flush;
-        FAIL();
+        std::unique_ptr<test_runnable> tr{new test_runnable{"constructor test"}};
+        pthread::thread t2{*tr};
+        EXPECT_EQ(t2.status(), pthread::thread_status::a_thread);
+        t2.join();
+    } catch (std::exception &err) {
+        std::cerr << "thread_constructor test failed. " << err.what() << std::endl;
     }
-
-    SUCCEED();
 }
 
-TEST(thread, thread_constructor){
+TEST(thread, move_operator) {
 
-    pthread::thread t1 ;
-    EXPECT_EQ(t1.status(), pthread::thread_status::not_a_thread);
+    display_context_infos();
 
-    test_runnable runnable ;
-    pthread::thread t2{runnable};
-    EXPECT_EQ(t2.status(), pthread::thread_status::a_thread);
-}
+    std::unique_ptr<test_runnable> tr{new test_runnable{"move operator test"}};
+    pthread::thread T1{*tr}; // this starts running the thread
+    EXPECT_EQ(T1.status(), pthread::thread_status::a_thread); // at this point t& is a running thread
 
-TEST(thread, DISABLED_move_operator) {
+    pthread::thread T2 = std::move(T1); // t2 becomes the running thread and T1 is not a thread anymore
+    EXPECT_EQ(T2.status(), pthread::thread_status::a_thread); // T2 is the running thread
+    EXPECT_EQ(T1.status(), pthread::thread_status::not_a_thread); // T1 is no longer a thread
 
-    test_runnable tr;
-    pthread::thread t1{tr}; // this starts running the thread
-    //pthread::thread t2 = t1;
-    EXPECT_EQ(t1.status(), pthread::thread_status::not_a_thread);
+    // join shouldn't throw an exception because when t1 was moved to t2, t2 is not a thread anymore
+    EXPECT_NO_THROW(T1.join());
+
+    T2.join();
+    EXPECT_NO_THROW(T2.join());
 }

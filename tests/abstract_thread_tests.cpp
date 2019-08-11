@@ -43,7 +43,7 @@ TEST(abstract_thread, joinable) {
 
     test_thread t;
     t.start();
-    if ( t.joinable() ) t.join();
+    if (t.joinable()) t.join();
 }
 
 TEST(abstract_thread, not_joinable) {
@@ -52,9 +52,26 @@ TEST(abstract_thread, not_joinable) {
     t.start();
     pthread::this_thread::sleep_for(3 * 1000);
 
-    EXPECT_TRUE( t.joinable() );
+    EXPECT_TRUE(t.joinable());
     t.join(); // once joined, the thread is no more a thread and can not be joined again.
-    EXPECT_FALSE( t.joinable() );
+    EXPECT_FALSE(t.joinable());
+}
+
+
+TEST(absttract_thread, self_join) {
+
+    class test_join_thread : public pthread::abstract_thread {
+    public:
+
+        void run() noexcept {
+            EXPECT_THROW(join(), pthread::thread_exception); // this should not work, self joining
+        }
+    };
+
+    test_join_thread T1;
+    T1.start();
+    pthread::this_thread::sleep_for(500);
+    EXPECT_NO_THROW(T1.join());
 }
 
 TEST(abstract_thread_group, start_auto_join) {

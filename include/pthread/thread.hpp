@@ -81,10 +81,11 @@ namespace pthread {
      *       void run() {...}
      *     };
      *
-     *     reader_thread rt;
-     *     thread t{rt};
+     *     std::unique_ptr<reader_thread> rt{new reader_thread };
+     *     thread t{*rt};
      *     t.join();
      * </code></pre>
+     *
      * @author herbert koelman (herbert.koelman@me.com)
      */
     class thread {
@@ -104,11 +105,11 @@ namespace pthread {
          */
         thread(const runnable &runner, const std::size_t stack_size = 0);
 
-        /** Move contructor.
+        /** Move constructor.
          *
-         * once moved this not a thread anymore. Status is thread_status::not_a_thread
+         * once moved the given thread is not a thread anymore (status is thread_status::not_a_thread)
          *
-         * @param other thread that will be moved, on completion other is no longer a thread.
+         * @param other thread that will be moved, on successfull completion, the passed argument is no longer a thread.
          */
         thread(thread &&other); // NOSONAR this is std interface and cannot be changed
 
@@ -139,24 +140,17 @@ namespace pthread {
          */
         bool joinable() const { return _thread != 0; };
 
-        /**
-         * The cancel method requests the cancellation of the thread. The action depends on the
-         * cancelability of the target thread:
-         *
-         * - If its cancelability is disabled, the cancellation request is set pending.
-         * - If its cancelability is deferred, the cancellation request is set pending till the thread reaches a cancellation point.
-         * - If its cancelability is asynchronous, the cancellation request is acted upon immediately; in some cases, it may result in unexpected behaviour.
-         *
-         * The cancellation of a thread terminates it safely, using the same termination
-         * procedure as the pthread_exit subroutine.
-         */
-        int cancel();
-
         /** @return the status of the thread (thread::status).
          */
         inline thread_status status() const {
             return _status;
         };
+
+        /** thread's current stack size (pthread_attr_getstacksize).
+         *
+         * @return the stack size in bytes.
+         */
+         size_t stact_size();
 
         /** copy operator is flagged deleted,  copying doesn't make sense
          */
@@ -171,16 +165,29 @@ namespace pthread {
 
     private:
 
+        /**
+         * The cancel method requests the cancellation of the thread. The action depends on the
+         * cancelability of the target thread:
+         *
+         * - If its cancelability is disabled, the cancellation request is set pending.
+         * - If its cancelability is deferred, the cancellation request is set pending till the thread reaches a cancellation point.
+         * - If its cancelability is asynchronous, the cancellation request is acted upon immediately; in some cases, it may result in unexpected behaviour.
+         *
+         * The cancellation of a thread terminates it safely, using the same termination
+         * procedure as the pthread_exit subroutine.
+         */
+        int cancel();
+
         /** Exchanges the underlying handles of two thread objects.
          *
          * @param other the thread to swap with, on completion other is not a thread.
          */
         void swap(thread &other);
 
-        pthread_t _thread; //!< thread identifier
-        pthread_attr_t _attr;   //!< thread attributes (stack size, ...)
-
-        thread_status _status; //!< thread status (@see thread_status)
+        pthread_t          _thread; //!< thread identifier
+        pthread_attr_t     _attr;   //!< thread attributes (stack size, ...)
+        pthread_attr_t    *_attr_ptr; //!< pthread attribute pointer (null, if pthread_attr_t was not initialized) (NOSONAR)
+        thread_status      _status; //!< thread status (@see thread_status)
     };
 
     /** base class of a thread.
@@ -312,9 +319,7 @@ namespace pthread {
 #if __cplusplus < 201103L
         explicit thread_group( bool destructor_joins_first = false ) throw();
 #else
-
         explicit thread_group(bool destructor_joins_first = false) noexcept;
-
 #endif
 
         /** not copy-assignable */
