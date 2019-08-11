@@ -92,7 +92,7 @@ namespace pthread {
     thread::thread() : _thread(0), _attr_ptr{nullptr}, _status(thread_status::not_a_thread) {
         int rc = pthread_attr_init(&_attr);
         if (rc != 0) {
-            throw thread_exception("pthread_attr_init failed.", rc);
+            throw thread_exception("pthread_attr_init call in pthread::pthread() failed.", rc);
         } else {
             _attr_ptr = &_attr;
         }
@@ -120,8 +120,9 @@ namespace pthread {
         } else {
             _status = thread_status::a_thread;
         }
+#if DEBUG
         std::cout << "thread " << _thread << " has started." << std::endl << std::flush ;
-
+#endif
     }
 
     /* move constructor
@@ -133,11 +134,13 @@ namespace pthread {
 
     thread::~thread() {
 
+#if DEBUG
         std::cout << "thread " << _thread << " being destroyed." << std::endl << std::flush ;
+#endif
         if ( _attr_ptr != nullptr) {
             int rc = pthread_attr_destroy(&_attr);
             if (rc != 0) {
-                std::cerr << "pthread::~" << __FUNCTION__ << " failed. " << strerror(rc) << std::endl << std::flush;
+                std::cerr << "pthread_attr_destroy called in pthread::~thread failed. " << strerror(rc) << std::endl << std::flush;
             }
         }
     }
