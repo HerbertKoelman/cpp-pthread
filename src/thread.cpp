@@ -11,7 +11,7 @@
 #include <cstdio>
 #include <cstring>
 #include <chrono>
-#include <limits.h>
+#include <climits>
 
 namespace pthread {
 
