@@ -81,10 +81,11 @@ namespace pthread {
      *       void run() {...}
      *     };
      *
-     *     reader_thread rt;
-     *     thread t{rt};
+     *     std::unique_ptr<reader_thread> rt{new reader_thread };
+     *     thread t{*rt};
      *     t.join();
      * </code></pre>
+     *
      * @author herbert koelman (herbert.koelman@me.com)
      */
     class thread {
