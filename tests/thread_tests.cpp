@@ -18,40 +18,70 @@ public:
     void run() noexcept override {
         try {
             long counter = 0;
-            std::cout << "test_runnable is running in a thread..." << std::flush;
+            display_message("test_runnable is running ");
             pthread::this_thread::sleep_for(2 * 1000);
             for (auto count = 1000; count > 0; count--) {
                 counter += count;
             }
-            std::cout << "Done" << std::endl << std::flush;
+            display_message( "done " );
         } catch (const std::exception &err) {
-            std::cerr << "something went wrong while running test_runnable. " << err.what() << std::endl << std::flush;
+            display_error(std::string{"something went wrong while running test_runnable. "} + err.what() );
         } catch (...) {
-            std::cerr << "unexpected exception catched. " << std::endl << std::flush;
+            display_error(std::string{"unexpected exception catched in test_runnable."} + __FUNCTION__ + " method.");
         }
     }
 
+    test_runnable( const std::string &message): _message{message}{
+        // intentional
+    }
+
+private:
+
+    void display_message( const std::string &message){
+        auto thid = pthread::this_thread::get_id();
+        std::cout << _message << ": "<< message << " (" << thid << ")" << std::endl << std::flush;
+    }
+
+    void display_error( const std::string &message){
+        auto thid = pthread::this_thread::get_id();
+        std::cerr << _message << ": "<< message << " (" << thid << ")" << std::endl << std::flush;
+    }
+
+    std::string _message;
 };
 
-TEST(thread, join) {
+void display_context_infos(){
+    auto thid = pthread::this_thread::get_id();
+    std::string test_case_name = ::testing::UnitTest::GetInstance()->current_test_case()->name();
+    std::string test_name = ::testing::UnitTest::GetInstance()->current_test_info()->name();
 
+    std::cout << "----------------------------------------------------" << std::endl;
+    std::cout << "| running test case: " << test_case_name << "." << test_name << " (test running thread ID: [" << thid << "])." << std::endl;
+    std::cout << std::endl <<std::flush;
+}
+
+TEST(thread, join) {
+    display_context_infos();
+
+    std::string test_case_name = ::testing::UnitTest::GetInstance()->current_test_case()->name();
+    std::string test_name = ::testing::UnitTest::GetInstance()->current_test_info()->name();
     try {
-        test_runnable tr;
-        pthread::thread t{tr}; // this starts running the thread
+        std::unique_ptr<test_runnable> tr{new test_runnable{"join test"}};
+        pthread::thread t{*tr}; // this starts running the thread
 
         EXPECT_TRUE(t.joinable());
         t.join();
     } catch (std::exception &err) {
-        std::cerr << "something went wrong when canceling a thread. " << err.what() << std::endl;
+        std::cerr << "something went wrong in test " << test_case_name << "." << test_name << ". " << err.what() << std::endl;
+        std::cerr << std::flush;
         FAIL();
     }
-
-    SUCCEED();
 }
 
 TEST(thread, status) {
+    display_context_infos();
 
-    std::unique_ptr<test_runnable> tr{new test_runnable};
+    std::unique_ptr<test_runnable> tr{new test_runnable{"status test"}};
 
     pthread::thread t{*tr}; // this starts running the thread
 
@@ -60,23 +90,14 @@ TEST(thread, status) {
     t.join();
 }
 
-TEST(thread, cancel) {
-
-    std::unique_ptr<test_runnable> tr{new test_runnable};
-    pthread::thread t{*tr}; // this starts running the thread
-    t.cancel();
-
-    EXPECT_THROW(t.join(), pthread::thread_exception);
-}
-
 TEST(thread, thread_constructor) {
+    display_context_infos();
 
     try {
-// This doesn't work because of the thread destructor that destroys _attr that was never allocated.
-//        pthread::thread t1;
-//        EXPECT_EQ(t1.status(), pthread::thread_status::not_a_thread);
+        pthread::thread t1;
+        EXPECT_EQ(t1.status(), pthread::thread_status::not_a_thread);
 
-        std::unique_ptr<test_runnable> tr{new test_runnable};
+        std::unique_ptr<test_runnable> tr{new test_runnable{"constructor test"}};
         pthread::thread t2{*tr};
         EXPECT_EQ(t2.status(), pthread::thread_status::a_thread);
         t2.join();
@@ -87,8 +108,8 @@ TEST(thread, thread_constructor) {
 
 TEST(thread, DISABLED_move_operator) {
 
-    test_runnable tr;
-    pthread::thread t1{tr}; // this starts running the thread
-    //pthread::thread t2 = t1;
+    std::unique_ptr<test_runnable> tr{new test_runnable{"move operator test"}};
+    pthread::thread t1{*tr}; // this starts running the thread
+    // pthread::thread t2 = t1;
     EXPECT_EQ(t1.status(), pthread::thread_status::not_a_thread);
 }
