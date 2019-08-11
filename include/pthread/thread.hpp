@@ -180,7 +180,7 @@ namespace pthread {
         pthread_t          _thread; //!< thread identifier
         pthread_attr_t     _attr;   //!< thread attributes (stack size, ...)
         pthread_attr_t    *_attr_ptr; //!< pthread attribute pointer (null, if pthread_attr_t was not initialized)
-        thread_status _status; //!< thread status (@see thread_status)
+        thread_status      _status; //!< thread status (@see thread_status)
     };
 
     /** base class of a thread.
@@ -312,9 +312,7 @@ namespace pthread {
 #if __cplusplus < 201103L
         explicit thread_group( bool destructor_joins_first = false ) throw();
 #else
-
         explicit thread_group(bool destructor_joins_first = false) noexcept;
-
 #endif
 
         /** not copy-assignable */
