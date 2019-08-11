@@ -23,6 +23,11 @@ public:
             for (auto count = 1000; count > 0; count--) {
                 counter += count;
             }
+
+//            std::string input ;
+//            std::cout << "Type enter to continue." << std::endl;
+//            std::getline(std::cin, input);
+
             display_message( "done " );
         } catch (const std::exception &err) {
             display_error(std::string{"something went wrong while running test_runnable. "} + err.what() );
@@ -106,10 +111,21 @@ TEST(thread, thread_constructor) {
     }
 }
 
-TEST(thread, DISABLED_move_operator) {
+TEST(thread, move_operator) {
+
+    display_context_infos();
 
     std::unique_ptr<test_runnable> tr{new test_runnable{"move operator test"}};
-    pthread::thread t1{*tr}; // this starts running the thread
-    // pthread::thread t2 = t1;
-    EXPECT_EQ(t1.status(), pthread::thread_status::not_a_thread);
+    pthread::thread T1{*tr}; // this starts running the thread
+    EXPECT_EQ(T1.status(), pthread::thread_status::a_thread); // at this point t& is a running thread
+
+    pthread::thread T2 = std::move(T1); // t2 becomes the running thread and T1 is not a thread anymore
+    EXPECT_EQ(T2.status(), pthread::thread_status::a_thread); // T2 is the running thread
+    EXPECT_EQ(T1.status(), pthread::thread_status::not_a_thread); // T1 is no longer a thread
+
+    // join shouldn't throw an exception because when t1 was moved to t2, t2 is not a thread anymore
+    EXPECT_NO_THROW(T1.join());
+
+    T2.join();
+    EXPECT_NO_THROW(T2.join());
 }
