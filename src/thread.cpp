@@ -28,6 +28,10 @@ namespace pthread {
                 if (rc != 0) {
                     throw pthread_exception("in sleep_for, call to sleep failed. ", errno);
                 }
+            } else {
+              std::string message {"sleep_for received an unexpected duration value "};
+              message = message + "(" + std::to_string(millis) +")";
+              throw pthread_exception(message);
             }
         }
 
@@ -41,11 +45,11 @@ namespace pthread {
         if (_thread != 0) {
 
             if (_thread == this_thread::get_id()) {
-                throw pthread_exception("join failed, joining yourself would endup in deadlock.");
+                throw thread_exception("join failed, joining yourself would endup in deadlock.");
             }
 
             if (_status == thread_status::not_a_thread) {
-                throw pthread_exception("join failed, this is not a thread.");
+                throw thread_exception("join failed, this is not a thread.");
             }
 
             int rc = pthread_join(_thread, NULL);
@@ -85,51 +89,57 @@ namespace pthread {
         return rc;
     }
 
-    thread::thread() : _thread(0), _status(thread_status::not_a_thread) {
-        // intentional..
+    thread::thread() : _thread(0), _attr_ptr{nullptr}, _status(thread_status::not_a_thread) {
+        int rc = pthread_attr_init(&_attr);
+        if (rc != 0) {
+            throw thread_exception("pthread_attr_init failed.", rc);
+        } else {
+            _attr_ptr = &_attr;
+        }
     }
 
-    thread::thread(const runnable &work, const std::size_t stack_size)
-            : thread() {
+    thread::thread(const runnable &work, const std::size_t stack_size) : thread() {
 
         int rc = -1; // initial return code value is failed
 
-        /* Initialize and set thread detached attribute */
-        rc = pthread_attr_init(&_attr);
-        if (rc != 0) {
-            throw thread_exception("pthread_attr_init failed.", rc);
-        }
-
-        rc = pthread_attr_setdetachstate(&_attr, PTHREAD_CREATE_JOINABLE);
+        rc = pthread_attr_setdetachstate(_attr_ptr, PTHREAD_CREATE_JOINABLE);
         if (rc != 0) {
             throw thread_exception("pthread_attr_setdetachstate failed.", rc);
         }
 
         if (stack_size > 0) {
-            rc = pthread_attr_setstacksize(&_attr, stack_size);
+            rc = pthread_attr_setstacksize(_attr_ptr, stack_size);
             if ((stack_size > 0) && (rc != 0)) {
                 throw thread_exception("bad stacksize, check size passed to thread::thread; thread not started.", rc);
             }
         }
 
-        rc = pthread_create(&_thread, &_attr, thread_startup_runnable, (void *) &work);
+        rc = pthread_create(&_thread, _attr_ptr, thread_startup_runnable, (void *) &work);
         if (rc != 0) {
             throw thread_exception("pthread_create failed.", rc);
         } else {
             _status = thread_status::a_thread;
         }
+        std::cout << "thread " << _thread << " has started." << std::endl << std::flush ;
 
     }
 
-    /** move constructor */
+    /* move constructor
+     */
     thread::thread(thread &&other) { //NOSONAR this a C++11 standard interface that we want to comply with.
 
         swap(other);
     }
 
     thread::~thread() {
-        pthread_attr_destroy(&_attr);
-        _status = pthread::thread_status::not_a_thread;
+
+        std::cout << "thread " << _thread << " being destroyed." << std::endl << std::flush ;
+        if ( _attr_ptr != nullptr) {
+            int rc = pthread_attr_destroy(&_attr);
+            if (rc != 0) {
+                std::cerr << "pthread::~" << __FUNCTION__ << " failed. " << strerror(rc) << std::endl << std::flush;
+            }
+        }
     }
 
     /* move operator */
@@ -241,9 +251,9 @@ namespace pthread {
         try {
             static_cast<runnable *>(runner)->run();
         } catch (...) { // NOSONAR threads cannot throw exceptions when ending, this prevents this from happening.
-            printf("uncaugth excpetion in thread_startup_runnable(), check your runnable::run() implementation.");
+            printf("uncaugth exception in thread_startup_runnable(), check your runnable::run() implementation.");
         }
-        return NULL;
+        return nullptr;
     }
 
 } // namespace pthread
