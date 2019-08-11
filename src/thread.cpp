@@ -140,7 +140,7 @@ namespace pthread {
         if ( _attr_ptr != nullptr) {
             int rc = pthread_attr_destroy(&_attr);
             if (rc != 0) {
-                std::cerr << "pthread_attr_destroy called in pthread::~thread failed. " << strerror(rc) << std::endl << std::flush;
+                std::cerr << "pthread_attr_destroy called in pthread::~thread failed. " << strerror(rc) << std::endl << std::flush; //NOSONAR I'd rather this basic output then nothing
             }
         }
     }
@@ -256,7 +256,7 @@ namespace pthread {
         try {
             static_cast<runnable *>(runner)->run();
         } catch (...) { // NOSONAR threads cannot throw exceptions when ending, this prevents this from happening.
-            printf("uncaugth exception in thread_startup_runnable(), check your runnable::run() implementation.");
+            printf("uncaugth exception in thread_startup_runnable(), check your runnable::run() implementation."); //NOSONAR this should never happen, BUT if it does, I want to be sure to see it
         }
         return nullptr;
     }
