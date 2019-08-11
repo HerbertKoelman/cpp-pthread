@@ -145,6 +145,12 @@ namespace pthread {
             return _status;
         };
 
+        /** thread's current stack size (pthread_attr_getstacksize).
+         *
+         * @return the stack size in bytes.
+         */
+         size_t stact_size();
+
         /** copy operator is flagged deleted,  copying doesn't make sense
          */
         thread &operator=(const thread &) = delete;

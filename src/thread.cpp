@@ -11,6 +11,7 @@
 #include <cstdio>
 #include <cstring>
 #include <chrono>
+#include <limits.h>
 
 namespace pthread {
 
@@ -108,9 +109,13 @@ namespace pthread {
         }
 
         if (stack_size > 0) {
-            rc = pthread_attr_setstacksize(_attr_ptr, stack_size);
-            if ((stack_size > 0) && (rc != 0)) {
-                throw thread_exception("bad stacksize, check size passed to thread::thread; thread not started.", rc);
+            if ( stack_size > PTHREAD_STACK_MIN) {
+                rc = pthread_attr_setstacksize(_attr_ptr, stack_size);
+                if ((stack_size > 0) && (rc != 0)) {
+                    throw thread_exception("bad stacksize, check size passed to thread::thread, thread not started.", rc);
+                }
+            } else {
+                throw thread_exception(std::string{"minimum stack size is "} + std::to_string(PTHREAD_STACK_MIN) + " bytes, you passed a size of " + std::to_string(stack_size));
             }
         }
 
@@ -158,6 +163,15 @@ namespace pthread {
         std::swap(_status, other._status);
         std::swap(_attr, other._attr);
         _attr_ptr = &_attr; // pthread_attribute is always initialized
+    }
+
+    size_t thread::stact_size() {
+        size_t size = -1;
+        int rc = pthread_attr_getstacksize(_attr_ptr, &size);
+        if ( rc != 0 ){
+            throw thread_exception("failed to get stack size.", rc);
+        }
+        return size;
     }
 
     abstract_thread::abstract_thread(const std::size_t stack_size) : _thread(NULL), _stack_size(stack_size) {
