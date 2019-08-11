@@ -28,41 +28,42 @@ public:
 //            std::cout << "Type enter to continue." << std::endl;
 //            std::getline(std::cin, input);
 
-            display_message( "done " );
+            display_message("done ");
         } catch (const std::exception &err) {
-            display_error(std::string{"something went wrong while running test_runnable. "} + err.what() );
+            display_error(std::string{"something went wrong while running test_runnable. "} + err.what());
         } catch (...) {
             display_error(std::string{"unexpected exception catched in test_runnable."} + __FUNCTION__ + " method.");
         }
     }
 
-    test_runnable( const std::string &message): _message{message}{
+    test_runnable(const std::string &message) : _message{message} {
         // intentional
     }
 
 private:
 
-    void display_message( const std::string &message){
+    void display_message(const std::string &message) {
         auto thid = pthread::this_thread::get_id();
-        std::cout << _message << ": "<< message << " (" << thid << ")" << std::endl << std::flush;
+        std::cout << _message << ": " << message << " (" << thid << ")" << std::endl << std::flush;
     }
 
-    void display_error( const std::string &message){
+    void display_error(const std::string &message) {
         auto thid = pthread::this_thread::get_id();
-        std::cerr << _message << ": "<< message << " (" << thid << ")" << std::endl << std::flush;
+        std::cerr << _message << ": " << message << " (" << thid << ")" << std::endl << std::flush;
     }
 
     std::string _message;
 };
 
-void display_context_infos(){
+void display_context_infos() {
     auto thid = pthread::this_thread::get_id();
     std::string test_case_name = ::testing::UnitTest::GetInstance()->current_test_case()->name();
     std::string test_name = ::testing::UnitTest::GetInstance()->current_test_info()->name();
 
     std::cout << "----------------------------------------------------" << std::endl;
-    std::cout << "| running test case: " << test_case_name << "." << test_name << " (test running thread ID: [" << thid << "])." << std::endl;
-    std::cout << std::endl <<std::flush;
+    std::cout << "| running test case: " << test_case_name << "." << test_name << " (test running thread ID: [" << thid
+              << "])." << std::endl;
+    std::cout << std::endl << std::flush;
 }
 
 TEST(thread, join) {
@@ -77,9 +78,31 @@ TEST(thread, join) {
         EXPECT_TRUE(t.joinable());
         t.join();
     } catch (std::exception &err) {
-        std::cerr << "something went wrong in test " << test_case_name << "." << test_name << ". " << err.what() << std::endl;
+        std::cerr << "something went wrong in test " << test_case_name << "." << test_name << ". " << err.what()
+                  << std::endl;
         std::cerr << std::flush;
         FAIL();
+    }
+}
+
+TEST(thread, stack_size) {
+    display_context_infos();
+    size_t initialized_stack_size = 524288 * 2;
+
+    // This should work
+    std::unique_ptr<test_runnable> tr{new test_runnable{"status test"}};
+    pthread::thread t{*tr, initialized_stack_size};
+    EXPECT_EQ(t.stact_size(), initialized_stack_size);
+    t.join();
+
+    // This should NOT work
+    initialized_stack_size = 100; // This is too smal
+    tr.reset(new test_runnable{"status test"});
+    try {
+        pthread::thread t{*tr, initialized_stack_size};
+        FAIL();
+    } catch (const pthread::thread_exception &err) {
+        SUCCEED();
     }
 }
 
@@ -106,8 +129,8 @@ TEST(thread, thread_constructor) {
         pthread::thread t2{*tr};
         EXPECT_EQ(t2.status(), pthread::thread_status::a_thread);
         t2.join();
-    } catch ( std::exception &err ){
-        std::cerr << "thread_constructor test failed. " << err.what() << std::endl ;
+    } catch (std::exception &err) {
+        std::cerr << "thread_constructor test failed. " << err.what() << std::endl;
     }
 }
 
