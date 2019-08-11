@@ -127,7 +127,7 @@ namespace pthread {
 
     /* move constructor
      */
-    thread::thread(thread &&other) { //NOSONAR this a C++11 standard interface that we want to comply with.
+    thread::thread(thread &&other): thread() { //NOSONAR this a C++11 standard interface that we want to comply with.
 
         swap(other);
     }
@@ -156,6 +156,8 @@ namespace pthread {
     void thread::swap(thread &other) {
         std::swap(_thread, other._thread);
         std::swap(_status, other._status);
+        std::swap(_attr, other._attr);
+        _attr_ptr = &_attr; // pthread_attribute is always initialized
     }
 
     abstract_thread::abstract_thread(const std::size_t stack_size) : _thread(NULL), _stack_size(stack_size) {
