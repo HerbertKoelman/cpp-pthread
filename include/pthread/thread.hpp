@@ -179,7 +179,7 @@ namespace pthread {
 
         pthread_t          _thread; //!< thread identifier
         pthread_attr_t     _attr;   //!< thread attributes (stack size, ...)
-        pthread_attr_t    *_attr_ptr; //!< pthread attribute pointer (null, if pthread_attr_t was not initialized)
+        pthread_attr_t    *_attr_ptr; //!< pthread attribute pointer (null, if pthread_attr_t was not initialized) (NOSONAR)
         thread_status      _status; //!< thread status (@see thread_status)
     };
 
