@@ -38,4 +38,4 @@ sonar.links.homepage==https://github.com/HerbertKoelman/cpp-pthread
 sonar.projectBaseDir=@CMAKE_SOURCE_DIR@
 
 # directories that contain code to analyze
-sonar.sources=src,include
+sonar.sources=src,include,tests
