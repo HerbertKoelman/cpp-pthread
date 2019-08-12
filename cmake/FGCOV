@@ -6,7 +6,7 @@
 # SonarConfig.cmake module
 #
 
-for source_gcda_file in $(find ./CMakeFiles/ -type f -name "*.gcda")
+for source_gcda_file in $(find ./ -type f -name "*.gcda")
 do
    source_file=`basename $source_gcda_file .gcda` 
    source_dir=`dirname $source_gcda_file`

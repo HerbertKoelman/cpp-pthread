@@ -19,8 +19,6 @@
 
 namespace pthread {
 
-//  using namespace std ;
-
   /** \addtogroup exception Errors and exceptions
    *
    * Threading related errors and exceptions
@@ -169,9 +167,7 @@ namespace pthread {
        */
       explicit queue_exception(const std::string &msg = "queue_error occured.");
 
-      virtual ~queue_exception(){
-        // intintional...
-      };
+      virtual ~queue_exception();
 
       /** @return an explanatory message
        */
