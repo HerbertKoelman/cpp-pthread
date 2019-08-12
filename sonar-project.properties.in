@@ -3,7 +3,7 @@
 # Description: @PROJECT_DESCRIPTION@
 
 # Add more detail to both client and server-side analysis logs.
-sonar.verbose=true
+sonar.verbose=false
 
 #-----------------------------------------------------------------------------
 #

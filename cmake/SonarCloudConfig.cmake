@@ -47,9 +47,10 @@ if ( SONAR )
     if(SONAR_GCOV)
       add_custom_target( sonar-gcov-report
         #        COMMAND find ./CMakeFiles/ -type f -name "*.gcno" -exec ${SONAR_GCOV} {} -m \; > /dev/null 2>&1
-        COMMAND find ./CMakeFiles/ -type f -name "*.gcno" -exec ${SONAR_GCOV} {} -m \;
+        COMMAND ${CMAKE_CURRENT_LIST_DIR}/FGCOV
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-        COMMENT "Built sonar GCOV report (${SONAR_GCOV})"
+        #        COMMENT "Built sonar GCOV report (${SONAR_GCOV})"
+        COMMENT "Built sonar GCOV report (${CMAKE_CURRENT_LIST_DIR}/FGCOV)"
         VERBATIM
         )
       message(STATUS "Added custom target [sonar-gcov-report]...")

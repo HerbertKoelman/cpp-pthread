@@ -165,19 +165,6 @@ namespace pthread {
 
     private:
 
-        /**
-         * The cancel method requests the cancellation of the thread. The action depends on the
-         * cancelability of the target thread:
-         *
-         * - If its cancelability is disabled, the cancellation request is set pending.
-         * - If its cancelability is deferred, the cancellation request is set pending till the thread reaches a cancellation point.
-         * - If its cancelability is asynchronous, the cancellation request is acted upon immediately; in some cases, it may result in unexpected behaviour.
-         *
-         * The cancellation of a thread terminates it safely, using the same termination
-         * procedure as the pthread_exit subroutine.
-         */
-        int cancel();
-
         /** Exchanges the underlying handles of two thread objects.
          *
          * @param other the thread to swap with, on completion other is not a thread.

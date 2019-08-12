@@ -73,23 +73,6 @@ namespace pthread {
         }
     }
 
-    int thread::cancel() {
-        int rc = -1;
-
-        if (_status == thread_status::not_a_thread) {
-            throw pthread_exception("cancel failed, this is not a thread.");
-        }
-
-        rc = pthread_cancel(_thread);
-        if (rc != 0) {
-            throw thread_exception("pthread_cancel failed.", rc);
-        } else {
-            _status = thread_status::not_a_thread;
-        }
-
-        return rc;
-    }
-
     thread::thread() : _thread(0), _attr_ptr{nullptr}, _status(thread_status::not_a_thread) {
         int rc = pthread_attr_init(&_attr);
         if (rc != 0) {
