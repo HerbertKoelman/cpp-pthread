@@ -41,6 +41,13 @@ TEST(exceptions, condition_variable_exception) {
         EXPECT_STREQ(expecting.c_str(), ex.what());
         EXPECT_EQ(-1, ex.error_number());
     }
+
+    try {
+        throw pthread::condition_variable_exception();
+    } catch (pthread::pthread_exception &ex) {
+        EXPECT_STREQ("conditional_variable_exception", ex.what());
+        EXPECT_EQ(0, ex.error_number());
+    }
 }
 
 TEST(exceptions, read_write_lock_exception) {

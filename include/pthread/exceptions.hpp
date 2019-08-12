@@ -136,7 +136,7 @@ namespace pthread {
      * @param message short description
      * @param pthread_errno error returned by the pthread function
      */
-    explicit condition_variable_exception( const std::string &message = "conditional_variable_exception", const int pthread_errno = -1);
+    explicit condition_variable_exception( const std::string &message = "conditional_variable_exception", const int pthread_errno = 0);
   };
 
   /** thrown to indicate that something went wrong with a thread */
