@@ -9,8 +9,8 @@
 #ifndef PTHREAD_THREAD_HPP
 #define PTHREAD_THREAD_HPP
 
-// must be include as first hearder file of each source code file (see IBM's
-// recommandation for more info p.285 �8.3.1).
+// WARN pthread.h must be include as first hearder file of each source code file (see IBM's
+// recommandation for more info p.285 chapter 8.3.1).
 #include <pthread.h>
 
 #include <iostream>
@@ -164,19 +164,6 @@ namespace pthread {
         thread &operator=(thread &&other); // NOSONAR this is a std method signature
 
     private:
-
-        /**
-         * The cancel method requests the cancellation of the thread. The action depends on the
-         * cancelability of the target thread:
-         *
-         * - If its cancelability is disabled, the cancellation request is set pending.
-         * - If its cancelability is deferred, the cancellation request is set pending till the thread reaches a cancellation point.
-         * - If its cancelability is asynchronous, the cancellation request is acted upon immediately; in some cases, it may result in unexpected behaviour.
-         *
-         * The cancellation of a thread terminates it safely, using the same termination
-         * procedure as the pthread_exit subroutine.
-         */
-        int cancel();
 
         /** Exchanges the underlying handles of two thread objects.
          *

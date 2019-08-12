@@ -35,24 +35,29 @@ if ( SONAR )
     find_program(SONAR_BUILD_WRAPPER build-wrapper-linux-x86-64)
     if ( SONAR_BUILD_WRAPPER )
       add_custom_target( build-wrapper
-        COMMAND ${SONAR_BUILD_WRAPPER} --out-dir ${SONAR_WRAPPER_OUTPUT_DIR} make clean all
+        COMMAND ${SONAR_BUILD_WRAPPER} --out-dir ${SONAR_WRAPPER_OUTPUT_DIR} make clean all test
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "run SONAR's ${SONAR_BUILD_WRAPPER}"
         )
       message(STATUS "Added custom target [build-wrapper]...")
-      add_dependencies(code-quality build-wrapper)
     endif()
 
     find_program(SONAR_GCOV gcov)
     if(SONAR_GCOV)
       add_custom_target( sonar-gcov-report
-        COMMAND find ./CMakeFiles/ -type f -name "*.gcno" -exec ${SONAR_GCOV} {} -m \; > /dev/null 2>&1
+        #        COMMAND find ./CMakeFiles/ -type f -name "*.gcno" -exec ${SONAR_GCOV} {} -m \; > /dev/null 2>&1
+        COMMAND ${CMAKE_CURRENT_LIST_DIR}/FGCOV
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-        COMMENT "Built sonar GCOV report (${SONAR_GCOV})"
+        #        COMMENT "Built sonar GCOV report (${SONAR_GCOV})"
+        COMMENT "Built sonar GCOV report (${CMAKE_CURRENT_LIST_DIR}/FGCOV)"
         VERBATIM
         )
       message(STATUS "Added custom target [sonar-gcov-report]...")
+
+      add_dependencies(sonar-gcov-report build-wrapper )
       add_dependencies(code-quality sonar-gcov-report)
+    else()
+      add_dependencies(code-quality build-wrapper)
     endif()
 
   else()
