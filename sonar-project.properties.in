@@ -33,9 +33,11 @@ sonar.cfamily.gcov.reportsPath=@CMAKE_CURRENT_BINARY_DIR@
 sonar.projectName=@PROJECT_NAME@
 sonar.projectVersion=@CPP_PTHREAD_VERSION@
 sonar.links.homepage==https://github.com/HerbertKoelman/cpp-pthread
+sonar.links.ci=https://travis-ci.com/HerbertKoelman/cpp-pthread
 
 # Base directory
 sonar.projectBaseDir=@CMAKE_SOURCE_DIR@
 
 # directories that contain code to analyze
-sonar.sources=src,include,tests
+sonar.sources=src,include
+sonar.tests=tests
