@@ -75,44 +75,26 @@ TEST(absttract_thread, self_join) {
 }
 
 TEST(abstract_thread_group, start_auto_join) {
-    try {
-        pthread::thread_group threads{true};
+    pthread::thread_group threads{true};
 
-        for (auto x = 10; x > 0; x--) {
-            threads.add(new test_thread{});
-        }
-
-        EXPECT_EQ(threads.size(), 10);
-
-        threads.start();
-
-    } catch (pthread::pthread_exception &err) {
-        std::cerr << "thread_group test case failed. " << err.what() << std::endl << std::flush;
-        GTEST_FAIL();
-    } catch (...) {
-        std::cerr << "thread_group test case failed. Unexpected eexception catched." << std::endl << std::flush;
-        GTEST_FAIL();
+    for (auto x = 10; x > 0; x--) {
+        threads.add(new test_thread{});
     }
+
+    EXPECT_EQ(threads.size(), 10);
+
+    threads.start();
 }
 
 TEST(abstract_thread_group, start_join) {
-    try {
-        pthread::thread_group threads;
+    pthread::thread_group threads;
 
-        for (auto x = 10; x > 0; x--) {
-            threads.add(new test_thread{});
-        }
-
-        EXPECT_EQ(threads.size(), 10);
-
-        threads.start();
-        threads.join();
-
-    } catch (pthread::pthread_exception &err) {
-        std::cerr << "thread_group test case failed. " << err.what() << std::endl << std::flush;
-        GTEST_FAIL();
-    } catch (...) {
-        std::cerr << "thread_group test case failed. Unexpected eexception catched." << std::endl << std::flush;
-        GTEST_FAIL();
+    for (auto x = 10; x > 0; x--) {
+        threads.add(new test_thread{});
     }
+
+    EXPECT_EQ(threads.size(), 10);
+
+    threads.start();
+    threads.join();
 }
