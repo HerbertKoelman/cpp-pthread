@@ -36,13 +36,13 @@ void signal_handler(int signal) {
         case SIGHUP :
             if (queue != NULL) {
                 if (queue->max_size() == 0) {
-                    fprintf(stderr, "%s: restarting producer/consumer (size: %ld)\n", __FUNCTION__, QUEUE_MAX_SIZE);
+                    fprintf(stderr, "%s: restarting producer/consumer (size: %d)\n", __FUNCTION__, QUEUE_MAX_SIZE);
                     queue->set_max_size(QUEUE_MAX_SIZE);
-                    fprintf(stderr, "%s: done (size: %ld)\n", __FUNCTION__, QUEUE_MAX_SIZE);
+                    fprintf(stderr, "%s: done (size: %l)\n", __FUNCTION__, QUEUE_MAX_SIZE);
                 } else {
-                    fprintf(stderr, "%s: stopping producer/consumer (size: %ld)\n", __FUNCTION__, 0);
+                    fprintf(stderr, "%s: stopping producer/consumer (size: %l)\n", __FUNCTION__, 0);
                     queue->set_max_size(0);
-                    fprintf(stderr, "%s: done (size: %ld)\n", __FUNCTION__, QUEUE_MAX_SIZE);
+                    fprintf(stderr, "%s: done (size: %l)\n", __FUNCTION__, QUEUE_MAX_SIZE);
                 }
             } else {
                 fprintf(stderr, "%s: queue pointer is NULL\n", __FUNCTION__);
