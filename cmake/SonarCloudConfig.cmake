@@ -46,7 +46,8 @@ if ( SONAR )
     find_program(SONAR_GCOV gcov)
     if(SONAR_GCOV)
       add_custom_target( sonar-gcov-report
-        COMMAND find ./CMakeFiles/ -type f -name "*.gcno" -exec ${SONAR_GCOV} {} -m \; > /dev/null 2>&1
+        #        COMMAND find ./CMakeFiles/ -type f -name "*.gcno" -exec ${SONAR_GCOV} {} -m \; > /dev/null 2>&1
+        COMMAND find ./CMakeFiles/ -type f -name "*.gcno" -exec ${SONAR_GCOV} {} -m \;
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Built sonar GCOV report (${SONAR_GCOV})"
         VERBATIM

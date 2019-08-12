@@ -3,7 +3,7 @@
 # Description: @PROJECT_DESCRIPTION@
 
 # Add more detail to both client and server-side analysis logs.
-sonar.verbose=false
+sonar.verbose=true
 
 #-----------------------------------------------------------------------------
 #
@@ -21,7 +21,7 @@ sonar.login=d9888da64996176bfb1c39145242d78052b37be0
 
 # wrapper MUSt use this directory to produce it's data
 sonar.cfamily.build-wrapper-output=@CMAKE_CURRENT_BINARY_DIR@/bw-output
-sonar.cfamily.gcov.reportsPath=.
+sonar.cfamily.gcov.reportsPath=@CMAKE_CURRENT_BINARY_DIR@
 
 #-----------------------------------------------------------------------------
 #
