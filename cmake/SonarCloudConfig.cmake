@@ -35,12 +35,11 @@ if ( SONAR )
     find_program(SONAR_BUILD_WRAPPER build-wrapper-linux-x86-64)
     if ( SONAR_BUILD_WRAPPER )
       add_custom_target( build-wrapper
-        COMMAND ${SONAR_BUILD_WRAPPER} --out-dir ${SONAR_WRAPPER_OUTPUT_DIR} make clean all
+        COMMAND ${SONAR_BUILD_WRAPPER} --out-dir ${SONAR_WRAPPER_OUTPUT_DIR} make clean all test
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "run SONAR's ${SONAR_BUILD_WRAPPER}"
         )
       message(STATUS "Added custom target [build-wrapper]...")
-      add_dependencies(code-quality build-wrapper)
     endif()
 
     find_program(SONAR_GCOV gcov)
@@ -54,7 +53,11 @@ if ( SONAR )
         VERBATIM
         )
       message(STATUS "Added custom target [sonar-gcov-report]...")
+
+      add_dependencies(sonar-gcov-report build-wrapper )
       add_dependencies(code-quality sonar-gcov-report)
+    else()
+      add_dependencies(code-quality build-wrapper)
     endif()
 
   else()

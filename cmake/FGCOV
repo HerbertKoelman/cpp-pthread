@@ -12,7 +12,8 @@ do
    source_dir=`dirname $source_gcda_file`
    source_gcno_file=$source_dir/$source_file.gcno
 
-   # echo "handling [$source_gcno_file]"
+   echo "Handling  file [$source_gcno_file]------------------------"
    [ -f $source_gcno_file ] && gcov -m $source_gcno_file 
+   echo "Done -----------------------------------------------------"
    echo
 done
