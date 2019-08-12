@@ -32,7 +32,7 @@ sonar.cfamily.gcov.reportsPath=@CMAKE_CURRENT_BINARY_DIR@
 # Name of the project that will be displayed on the web interface.
 sonar.projectName=@PROJECT_NAME@
 sonar.projectVersion=@CPP_PTHREAD_VERSION@
-sonar.links.homepage==https://github.com/HerbertKoelman/cpp-pthread
+sonar.links.homepage=https://github.com/HerbertKoelman/cpp-pthread
 sonar.links.ci=https://travis-ci.com/HerbertKoelman/cpp-pthread
 
 # Base directory
