@@ -136,7 +136,7 @@ namespace pthread {
          */
         cv_status wait_for(mutex &mtx, int millis);
 
-        /** Wait for condition to be signaled within given time frame.
+        /** NOSONAR Wait for condition to be signaled within given time frame.
          *
          * The method uses the lock_guard's mutex to execute.
          *
@@ -207,7 +207,7 @@ namespace pthread {
          * @throw condition_variable_exception if the call to pthread_cond_broadcast return value is different from 0 (zero)
          * @see pthread_cond_broadcast
          */
-        void notify_all() noexcept;
+        void notify_all();
 
         /**
          * not copy-assignable
