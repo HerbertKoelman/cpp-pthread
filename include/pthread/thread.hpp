@@ -35,11 +35,17 @@ namespace pthread {
      * @{
      */
 
-    /** Function used to startup a thread.
+    /**
+     * This function is a helper function. It has normal C linkage, and is
+     * the base for newly created Thread objects. It runs the
+     * run method on the thread object passed to it (as a void *).
      *
-     * it expects a reference to a runnable instance
+     * This is the signature that the POSIX threading library imposes.
+     *
+     * @param runner runnable interface.
+     * @return unknown
      */
-    void *thread_startup_runnable(void *);
+    extern "C" void *thread_startup_runnable(void *);
 
     /** current status of a thread instance
     */
@@ -293,6 +299,7 @@ namespace pthread {
      * } // scope end
      *
      * </code></pre>
+     *
      * @author herbert koelman (herbert.koelman@me.com)
      * @since 1.3
      */
@@ -300,16 +307,13 @@ namespace pthread {
     public:
         /** Setup a thread container/list.
          *
-         * @param destructor_joins_first if true then destructor tries to wait for all registered threads to join the calling one before deleting thread instances.
+         * @param destructor_joins_first if true, then destructor tries to wait for all registered threads.
          */
 #if __cplusplus < 201103L
         explicit thread_group( bool destructor_joins_first = false ) throw();
 #else
         explicit thread_group(bool destructor_joins_first = false) noexcept;
 #endif
-
-        /** not copy-assignable */
-        thread_group(const thread_group &) = delete;
 
         /** delete all abstract_thread referenced by the thread_group.
          *
@@ -346,6 +350,9 @@ namespace pthread {
 
         /** not copy-assignable */
         void operator=(const thread_group &) = delete;
+
+        /** not copy-assignable */
+        thread_group(const thread_group &) = delete;
 
     private:
         std::list<pthread::abstract_thread *> _threads;
