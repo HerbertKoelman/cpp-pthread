@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+# author: herbert koelman
+# 
+# This shell script makes sure to handle only files that have produced coverage data. It comes with the
+# SonarConfig.cmake module
+#
+
+for source_gcda_file in $(find ./ -type f -name "*.gcda")
+do
+   source_file=`basename $source_gcda_file .gcda` 
+   source_dir=`dirname $source_gcda_file`
+   source_gcno_file=$source_dir/$source_file.gcno
+
+   echo "Handling  file [$source_gcno_file]------------------------"
+   [ -f $source_gcno_file ] && gcov -m $source_gcno_file 
+   echo "Done -----------------------------------------------------"
+   echo
+done

@@ -21,7 +21,7 @@ sonar.login=d9888da64996176bfb1c39145242d78052b37be0
 
 # wrapper MUSt use this directory to produce it's data
 sonar.cfamily.build-wrapper-output=@CMAKE_CURRENT_BINARY_DIR@/bw-output
-sonar.cfamily.gcov.reportsPath=.
+sonar.cfamily.gcov.reportsPath=@CMAKE_CURRENT_BINARY_DIR@
 
 #-----------------------------------------------------------------------------
 #
@@ -31,11 +31,13 @@ sonar.cfamily.gcov.reportsPath=.
 
 # Name of the project that will be displayed on the web interface.
 sonar.projectName=@PROJECT_NAME@
-sonar.projectVersion=@PROJECT_VERSION@
-sonar.links.homepage==https://github.com/HerbertKoelman/cpp-pthread
+sonar.projectVersion=@CPP_PTHREAD_VERSION@
+sonar.links.homepage=https://github.com/HerbertKoelman/cpp-pthread
+sonar.links.ci=https://travis-ci.com/HerbertKoelman/cpp-pthread
 
 # Base directory
 sonar.projectBaseDir=@CMAKE_SOURCE_DIR@
 
 # directories that contain code to analyze
 sonar.sources=src,include
+sonar.tests=tests

@@ -30,27 +30,6 @@ typedef pthread::util::sync_queue<message_ptr> sync_message_queue;
 
 sync_message_queue *queue = NULL;
 
-void signal_handler(int signal) {
-    switch (signal) {
-        //case SIGINT :
-        case SIGHUP :
-            if (queue != NULL) {
-                if (queue->max_size() == 0) {
-                    fprintf(stderr, "%s: restarting producer/consumer (size: %ld)\n", __FUNCTION__, QUEUE_MAX_SIZE);
-                    queue->set_max_size(QUEUE_MAX_SIZE);
-                    fprintf(stderr, "%s: done (size: %ld)\n", __FUNCTION__, QUEUE_MAX_SIZE);
-                } else {
-                    fprintf(stderr, "%s: stopping producer/consumer (size: %ld)\n", __FUNCTION__, 0);
-                    queue->set_max_size(0);
-                    fprintf(stderr, "%s: done (size: %ld)\n", __FUNCTION__, QUEUE_MAX_SIZE);
-                }
-            } else {
-                fprintf(stderr, "%s: queue pointer is NULL\n", __FUNCTION__);
-            }
-            break;
-    }
-};
-
 class message {
 public:
     message(const std::string &buffer, unsigned long number) : _message(buffer), _number(number) {
@@ -207,10 +186,7 @@ TEST(synchronized_queue, producer_consumer) {
 
     try {
         std::cout << "Version: " << pthread::cpp_pthread_version() << std::endl;
-        // sync_message_queue queue(QUEUE_MAX_SIZE);
         queue = new sync_message_queue(QUEUE_MAX_SIZE);
-
-        // std::signal(SIGINT, signal_handler);
 
         status status(*queue);
 

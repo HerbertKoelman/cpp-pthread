@@ -45,21 +45,18 @@ namespace pthread {
     return status;
   }
 
-#if __cplusplus < 201103L
-  void condition_variable::notify_one() throw() {
-#else
-  void condition_variable::notify_one() noexcept {
-#endif
-    pthread_cond_signal ( &_condition );
+  void condition_variable::notify_one(){
+    int rc = pthread_cond_signal ( &_condition );
+    if ( rc != 0 ){
+      throw condition_variable_exception{"notify_all failed.", rc};
+    }
   }
 
-#if __cplusplus < 201103L
-  void condition_variable::notify_all () throw(){
-#else
-  void condition_variable::notify_all () noexcept{
-#endif
-    pthread_cond_broadcast ( &_condition );
-
+  void condition_variable::notify_all () {
+    int rc = pthread_cond_broadcast ( &_condition );
+    if ( rc != 0 ){
+        throw condition_variable_exception{"notify_all failed.", rc};
+    }
   }
 
   void condition_variable::milliseconds(int millis){
@@ -91,13 +88,12 @@ namespace pthread {
   }
 
   condition_variable::~condition_variable () {
-      pthread_cond_destroy(&_condition);
-/* NOSONAR
     int rc = pthread_cond_destroy(&_condition);
     if (rc != 0){
-      throw condition_variable_exception("pthread condition variable destroy failed.", rc);
+      // This is the only way to signal that the destruction of the ressource failed, so the rule "Destructors should not throw exceptions" is therfore ignored.
+      //
+      throw condition_variable_exception("pthread condition variable destroy failed.", rc); // NOSONAR we decided to make an exception for this one
     }
-*/
   }
 
 } // namespace pthread

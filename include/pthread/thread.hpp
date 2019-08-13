@@ -9,8 +9,8 @@
 #ifndef PTHREAD_THREAD_HPP
 #define PTHREAD_THREAD_HPP
 
-// must be include as first hearder file of each source code file (see IBM's
-// recommandation for more info p.285 �8.3.1).
+// WARN pthread.h must be include as first hearder file of each source code file (see IBM's
+// recommandation for more info p.285 chapter 8.3.1).
 #include <pthread.h>
 
 #include <iostream>
@@ -35,11 +35,17 @@ namespace pthread {
      * @{
      */
 
-    /** Function used to startup a thread.
+    /**
+     * This function is a helper function. It has normal C linkage, and is
+     * the base for newly created Thread objects. It runs the
+     * run method on the thread object passed to it (as a void *).
      *
-     * it expects a reference to a runnable instance
+     * This is the signature that the POSIX threading library imposes.
+     *
+     * @param runner runnable interface.
+     * @return unknown
      */
-    void *thread_startup_runnable(void *);
+    extern "C" void *thread_startup_runnable(void *);
 
     /** current status of a thread instance
     */
@@ -81,10 +87,11 @@ namespace pthread {
      *       void run() {...}
      *     };
      *
-     *     reader_thread rt;
-     *     thread t{rt};
+     *     std::unique_ptr<reader_thread> rt{new reader_thread };
+     *     thread t{*rt};
      *     t.join();
      * </code></pre>
+     *
      * @author herbert koelman (herbert.koelman@me.com)
      */
     class thread {
@@ -104,11 +111,11 @@ namespace pthread {
          */
         thread(const runnable &runner, const std::size_t stack_size = 0);
 
-        /** Move contructor.
+        /** Move constructor.
          *
-         * once moved this not a thread anymore. Status is thread_status::not_a_thread
+         * once moved the given thread is not a thread anymore (status is thread_status::not_a_thread)
          *
-         * @param other thread that will be moved, on completion other is no longer a thread.
+         * @param other thread that will be moved, on successfull completion, the passed argument is no longer a thread.
          */
         thread(thread &&other); // NOSONAR this is std interface and cannot be changed
 
@@ -133,26 +140,23 @@ namespace pthread {
          */
         void join();
 
-        /** @return true if this thread can be joined.
+        /** A thread is considered joinable, if it has been allocated (`pthread_create`)
+         *
+         * @return true if this thread can be joined.
          */
         bool joinable() const { return _thread != 0; };
 
-        /**
-         * The cancel method requests the cancellation of the thread. The action depends on the
-         * cancelability of the target thread:
-         *
-         * - If its cancelability is disabled, the cancellation request is set pending.
-         * - If its cancelability is deferred, the cancellation request is set pending till the thread reaches a cancellation point.
-         * - If its cancelability is asynchronous, the cancellation request is acted upon immediately; in some cases, it may result in unexpected behaviour.
-         *
-         * The cancellation of a thread terminates it safely, using the same termination
-         * procedure as the pthread_exit subroutine.
-         */
-        int cancel();
-
         /** @return the status of the thread (thread::status).
          */
-        inline thread_status status() { return _status; };
+        inline thread_status status() const {
+            return _status;
+        };
+
+        /** thread's current stack size (pthread_attr_getstacksize).
+         *
+         * @return the stack size in bytes.
+         */
+         size_t stack_size();
 
         /** copy operator is flagged deleted,  copying doesn't make sense
          */
@@ -173,10 +177,10 @@ namespace pthread {
          */
         void swap(thread &other);
 
-        pthread_t _thread; //!< thread identifier
-        pthread_attr_t _attr;   //!< thread attributes (stack size, ...)
-
-        thread_status _status; //!< thread status (@see thread_status)
+        pthread_t          _thread; //!< thread identifier
+        pthread_attr_t     _attr;   //!< thread attributes (stack size, ...)
+        pthread_attr_t    *_attr_ptr; //!< pthread attribute pointer (null, if pthread_attr_t was not initialized) (NOSONAR)
+        thread_status      _status; //!< thread status (@see thread_status)
     };
 
     /** base class of a thread.
@@ -266,8 +270,7 @@ namespace pthread {
         /** @return true if this thread can be joined.
          */
         bool joinable() const;
-
-
+        
         /** not copy-assignable */
         void operator=(const abstract_thread &) = delete;
 
@@ -296,6 +299,7 @@ namespace pthread {
      * } // scope end
      *
      * </code></pre>
+     *
      * @author herbert koelman (herbert.koelman@me.com)
      * @since 1.3
      */
@@ -303,18 +307,13 @@ namespace pthread {
     public:
         /** Setup a thread container/list.
          *
-         * @param destructor_joins_first if true then destructor tries to wait for all registered threads to join the calling one before deleting thread instances.
+         * @param destructor_joins_first if true, then destructor tries to wait for all registered threads.
          */
 #if __cplusplus < 201103L
         explicit thread_group( bool destructor_joins_first = false ) throw();
 #else
-
         explicit thread_group(bool destructor_joins_first = false) noexcept;
-
 #endif
-
-        /** not copy-assignable */
-        thread_group(const thread_group &) = delete;
 
         /** delete all abstract_thread referenced by the thread_group.
          *
@@ -351,6 +350,9 @@ namespace pthread {
 
         /** not copy-assignable */
         void operator=(const thread_group &) = delete;
+
+        /** not copy-assignable */
+        thread_group(const thread_group &) = delete;
 
     private:
         std::list<pthread::abstract_thread *> _threads;
