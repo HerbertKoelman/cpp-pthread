@@ -34,7 +34,9 @@ namespace pthread {
 
         auto rc = pthread_mutex_trylock(&_mutex);
         if (rc == 0) {
-            status = true;
+            status = true; // mutex is locked now
+        }else if ( rc == EBUSY){
+            status = false ; // mutex is held by some other thread
         } else {
             throw mutex_exception("pthread_mutex_trylock failed, already locked.", rc);
         }

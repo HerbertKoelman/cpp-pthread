@@ -64,10 +64,15 @@ namespace pthread {
          * @param mtx ralated mutex, which must be locked by the current thread.
          * @see notify_one
          * @see notify_all
+         * @see pthread_cond_wait
          */
         void wait(mutex &mtx);
 
-        /** @see wai
+        /**  Wait for condition to be signaled within given time frame.
+         *
+         * The method uses the lock_guard's mutex to execute.
+         *
+         * @see #wait(mutex &)
          */
         void wait(lock_guard<pthread::mutex> lck);
 
@@ -82,10 +87,11 @@ namespace pthread {
          * The signature of the predicate function should be equivalent to the following: bool pred();
          *
          * @param mtx ralated mutex, which must be locked by the current thread.
-         * @param lambda run to check if condition was met.
+         * @param lambda code that checks if the condition is met (MUST return a boolean).
          * @return true if lmabda returned true.
          * @see notify_one
          * @see notify_all
+         * @see pthread_cond_wait
          */
         template<class Lambda>
         bool wait(mutex &mtx, Lambda lambda);
@@ -101,10 +107,11 @@ namespace pthread {
          * The signature of the predicate function should be equivalent to the following: bool pred();
          *
          * @param lck ralated mutex lock_guard, which must be locked by the current thread.
-         * @param lambda run to check if condition was met.
+         * @param lambda code that checks if the condition is met (MUST return a boolean).
          * @return true if lmabda returned true.
          * @see notify_one
          * @see notify_all
+         * @see pthread_cond_timedwait
          */
         template<class Lambda>
         bool wait(lock_guard<pthread::mutex> &lck, Lambda lambda);
@@ -125,10 +132,15 @@ namespace pthread {
          * @throw condition_variable_exception is thrown either if timeout calculation failed or mutex ownership was wrong.
          * @see notify_one
          * @see notify_all
+         * @see pthread_cond_timedwait
          */
         cv_status wait_for(mutex &mtx, int millis);
 
-        /** @see #wait_for (mutex &, int)
+        /** Wait for condition to be signaled within given time frame.
+         *
+         * The method uses the lock_guard's mutex to execute.
+         *
+         * @see #wait_for (mutex &, int) NOSONAR this is not comment code
          */
         cv_status wait_for(lock_guard<pthread::mutex> &lck, int millis);
 
@@ -144,15 +156,16 @@ namespace pthread {
          *
          * @param mtx ralated mutex, which must be locked by the current thread.
          * @param millis milli seconds to wait for condition to be signaled.
-         * @param lambda run to check if condition was met.
+         * @param lambda code that checks if the condition is met (MUST return a boolean).
          * @return true if lmabda returned true.
          * @see notify_one
          * @see notify_all
+         * @see pthread_cond_timedwait
          */
         template<class Lambda>
         bool wait_for(mutex &mtx, int millis, Lambda lambda);
 
-        /** NOSONAR Wait for condition to be signaled within a given time frame.
+        /** Wait for condition to be signaled within a given time frame.
          *
          * This method atomically release mutex and cause the calling thread to block; atomically here means "atomically with respect to
          * access by another thread to the mutex and then the condition variable". Call notify_one or notify_all to signal the condition.
@@ -168,33 +181,33 @@ namespace pthread {
          * @return true if lmabda returned true.
          * @see notify_one
          * @see notify_all
+         * @see pthread_cond_timedwait
          */
         template<class Lambda>
         bool wait_for(lock_guard<pthread::mutex> &lck, int millis, Lambda lambda);
 
-        /** Signal one waiting thread.
+        /** signal a condition.
          *
-         * The call unblocks at least one of the threads that are blocked on the specified condition variable cond (if any threads are blocked on cond).
-         */
-#if __cplusplus < 201103L
-        void notify_one () throw() ;
-#else
-
-        void notify_one() noexcept;
-
-#endif
-
-        /** Signal all waiting threads.
+         * unblocks at least one of the threads that are blocked on the specified condition variable cond (if any threads are blocked on cond).
+         * > *WARN* the signature of this methode should be the same as `std::condition_variable::notify_one`, we decided to
+         * > throw an exception anyway, when the pthread function fails and not be strictly compliant.
          *
-         * The call unblocks all threads currently blocked on the specified condition variable cond.
+         * @throw condition_variable_exception if the call to pthread_cond_signal return value is different from 0 (zero)
+         * @see pthread_cond_signal
          */
-#if __cplusplus < 201103L
-        void notify_all () throw() ;
-#else
+        void notify_one() ;
 
-        void notify_all() noexcept;
-
-#endif
+        /** broadcast a condition.
+         *
+         * unblocks all threads currently blocked on the specified condition variable cond.
+         *
+         * > *WARN* the signature of this methode should be the same as `std::condition_variable::notify_one`, we decided to
+         * > throw an exception anyway, when the pthread function fails and not be strictly compliant.
+         *
+         * @throw condition_variable_exception if the call to pthread_cond_broadcast return value is different from 0 (zero)
+         * @see pthread_cond_broadcast
+         */
+        void notify_all();
 
         /**
          * not copy-assignable
@@ -203,7 +216,9 @@ namespace pthread {
 
         // constructor/destructor ------------------------------------------------
 
-        /** construct a new condition_variable (pthread_cond_init).
+        /** construct a new condition_variable.
+         *
+         * @see pthread_cond_init
          */
         condition_variable();
 
@@ -212,9 +227,10 @@ namespace pthread {
          */
         condition_variable(const condition_variable &) = delete;
 
-        /** destroy a condition_variable (pthread_cond_destroy)
+        /** destroy a condition_variable.
          *
          * @throw condition_variable_exception if conditional variable failed to be destroyed (pthread_cond_destroy != 0)
+         * @see pthread_cond_destroy
          */
         ~condition_variable() ;
 

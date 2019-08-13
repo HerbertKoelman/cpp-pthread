@@ -11,6 +11,7 @@
 #include <string>
 #include <memory>
 #include <ctime>
+#include <chrono>
 
 class test_runnable : public pthread::runnable {
 public:
@@ -92,7 +93,7 @@ TEST(thread, stack_size) {
     // This should work
     std::unique_ptr<test_runnable> tr{new test_runnable{"status test"}};
     pthread::thread t{*tr, initialized_stack_size};
-    EXPECT_EQ(t.stact_size(), initialized_stack_size);
+    EXPECT_EQ(t.stack_size(), initialized_stack_size);
     t.join();
 
     // This should NOT work
@@ -129,6 +130,7 @@ TEST(thread, thread_constructor) {
         pthread::thread t2{*tr};
         EXPECT_EQ(t2.status(), pthread::thread_status::a_thread);
         t2.join();
+
     } catch (std::exception &err) {
         std::cerr << "thread_constructor test failed. " << err.what() << std::endl;
     }
@@ -151,4 +153,23 @@ TEST(thread, move_operator) {
 
     T2.join();
     EXPECT_NO_THROW(T2.join());
+
+    pthread::thread T3;
+    T3 = std::move(T2);
+    EXPECT_EQ(T3.status(), pthread::thread_status::not_a_thread);
+
+}
+
+TEST(thread, this_thread_sleep) {
+    auto start = std::chrono::steady_clock::now();
+    pthread::this_thread::sleep_for(500);
+    pthread::this_thread::sleep_for(1500);
+    pthread::this_thread::sleep_for(1000);
+    pthread::this_thread::sleep_for(0);
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(start - std::chrono::steady_clock::now()).count();
+    EXPECT_GT(2.3, duration);
+}
+
+TEST(thread, this_thread_get_id) {
+    auto id = pthread::this_thread::get_id();
 }

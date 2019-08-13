@@ -150,7 +150,7 @@ namespace pthread {
          *
          * @return the stack size in bytes.
          */
-         size_t stact_size();
+         size_t stack_size();
 
         /** copy operator is flagged deleted,  copying doesn't make sense
          */
@@ -264,8 +264,7 @@ namespace pthread {
         /** @return true if this thread can be joined.
          */
         bool joinable() const;
-
-
+        
         /** not copy-assignable */
         void operator=(const abstract_thread &) = delete;
 

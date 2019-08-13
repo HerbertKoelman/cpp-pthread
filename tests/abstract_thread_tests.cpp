@@ -77,6 +77,8 @@ TEST(absttract_thread, self_join) {
 TEST(abstract_thread_group, start_auto_join) {
     pthread::thread_group threads{true};
 
+    EXPECT_TRUE(threads.destructor_joins_first());
+
     for (auto x = 10; x > 0; x--) {
         threads.add(new test_thread{});
     }

@@ -148,7 +148,7 @@ namespace pthread {
         _attr_ptr = &_attr; // pthread_attribute is always initialized
     }
 
-    size_t thread::stact_size() {
+    size_t thread::stack_size() {
         size_t size = -1;
         int rc = pthread_attr_getstacksize(_attr_ptr, &size);
         if ( rc != 0 ){
@@ -174,11 +174,13 @@ namespace pthread {
     }
 
     void abstract_thread::join() {
-        _thread->join();
+        if ( _thread != nullptr ){
+            _thread->join();
+        }
     };
 
     bool abstract_thread::joinable() const {
-        return _thread != 0 && _thread->joinable();
+        return _thread != nullptr && _thread->joinable();
     };
 
 #if __cplusplus < 201103L
