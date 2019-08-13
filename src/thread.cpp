@@ -186,7 +186,6 @@ namespace pthread {
 #if __cplusplus < 201103L
     thread_group::thread_group(bool destructor_joins_first) throw():  _destructor_joins_first(destructor_joins_first){
 #else
-
     thread_group::thread_group(bool destructor_joins_first) noexcept: _destructor_joins_first(destructor_joins_first) {
 #endif
 
@@ -199,14 +198,14 @@ namespace pthread {
 #if __cplusplus < 201103L
             std::auto_ptr<pthread::abstract_thread> pat(_threads.front());
 #else
-            std::unique_ptr<pthread::abstract_thread> pat(_threads.front());
+            std::unique_ptr<pthread::abstract_thread> thread(_threads.front());
 #endif
 
             _threads.pop_front();
 
-            if (_destructor_joins_first && pat->joinable()) {
+            if (_destructor_joins_first && thread->joinable()) {
                 try {
-                    pat->join();
+                    thread->join();
                 } catch (pthread_exception &err) {
                     std::cerr << "thread_group destructor failed to join one thread. " << err.what() << std::endl << std::flush;
                 } catch (...) { //NOSONAR this was done on purpose to avoid crashes due to unhandled error conditions.
@@ -240,16 +239,6 @@ namespace pthread {
         return _threads.size();
     }
 
-    /**
-     * This function is a helper function. It has normal C linkage, and is
-     * the base for newly created Thread objects. It runs the
-     * run method on the thread object passed to it (as a void *).
-     *
-     * This is the signature that the POSIX threading library imposes.
-     *
-     * @param runner runnable interface.
-     * @return unknown
-     */
     void *thread_startup_runnable(void *runner) { // NOSONAR
 
         try {
