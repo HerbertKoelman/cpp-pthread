@@ -50,7 +50,10 @@ namespace pthread {
 #else
   void condition_variable::notify_one() noexcept {
 #endif
-    pthread_cond_signal ( &_condition );
+    int rc = pthread_cond_signal ( &_condition );
+    if ( rc != 0 ){
+      throw condition_variable_exception{"notify_all failed.", rc};
+    }
   }
 
 #if __cplusplus < 201103L
@@ -58,8 +61,10 @@ namespace pthread {
 #else
   void condition_variable::notify_all () noexcept{
 #endif
-    pthread_cond_broadcast ( &_condition );
-
+    int rc = pthread_cond_broadcast ( &_condition );
+    if ( rc != 0 ){
+        throw condition_variable_exception{"notify_all failed.", rc};
+    }
   }
 
   void condition_variable::milliseconds(int millis){

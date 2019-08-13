@@ -46,13 +46,13 @@ namespace pthread {
         void lock();
 
         /**
-         * The function pthread_mutex_trylock is identical to pthread_mutex_lock except that
-         * if the mutex object referenced by mutex is currently locked (by any thread,
-         * including the current thread), the call returns immediately.
+         * Identical to lock method except that if the mutex object is currently locked (by any thread, including the
+         * current thread), the call returns immediately.
          *
-         * @return
+         * @return true if the mutex is locked, false is returned if the lock is held by some other thread.
          * @throw mutex_exception if error conditions preventing this method to succeed.
          * @see lock
+         * @see unlock
          */
         bool try_lock();
 

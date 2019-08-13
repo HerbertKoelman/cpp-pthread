@@ -44,7 +44,7 @@ TEST(exceptions, condition_variable_exception) {
 
     try {
         throw pthread::condition_variable_exception();
-    } catch (pthread::pthread_exception &ex) {
+    } catch (pthread::condition_variable_exception &ex) {
         EXPECT_STREQ("conditional_variable_exception", ex.what());
         EXPECT_EQ(0, ex.error_number());
     }
@@ -82,6 +82,8 @@ TEST(exceptions, timeout_exception) {
     }
 }
 
+// pthread::util exception -----------------------------------------
+
 TEST(exceptions, util_queue_exception) {
     std::string expecting = "Condition variable exception test. ";
     expecting += strerror(-1);
@@ -95,7 +97,7 @@ TEST(exceptions, util_queue_exception) {
 TEST(exceptions, util_queue_full_exception) {
     try {
         throw pthread::util::queue_full();
-    } catch (std::exception &ex) {
+    } catch (pthread::util::queue_exception &ex) {
         EXPECT_STREQ("synchronized_queue full.", ex.what());
     }
 }
@@ -103,7 +105,7 @@ TEST(exceptions, util_queue_full_exception) {
 TEST(exceptions, util_queue_access_timeout_exception) {
     try {
         throw pthread::util::queue_timeout();
-    } catch (std::exception &ex) {
+    } catch (pthread::util::queue_exception &ex) {
         EXPECT_STREQ("synchronized_queue get/put timed out.", ex.what());
     }
 }
