@@ -38,14 +38,19 @@ namespace pthread {
         friend class condition_variable;
 
     public:
-        /**
-         The mutex object is locked (by calling pthread_mutex_lock). If the mutex is already locked, the calling thread blocks until the mutex becomes
-         available. This operation returns with the mutex object referenced by mutex in the locked state with the calling thread as its owner.
-         @throw mutex_exception if error conditions preventing this method to succeed.
+        /** Lock the mutex.
+         *
+         * The mutex object is locked (by calling pthread_mutex_lock). If the mutex is already locked, the calling thread blocks until the mutex becomes
+         * available. This operation returns with the mutex object referenced by mutex in the locked state with the calling thread as its owner.
+         *
+         * @throw mutex_exception if error conditions preventing this method to succeed.
+         * @see unlock
+         * @see pthread_mutex_lock
          */
         void lock();
 
-        /**
+        /** Try to lock the mutex.
+         *
          * Identical to lock method except that if the mutex object is currently locked (by any thread, including the
          * current thread), the call returns immediately.
          *
@@ -53,29 +58,40 @@ namespace pthread {
          * @throw mutex_exception if error conditions preventing this method to succeed.
          * @see lock
          * @see unlock
+         * @see pthread_mutex_trylock
          */
         bool try_lock();
 
-        /**
-         The pthread_mutex_unlock function releases the mutex object referenced by mutex.  The manner in which a mutex is released is dependent upon the mutex's type attribute. If there are threads blocked on the mutex object referenced by mutex when unlock is called, resulting in the mutex becoming available, the scheduling policy is used to determine which thread shall acquire the mutex.
-         @throw mutex_exception if error conditions preventing this method to succeed.
+        /** Release the mutex.
+         *
+         * Releases the mutex object referenced by mutex.  The manner in which a mutex is released is dependent upon the mutex's
+         * type attribute. If there are threads blocked on the mutex object referenced by mutex when unlock is called,
+         * resulting in the mutex becoming available, the scheduling policy is used to determine which thread shall acquire the mutex.
+         *
+         * @throw mutex_exception if error conditions preventing this method to succeed.
+         * @see pthread_mutex_unlock
          */
         void unlock();
 
-        /**
-         Constructor/Desctructor
-         @throw mutex_exception if error conditions preventing this method to succeed.
+        /** create and initialize a mutex.
+         *
+         * > *WARN* the default mutex attributes are used.
+         * 
+         * @throw mutex_exception if error conditions preventing this method to succeed.
+         * @see pthread_mutex_init
          */
         mutex();
+
+        /** destroys the mutex.
+         *
+         * @see pthread_mutex_destroy
+         */
+        virtual ~mutex();
 
         /** not copy-assignable, so no copy contructor is needed.
          *
          */
         mutex(const mutex &) = delete;
-        /**
-         * destroys the mutes (pthread_mutex_destroy)
-         */
-        virtual ~mutex();
 
         /** not copy-assignable
          *
