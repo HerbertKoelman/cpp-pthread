@@ -45,11 +45,7 @@ namespace pthread {
     return status;
   }
 
-#if __cplusplus < 201103L
-  void condition_variable::notify_one() throw() {
-#else
-  void condition_variable::notify_one() noexcept {
-#endif
+  void condition_variable::notify_one(){
     int rc = pthread_cond_signal ( &_condition );
     if ( rc != 0 ){
       throw condition_variable_exception{"notify_all failed.", rc};
