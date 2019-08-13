@@ -136,11 +136,11 @@ namespace pthread {
          */
         cv_status wait_for(mutex &mtx, int millis);
 
-        /** NOSONAR Wait for condition to be signaled within given time frame.
+        /** Wait for condition to be signaled within given time frame.
          *
          * The method uses the lock_guard's mutex to execute.
          *
-         * @see #wait_for (mutex &, int)
+         * @see #wait_for (mutex &, int) NOSONAR
          */
         cv_status wait_for(lock_guard<pthread::mutex> &lck, int millis);
 
@@ -165,7 +165,7 @@ namespace pthread {
         template<class Lambda>
         bool wait_for(mutex &mtx, int millis, Lambda lambda);
 
-        /** NOSONAR Wait for condition to be signaled within a given time frame.
+        /** Wait for condition to be signaled within a given time frame.
          *
          * This method atomically release mutex and cause the calling thread to block; atomically here means "atomically with respect to
          * access by another thread to the mutex and then the condition variable". Call notify_one or notify_all to signal the condition.
