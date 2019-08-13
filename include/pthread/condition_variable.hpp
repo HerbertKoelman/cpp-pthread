@@ -140,7 +140,7 @@ namespace pthread {
          *
          * The method uses the lock_guard's mutex to execute.
          *
-         * @see #wait_for (mutex &, int) NOSONAR
+         * @see #wait_for (mutex &, int) NOSONAR this is not comment code
          */
         cv_status wait_for(lock_guard<pthread::mutex> &lck, int millis);
 
