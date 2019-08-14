@@ -45,6 +45,7 @@ matrix:
         MAKE_TARGETS="all doxygen package"
 
 script:
+  # Set the variable CMAKE_BUILD_TYPE in your project's settings
   - mkdir $BUILD_DIRECTORY && cd $BUILD_DIRECTORY && cmake $CMAKE_BUILD_TYPE $CMAKE_COMMAND_LINE_ARGS .. && make $MAKE_TARGETS
 
 after_success:
