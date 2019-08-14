@@ -41,13 +41,11 @@ matrix:
     - name: default
       env:
         BUILD_DIRECTORY=cmake-default-build
-        CMAKE_COMMAND_LINE_ARGS="-DCMAKE_BUILD_TYPE=Release"
+        CMAKE_COMMAND_LINE_ARGS=""
         MAKE_TARGETS="all doxygen package"
 
 script:
-#   - [ $TRAVIS_BRANCH == "master" ] && export CMAKE_COMMAND_LINE_ARGS="-DCMAKE_BUILD_TYPE=Release $CMAKE_COMMAND_LINE_ARGS" || export CMAKE_COMMAND_LINE_ARGS="-DCMAKE_BUILD_TYPE=Debug $CMAKE_COMMAND_LINE_ARGS" 
-  - echo $TRAVIS_BRANCH 
-  - mkdir $BUILD_DIRECTORY && cd $BUILD_DIRECTORY && cmake $CMAKE_COMMAND_LINE_ARGS .. && make $MAKE_TARGETS
+  - mkdir $BUILD_DIRECTORY && cd $BUILD_DIRECTORY && cmake $CMAKE_BUILD_TYPE $CMAKE_COMMAND_LINE_ARGS .. && make $MAKE_TARGETS
 
 after_success:
   # create gcov files
