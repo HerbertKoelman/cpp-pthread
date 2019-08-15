@@ -7,7 +7,7 @@ cmake_minimum_required(VERSION 3.11)
 project(
   cpp-pthread
   VERSION 1.10.0
-  DESCRIPTION "Simple C++ wrapper to pthread functions (${GIT_LOG})")
+  DESCRIPTION "Simple C++ wrapper of the standard POSIX pthread C library.")
 
 if( CMAKE_BUILD_TYPE MATCHES Release )
   if( GIT_LOG )

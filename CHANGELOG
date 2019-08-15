@@ -1,5 +1,6 @@
 1.10.0
 - map master branch to Release build type (#182)
+- bug fixing : #184
 1.9.1
 - check that joining yourself throws an exception (#169)
 - removed code smells (#168)
