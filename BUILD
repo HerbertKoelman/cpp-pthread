@@ -39,7 +39,7 @@ make_args="all test"
 while getopts "SGT:" option
 do
  case $option in
-    S) cmake_sonar_option="-DSONAR=yes" ; cmake_gcov_option="-DGCOV=yes" ; make_args="code_quality";;
+    S) cmake_sonar_option="-DSONAR=yes" ; cmake_gcov_option="-DGCOV=yes" ; make_args="code-quality";;
     G) cmake_gcov_option="-DGCOV=yes" ;;
     T) cmake_build_type="-DCMAKE_BUILD_TYPE=$OPTARG" ;;
     *) usage ;;                     # display usage and exit
