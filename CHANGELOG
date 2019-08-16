@@ -1,4 +1,5 @@
 1.10.0
+- provide a BUILD script (#182)
 - map master branch to Release build type (#182)
 - bug fixing : #184
 1.9.1
