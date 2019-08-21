@@ -169,7 +169,9 @@ namespace pthread {
         /** @return the current value of the thread's ID. Zero if this si not a thread.
          *
          */
-        pthread_t get_id() const noexcept ;
+        inline pthread_t get_id() const noexcept {
+            return _thread;
+        }
 
         /** @return the status of the thread (thread::status).
          */

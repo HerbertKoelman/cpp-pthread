@@ -126,7 +126,7 @@ TEST(thread, get_id) {
 
     pthread::thread t{tr.get()}; // this starts running the thread
 
-    EXPECT_NE(t.get_id(), nullptr);
+    EXPECT_NE(t.get_id(), (pthread_t) 0);
 
     t.join();
 }
