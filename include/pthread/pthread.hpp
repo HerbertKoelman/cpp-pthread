@@ -32,6 +32,14 @@
 */
 namespace pthread {
 
+    /**
+     *  @example concurrency_tests.cpp
+     *  @example thread_tests.cpp
+     *  @example synchronized_queue_tests.cpp
+     *  @example exceptions_tests.cpp
+     *  @example abstract_thread_tests.cpp
+     */
+
   /** @return library version */
   const char *cpp_pthread_version();
 

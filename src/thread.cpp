@@ -82,8 +82,21 @@ namespace pthread {
         }
     }
 
-    thread::thread(const runnable &work, const std::size_t stack_size) : thread() {
+    thread::thread(const runnable *work, std::size_t stack_size) : thread() {
+#ifdef DEBUG
+        std:: cout << "constructor " << __FUNCTION__ << ":  runnable pointer, " << stack_size << " bytes. " << std::endl << std::flush;
+#endif
+        init(work, stack_size);
+    }
 
+    thread::thread(const runnable &work, std::size_t stack_size) : thread() {
+#ifdef DEBUG
+        std:: cout << "constructor " << __FUNCTION__ << ":  runnable reference, " << stack_size << " bytes. " << std::endl << std::flush;
+#endif
+        init (&work, stack_size);
+    }
+
+    int thread::init( const runnable *runner, std::size_t stack_size ) {
         int rc = -1; // initial return code value is failed
 
         rc = pthread_attr_setdetachstate(_attr_ptr, PTHREAD_CREATE_JOINABLE);
@@ -102,7 +115,7 @@ namespace pthread {
             }
         }
 
-        rc = pthread_create(&_thread, _attr_ptr, thread_startup_runnable, (void *) &work);
+        rc = pthread_create(&_thread, _attr_ptr, thread_startup_runnable, (void *) runner);
         if (rc != 0) {
             throw thread_exception("pthread_create failed.", rc);
         } else {
@@ -111,6 +124,7 @@ namespace pthread {
 #if DEBUG
         std::cout << "thread " << _thread << " has started." << std::endl << std::flush ;
 #endif
+        return rc ;
     }
 
     /* move constructor

@@ -1,8 +1,8 @@
 
-if (GCOV AND ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU"))
-  message(STATUS "Setting GCOV library (-lgcov)")
-  set(GCOV_LIB gcov)
-endif()
+#if (GCOV AND ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU"))
+#  message(STATUS "Setting GCOV library (-lgcov)")
+#  set(GCOV_LIB gcov)
+#endif()
 
 add_executable(exception_tests exceptions_tests.cpp )
 target_link_libraries(exception_tests GTest::GTest GTest::gtest_main cpp-pthread-static ${GCOV_LIB})
@@ -13,7 +13,7 @@ target_link_libraries(concurrency_tests GTest::GTest GTest::gtest_main cpp-pthre
 add_test(NAME concurrency_tests COMMAND concurrency_tests)
 
 add_executable(thread_tests thread_tests.cpp)
-target_link_libraries(thread_tests GTest::GTest GTest::gtest_main cpp-pthread-static ${GCOV_LIB})
+target_link_libraries(thread_tests GTest::GTest GTest::gtest_main cpp-pthread-shared ${GCOV_LIB})
 add_test(NAME thread_tests COMMAND thread_tests)
 
 add_executable(abstract_thread_tests abstract_thread_tests.cpp)
