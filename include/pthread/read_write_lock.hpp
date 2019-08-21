@@ -23,6 +23,8 @@ namespace pthread {
      * @{
      */
 
+
+
     /** This class acquires the read lock.
      *
      * This class cannot be instaiated as it's main putpose is to implement read locks. To use a read lock create

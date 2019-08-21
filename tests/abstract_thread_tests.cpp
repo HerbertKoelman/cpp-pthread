@@ -58,7 +58,7 @@ TEST(abstract_thread, not_joinable) {
 }
 
 
-TEST(absttract_thread, self_join) {
+TEST(abstract_thread, self_join) {
 
     class test_join_thread : public pthread::abstract_thread {
     public:

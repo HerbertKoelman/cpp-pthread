@@ -119,6 +119,18 @@ TEST(thread, status) {
     t.join();
 }
 
+TEST(thread, get_id) {
+    display_context_infos();
+
+    std::unique_ptr<test_runnable> tr{new test_runnable{"status test"}};
+
+    pthread::thread t{tr.get()}; // this starts running the thread
+
+    EXPECT_NE(t.get_id(), nullptr);
+
+    t.join();
+}
+
 TEST(thread, thread_constructor) {
     display_context_infos();
 
@@ -130,6 +142,10 @@ TEST(thread, thread_constructor) {
         pthread::thread t2{*tr};
         EXPECT_EQ(t2.status(), pthread::thread_status::a_thread);
         t2.join();
+
+        pthread::thread t3{tr.get()};
+        EXPECT_EQ(t3.status(), pthread::thread_status::a_thread);
+        t3.join();
 
     } catch (std::exception &err) {
         std::cerr << "thread_constructor test failed. " << err.what() << std::endl;

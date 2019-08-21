@@ -25,6 +25,12 @@ endif()
 
 option(BUILD_TESTS "enable/disable tests (default is enabled)" ON)
 option(GCOV "Activate GCOV options")
+option(DEBUG "Set macro DEBUG")
+
+if ( DEBUG )
+  message(STATUS "Setting DEBUG macro...")
+  add_definitions( -DDEBUG=1 )
+endif()
 
 if ( GCOV )
   if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")

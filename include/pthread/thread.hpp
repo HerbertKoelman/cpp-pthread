@@ -45,7 +45,7 @@ namespace pthread {
      * @param runner runnable interface.
      * @return unknown
      */
-    extern "C" void *thread_startup_runnable(void *);
+    extern "C" void *thread_startup_runnable(void *runner);
 
     /** current status of a thread instance
     */
@@ -57,20 +57,17 @@ namespace pthread {
     /**
      * Interface of a runnable class.
      *
-     * You can write code to be run through a Thread by implementing this interface.
      * @author herbert koelman (herbert.koelman@me.com)
      */
     class runnable {
     public:
         /**
-         * This method must be overritten
+         * The run method is actually what the thread will be running.
          */
 #if __cplusplus < 201103L
         virtual void run () throw() = 0 ;
 #else
-
         virtual void run() noexcept = 0;
-
 #endif
 
         virtual ~runnable() {
@@ -97,19 +94,42 @@ namespace pthread {
     class thread {
     public:
 
-        /**
-         * create a new thread status is no_a_thread
+        /** create a new thread.
+         *
+         * The thread's status is set to thread_status::not_a_thread and the thread id is set to 0 (zero). An pthread attribute
+         * is created, and the attrbutes are set to the thier default values.
+         *
+         * @see pthread_attr_init
          */
         thread();
 
-        /** create a new thread
+        /**
+         * @copydoc thread(const runnable *, std::size_t )
          *
-         * The new thread is made runnable, and will start executing the run routine, with.
+         * @deprecated this constructor is not realy safe to use, prefer new signature.
+         */
+        thread(const runnable &runner, std::size_t stack_size = 0);
+
+        /** Initializes needed structures and start running the thread.
+         *
+         *  The method creates and initializes a pthread_attr_t:
+         *  - the detach state attribute is set to PTHREAD_CREATE_JOINABLE
+         *  - the stacksize attribute is set to whatever value you passed (must be greater than 0 (zero)).
+         *
+         *  If all the setup was successfull, the thread is created and started.
          *
          * @param runner a class that implements the runnable interface.
          * @param stack_size thread stack size in bytes (default is 0 and means use default stack size)
+         * @return 0 (zero) or an error code returned by a call to a pthread function.
+         * @throws thread_exception is thrown if a call to pthread_attr_setstacksize, pthread_attr_setdetachstate or pthread_create fails.
+         * @see thread_startup_runnable
+         * @see thread::thread()
+         * @see pthread_attr_setstacksize
+         * @see pthread_attr_setdetachstate
+         * @see pthread_create
+         * @see init
          */
-        thread(const runnable &runner, const std::size_t stack_size = 0);
+        thread(const runnable *runner, std::size_t stack_size = 0);
 
         /** Move constructor.
          *
@@ -146,6 +166,11 @@ namespace pthread {
          */
         bool joinable() const { return _thread != 0; };
 
+        /** @return the current value of the thread's ID. Zero if this si not a thread.
+         *
+         */
+        pthread_t get_id() const noexcept ;
+
         /** @return the status of the thread (thread::status).
          */
         inline thread_status status() const {
@@ -156,7 +181,7 @@ namespace pthread {
          *
          * @return the stack size in bytes.
          */
-         size_t stack_size();
+        size_t stack_size();
 
         /** copy operator is flagged deleted,  copying doesn't make sense
          */
@@ -177,10 +202,25 @@ namespace pthread {
          */
         void swap(thread &other);
 
-        pthread_t          _thread; //!< thread identifier
-        pthread_attr_t     _attr;   //!< thread attributes (stack size, ...)
-        pthread_attr_t    *_attr_ptr; //!< pthread attribute pointer (null, if pthread_attr_t was not initialized) (NOSONAR)
-        thread_status      _status; //!< thread status (@see thread_status)
+        /** Initializes needed structures and start running the thread.
+         *
+         *  The method creates and initializes a pthread_attr_t by setting:
+         *  - joinable to true
+         *  - the stacksize if a value was passed and is greater than 0 (zero).
+         *
+         *  If all the setup was successfull, the thread is created and started.
+         * @param runner
+         * @param stack_size
+         * @return 0 (zero) or an error code returned by a call to a pthread function.
+         * @throws thread_exception is thrown if a call to pthread_attr_setstacksize, pthread_attr_setdetachstate or pthread_create fails.
+         * @see thread_startup_runnable
+         */
+        int init(const runnable *runner, std::size_t stack_size = 0);
+
+        pthread_t _thread; //!< thread identifier
+        pthread_attr_t _attr;   //!< thread attributes (stack size, ...)
+        pthread_attr_t *_attr_ptr; //!< pthread attribute pointer (null, if pthread_attr_t was not initialized) (NOSONAR)
+        thread_status _status; //!< thread status (@see thread_status)
     };
 
     /** base class of a thread.
@@ -270,7 +310,7 @@ namespace pthread {
         /** @return true if this thread can be joined.
          */
         bool joinable() const;
-        
+
         /** not copy-assignable */
         void operator=(const abstract_thread &) = delete;
 
@@ -312,7 +352,9 @@ namespace pthread {
 #if __cplusplus < 201103L
         explicit thread_group( bool destructor_joins_first = false ) throw();
 #else
+
         explicit thread_group(bool destructor_joins_first = false) noexcept;
+
 #endif
 
         /** delete all abstract_thread referenced by the thread_group.
