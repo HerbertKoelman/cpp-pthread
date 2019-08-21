@@ -171,10 +171,6 @@ namespace pthread {
         return size;
     }
 
-    pthread_t thread::get_id() const noexcept {
-        return _thread;
-    }
-
     abstract_thread::abstract_thread(const std::size_t stack_size) : _thread(NULL), _stack_size(stack_size) {
     }
 
