@@ -26,7 +26,7 @@ usage(){
 
 git_current_branch=`git rev-parse --abbrev-ref HEAD -- | head -1`
 
-if [ $git_current_branch == "master" ] 
+if [ "$git_current_branch" == "master" ] 
 then
   cmake_build_type="-DCMAKE_BUILD_TYPE=Release"
 else

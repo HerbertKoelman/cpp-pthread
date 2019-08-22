@@ -50,6 +50,7 @@ if (GCOV)
 endif ()
 
 find_package(GTestExt PATHS cmake)
+find_package(Coverage PATHS cmake)
 
 # main targets --------------------------------------------------
 #
