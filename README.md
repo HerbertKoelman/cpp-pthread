@@ -45,56 +45,24 @@ If you use CMake, the test are built and run like this (in your `build` director
 The `cmake/CoverageConfig.cmake` package create a make target **coverage**. When used, it will produce a coverage report using `lcov`.
 
 ```
+$ make coverage
 [100%] Coverage report (/shared/home/herbert/c++/cpp-pthread/cmake/LCOV)
--------------------------------------------------------------------------
-Handling directory [./CMakeFiles/cpp-pthread-static.dir/src] (trace file: [/tmp/tmp.I9g5LExQH8.coverage])
+Handling directory [./CMakeFiles/cpp-pthread-static.dir/src]
 Initializing [coverage.info] file
-Adding tracefile [/tmp/tmp.I9g5LExQH8.coverage] to [covergae.info]
-lcov: ERROR: no valid records found in tracefile /tmp/tmp.I9g5LExQH8.coverage
-done
-
--------------------------------------------------------------------------
-Handling directory [./googletest-build/googlemock/gtest/CMakeFiles/gtest.dir/src] (trace file: [/tmp/tmp.nHizIENhO5.coverage])
-/shared/home/herbert/c++/cpp-pthread/cmake/LCOV: ligne 6 : [: trop d'arguments
-Adding tracefile [/tmp/tmp.nHizIENhO5.coverage] to [covergae.info]
-done
-
--------------------------------------------------------------------------
-Handling directory [./googletest-build/googlemock/gtest/CMakeFiles/gtest_main.dir/src] (trace file: [/tmp/tmp.ceN6PdiHlE.coverage])
-/shared/home/herbert/c++/cpp-pthread/cmake/LCOV: ligne 6 : [: trop d'arguments
-Adding tracefile [/tmp/tmp.ceN6PdiHlE.coverage] to [covergae.info]
-done
-
--------------------------------------------------------------------------
-Handling directory [./tests/CMakeFiles/abstract_thread_tests.dir] (trace file: [/tmp/tmp.G8vCThD5kK.coverage])
-/shared/home/herbert/c++/cpp-pthread/cmake/LCOV: ligne 6 : [: trop d'arguments
-Adding tracefile [/tmp/tmp.G8vCThD5kK.coverage] to [covergae.info]
-done
-
--------------------------------------------------------------------------
-Handling directory [./tests/CMakeFiles/concurrency_tests.dir] (trace file: [/tmp/tmp.bQylJ9XfbI.coverage])
-/shared/home/herbert/c++/cpp-pthread/cmake/LCOV: ligne 6 : [: trop d'arguments
-Adding tracefile [/tmp/tmp.bQylJ9XfbI.coverage] to [covergae.info]
-done
-
--------------------------------------------------------------------------
-Handling directory [./tests/CMakeFiles/exception_tests.dir] (trace file: [/tmp/tmp.cYf0dQErrL.coverage])
-/shared/home/herbert/c++/cpp-pthread/cmake/LCOV: ligne 6 : [: trop d'arguments
-Adding tracefile [/tmp/tmp.cYf0dQErrL.coverage] to [covergae.info]
-done
-
--------------------------------------------------------------------------
-Handling directory [./tests/CMakeFiles/synchronized_queue_tests.dir] (trace file: [/tmp/tmp.aLjthFMujz.coverage])
-/shared/home/herbert/c++/cpp-pthread/cmake/LCOV: ligne 6 : [: trop d'arguments
-Adding tracefile [/tmp/tmp.aLjthFMujz.coverage] to [covergae.info]
-done
-
--------------------------------------------------------------------------
-Handling directory [./tests/CMakeFiles/thread_tests.dir] (trace file: [/tmp/tmp.dh5qKqp3sp.coverage])
-/shared/home/herbert/c++/cpp-pthread/cmake/LCOV: ligne 6 : [: trop d'arguments
-Adding tracefile [/tmp/tmp.dh5qKqp3sp.coverage] to [covergae.info]
-done
-
+Handling directory [./googletest-build/googlemock/gtest/CMakeFiles/gtest.dir/src]
+Adding tracefile [/tmp/tmp.GQvVYkluCo.coverage] to [coverage.info]
+Handling directory [./googletest-build/googlemock/gtest/CMakeFiles/gtest_main.dir/src]
+Adding tracefile [/tmp/tmp.4xDeqRUZJO.coverage] to [coverage.info]
+Handling directory [./tests/CMakeFiles/abstract_thread_tests.dir]
+Adding tracefile [/tmp/tmp.UqJ7PH9H1e.coverage] to [coverage.info]
+Handling directory [./tests/CMakeFiles/concurrency_tests.dir]
+Adding tracefile [/tmp/tmp.a24dLMFBkh.coverage] to [coverage.info]
+Handling directory [./tests/CMakeFiles/exception_tests.dir]
+Adding tracefile [/tmp/tmp.GsxpxMbh9W.coverage] to [coverage.info]
+Handling directory [./tests/CMakeFiles/synchronized_queue_tests.dir]
+Adding tracefile [/tmp/tmp.NxAsqKaPSp.coverage] to [coverage.info]
+Handling directory [./tests/CMakeFiles/thread_tests.dir]
+Adding tracefile [/tmp/tmp.8J60C5yNeg.coverage] to [coverage.info]
 Reading tracefile coverage.info
                                           |Lines       |Functions  |Branches
 Filename                                  |Rate     Num|Rate    Num|Rate     Num
