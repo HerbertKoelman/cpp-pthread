@@ -40,7 +40,87 @@ If you use CMake, the test are built and run like this (in your `build` director
 
    make all test
    
- 
+### Coverage
+
+The `cmake/CoverageConfig.cmake` package create a make target **coverage**. When used, it will produce a coverage report using `lcov`.
+
+```
+[100%] Coverage report (/shared/home/herbert/c++/cpp-pthread/cmake/LCOV)
+-------------------------------------------------------------------------
+Handling directory [./CMakeFiles/cpp-pthread-static.dir/src] (trace file: [/tmp/tmp.I9g5LExQH8.coverage])
+Initializing [coverage.info] file
+Adding tracefile [/tmp/tmp.I9g5LExQH8.coverage] to [covergae.info]
+lcov: ERROR: no valid records found in tracefile /tmp/tmp.I9g5LExQH8.coverage
+done
+
+-------------------------------------------------------------------------
+Handling directory [./googletest-build/googlemock/gtest/CMakeFiles/gtest.dir/src] (trace file: [/tmp/tmp.nHizIENhO5.coverage])
+/shared/home/herbert/c++/cpp-pthread/cmake/LCOV: ligne 6 : [: trop d'arguments
+Adding tracefile [/tmp/tmp.nHizIENhO5.coverage] to [covergae.info]
+done
+
+-------------------------------------------------------------------------
+Handling directory [./googletest-build/googlemock/gtest/CMakeFiles/gtest_main.dir/src] (trace file: [/tmp/tmp.ceN6PdiHlE.coverage])
+/shared/home/herbert/c++/cpp-pthread/cmake/LCOV: ligne 6 : [: trop d'arguments
+Adding tracefile [/tmp/tmp.ceN6PdiHlE.coverage] to [covergae.info]
+done
+
+-------------------------------------------------------------------------
+Handling directory [./tests/CMakeFiles/abstract_thread_tests.dir] (trace file: [/tmp/tmp.G8vCThD5kK.coverage])
+/shared/home/herbert/c++/cpp-pthread/cmake/LCOV: ligne 6 : [: trop d'arguments
+Adding tracefile [/tmp/tmp.G8vCThD5kK.coverage] to [covergae.info]
+done
+
+-------------------------------------------------------------------------
+Handling directory [./tests/CMakeFiles/concurrency_tests.dir] (trace file: [/tmp/tmp.bQylJ9XfbI.coverage])
+/shared/home/herbert/c++/cpp-pthread/cmake/LCOV: ligne 6 : [: trop d'arguments
+Adding tracefile [/tmp/tmp.bQylJ9XfbI.coverage] to [covergae.info]
+done
+
+-------------------------------------------------------------------------
+Handling directory [./tests/CMakeFiles/exception_tests.dir] (trace file: [/tmp/tmp.cYf0dQErrL.coverage])
+/shared/home/herbert/c++/cpp-pthread/cmake/LCOV: ligne 6 : [: trop d'arguments
+Adding tracefile [/tmp/tmp.cYf0dQErrL.coverage] to [covergae.info]
+done
+
+-------------------------------------------------------------------------
+Handling directory [./tests/CMakeFiles/synchronized_queue_tests.dir] (trace file: [/tmp/tmp.aLjthFMujz.coverage])
+/shared/home/herbert/c++/cpp-pthread/cmake/LCOV: ligne 6 : [: trop d'arguments
+Adding tracefile [/tmp/tmp.aLjthFMujz.coverage] to [covergae.info]
+done
+
+-------------------------------------------------------------------------
+Handling directory [./tests/CMakeFiles/thread_tests.dir] (trace file: [/tmp/tmp.dh5qKqp3sp.coverage])
+/shared/home/herbert/c++/cpp-pthread/cmake/LCOV: ligne 6 : [: trop d'arguments
+Adding tracefile [/tmp/tmp.dh5qKqp3sp.coverage] to [covergae.info]
+done
+
+Reading tracefile coverage.info
+                                          |Lines       |Functions  |Branches
+Filename                                  |Rate     Num|Rate    Num|Rate     Num
+================================================================================
+[/shared/home/herbert/c++/cpp-pthread/]
+include/pthread/condition_variable.hpp    |64.7%     68| 100%     5|    -      0
+include/pthread/lock_guard.hpp            | 100%     28| 100%     6|    -      0
+include/pthread/sync_queue.hpp            |79.3%     29|77.8%     9|    -      0
+include/pthread/thread.hpp                |83.3%     12|83.3%     6|    -      0
+src/condition_variable.cpp                |68.8%     64|80.0%    10|    -      0
+src/exceptions.cpp                        |91.5%     47|88.2%    17|    -      0
+src/mutex.cpp                             |81.8%     33|83.3%     6|    -      0
+src/pthread.cpp                           | 100%      2| 100%     1|    -      0
+src/read_write_lock.cpp                   |69.6%     46|72.7%    11|    -      0
+src/thread.cpp                            |79.0%    162|92.6%    27|    -      0
+tests/abstract_thread_tests.cpp           |98.0%     99| 100%    13|    -      0
+tests/concurrency_tests.cpp               |93.5%    123| 100%    12|    -      0
+tests/exceptions_tests.cpp                |97.8%    181|95.2%    21|    -      0
+tests/synchronized_queue_tests.cpp        |94.5%    109|94.4%    18|    -      0
+tests/thread_tests.cpp                    |88.1%    201|95.2%    21|    -      0
+================================================================================
+                                    Total:|87.2%   1204|91.3%   183|    -      0
+```
+
+> **WARN** you have to run the test before a report can be displayed (`make all test`).
+
 ### Usefull links
 
 #### Memory management on AIX
