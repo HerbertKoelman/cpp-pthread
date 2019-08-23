@@ -87,7 +87,7 @@ namespace pthread {
     }
   }
 
-  condition_variable::~condition_variable () {
+  condition_variable::~condition_variable () throw (condition_variable_exception){
     int rc = pthread_cond_destroy(&_condition);
     if (rc != 0){
       // This is the only way to signal that the destruction of the ressource failed, so the rule "Destructors should not throw exceptions" is therfore ignored.

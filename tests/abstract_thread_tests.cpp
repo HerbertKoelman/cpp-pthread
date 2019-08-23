@@ -21,7 +21,7 @@ public:
         try {
             long counter = 0;
             std::cout << std::flush << "Test thread is running..." << std::flush;
-            pthread::this_thread::sleep_for(25 * 100);
+            pthread::this_thread::sleep_for(2 * 100);
             for (auto count = 1000; count > 0; count--) {
                 counter += count;
             }
@@ -58,7 +58,7 @@ TEST(abstract_thread, not_joinable) {
 }
 
 
-TEST(absttract_thread, self_join) {
+TEST(abstract_thread, self_join) {
 
     class test_join_thread : public pthread::abstract_thread {
     public:

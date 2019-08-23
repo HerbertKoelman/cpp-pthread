@@ -109,3 +109,46 @@ TEST(exceptions, util_queue_access_timeout_exception) {
         EXPECT_STREQ("synchronized_queue get/put timed out.", ex.what());
     }
 }
+
+void *starter_function(pthread::runnable *runner){
+    std::cout << "function thread ID : " << pthread::this_thread::get_id() << ": " ;
+    runner->run();
+}
+
+TEST(class_function, demo) {
+    class function_class{
+    public:
+
+        function_class( pthread::runnable *runner){
+            run(runner);
+        }
+
+        function_class( pthread::runnable &runner){
+            run((void *)&runner);
+        }
+    private:
+        int         _number;
+        std::string _message;
+
+        void run (void *runnable){
+            std::cout << "thread ID : " << pthread::this_thread::get_id() << ": " ;
+            reinterpret_cast<pthread::runnable *>(runnable)->run();
+        }
+    };
+
+    class runner : public pthread::runnable{
+    public:
+        void run() noexcept override {
+            std::cout << "runner: hello, world" << std::endl ;
+        }
+    };
+    runner *run_ptr = new runner;
+    runner run;
+    function_class fc1(run_ptr);
+    function_class fc2(run);
+
+    pthread::thread thread{run};
+
+    thread.join();
+    delete run_ptr;
+}

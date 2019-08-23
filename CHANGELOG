@@ -1,3 +1,11 @@
+1.10.0
+- the script ./BUILD now uses Travis variables to set the current branch and build type
+- coverage is now entirely handle in cmake/CoverageConfig/cmake (#191)
+- new pthread::thread constructor (#185)
+- produce lcov reports (#190)
+- provide a BUILD script (#182)
+- map master branch to Release build type (#182)
+- bug fixing : #184, #182, #186, #187, #188, #192, #193, #195
 1.9.1
 - check that joining yourself throws an exception (#169)
 - removed code smells (#168)

@@ -1,0 +1,23 @@
+#8/usr/bin/env bash
+
+initialize_coverage_file=""
+
+for directory in $(find ./ -type f -name "*.gcda" -exec dirname {} \; | sort -u)
+do
+  echo "Handling directory [$directory]"
+
+  if [ "${initialize_coverage_file}" == "" ]
+  then
+    echo "Initializing [coverage.info] file"
+    lcov --quiet --directory $directory --capture --output-file coverage.info
+    initialize_coverage_file="`date`"
+  else
+    coverage_info=$(mktemp --suffix=.coverage)
+    lcov --quiet --directory $directory --capture --output-file $coverage_info
+    echo "Adding tracefile [$coverage_info] to [coverage.info]"
+    lcov --quiet --add-tracefile $coverage_info --add-tracefile coverage.info --output-file coverage.info
+  fi
+done 
+lcov --quiet --remove coverage.info '/usr/*' --output-file coverage.info
+lcov --quiet --remove coverage.info '*/googletest/*' --output-file coverage.info
+lcov --list coverage.info

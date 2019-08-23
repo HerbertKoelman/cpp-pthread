@@ -26,26 +26,28 @@ addons:
       - doxygen
       - graphviz
 
-matrix:
-  include:
-    - name: coverage jobs
-      env:
-        BUILD_DIRECTORY=cmake-gcov-build
-        CMAKE_COMMAND_LINE_ARGS="-DGCOV=yes"
-        MAKE_TARGETS="all test"
-    - name: sonar code quality checks
-      env:
-        BUILD_DIRECTORY=cmake-sonar-build
-        CMAKE_COMMAND_LINE_ARGS="-DSONAR=yes -DGCOV=yes"
-        MAKE_TARGETS="code-quality"
-    - name: default
-      env:
-        BUILD_DIRECTORY=cmake-default-build
-        CMAKE_COMMAND_LINE_ARGS="-DCMAKE_BUILD_TYPE=Release"
-        MAKE_TARGETS="all doxygen package"
+# matrix:
+#   include:
+#     - name: coverage jobs
+#       env:
+#         BUILD_DIRECTORY=cmake-gcov-build
+#         CMAKE_COMMAND_LINE_ARGS="-DGCOV=yes"
+#         MAKE_TARGETS="all test"
+#     - name: sonar code quality checks
+#       env:
+#         BUILD_DIRECTORY=cmake-sonar-build
+#         CMAKE_COMMAND_LINE_ARGS="-DSONAR=yes -DGCOV=yes"
+#         MAKE_TARGETS="code-quality"
+#     - name: default
+#       env:
+#         BUILD_DIRECTORY=cmake-default-build
+#         CMAKE_COMMAND_LINE_ARGS=""
+#         MAKE_TARGETS="all doxygen package"
 
 script:
-  - mkdir $BUILD_DIRECTORY && cd $BUILD_DIRECTORY && cmake $CMAKE_COMMAND_LINE_ARGS .. && make $MAKE_TARGETS
+  # Set the variable CMAKE_BUILD_TYPE in your project's settings
+  #- mkdir $BUILD_DIRECTORY && cd $BUILD_DIRECTORY && cmake $CMAKE_BUILD_TYPE $CMAKE_COMMAND_LINE_ARGS .. && make $MAKE_TARGETS
+  - ./BUILD -S
 
 after_success:
   # create gcov files
