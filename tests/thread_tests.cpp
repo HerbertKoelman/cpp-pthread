@@ -20,7 +20,7 @@ public:
         try {
             long counter = 0;
             display_message("test_runnable is running ");
-            pthread::this_thread::sleep_for(2 * 1000);
+            pthread::this_thread::sleep_for(2 * 100);
             for (auto count = 1000; count > 0; count--) {
                 counter += count;
             }
