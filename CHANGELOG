@@ -4,7 +4,7 @@
 - produce lcov reports (#190)
 - provide a BUILD script (#182)
 - map master branch to Release build type (#182)
-- bug fixing : #184, #182, #186, #187, #188
+- bug fixing : #184, #182, #186, #187, #188, #193
 1.9.1
 - check that joining yourself throws an exception (#169)
 - removed code smells (#168)

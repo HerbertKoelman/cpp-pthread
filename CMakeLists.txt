@@ -31,8 +31,8 @@ if (DEBUG)
     add_definitions(-DDEBUG=1)
 endif ()
 
-find_package(GTestExt PATHS cmake)
 find_package(Coverage PATHS cmake)
+find_package(GTestExt PATHS cmake)
 
 # main targets --------------------------------------------------
 #
