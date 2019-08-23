@@ -32,6 +32,7 @@ get_current_branch(){
     then
       current_branch=`git rev-parse --abbrev-ref HEAD -- | head -1`
     else
+      echo "ON TRAVIS >>>>>>>>>>"
       [ -z "$TRAVIS_TAG" ] && current_branch=$TRAVIS_BRANCH || current_branch="master"
     fi
 
@@ -66,6 +67,8 @@ cmake_args="$cmake_build_type $cmake_gcov_option $cmake_sonar_option"
 get_current_branch
 
 echo "##############################################################################"
+echo "#"
+[ ! -z "$TRAVIS_BRANCH" ] && echo "# Running on Travis"
 echo "#"
 echo "# Project: cpp-pthread"
 echo "# Build date: `date`"
