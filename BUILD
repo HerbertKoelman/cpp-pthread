@@ -24,6 +24,12 @@ usage(){
     exit 99
 }
 
+current_branch(){
+
+  git_current_branch=`git rev-parse --abbrev-ref HEAD -- | head -1`
+  echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, TRAVIS_TAG=$TRAVIS_TAG"
+}
+
 git_current_branch=`git rev-parse --abbrev-ref HEAD -- | head -1`
 
 if [ "$git_current_branch" == "master" ] 
