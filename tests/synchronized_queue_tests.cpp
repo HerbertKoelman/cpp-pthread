@@ -96,7 +96,7 @@ public:
     void run() throw() {
 #else
 
-    void run() noexcept {
+    void run() noexcept override {
 #endif
         printf("start producing %d messages\n", MESSAGES_TO_PRODUCE);
         for (auto x = MESSAGES_TO_PRODUCE; (x > 0) && running(); x--) {
@@ -122,7 +122,7 @@ public:
     void run() throw() {
 #else
 
-    void run() noexcept {
+    void run() noexcept override {
 #endif
 
         printf("starting consumer\n");
@@ -139,7 +139,7 @@ public:
                 }
 
                 if ((100 % counter()) == 0) {
-                    printf("queue's current content is %zu (thrd: %o );\n", _queue.size(), pthread::this_thread::get_id());
+                    printf("[handle 100] queue's current content is %zu (thrd: %o );\n", _queue.size(), pthread::this_thread::get_id());
                 }
 
                 pthread::this_thread::sleep_for(CONSUMER_PROCESSING_DURATION);
