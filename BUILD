@@ -29,7 +29,12 @@ set_current_branch(){
     then
       current_branch=`git rev-parse --abbrev-ref HEAD -- | head -1`
     else
-      [ -z "$TRAVIS_TAG" ] && current_branch=$TRAVIS_BRANCH || current_branch="master"
+      if [ -z "$TRAVIS_TAG" ] 
+      then
+        [ -z "$TRAVIS_PULL_REQUEST_BRANCH" ] && current_branch=$TRAVIS_BRANCH || current_branch=$TRAVIS_PULL_REQUEST_BRANCH
+      else
+        current_branch="master"
+      fi
     fi
 }
 
