@@ -54,6 +54,8 @@ done
 
 cmake_args="$cmake_build_type $cmake_gcov_option $cmake_sonar_option"
 
+current_branch
+
 echo "##############################################################################"
 echo "#"
 echo "# Project: cpp-pthread"
