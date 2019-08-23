@@ -63,7 +63,7 @@ cmake_args="$cmake_build_type $cmake_gcov_option $cmake_sonar_option"
 
 echo "##############################################################################"
 echo "#"
-[ ! -z "$TRAVIS_BRANCH" ] && echo -e "# Running on Travis (TRAVIS_BRANCH: $TRAVIS_BRANCH, TRAVIS_TAG: $TRAVIS_TAGi, TRAVIS_PULL_REQUEST_BRANCH: $TRAVIS_PULL_REQUEST_BRANCH)\n#"
+[ ! -z "$TRAVIS_BRANCH" ] && echo -e "# Running on Travis (TRAVIS_BRANCH: $TRAVIS_BRANCH, TRAVIS_TAG: $TRAVIS_TAG, TRAVIS_PULL_REQUEST_BRANCH: $TRAVIS_PULL_REQUEST_BRANCH)\n#"
 echo "# Project: cpp-pthread"
 echo "# Build date: `date`"
 echo "# Build directory: cmake-build"
