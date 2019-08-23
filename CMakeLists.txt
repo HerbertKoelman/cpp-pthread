@@ -42,8 +42,10 @@ add_definitions(-DCPP_PTHREAD_VERSION="${CPP_PTHREAD_VERSION}")
 # This part MUST be executed before the loading of the CMake package. As we are using the CPP-PTHREAD_VERSION variable in the sonar properties file, 
 # we need to reun this after the setting of the version variable.
 set(SONAR_PROPERTIES_FILE ${CMAKE_CURRENT_BINARY_DIR}/sonar-project.properties)
+
 message(STATUS "Generating SONAR properties file ${SONAR_PROPERTIES_FILE}")
 configure_file(${CMAKE_CURRENT_LIST_DIR}/sonar-project.properties.in ${SONAR_PROPERTIES_FILE})
+
 find_package(SonarCloud PATHS cmake)
 
 configure_file(src/config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/src/config.h)

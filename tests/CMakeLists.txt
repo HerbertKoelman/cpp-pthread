@@ -1,9 +1,3 @@
-
-#if (GCOV AND ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU"))
-#  message(STATUS "Setting GCOV library (-lgcov)")
-#  set(GCOV_LIB gcov)
-#endif()
-
 add_executable(exception_tests exceptions_tests.cpp )
 target_link_libraries(exception_tests GTest::GTest GTest::gtest_main cpp-pthread-static )
 add_test(NAME exception_tests COMMAND exception_tests)
