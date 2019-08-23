@@ -4,8 +4,8 @@
 #
 cmake_build(){
 
-  echo "[ -d $cmake_build_dir ] && ( cd $cmake_build_dir && cmake $cmake_args .. && make $make_args )"
-  [ -d $cmake_build_dir ] && ( cd $cmake_build_dir && cmake $cmake_args .. && make $make_args )
+  echo "cd cmake-build && cmake $cmake_args .. && make $make_args "
+  [ -d cmake-build ] && ( cd cmake-build && cmake $cmake_args .. && make $make_args )
 
 }
 
@@ -24,14 +24,27 @@ usage(){
     exit 99
 }
 
-git_current_branch=`git rev-parse --abbrev-ref HEAD -- | head -1`
+set_current_branch(){
+    if [ -z "$TRAVIS_BRANCH" ]
+    then
+      current_branch=`git rev-parse --abbrev-ref HEAD -- | head -1`
+    else
+      if [ -z "$TRAVIS_TAG" ] 
+      then
+        [ -z "$TRAVIS_PULL_REQUEST_BRANCH" ] && current_branch=$TRAVIS_BRANCH || current_branch=$TRAVIS_PULL_REQUEST_BRANCH
+      else
+        current_branch="master"
+      fi
+    fi
+}
 
-if [ "$git_current_branch" == "master" ] 
+set_current_branch
+
+if [ "$current_branch" == "master" ] 
 then
   cmake_build_type="-DCMAKE_BUILD_TYPE=Release"
 else
   cmake_build_type="-DCMAKE_BUILD_TYPE=Debug"
-  cmake_build_dir=cmake-build
 fi
 
 make_args="all test"
@@ -50,13 +63,14 @@ cmake_args="$cmake_build_type $cmake_gcov_option $cmake_sonar_option"
 
 echo "##############################################################################"
 echo "#"
+[ ! -z "$TRAVIS_BRANCH" ] && echo -e "# Running on Travis (TRAVIS_BRANCH: $TRAVIS_BRANCH, TRAVIS_TAG: $TRAVIS_TAG, TRAVIS_PULL_REQUEST_BRANCH: $TRAVIS_PULL_REQUEST_BRANCH)\n#"
 echo "# Project: cpp-pthread"
 echo "# Build date: `date`"
-echo "# Build directory: $cmake_build_dir"
+echo "# Build directory: cmake-build"
 echo "# Build options: $cmake_args"
-echo "# GIT current branch: [$git_current_branch]"
+echo "# GIT current branch: [$current_branch]"
 echo "#"
 echo "##############################################################################"
 
-[ -d $cmake_build_dir ] && (rm -Rf $cmake_build_dir/* && cmake_build ) || ( mkdir $cmake_build_dir && cmake_build )
+[ -d cmake-build ] && (rm -Rf cmake-build/* && cmake_build ) || ( mkdir cmake-build && cmake_build )
 
