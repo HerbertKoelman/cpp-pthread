@@ -1,4 +1,5 @@
 1.10.0
+- coverage is now entirely handle in cmake/CoverageConfig/cmake (#191)
 - new pthread::thread constructor (#185)
 - produce lcov reports (#190)
 - provide a BUILD script (#182)
