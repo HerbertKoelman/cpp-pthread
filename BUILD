@@ -24,15 +24,24 @@ usage(){
     exit 99
 }
 
-current_branch(){
+echo "TRAVIS_TAG: $TRAVIS_TAG"
 
-  git_current_branch=`git rev-parse --abbrev-ref HEAD -- | head -1`
-  echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, TRAVIS_TAG=$TRAVIS_TAG"
+get_current_branch(){
+
+    if [ -z "$TRAVIS_BRANCH" ]
+    then
+      current_branch=`git rev-parse --abbrev-ref HEAD -- | head -1`
+    else
+      [ -z "$TRAVIS_TAG" ] && current_branch=$TRAVIS_BRANCH || current_branch="master"
+    fi
+
+    echo -n "$current_branch"
 }
 
-git_current_branch=`git rev-parse --abbrev-ref HEAD -- | head -1`
+current_branch=`get_current_branch`
+echo "BRANCH: $current_branch"
 
-if [ "$git_current_branch" == "master" ] 
+if [ "$current_branch" == "master" ] 
 then
   cmake_build_type="-DCMAKE_BUILD_TYPE=Release"
 else
@@ -54,7 +63,7 @@ done
 
 cmake_args="$cmake_build_type $cmake_gcov_option $cmake_sonar_option"
 
-current_branch
+get_current_branch
 
 echo "##############################################################################"
 echo "#"
@@ -62,7 +71,7 @@ echo "# Project: cpp-pthread"
 echo "# Build date: `date`"
 echo "# Build directory: $cmake_build_dir"
 echo "# Build options: $cmake_args"
-echo "# GIT current branch: [$git_current_branch]"
+echo "# GIT current branch: [$current_branch]"
 echo "#"
 echo "##############################################################################"
 
