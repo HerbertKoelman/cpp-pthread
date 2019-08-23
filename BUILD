@@ -17,7 +17,7 @@ usage(){
     echo "Build this module."
     echo
     echo "-S setup things to run SONAR"
-    echo "-G setup things to compile with GCOV options and libs"
+    echo "-G setup things to compile with coverage options and libs"
     echo "-T build type (Release, Debug, ...)"
     echo
 
@@ -39,8 +39,8 @@ make_args="all test"
 while getopts "SGT:" option
 do
  case $option in
-    S) cmake_sonar_option="-DSONAR=yes" ; cmake_gcov_option="-DGCOV=yes" ; make_args="code-quality";;
-    G) cmake_gcov_option="-DGCOV=yes" ;;
+    S) cmake_sonar_option="-DSONAR=yes" ; cmake_gcov_option="-DCOVERAGE=yes" ; make_args="code-quality";;
+    G) cmake_gcov_option="-DCOVERAGE=yes" ; make_args="$make_args coverage";;
     T) cmake_build_type="-DCMAKE_BUILD_TYPE=$OPTARG" ;;
     *) usage ;;                     # display usage and exit
  esac
