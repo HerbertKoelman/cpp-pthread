@@ -1,4 +1,4 @@
-# autho: Herbert Koelman
+# author: Herbert Koelman
 # created on: 1/6/2019
 os: linux
 
@@ -25,24 +25,6 @@ addons:
     packages:
       - doxygen
       - graphviz
-
-# matrix:
-#   include:
-#     - name: coverage jobs
-#       env:
-#         BUILD_DIRECTORY=cmake-gcov-build
-#         CMAKE_COMMAND_LINE_ARGS="-DGCOV=yes"
-#         MAKE_TARGETS="all test"
-#     - name: sonar code quality checks
-#       env:
-#         BUILD_DIRECTORY=cmake-sonar-build
-#         CMAKE_COMMAND_LINE_ARGS="-DSONAR=yes -DGCOV=yes"
-#         MAKE_TARGETS="code-quality"
-#     - name: default
-#       env:
-#         BUILD_DIRECTORY=cmake-default-build
-#         CMAKE_COMMAND_LINE_ARGS=""
-#         MAKE_TARGETS="all doxygen package"
 
 script:
   # Set the variable CMAKE_BUILD_TYPE in your project's settings
