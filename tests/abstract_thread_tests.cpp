@@ -16,7 +16,7 @@
 class test_thread : public pthread::abstract_thread {
 public:
 
-    void run() noexcept {
+    void run() noexcept override {
 
         try {
             long counter = 0;
@@ -63,7 +63,7 @@ TEST(abstract_thread, self_join) {
     class test_join_thread : public pthread::abstract_thread {
     public:
 
-        void run() noexcept {
+        void run() noexcept override {
             EXPECT_THROW(join(), pthread::thread_exception); // this should not work, self joining
         }
     };

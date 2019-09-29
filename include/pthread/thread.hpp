@@ -108,7 +108,7 @@ namespace pthread {
          *
          * @deprecated this constructor is not realy safe to use, prefer new signature.
          */
-        thread(const runnable &runner, std::size_t stack_size = 0);
+        explicit thread(const runnable &runner, std::size_t stack_size = 0);
 
         /** Initializes needed structures and start running the thread.
          *
@@ -129,7 +129,7 @@ namespace pthread {
          * @see pthread_create
          * @see init
          */
-        thread(const runnable *runner, std::size_t stack_size = 0);
+        explicit thread(const runnable *runner, std::size_t stack_size = 0);
 
         /** Move constructor.
          *
@@ -137,7 +137,7 @@ namespace pthread {
          *
          * @param other thread that will be moved, on successfull completion, the passed argument is no longer a thread.
          */
-        thread(thread &&other); // NOSONAR this is std interface and cannot be changed
+        thread(thread &&other) noexcept; // NOSONAR this is std interface and cannot be changed
 
         /** Copy constructor is flagged deleted because it makes no sense to copy a thread.
          */
@@ -194,7 +194,7 @@ namespace pthread {
          * @param other thread to move, on completion it is not a thread anymore (thread_status::not_a_thread).
          * @return a thread
          */
-        thread &operator=(thread &&other); // NOSONAR this is a std method signature
+        thread &operator=(thread &&other) noexcept ; // NOSONAR this is a std method signature
 
     private:
 
@@ -297,7 +297,7 @@ namespace pthread {
 
         /** deallocate thread.
          */
-        virtual ~abstract_thread();
+        virtual ~abstract_thread() override;
 
         /** start running the `run()` method in a new thread.
          */

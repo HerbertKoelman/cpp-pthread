@@ -208,7 +208,7 @@ namespace pthread {
 
         };
         /** @} */
-    }; // namespace util
+    } // namespace util
 
     /** @} */
 

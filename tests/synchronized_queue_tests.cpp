@@ -139,7 +139,7 @@ public:
                 }
 
                 if ((100 % counter()) == 0) {
-                    printf("[handle 100] queue's current content is %zu (thrd: %o );\n", _queue.size(), pthread::this_thread::get_id());
+                    printf("[handle 100] queue's current content is %zu (thrd: %lo );\n", _queue.size(), pthread::this_thread::get_id());
                 }
 
                 pthread::this_thread::sleep_for(CONSUMER_PROCESSING_DURATION);

@@ -129,7 +129,7 @@ namespace pthread {
 
     /* move constructor
      */
-    thread::thread(thread &&other): thread() { //NOSONAR this a C++11 standard interface that we want to comply with.
+    thread::thread(thread &&other) noexcept : thread() { //NOSONAR this a C++11 standard interface that we want to comply with.
 
         swap(other);
     }
@@ -148,7 +148,7 @@ namespace pthread {
     }
 
     /* move operator */
-    thread &thread::operator=(thread &&other) { //NOSONAR this a C++11 standard interface that we want to comply with.
+    thread &thread::operator=(thread &&other) noexcept { //NOSONAR this a C++11 standard interface that we want to comply with.
 
         swap(other);
 
@@ -171,14 +171,14 @@ namespace pthread {
         return size;
     }
 
-    abstract_thread::abstract_thread(const std::size_t stack_size) : _thread(NULL), _stack_size(stack_size) {
+    abstract_thread::abstract_thread(const std::size_t stack_size) : _thread(nullptr), _stack_size(stack_size) {
     }
 
     abstract_thread::~abstract_thread() {
 
-        if (_thread != NULL) {
+        if (_thread != nullptr) {
             delete _thread;
-            _thread = NULL;
+            _thread = nullptr;
         }
     }
 
@@ -236,15 +236,15 @@ namespace pthread {
     }
 
     void thread_group::start() {
-        for (auto iterator = _threads.begin(); iterator != _threads.end(); iterator++) {
-            (*iterator)->start();
+        for (auto & _thread : _threads) {
+            _thread->start();
         }
     }
 
     void thread_group::join() {
-        for (auto iterator = _threads.begin(); iterator != _threads.end(); iterator++) {
-            if ((*iterator)->joinable()) {
-                (*iterator)->join();
+        for (auto & _thread : _threads) {
+            if (_thread->joinable()) {
+                _thread->join();
             }
         }
     }
