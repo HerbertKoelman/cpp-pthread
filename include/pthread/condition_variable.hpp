@@ -6,8 +6,8 @@
 #ifndef pthread_condition_variable_hpp
 #define pthread_condition_variable_hpp
 
-// WARN pthread.h must be include as first hearder file of each source code file (see IBM's
-// recommandation for more info p.285 chapter 8.3.1).
+// WARN pthread.h must be include as first header file of each source code file (see IBM's
+// recommendation for more info p.285 chapter 8.3.1).
 #include <pthread.h>
 #include <string>
 #include <ctime>
@@ -21,7 +21,7 @@ namespace pthread {
 
     /** \addtogroup concurrency Concurrency
      *
-     * Set of classes to handle concurrent access to shared ressources.
+     * Set of classes to handle concurrent access to shared resources.
      *
      * @author herbert koelman (herbert.koelman@me.com)
      * @{
@@ -30,7 +30,7 @@ namespace pthread {
     /** condition variable current wait status. */
     enum cv_status {
         no_timeout, /*!< unblocked before a timeout occured */
-        timedout    /*!< condition timedout */
+        timedout    /*!< condition timed out */
     };
 
     /** Condition variable.
@@ -61,7 +61,7 @@ namespace pthread {
          *
          * Upon successful return, the mutex has been locked and is owned by the calling thread.
          *
-         * @param mtx ralated mutex, which must be locked by the current thread.
+         * @param mtx related mutex, which must be locked by the current thread.
          * @see notify_one
          * @see notify_all
          * @see pthread_cond_wait
@@ -86,9 +86,9 @@ namespace pthread {
          * The lambda (closure) is run to check if the condition was met. Lambda should return false if the waiting should be continued.
          * The signature of the predicate function should be equivalent to the following: bool pred();
          *
-         * @param mtx ralated mutex, which must be locked by the current thread.
+         * @param mtx related mutex, which must be locked by the current thread.
          * @param lambda code that checks if the condition is met (MUST return a boolean).
-         * @return true if lmabda returned true.
+         * @return true if lambda returned true.
          * @see notify_one
          * @see notify_all
          * @see pthread_cond_wait
@@ -106,9 +106,9 @@ namespace pthread {
          * The lambda (closure) is run to check if the condition was met. Lambda should return false if the waiting should be continued.
          * The signature of the predicate function should be equivalent to the following: bool pred();
          *
-         * @param lck ralated mutex lock_guard, which must be locked by the current thread.
+         * @param lck related mutex lock_guard, which must be locked by the current thread.
          * @param lambda code that checks if the condition is met (MUST return a boolean).
-         * @return true if lmabda returned true.
+         * @return true if lambda returned true.
          * @see notify_one
          * @see notify_all
          * @see pthread_cond_timedwait
@@ -124,9 +124,9 @@ namespace pthread {
          * Upon successful return, the mutex has been locked and is owned by the calling thread.
          *
          * If this method is called with millis < 0 then the timeout time is not recalculated. This make it possible to handle spurious
-         * unblocking of condition variable without the need of a lambda expression. The call sequence is then: while(! check_condition() && wait_for(lck, 200) == no_tiemout );
+         * unblocking of condition variable without the need of a lambda expression. The call sequence is then: while(! check_condition() && wait_for(lck, 200) == no_timeout );
          *
-         * @param mtx ralated mutex, which must be locked by the current thread.
+         * @param mtx related mutex, which must be locked by the current thread.
          * @param millis milliseconds to wait for this instance to signaled.
          * @return cv_status (either timeout or no_timeout)
          * @throw condition_variable_exception is thrown either if timeout calculation failed or mutex ownership was wrong.
@@ -154,10 +154,10 @@ namespace pthread {
          * The lambda (closure) is run to check if the condition was met. Lambda should return false if the waiting should be continued.
          * The signature of the predicate function should be equivalent to the following: bool lambda();
          *
-         * @param mtx ralated mutex, which must be locked by the current thread.
+         * @param mtx related mutex, which must be locked by the current thread.
          * @param millis milli seconds to wait for condition to be signaled.
          * @param lambda code that checks if the condition is met (MUST return a boolean).
-         * @return true if lmabda returned true.
+         * @return true if lambda returned true.
          * @see notify_one
          * @see notify_all
          * @see pthread_cond_timedwait
@@ -175,10 +175,10 @@ namespace pthread {
          * The lambda (closure) is run to check if the condition was met. Lambda should return false if the waiting should be continued.
          * The signature of the predicate function should be equivalent to the following: bool lambda();
          *
-         * @param lck ralated mutex lock_guard, which must be locked by the current thread.
+         * @param lck related mutex lock_guard, which must be locked by the current thread.
          * @param millis milli seconds to wait for condition to be signaled.
          * @param lambda run to check if condition was met.
-         * @return true if lmabda returned true.
+         * @return true if lambda returned true.
          * @see notify_one
          * @see notify_all
          * @see pthread_cond_timedwait
@@ -189,7 +189,7 @@ namespace pthread {
         /** signal a condition.
          *
          * unblocks at least one of the threads that are blocked on the specified condition variable cond (if any threads are blocked on cond).
-         * > *WARN* the signature of this methode should be the same as `std::condition_variable::notify_one`, we decided to
+         * > *WARN* the signature of this method should be the same as `std::condition_variable::notify_one`, we decided to
          * > throw an exception anyway, when the pthread function fails and not be strictly compliant.
          *
          * @throw condition_variable_exception if the call to pthread_cond_signal return value is different from 0 (zero)
@@ -201,7 +201,7 @@ namespace pthread {
          *
          * unblocks all threads currently blocked on the specified condition variable cond.
          *
-         * > *WARN* the signature of this methode should be the same as `std::condition_variable::notify_one`, we decided to
+         * > *WARN* the signature of this method should be the same as `std::condition_variable::notify_one`, we decided to
          * > throw an exception anyway, when the pthread function fails and not be strictly compliant.
          *
          * @throw condition_variable_exception if the call to pthread_cond_broadcast return value is different from 0 (zero)

@@ -10,7 +10,7 @@
 #define pthread_read_write_lock_hpp
 
 // must be include as first header file of each source code file (see IBM's
-// recommandation for more info p.285 §8.3.1).
+// recommendation for more info p.285 §8.3.1).
 #include <pthread.h>
 
 #include "pthread/exceptions.hpp"
@@ -27,7 +27,7 @@ namespace pthread {
 
     /** This class acquires the read lock.
      *
-     * This class cannot be instaiated as it's main putpose is to implement read locks. To use a read lock create
+     * This class cannot be instantiated as it's main purpose is to implement read locks. To use a read lock create
      * either a read_write_lock or a write_lock.
      *
      * @author herbert koelman (herbert.koelman@me.com)
@@ -58,7 +58,7 @@ namespace pthread {
 
 
         /**
-         * the descructor, shall destroy the read-write lock object referenced by rwlock and release any resources used by the lock.
+         * the destructor, shall destroy the read-write lock object referenced by rwlock and release any resources used by the lock.
          */
         virtual ~read_lock();
 
@@ -75,7 +75,7 @@ namespace pthread {
     protected:
 
         /**
-         Constructor/Desctructor
+         Constructor/Destructor
 
          this constructor shall allocate any resources required to use the read-write lock referenced by rwlock and initializes the lock to an unlocked state. The read/write lock
          passes NULL attributes. This means default behavior.
@@ -109,7 +109,7 @@ namespace pthread {
         void try_lock();
 
         /**
-         Constructor/Desctructor
+         Constructor/Destructor
 
          this constructor shall allocate any resources required to use the read-write lock referenced by rwlock and initializes the lock to an unlocked state. The read/write lock
          passes NULL attributes. This means default behavior.
@@ -124,7 +124,7 @@ namespace pthread {
          write_lock( const write_lock &) = delete ;
 
         /**
-         * the descructor, shall destroy the read-write lock object referenced by rwlock and release any resources used by the lock.
+         * the destructor, shall destroy the read-write lock object referenced by rwlock and release any resources used by the lock.
          */
         virtual ~write_lock();
 
