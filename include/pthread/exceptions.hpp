@@ -164,7 +164,7 @@ namespace pthread {
              *
              * @param msg explanatory message.
              */
-            explicit queue_exception(const std::string &msg = "queue_error occurred.");
+            explicit queue_exception(const std::string &msg = "queue_error occured.");
 
             virtual ~queue_exception();
 

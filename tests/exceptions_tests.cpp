@@ -115,7 +115,7 @@ void *starter_function(pthread::runnable *runner){
     runner->run();
 }
 
-TEST(class_function, demo) {
+TEST(class_function, DISABLED_demo) {
     class function_class{
     public:
 
