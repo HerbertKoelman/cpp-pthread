@@ -1,3 +1,6 @@
+1.11.0
+- setup inspection better inspection tools
+- fix typos (#201)
 1.10.0
 - the script ./BUILD now uses Travis variables to set the current branch and build type
 - coverage is now entirely handle in cmake/CoverageConfig/cmake (#191)
