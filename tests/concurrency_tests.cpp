@@ -51,7 +51,7 @@ TEST(concurrency, mutex) {
 
     EXPECT_FALSE(mutex.try_lock()); // return false, because the test thread has already locked the mutex
     EXPECT_NO_THROW(pthread::lock_guard<pthread::mutex> lock(mutex));
-    EXPECT_TRUE(mutex.try_lock()); // the test thread has ended and the lock can be aquired again
+    EXPECT_TRUE(mutex.try_lock()); // the test thread has ended and the lock can be acquired again
 
     mtr.join();
 }
