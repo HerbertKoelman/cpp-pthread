@@ -24,7 +24,7 @@ namespace pthread {
   }
 
   write_lock::~write_lock(){
-    // intentional... base class is in charge of freeing allocated ressources
+    // intentional... base class is in charge of freeing allocated resources
   }
 
   // read_lock -----------------------------

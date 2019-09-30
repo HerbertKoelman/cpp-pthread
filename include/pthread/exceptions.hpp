@@ -35,8 +35,8 @@ namespace pthread {
 
         /** Base class of exception thrown by this module.
          *
-         * If an error_number is passed, then the corresponding system error message is catenated to the message string. If the message
-         * string ends witht a period, then a space (`" "`) is inserted between the message and the system error message. Else
+         * If an error_number is passed, then the corresponding system error message is concatenated to the message string. If the message
+         * string ends with a period, then a space (`" "`) is inserted between the message and the system error message. Else
          * a period + space is inserted (`". "`).
          *
          * An `error_number` of 0, means that we don't consider this to be a system related exception.
@@ -155,7 +155,7 @@ namespace pthread {
          * @{
          */
 
-        /** thrown when something goes wrong in a synchonized queue.
+        /** thrown when something goes wrong in a synchronized queue.
          */
         class queue_exception : public std::exception {
         public:

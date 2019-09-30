@@ -9,8 +9,8 @@
 #ifndef pthread_lock_guard_H
 #define pthread_lock_guard_H
 
-// WARN pthread.h must be include as first hearder file of each source code file (see IBM's
-// recommandation for more info p.285 chapter 8.3.1).
+// WARN pthread.h must be include as first header file of each source code file (see IBM's
+// recommendation for more info p.285 chapter 8.3.1).
 #include <pthread.h>
 
 #include "pthread/mutex.hpp"
@@ -25,7 +25,7 @@ namespace pthread {
     /**
      * This class was designed to encapsulate a mutex and automatically control the lock attribute.
      *
-     * The lock_guard lock the associated mutex once we instanciate the class and the lock is automatically unlocked
+     * The lock_guard lock the associated mutex once we instantiate the class and the lock is automatically unlocked
      * once the object is destroyed. This allow us to correlate the lock with the scope of the object.
      *
      * > *WARN* this is a wrapper and therefore doesn't deal with allocating/deallocating the mutex it is guarding.
@@ -74,7 +74,7 @@ namespace pthread {
         lock_guard(const lock_guard &) = delete;
 
         /**
-         * Desabling the = operator.
+         * Disabling the = operator.
          */
         void operator=(lock_guard &) = delete;
 

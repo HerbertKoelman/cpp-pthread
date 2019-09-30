@@ -76,7 +76,7 @@ namespace pthread {
 
     namespace util {
 
-        // synchonized queue
+        // synchronized queue
         //
         queue_exception::queue_exception(const std::string &msg) : _message(msg) {
         }

@@ -46,7 +46,7 @@ namespace pthread {
         if (_thread != 0) {
 
             if (_thread == this_thread::get_id()) {
-                throw thread_exception("join failed, joining yourself would endup in deadlock.");
+                throw thread_exception("join failed, joining yourself would end up in a deadlock.");
             }
 
             if (_status == thread_status::not_a_thread) {
@@ -258,7 +258,7 @@ namespace pthread {
         try {
             static_cast<runnable *>(runner)->run();
         } catch (...) { // NOSONAR threads cannot throw exceptions when ending, this prevents this from happening.
-            printf("uncaugth exception in thread_startup_runnable(), check your runnable::run() implementation."); //NOSONAR this should never happen, BUT if it does, I want to be sure to see it
+            printf("uncaught exception in thread_startup_runnable(), check your runnable::run() implementation."); //NOSONAR this should never happen, BUT if it does, I want to be sure to see it
         }
         return nullptr;
     }

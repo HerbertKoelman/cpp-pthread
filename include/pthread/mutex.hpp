@@ -9,8 +9,8 @@
 #ifndef pthread_mutex_hpp
 #define pthread_mutex_hpp
 
-// WARN pthread.h must be include as first hearder file of each source code file (see IBM's
-// recommandation for more info p.285 chapter 8.3.1).
+// WARN pthread.h must be include as first header file of each source code file (see IBM's
+// recommendation for more info p.285 chapter 8.3.1).
 #include <pthread.h>
 
 #include <exception>
@@ -88,7 +88,7 @@ namespace pthread {
          */
         virtual ~mutex();
 
-        /** not copy-assignable, so no copy contructor is needed.
+        /** not copy-assignable, so no copy constructor is needed.
          *
          */
         mutex(const mutex &) = delete;

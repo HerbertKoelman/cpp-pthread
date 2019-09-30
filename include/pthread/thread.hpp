@@ -9,8 +9,8 @@
 #ifndef PTHREAD_THREAD_HPP
 #define PTHREAD_THREAD_HPP
 
-// WARN pthread.h must be include as first hearder file of each source code file (see IBM's
-// recommandation for more info p.285 chapter 8.3.1).
+// WARN pthread.h must be include as first header file of each source code file (see IBM's
+// recommendation for more info p.285 chapter 8.3.1).
 #include <pthread.h>
 
 #include <iostream>
@@ -97,7 +97,7 @@ namespace pthread {
         /** create a new thread.
          *
          * The thread's status is set to thread_status::not_a_thread and the thread id is set to 0 (zero). An pthread attribute
-         * is created, and the attrbutes are set to the thier default values.
+         * is created, and the attributes are set to their default values.
          *
          * @see pthread_attr_init
          */
@@ -106,7 +106,7 @@ namespace pthread {
         /**
          * @copydoc thread(const runnable *, std::size_t )
          *
-         * @deprecated this constructor is not realy safe to use, prefer new signature.
+         * @deprecated this constructor is not really safe to use, prefer new signature.
          */
         explicit thread(const runnable &runner, std::size_t stack_size = 0);
 
@@ -116,7 +116,7 @@ namespace pthread {
          *  - the detach state attribute is set to PTHREAD_CREATE_JOINABLE
          *  - the stacksize attribute is set to whatever value you passed (must be greater than 0 (zero)).
          *
-         *  If all the setup was successfull, the thread is created and started.
+         *  If all the setup was successful, the thread is created and started.
          *
          * @param runner a class that implements the runnable interface.
          * @param stack_size thread stack size in bytes (default is 0 and means use default stack size)
@@ -135,7 +135,7 @@ namespace pthread {
          *
          * once moved the given thread is not a thread anymore (status is thread_status::not_a_thread)
          *
-         * @param other thread that will be moved, on successfull completion, the passed argument is no longer a thread.
+         * @param other thread that will be moved, on successful completion, the passed argument is no longer a thread.
          */
         thread(thread &&other) noexcept; // NOSONAR this is std interface and cannot be changed
 
@@ -144,7 +144,7 @@ namespace pthread {
         thread(const thread &) = delete;
 
         /**
-         * cleanup thread ressources.
+         * cleanup thread resources.
          */
         virtual ~thread();
 
@@ -210,7 +210,7 @@ namespace pthread {
          *  - joinable to true
          *  - the stacksize if a value was passed and is greater than 0 (zero).
          *
-         *  If all the setup was successfull, the thread is created and started.
+         *  If all the setup was successful, the thread is created and started.
          * @param runner
          * @param stack_size
          * @return 0 (zero) or an error code returned by a call to a pthread function.
@@ -242,10 +242,10 @@ namespace pthread {
      *     { // critical section scope
      *       pthread::lock_guard<pthread::mutex> lck(mtx);
      *
-     *       bool stop_waiting = true; // if lambda syntax is not availbale then use this kind of implementation
-     *       auto delay = _sleep; // use sleep seconds to calculate point in time timeou
+     *       bool stop_waiting = true; // if lambda syntax is not available then use this kind of implementation
+     *       auto delay = _sleep; // use sleep seconds to calculate point in time timeout
      *       while ( ! (stop_waiting = (counter >= 10000)) && (condition.wait_for(mtx, delay) == pthread::cv_status::no_timeout)){
-     *         delay = -1 ; // if timeout millis is negatif, then we keep last timeout calculation.
+     *         delay = -1 ; // if timeout millis is negative, then we keep last timeout calculation.
      *       }
      *
      *       if ( counter >= 10000 ) {

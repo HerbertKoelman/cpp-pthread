@@ -4,7 +4,7 @@
 
 Some C/C++ compilers are not implementing all of C++11 and above standard, it's often lacking the concurrency features that the standard brings. These compilers will at some point be updated. I was therefore looking for a way to reduce the effort of switching from a specific implementation to the C++11 standard one.
 
-This projetc is the resulting code.
+This project is the resulting code.
 
 > _WARN_ of course, this library is a replacement of C++11 features, it is best to use the standard implementation if your compiler support it.
 
@@ -28,7 +28,7 @@ The `make` target `package` will produce au tar.gz that can be distributed.
 
 ### How to use it
 
-Once compiled and installed in a location that suites you, use your compiler options to reference the headers and the library directory. In almoast all casses you can:
+Once compiled and installed in a location that suites you, use your compiler options to reference the headers and the library directory. In almost all cases you can:
 * include `#include "pthread/phtread.hpp"` in your code to replace of the standard includes.
 * replace `std` namespace  with `pthread` ( std::condition_variable becomes pthread::condition_variable, etc)
 
@@ -89,11 +89,11 @@ tests/thread_tests.cpp                    |88.1%    201|95.2%    21|    -      0
 
 > **WARN** you have to run the test before a report can be displayed (`make all test`).
 
-### Usefull links
+### Useful links
 
 #### Memory management on AIX
 
-Memory management on AIX is quite sophisticated, memory managementcan be fine tuned very precisely. Consider using these compiler/linker options when using pthreads:
+Memory management on AIX is quite sophisticated, memory management can be fine tuned very precisely. Consider using these compiler/linker options when using pthreads:
 * -bmaxdata:0xN0000000 this option activates the large memory model, N is a number in the range of [1-8].
 * -bmaxmem=-1 this option tells the compiler to use as much memory it needs to optimize your code.
 
@@ -120,7 +120,7 @@ More detailed information can be found in this [RedBook](http://www.redbooks.ibm
 
 ### Conan
 
-This project can produce Conan Artefacts using these commands:
+This project can produce Conan Artifacts using these commands:
 
     $ conan create .. rcs/testing
     ...
