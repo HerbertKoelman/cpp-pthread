@@ -18,6 +18,7 @@ delivery/**
 *.so
 *.class
 *.dll
+*.png
 
 # IDE related stiff
 .idea/**
