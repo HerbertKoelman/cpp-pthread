@@ -1,5 +1,6 @@
 1.11.0
-- setup inspection better inspection tools
+- upgrade GoogleTest 1.8 -> 1.10 (#202)
+- setup better inspection tools
 - fix typos (#201)
 1.10.0
 - the script ./BUILD now uses Travis variables to set the current branch and build type
