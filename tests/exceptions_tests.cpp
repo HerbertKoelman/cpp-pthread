@@ -115,7 +115,32 @@ void *starter_function(pthread::runnable *runner){
     runner->run();
 }
 
+class duration {
+public:
+    constexpr duration():_duration(0) {
+    }
+
+    constexpr int d() const{
+        return _duration;
+    }
+    constexpr duration(unsigned long long d): _duration(d){
+    }
+private:
+
+    const unsigned long long _duration;
+};
+
+std::string operator "" _days(unsigned long long d){
+    return std::to_string(d)+ " days";
+}
+
+constexpr duration operator "" _days2(unsigned long long d){
+    return duration{d};
+}
+
 TEST(class_function, DISABLED_demo) {
+
+
     class function_class{
     public:
 
@@ -142,6 +167,10 @@ TEST(class_function, DISABLED_demo) {
             std::cout << "runner: hello, world" << std::endl ;
         }
     };
+
+    std::string ten_days = 10_days;
+    duration ten_days2 = 10_days2;
+    std::cout << std::endl << "Duration: " << ten_days << ", second literal: " << ten_days2.d() << std::endl;
     runner *run_ptr = new runner;
     runner run;
     function_class fc1(run_ptr);
