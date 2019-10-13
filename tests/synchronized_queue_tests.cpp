@@ -10,6 +10,7 @@
 #include <memory>
 #include <ctime>
 #include <csignal>
+#include <chrono>
 
 #define MESSAGES_TO_PRODUCE 5000 // messages produced
 #define CONSUMER_PROCESSING_DURATION 20 // millis
@@ -174,10 +175,10 @@ private:
 
 };
 
-int            consumer::_counter = 0;
+int                      consumer::_counter = 0;
 pthread::read_write_lock consumer::_rwlock;
-bool           status::_running = true;
-pthread::mutex status::_mutex;
+bool                     status::_running = true;
+pthread::mutex           status::_mutex;
 
 // int synchronized_queue() {
 TEST(synchronized_queue, producer_consumer) {
@@ -200,15 +201,17 @@ TEST(synchronized_queue, producer_consumer) {
             group.add(new producer(*queue));
         }
 
+        auto start = std::chrono::steady_clock::now();
         group.start();
         group.join();
+        auto duration = std::chrono::steady_clock::now() - start;
 
         auto consumed_messages = consumer::counter();
 
         // The + 1 is because we send one more message: a stop message
         EXPECT_EQ(MESSAGES_TO_PRODUCE + 1, consumed_messages);
 
-        std::cout << "threads joined main program, consumed " << consumed_messages << " messages" << std::endl;
+        std::cout << "threads joined main program, consumed " << consumed_messages << " messages in " << std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() << "ms" << std::endl;
 
         pstatus = EXIT_SUCCESS;
     } catch (std::exception &err) {
